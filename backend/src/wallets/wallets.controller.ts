@@ -2,8 +2,6 @@ import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common'
 import { WalletsService } from './wallets.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
-import { DepositDto } from './dto/deposit.dto';
-import { WithdrawDto } from './dto/withdraw.dto';
 
 @ApiTags('Wallets (Ví điện tử)')
 @ApiBearerAuth()
@@ -26,15 +24,15 @@ export class WalletsController {
 
   @Post('deposit')
   @ApiOperation({ summary: 'Nạp tiền vào ví' })
-  @ApiBody({ type: DepositDto })
-  async deposit(@Request() req, @Body() body: DepositDto) {
-    return this.walletsService.deposit(req.user.userId, body.amount);
+  @ApiBody({ schema: { example: { amount: 100000 } } })
+  async deposit(@Request() req, @Body('amount') amount: number) {
+    return this.walletsService.deposit(req.user.userId, amount);
   }
 
   @Post('withdraw')
   @ApiOperation({ summary: 'Yêu cầu rút tiền từ ví' })
-  @ApiBody({ type: WithdrawDto })
-  async withdraw(@Request() req, @Body() body: WithdrawDto) {
-    return this.walletsService.withdraw(req.user.userId, body.amount);
+  @ApiBody({ schema: { example: { amount: 50000 } } })
+  async withdraw(@Request() req, @Body('amount') amount: number) {
+    return this.walletsService.withdraw(req.user.userId, amount);
   }
 }

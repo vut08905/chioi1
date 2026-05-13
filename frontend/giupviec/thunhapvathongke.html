@@ -103,7 +103,6 @@
         body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #fff8f6; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .chart-bar { transition: height 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(5px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     </style>
 <style>
     body {
@@ -148,7 +147,7 @@
 <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Số dư khả dụng</span>
 <div class="flex items-center gap-sm">
 <span class="material-symbols-outlined text-primary text-[28px]">account_balance_wallet</span>
-<span class="font-display-lg text-display-lg text-on-surface">1,500,000 đ</span>
+<span class="font-display-lg text-display-lg text-on-surface">... đ</span>
 </div>
 <button class="mt-md w-full py-4 bg-gradient-to-r from-primary to-primary-container text-on-surface font-title-sm text-title-sm rounded-full shadow-lg active:scale-95 transition-all">
                     YÊU CẦU RÚT TIỀN
@@ -354,34 +353,9 @@
           var barH = Math.max(pct, 8);
           var isToday = dayIdx === today;
           var col = document.createElement('div');
-          col.className = 'flex flex-col items-center gap-xs flex-1 relative cursor-pointer';
-          col.innerHTML = '<div class="w-full ' + (isToday ? 'bg-primary' : 'bg-primary-fixed') + ' rounded-t-lg chart-bar hover:opacity-80 transition-opacity" style="height:' + barH + 'px"></div>' +
+          col.className = 'flex flex-col items-center gap-xs flex-1';
+          col.innerHTML = '<div class="w-full ' + (isToday ? 'bg-primary' : 'bg-primary-fixed') + ' rounded-t-lg chart-bar" style="height:' + barH + 'px"></div>' +
             '<span class="text-[10px] font-label-caps ' + (isToday ? 'text-primary font-bold' : '') + '">' + dayNames[dayIdx] + '</span>';
-
-          // Lỗi 4 FIX: Click vào bar hiện tooltip thu nhập
-          (function(dayName, income, isActive) {
-            col.addEventListener('click', function() {
-              // Xóa tooltip cũ
-              var old = document.getElementById('chart-tooltip');
-              if (old) old.remove();
-
-              if (income === 0) {
-                showToastMsg('Chưa có thu nhập ngày ' + dayName);
-                return;
-              }
-
-              var tooltip = document.createElement('div');
-              tooltip.id = 'chart-tooltip';
-              tooltip.className = 'absolute -top-14 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-3 py-2 rounded-xl text-xs whitespace-nowrap shadow-xl z-50';
-              tooltip.style.animation = 'fadeIn 0.2s ease-out';
-              tooltip.innerHTML = '<p class="font-bold">' + dayName + (isActive ? ' (Hôm nay)' : '') + '</p><p class="text-primary-fixed-dim font-bold">' + formatVND(income) + '</p>';
-              col.appendChild(tooltip);
-
-              // Tự ẩn sau 3 giây
-              setTimeout(function() { if (tooltip.parentNode) tooltip.remove(); }, 3000);
-            });
-          })(dayNames[dayIdx], dailyIncome[dayIdx], isToday);
-
           chartContainer.appendChild(col);
         });
       }

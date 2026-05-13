@@ -1,231 +1,386 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chat với Khách hàng | Chị Ơi!</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .chat-bubble-left {
-            border-radius: 16px 16px 16px 4px;
-        }
-        .chat-bubble-right {
-            border-radius: 16px 16px 4px 16px;
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dfc0b3;
-            border-radius: 10px;
-        }
-    </style>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "primary-fixed-dim": "#ffb693",
-                        "tertiary": "#006780",
-                        "surface-bright": "#fff8f6",
-                        "error": "#ba1a1a",
-                        "surface-container-lowest": "#ffffff",
-                        "on-primary-container": "#642600",
-                        "secondary-fixed": "#ffdbcc",
-                        "on-primary-fixed": "#351000",
-                        "on-tertiary": "#ffffff",
-                        "primary-fixed": "#ffdbcc",
-                        "inverse-surface": "#3b2e28",
-                        "surface-tint": "#a04100",
-                        "on-secondary": "#ffffff",
-                        "background": "#fff8f6",
-                        "surface-container": "#ffeae1",
-                        "primary": "#a04100",
-                        "on-secondary-fixed": "#351000",
-                        "surface-container-high": "#fae4da",
-                        "secondary-container": "#feb28e",
-                        "surface-container-low": "#fff1eb",
-                        "outline-variant": "#dfc0b3",
-                        "on-error-container": "#93000a",
-                        "tertiary-fixed-dim": "#52d5ff",
-                        "on-tertiary-container": "#003f4f",
-                        "on-error": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "on-tertiary-fixed-variant": "#004d61",
-                        "surface": "#fff8f6",
-                        "on-primary": "#ffffff",
-                        "on-secondary-container": "#794226",
-                        "outline": "#8b7266",
-                        "on-background": "#241914",
-                        "on-surface-variant": "#584238",
-                        "tertiary-fixed": "#b8eaff",
-                        "on-tertiary-fixed": "#001f28",
-                        "primary-container": "#ff7e36",
-                        "on-surface": "#241914",
-                        "inverse-primary": "#ffb693",
-                        "secondary-fixed-dim": "#ffb693",
-                        "secondary": "#895032",
-                        "inverse-on-surface": "#ffede6",
-                        "on-primary-fixed-variant": "#7a3000",
-                        "tertiary-container": "#00b1da",
-                        "on-secondary-fixed-variant": "#6d391d",
-                        "surface-dim": "#ecd6cc",
-                        "surface-container-highest": "#f4ded5",
-                        "surface-variant": "#f4ded5"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "xs": "4px",
-                        "xl": "32px",
-                        "md": "16px",
-                        "lg": "24px",
-                        "container-padding": "16px",
-                        "sm": "8px",
-                        "base": "4px",
-                        "stack-gap": "12px"
-                    },
-                    "fontFamily": {
-                        "label-caps": ["Be Vietnam Pro"],
-                        "headline-md": ["Be Vietnam Pro"],
-                        "body-sm": ["Be Vietnam Pro"],
-                        "body-lg": ["Be Vietnam Pro"],
-                        "title-sm": ["Be Vietnam Pro"],
-                        "display-lg": ["Be Vietnam Pro"]
-                    },
-                    "fontSize": {
-                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
-                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
-                    }
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "primary": "#a04100",
+                    "primary-container": "#ff7e36",
+                    "primary-fixed": "#ffdbcc",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#642600",
+                    "background": "#fff8f6",
+                    "surface": "#fff8f6",
+                    "surface-container": "#ffeae1",
+                    "surface-container-low": "#fff1eb",
+                    "surface-container-high": "#fae4da",
+                    "surface-container-highest": "#f4ded5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#241914",
+                    "on-surface-variant": "#584238",
+                    "outline": "#8b7266",
+                    "outline-variant": "#dfc0b3",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#3b2e28",
+                    "secondary-container": "#feb28e"
                 },
+                "spacing": {
+                    "xs": "4px", "sm": "8px", "md": "16px", "lg": "24px", "xl": "32px",
+                    "container-padding": "16px", "stack-gap": "12px", "base": "4px"
+                },
+                "fontFamily": {
+                    "body-lg": ["Be Vietnam Pro"],
+                    "title-sm": ["Be Vietnam Pro"],
+                    "label-caps": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"]
+                },
+                "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "500"}]
+                }
             },
-        }
-    </script>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+        },
     }
-          body { font-family: 'Be Vietnam Pro', sans-serif; }
-        .orange-gradient {
-            background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%);
-        }
-        .teal-gradient {
-            background: linear-gradient(135deg, #00b1da 0%, #006780 100%);
-        }
-        .soft-shadow {
-            box-shadow: 0 4px 12px rgba(255, 126, 54, 0.08);
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Smooth transitions */
-        a, button { transition: all 0.2s ease; }
-        /* Card hover effect */
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-    </style>
+</script>
+<style>
+    body { font-family: 'Be Vietnam Pro', sans-serif; }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .orange-gradient { background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%); }
+    .chat-bubble-left { border-radius: 16px 16px 16px 4px; }
+    .chat-bubble-right { border-radius: 16px 16px 4px 16px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #dfc0b3; border-radius: 10px; }
+</style>
 </head>
-<body class="bg-background font-body-lg text-on-background min-h-screen flex flex-col items-center">
+<body class="bg-background font-body-lg text-on-surface min-h-screen flex flex-col items-center">
 <div class="absolute top-0 left-0 w-full h-[300px] z-0" style="background: linear-gradient(180deg, rgba(255,126,54,0.9) 0%, rgba(255,126,54,0) 100%); pointer-events: none;"></div>
 
-<!-- Header Section -->
-<header class="w-full max-w-md  from-[#FF7E36] to-[#FFB693] h-16 flex items-center px-md  fixed top-0 z-50 bg-transparent relative z-40">
-<button class="p-base active:scale-95 transition-all">
-<span class="material-symbols-outlined text-white text-[24px]">arrow_back</span>
-</button>
-<div class="flex flex-1 items-center ml-sm gap-sm">
-<div class="relative">
-<img alt="Customer Avatar" class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="A professional headshot of a middle-aged Vietnamese man with a friendly smile, clean-cut hair, and a business-casual shirt. The background is a soft-focus office interior. The lighting is warm and natural, creating a trustworthy and professional aesthetic for a service-based mobile app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1GYnK34YHg0SREUNs_ns1wou48LfUYBveQmpCTbqhtIX9VuMWigQ70GuASphLX4t6Kgt6G4svE415LN5UAbx1SlPwOM9vSSIAogk1kgEKFrjXP_IUxX5ixaXqL5ZAbq__QxuXWM_p5ItuZ4QMabeXH0DbSgBntX_j_LqmTvsw3PeXRm9pihvrhmjALuySKJhwlxcnZN3UwCNIX8Jpcf1_AJNengC-8umX5XrU6O7aP_2enct5ghepfdm-jR80Lds1j-J-YnjS_FM"/>
-<span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
-</div>
-<div class="flex flex-col">
-<span class="font-title-sm text-white text-[16px] leading-tight">KH Nguyễn Văn A</span>
-<span class="text-[10px] text-white/90 font-medium">Đang hoạt động</span>
-</div>
-</div>
-<button class="p-base active:scale-95 transition-all">
-<span class="material-symbols-outlined text-white text-[24px]" data-weight="fill">call</span>
-</button>
+<!-- Header -->
+<header class="w-full max-w-md h-16 flex items-center px-md fixed top-0 z-50 bg-transparent relative z-40">
+    <button class="p-base active:scale-95 transition-all" onclick="history.back()">
+        <span class="material-symbols-outlined text-white text-[24px]">arrow_back</span>
+    </button>
+    <div class="flex flex-1 items-center ml-sm gap-sm">
+        <div class="relative">
+            <div id="customer-avatar-wrap" class="w-10 h-10 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center overflow-hidden">
+                <span class="material-symbols-outlined text-outline text-[24px]">person</span>
+            </div>
+            <span id="online-dot" class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full hidden"></span>
+        </div>
+        <div class="flex flex-col">
+            <span id="customer-name" class="font-title-sm text-white text-[16px] leading-tight">Đang tải...</span>
+            <span id="customer-status" class="text-[10px] text-white/90 font-medium">Đang kết nối</span>
+        </div>
+    </div>
+    <button id="btn-call" class="p-base active:scale-95 transition-all">
+        <span class="material-symbols-outlined text-white text-[24px]" style="font-variation-settings: 'FILL' 1">call</span>
+    </button>
 </header>
+
+<!-- Order Info Card -->
+<div id="order-card" class="sticky top-16 z-40 bg-white/90 backdrop-blur-sm px-md py-2 shadow-sm flex items-center gap-3 mx-md mt-[72px] rounded-xl border border-outline-variant/30 hidden">
+    <div class="bg-primary p-2 rounded-lg">
+        <span class="material-symbols-outlined text-on-primary text-[18px]">cleaning_services</span>
+    </div>
+    <span id="order-info-text" class="text-on-surface text-[13px] font-semibold flex-1">Đơn hàng</span>
+</div>
+
 <!-- Chat Message Area -->
-<main class="w-full max-w-md flex-1 mt-16 pb-24 px-md overflow-y-auto relative z-10">
-<!-- Security Banner -->
-<div class="flex flex-col gap-lg">
-<!-- Timestamp -->
-<div class="text-center">
-<span class="text-label-caps text-outline bg-surface-container-low px-3 py-1 rounded-full text-[10px]">Hôm nay, 14:30</span>
-</div>
-<!-- Customer Chat (Left) -->
-<div class="flex flex-col items-start gap-base max-w-[85%]">
-<div class="chat-bubble-left bg-[#EBEBEB] text-on-surface p-md shadow-sm">
-<p class="text-body-lg">Cô lao công sắp tới chưa ạ?</p>
-</div>
-<span class="text-[10px] text-outline ml-xs">14:32</span>
-</div>
-<!-- Tasker Chat (Right) -->
-<div class="flex flex-col items-end gap-base ml-auto max-w-[85%]">
-<div class="chat-bubble-right  text-on-surface p-md shadow-md">
-<p class="text-body-lg">Dạ cháu đang trên đường ạ.</p>
-</div>
-<div class="flex items-center gap-xs">
-<span class="text-[10px] text-primary font-semibold">Đã xem</span>
-<span class="text-[10px] text-outline">14:33</span>
-</div>
-</div>
-<!-- Image Attachment (Right) -->
-<div class="flex flex-col items-end gap-base ml-auto max-w-[70%]">
-<div class="chat-bubble-right bg-white p-xs shadow-md border border-light-orange overflow-hidden">
-<img alt="Location Image" class="w-full rounded-xl object-cover" data-alt="A high-quality photo of a clean, modern apartment hallway with white walls and light wood flooring. The lighting is bright and airy, reflecting a clean and professional environment. The image is taken from a first-person perspective, suggesting a tasker documenting their arrival at a job site." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsLiRGsXeNiu2tbKQ8iGCFa0wO2wRoNTNKe3pfNAchiYC84lAzAz-Fhv7ZLXap3xD3jpzVoWtM71FrYvy95HMVQz1K_8VMARf4KHzYRxOS_1s6HVm0JgJ7mE4f7Rskoa2vVZHI8whTXNSG_p5_pFk8g-6rJS4y_sMKcSRNd2obzv8gcSjzSj8w_F1e_8E-b1TOUubZJjaxcO3hbCKjN48h8nXol0m_UOLi6_nlhlcNrNya-RsvteIn6xIXVMrJjsD2GcqCkJCjLj8"/>
-</div>
-<span class="text-[10px] text-outline">14:35</span>
-</div>
-<!-- Customer Chat (Left) -->
-<div class="flex flex-col items-start gap-base max-w-[85%]">
-<div class="chat-bubble-left bg-[#EBEBEB] text-on-surface p-md shadow-sm">
-<p class="text-body-lg">Ok cháu, nhà bác ở lầu 4, phòng 402 nhé. Cứ bấm chuông là được.</p>
-</div>
-<span class="text-[10px] text-outline ml-xs">14:36</span>
-</div>
-<!-- Tasker Chat (Right) -->
-<div class="flex flex-col items-end gap-base ml-auto max-w-[85%]">
-<div class="chat-bubble-right  text-on-surface p-md shadow-md">
-<p class="text-body-lg">Dạ vâng ạ, bác đợi cháu 5 phút nữa cháu tới.</p>
-</div>
-<div class="flex items-center gap-xs">
-<span class="text-[10px] text-primary font-semibold">Đã xem</span>
-<span class="text-[10px] text-outline">14:37</span>
-</div>
-</div>
-</div>
+<main id="chat-area" class="w-full max-w-md flex-1 mt-4 pb-24 px-md overflow-y-auto relative z-10 no-scrollbar">
+    <div class="flex flex-col gap-lg">
+        <div class="text-center">
+            <span class="text-label-caps text-outline bg-surface-container-low px-3 py-1 rounded-full text-[10px]">Đang tải tin nhắn...</span>
+        </div>
+    </div>
 </main>
+
 <!-- Bottom Input Area -->
-<footer class="fixed bottom-0 w-full max-w-md bg-white/90 backdrop-blur-md p-md pb-8 z-50">
+<footer class="fixed bottom-0 w-full max-w-md bg-white/90 backdrop-blur-md p-md pb-6 z-50 border-t border-outline-variant/20">
 <div class="flex items-center gap-sm">
-<!-- Camera Button -->
-<button class="w-12 h-12 flex items-center justify-center rounded-full -container text-primary hover:bg-surface-container-high transition-colors active:scale-90">
-<span class="material-symbols-outlined text-[24px]">photo_camera</span>
-</button>
-<!-- Message Input -->
-<div class="flex-1 relative">
-<input class="w-full h-12 bg-surface-container-low border-none rounded-full px-md text-body-lg focus:ring-2 focus:ring-primary-container placeholder:text-outline-variant" placeholder="Nhập tin nhắn..." type="text"/>
-</div>
-<!-- Send Button -->
-<button class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-primary text-on-surface shadow-lg active:scale-90 transition-all">
-<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">send</span>
-</button>
+    <button id="btn-camera" class="w-12 h-12 flex items-center justify-center rounded-full text-primary hover:bg-surface-container-high transition-colors active:scale-90">
+        <span class="material-symbols-outlined text-[24px]">photo_camera</span>
+    </button>
+    <input type="file" id="camera-capture" accept="image/*" capture="environment" class="hidden" />
+    <div class="flex-1 relative">
+        <input id="msg-input" class="w-full h-12 bg-surface-container-low border-none rounded-full px-md text-body-lg focus:ring-2 focus:ring-primary-container placeholder:text-outline-variant" placeholder="Nhập tin nhắn..." type="text"/>
+    </div>
+    <button id="btn-send" class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-primary text-white shadow-lg active:scale-90 transition-all">
+        <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">send</span>
+    </button>
 </div>
 </footer>
+
+<!-- ===== CALL OVERLAY ===== -->
+<div id="call-overlay" class="hidden fixed inset-0 z-[200] bg-black/85 flex flex-col items-center justify-center">
+    <div class="w-24 h-24 rounded-full bg-surface-container-high flex items-center justify-center mb-4 border-4 border-white/30 overflow-hidden">
+        <span class="material-symbols-outlined text-outline text-[48px]">person</span>
+    </div>
+    <h2 id="call-name" class="text-white text-xl font-bold mb-2">Đang gọi...</h2>
+    <p id="call-status" class="text-white/70 mb-8 text-sm">Đang chờ phản hồi</p>
+    <button onclick="if(window.chiOiCall)chiOiCall.endCall()" class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center shadow-2xl active:scale-90 transition-all">
+        <span class="material-symbols-outlined text-white text-[32px]" style="font-variation-settings: 'FILL' 1">call_end</span>
+    </button>
+    <audio id="remote-audio" autoplay></audio>
+</div>
+
+<!-- ===== INCOMING CALL POPUP ===== -->
+<div id="incoming-call-popup" class="hidden fixed bottom-24 left-4 right-4 z-[200] bg-gray-900 rounded-2xl p-4 shadow-2xl animate-bounce">
+    <div class="flex items-center gap-3 mb-3">
+        <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-outline text-[28px]">person</span>
+        </div>
+        <div>
+            <p class="text-white font-bold" id="incoming-name">Cuộc gọi đến</p>
+            <p class="text-white/60 text-sm">📞 Cuộc gọi từ khách hàng</p>
+        </div>
+    </div>
+    <div class="flex gap-3">
+        <button id="btn-reject-call" class="flex-1 py-3 bg-red-500 rounded-full text-white font-bold flex items-center justify-center gap-1 active:scale-95 transition-all">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">call_end</span> Từ chối
+        </button>
+        <button id="btn-accept-call" class="flex-1 py-3 bg-green-500 rounded-full text-white font-bold flex items-center justify-center gap-1 active:scale-95 transition-all">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">call</span> Nghe máy
+        </button>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="../shared/api.js"></script>
+<script src="../shared/webrtc.js"></script>
+<script>
+(async function() {
+  if (!ChiOiAuth.requireAuth('dangnhaptasker.html')) return;
+  var user = ChiOiAuth.getUser();
+
+  // Lấy params từ URL
+  var params = new URLSearchParams(window.location.search);
+  var orderId = params.get('orderId');
+  var receiverId = params.get('receiverId');
+
+  if (!orderId) {
+    showToastMsg('⚠️ Thiếu thông tin đơn hàng');
+    return;
+  }
+
+  var chatArea = document.getElementById('chat-area');
+  var msgInput = document.getElementById('msg-input');
+  var btnSend = document.getElementById('btn-send');
+  var customerNameEl = document.getElementById('customer-name');
+  var customerStatusEl = document.getElementById('customer-status');
+  var orderCard = document.getElementById('order-card');
+  var orderInfoText = document.getElementById('order-info-text');
+
+  // ===== 1. Load thông tin đơn hàng =====
+  try {
+    var order = await apiFetch('/api/orders/' + orderId);
+    var customerName = (order.customers && order.customers.users && order.customers.users.full_name) || 'Khách hàng';
+    customerNameEl.textContent = 'KH ' + customerName;
+    customerStatusEl.textContent = 'Đang hoạt động';
+    document.getElementById('online-dot').classList.remove('hidden');
+
+    // Hiện order card
+    var serviceName = (order.services && order.services.name) || 'Dịch vụ';
+    var statusMap = { 'ACCEPTED': 'Đã nhận', 'IN_PROGRESS': 'Đang TH', 'TASKER_ARRIVED': 'Đã tới', 'COMPLETED': 'Xong', 'PENDING': 'Chờ' };
+    orderInfoText.textContent = 'Đơn: ' + serviceName + ' · ' + (statusMap[order.status] || order.status);
+    orderCard.classList.remove('hidden');
+
+    // Lấy receiverId từ order nếu chưa có
+    if (!receiverId && order.customer_id) {
+      receiverId = order.customer_id;
+    }
+    document.getElementById('call-name').textContent = customerName;
+  } catch (e) {
+    console.warn('[Chat] Không load được đơn hàng:', e.message);
+    customerNameEl.textContent = 'Khách hàng';
+  }
+
+  // ===== 2. Load lịch sử tin nhắn =====
+  try {
+    var messages = await apiFetch('/api/orders/chat/' + orderId);
+    chatArea.innerHTML = '';
+
+    var tsDiv = document.createElement('div');
+    tsDiv.className = 'text-center mb-4';
+    tsDiv.innerHTML = '<span class="text-label-caps text-outline bg-surface-container-low px-3 py-1 rounded-full text-[10px]">HÔM NAY</span>';
+    chatArea.appendChild(tsDiv);
+
+    if (messages && messages.length > 0) {
+      messages.forEach(function(msg) {
+        appendMessage(msg, Number(msg.sender_id) === Number(user.user_id));
+      });
+    } else {
+      var empty = document.createElement('div');
+      empty.className = 'text-center py-12';
+      empty.innerHTML = '<span class="material-symbols-outlined text-[48px] text-outline-variant">chat_bubble_outline</span><p class="text-on-surface-variant mt-2 text-sm">Bắt đầu trò chuyện với khách hàng</p>';
+      chatArea.appendChild(empty);
+    }
+    scrollToBottom();
+  } catch (e) {
+    console.warn('[Chat] Không load được lịch sử:', e.message);
+    chatArea.innerHTML = '<div class="text-center py-12"><p class="text-on-surface-variant text-sm">Không thể tải tin nhắn</p></div>';
+  }
+
+  // ===== 3. Kết nối Socket + join room =====
+  var socket = connectSocket();
+  if (socket) {
+    socket.on('connect', function() {
+      socket.emit('join_order_room', { orderId: parseInt(orderId) });
+    });
+    if (socket.connected) {
+      socket.emit('join_order_room', { orderId: parseInt(orderId) });
+    }
+
+    socket.on('joined_room', function(data) {
+      console.log('[Chat] Đã join room:', data.roomName);
+    });
+
+    // Nhận tin nhắn realtime — chỉ hiện tin của đối phương
+    socket.on('receive_message', function(msg) {
+      if (Number(msg.sender_id) !== Number(user.user_id)) {
+        var emptyDiv = chatArea.querySelector('.text-center.py-12');
+        if (emptyDiv) emptyDiv.remove();
+        appendMessage(msg, false);
+        scrollToBottom();
+      }
+    });
+
+    // Confirm
+    socket.on('message_sent', function(msg) {
+      var allSent = chatArea.querySelectorAll('.msg-status-icon');
+      if (allSent.length > 0) {
+        allSent[allSent.length - 1].textContent = 'done_all';
+      }
+    });
+
+    // ===== 4. WebRTC Call =====
+    window.chiOiCall = new ChiOiCall(socket, user.user_id);
+
+    document.getElementById('btn-call').addEventListener('click', function() {
+      if (!receiverId) { showToastMsg('⚠️ Không xác định được người nhận'); return; }
+      chiOiCall.startCall(parseInt(orderId), parseInt(receiverId));
+    });
+
+    document.getElementById('btn-accept-call').addEventListener('click', function() {
+      if (chiOiCall.remoteUserId) chiOiCall.acceptCall(chiOiCall.remoteUserId);
+    });
+    document.getElementById('btn-reject-call').addEventListener('click', function() {
+      if (chiOiCall.remoteUserId) chiOiCall.rejectCall(chiOiCall.remoteUserId);
+    });
+  }
+
+  // ===== 5. Gửi tin nhắn =====
+  function sendChatMessage() {
+    var text = msgInput.value.trim();
+    if (!text || !receiverId) return;
+
+    var emptyDiv = chatArea.querySelector('.text-center.py-12');
+    if (emptyDiv) emptyDiv.remove();
+
+    appendMessage({ content: text, sender_id: user.user_id, created_at: new Date().toISOString() }, true);
+    scrollToBottom();
+
+    if (socket) {
+      socket.emit('send_message', {
+        orderId: parseInt(orderId),
+        receiverId: parseInt(receiverId),
+        content: text
+      });
+    }
+    msgInput.value = '';
+  }
+
+  btnSend.addEventListener('click', sendChatMessage);
+  msgInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') sendChatMessage();
+  });
+
+  // ===== 6. Camera =====
+  var btnCamera = document.getElementById('btn-camera');
+  var cameraCapture = document.getElementById('camera-capture');
+  if (btnCamera && cameraCapture) {
+    btnCamera.addEventListener('click', function() { cameraCapture.click(); });
+    cameraCapture.addEventListener('change', function() {
+      var file = this.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) { showToastMsg('Chỉ chấp nhận file ảnh'); return; }
+      if (file.size > 5 * 1024 * 1024) { showToastMsg('Ảnh tối đa 5MB'); return; }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        appendImageMessage(e.target.result, true);
+        scrollToBottom();
+        showToastMsg('📷 Đã gửi ảnh');
+        if (socket && orderId && receiverId) {
+          socket.emit('send_message', {
+            orderId: parseInt(orderId),
+            receiverId: parseInt(receiverId),
+            content: '[Hình ảnh]'
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+      this.value = '';
+    });
+  }
+
+  // ===== Helpers =====
+  function appendMessage(msg, isMine) {
+    var div = document.createElement('div');
+    var timeStr = msg.created_at ? formatTime(msg.created_at) : 'Vừa xong';
+
+    if (isMine) {
+      div.className = 'flex flex-col items-end gap-base ml-auto max-w-[85%] mb-3';
+      div.innerHTML = '<div class="chat-bubble-right orange-gradient text-white p-md shadow-md">' +
+        '<p class="text-body-lg">' + escapeHtml(msg.content) + '</p></div>' +
+        '<div class="flex items-center gap-xs"><span class="text-[10px] text-primary font-semibold msg-status-icon">done</span>' +
+        '<span class="text-[10px] text-outline">' + timeStr + '</span></div>';
+    } else {
+      div.className = 'flex flex-col items-start gap-base max-w-[85%] mb-3';
+      div.innerHTML = '<div class="chat-bubble-left bg-[#EBEBEB] text-on-surface p-md shadow-sm">' +
+        '<p class="text-body-lg">' + escapeHtml(msg.content) + '</p></div>' +
+        '<span class="text-[10px] text-outline ml-xs">' + timeStr + '</span>';
+    }
+    chatArea.appendChild(div);
+  }
+
+  function appendImageMessage(src, isMine) {
+    var div = document.createElement('div');
+    div.className = 'flex flex-col items-end gap-base ml-auto max-w-[70%] mb-3';
+    div.innerHTML = '<div class="chat-bubble-right bg-white p-xs shadow-md border border-outline-variant overflow-hidden">' +
+      '<img src="' + src + '" class="w-full rounded-xl object-cover" alt="Ảnh gửi" /></div>' +
+      '<span class="text-[10px] text-outline">Vừa xong</span>';
+    chatArea.appendChild(div);
+  }
+
+  function scrollToBottom() {
+    setTimeout(function() { chatArea.scrollTop = chatArea.scrollHeight; }, 100);
+  }
+
+  function formatTime(isoStr) {
+    if (!isoStr) return '';
+    var d = new Date(isoStr);
+    return d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+})();
+</script>
 </body></html>

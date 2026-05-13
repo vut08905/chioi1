@@ -7,8 +7,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -256,6 +254,22 @@
       var initials = user.full_name.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
       avatarEl.innerHTML = initials;
     }
+    
+    // Gọi API lấy dữ liệu mới nhất từ backend
+    try {
+      var freshUser = await apiFetch('/api/users/profile');
+      if (freshUser) {
+        user = Object.assign(user, freshUser);
+        localStorage.setItem('chioi_user', JSON.stringify(user));
+        document.getElementById('user-name').textContent = user.full_name || 'Chưa cập nhật';
+        document.getElementById('user-phone').textContent = user.phone || '...';
+        if (user.full_name) {
+          avatarEl.innerHTML = user.full_name.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+        }
+      }
+    } catch (e) {
+      console.warn('Không thể tải hồ sơ mới:', e);
+    }
   }
 
   // ===== Lỗi 4+11 FIX: Chỉnh sửa hồ sơ - đầy đủ giới tính, email, địa chỉ =====
@@ -278,11 +292,10 @@
       '<div><label class="text-body-sm text-on-surface-variant block mb-1">Địa chỉ nhà</label>' +
       '<div class="flex gap-2">' +
       '<input id="edit-address" type="text" value="' + (user ? user.address || '' : '') + '" placeholder="VD: Căn A1-2003, Vinhomes" class="flex-1 p-3 rounded-xl border border-outline-variant bg-surface-container-low focus:ring-2 focus:ring-primary-container text-body-lg" />' +
-      '<button id="btn-gps-location" type="button" class="p-3 rounded-xl bg-primary text-white active:scale-95 transition-all flex items-center justify-center shrink-0" title="Lấy vị trí hiện tại"><span class="material-symbols-outlined text-[20px]">my_location</span></button>' +
-      '<button id="btn-map-picker" type="button" class="p-3 rounded-xl bg-[#00b1da] text-white active:scale-95 transition-all flex items-center justify-center shrink-0" title="Chọn trên bản đồ"><span class="material-symbols-outlined text-[20px]">map</span></button></div>' +
+      '<button id="btn-gps-location" type="button" class="p-3 rounded-xl bg-primary text-white active:scale-95 transition-all flex items-center justify-center shrink-0" title="Lấy vị trí hiện tại"><span class="material-symbols-outlined text-[20px]">my_location</span></button></div>' +
       '<input id="edit-lat" type="hidden" value="' + (user ? user.latitude || '' : '') + '" />' +
       '<input id="edit-lng" type="hidden" value="' + (user ? user.longitude || '' : '') + '" />' +
-      '<p id="gps-status" class="text-[11px] text-on-surface-variant mt-1">Bấm 📍 GPS hoặc 🗺️ chọn trên bản đồ</p></div>' +
+      '<p id="gps-status" class="text-[11px] text-on-surface-variant mt-1">Bấm 📍 để lấy vị trí GPS chính xác</p></div>' +
       '<button id="save-profile-btn" class="orange-gradient w-full py-3 rounded-xl text-white font-bold active:scale-95 transition-all">Lưu thay đổi</button>' +
       '</div>',
       function() {
@@ -340,85 +353,6 @@
           }, function(err) {
             if (statusEl) statusEl.textContent = '❌ Không lấy được vị trí: ' + err.message;
           }, { enableHighAccuracy: true, timeout: 10000 });
-        });
-
-        // Lỗi 2 FIX: Map picker - chọn vị trí trên bản đồ
-        document.getElementById('btn-map-picker').addEventListener('click', function() {
-          var statusEl = document.getElementById('gps-status');
-          var currentLat = parseFloat(document.getElementById('edit-lat').value) || 21.0285;
-          var currentLng = parseFloat(document.getElementById('edit-lng').value) || 105.8542;
-
-          // Tạo fullscreen map overlay
-          var mapOverlay = document.createElement('div');
-          mapOverlay.id = 'map-picker-overlay';
-          mapOverlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;';
-          mapOverlay.innerHTML =
-            '<div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#ff7e36,#a04100);color:white;">' +
-              '<div style="display:flex;align-items:center;gap:8px;"><span class="material-symbols-outlined">map</span><span style="font-weight:700;font-size:16px;">Chọn vị trí trên bản đồ</span></div>' +
-              '<button id="close-map-picker" style="background:rgba(255,255,255,0.2);border:none;color:white;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><span class="material-symbols-outlined">close</span></button>' +
-            '</div>' +
-            '<div id="picker-map" style="flex:1;"></div>' +
-            '<div style="padding:16px 20px;background:white;border-top:1px solid #eee;">' +
-              '<p id="picker-address" style="font-size:13px;color:#584238;margin-bottom:8px;">📍 Bấm vào bản đồ để chọn vị trí</p>' +
-              '<button id="confirm-map-pick" style="width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,#ff7e36,#a04100);color:white;font-weight:700;border:none;cursor:pointer;font-size:15px;">Xác nhận vị trí này</button>' +
-            '</div>';
-          document.body.appendChild(mapOverlay);
-
-          // Khởi tạo Leaflet map
-          var pickerMap = L.map('picker-map').setView([currentLat, currentLng], 16);
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(pickerMap);
-
-          var pickerMarker = L.marker([currentLat, currentLng], { draggable: true }).addTo(pickerMap);
-          var pickedLat = currentLat, pickedLng = currentLng;
-
-          // Bấm vào map để chọn vị trí
-          pickerMap.on('click', function(e) {
-            pickedLat = e.latlng.lat;
-            pickedLng = e.latlng.lng;
-            pickerMarker.setLatLng([pickedLat, pickedLng]);
-            reverseGeocodeForPicker(pickedLat, pickedLng);
-          });
-
-          // Kéo marker
-          pickerMarker.on('dragend', function() {
-            var pos = pickerMarker.getLatLng();
-            pickedLat = pos.lat;
-            pickedLng = pos.lng;
-            reverseGeocodeForPicker(pickedLat, pickedLng);
-          });
-
-          function reverseGeocodeForPicker(lat, lng) {
-            var addrEl = document.getElementById('picker-address');
-            if (addrEl) addrEl.textContent = '⏳ Đang tìm địa chỉ...';
-            fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&zoom=18&addressdetails=1')
-              .then(function(r) { return r.json(); })
-              .then(function(data) {
-                if (data && data.display_name && addrEl) {
-                  addrEl.textContent = '📍 ' + data.display_name;
-                }
-              })
-              .catch(function() {
-                if (addrEl) addrEl.textContent = '📍 ' + lat.toFixed(6) + ', ' + lng.toFixed(6);
-              });
-          }
-
-          // Xác nhận chọn vị trí
-          document.getElementById('confirm-map-pick').addEventListener('click', function() {
-            document.getElementById('edit-lat').value = pickedLat;
-            document.getElementById('edit-lng').value = pickedLng;
-            var addrText = document.getElementById('picker-address').textContent.replace('📍 ', '');
-            if (addrText && addrText.indexOf('Bấm vào') === -1 && addrText.indexOf('Đang tìm') === -1) {
-              document.getElementById('edit-address').value = addrText;
-            }
-            if (statusEl) statusEl.textContent = '✅ Đã chọn vị trí trên bản đồ';
-            mapOverlay.remove();
-          });
-
-          // Đóng map picker
-          document.getElementById('close-map-picker').addEventListener('click', function() { mapOverlay.remove(); });
-
-          // Fix Leaflet render issue khi container mới tạo
-          setTimeout(function() { pickerMap.invalidateSize(); }, 100);
         });
       }
     );

@@ -476,15 +476,28 @@
 <span class="absolute right-full mr-4 bg-on-surface text-surface text-xs px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Hỗ trợ nhanh</span>
 </button>
 
-<div id="complaint-detail-panel" class="hidden fixed inset-y-0 right-0 w-[480px] bg-surface shadow-2xl z-50 flex flex-col border-l border-outline-variant/30" data-panel>
+<div id="complaint-detail-panel" class="hidden fixed inset-y-0 right-0 w-[420px] bg-surface shadow-2xl z-50 flex flex-col border-l border-outline-variant/30" data-panel>
   <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/20 bg-surface-container-low">
-    <h2 class="font-bold text-on-surface">Chi tiết khiếu nại</h2>
-    <button class="p-2 hover:bg-surface-variant rounded-full" data-close="complaint-detail-panel"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    <h2 class="text-title-sm font-bold text-on-surface">Chi tiết khiếu nại</h2>
+    <button class="p-2 hover:bg-surface-variant rounded-full" onclick="document.getElementById('complaint-detail-panel').classList.add('hidden')"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
   </div>
   <div class="flex-1 overflow-y-auto p-6 space-y-4">
-    <div class="bg-error-container/20 border border-error/20 rounded-xl p-4">
-      <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-error text-xl" style="font-variation-settings:'FILL' 1">warning</span><span class="font-bold text-on-error-container">Nội dung khiếu nại</span></div>
-      <p class="text-sm text-on-surface">Tasker không hoàn thành công việc theo yêu cầu. Phòng ngủ chưa được dọn dẹp, sàn nhà vẫn còn bẩn. Khách hàng không hài lòng và yêu cầu hoàn tiền toàn bộ.</p>
+    <div class="bg-surface-container-lowest rounded-xl p-4 space-y-3 border border-outline-variant/20">
+      <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant uppercase tracking-wider font-bold">Mã đơn</span><span class="font-bold text-primary">#ORD-4412</span></div>
+      <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Khách hàng</span><span class="font-medium text-on-surface">Đỗ Thùy Linh</span></div>
+      <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Tasker</span><span class="font-medium text-on-surface">Nguyễn Thị Mai</span></div>
+      <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Loại khiếu nại</span><span class="px-2 py-1 bg-error-container text-on-error-container text-xs rounded-full font-bold">Thái độ Tasker</span></div>
+    </div>
+    <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20">
+      <h3 class="text-xs uppercase tracking-wider font-bold text-on-surface-variant mb-3">Nội dung phản ánh</h3>
+      <p class="text-sm text-on-surface">Tasker đến trễ 45 phút không báo trước, thái độ không hợp tác khi được yêu cầu làm sạch lại khu vực bếp.</p>
+    </div>
+    <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20">
+      <h3 class="text-xs uppercase tracking-wider font-bold text-on-surface-variant mb-3">Bằng chứng (Hình ảnh)</h3>
+      <div class="flex gap-2">
+        <div class="w-16 h-16 bg-surface-variant rounded-lg flex items-center justify-center cursor-pointer hover:opacity-80"><span class="material-symbols-outlined text-on-surface-variant/50">image</span></div>
+        <div class="w-16 h-16 bg-surface-variant rounded-lg flex items-center justify-center cursor-pointer hover:opacity-80"><span class="material-symbols-outlined text-on-surface-variant/50">image</span></div>
+      </div>
     </div>
     <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20 space-y-3">
       <h3 class="text-xs uppercase tracking-wider font-bold text-on-surface-variant">Quyết định xử lý</h3>

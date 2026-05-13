@@ -357,7 +357,7 @@
   // ===== Lỗi 3 FIX: Check duplicate orders from DB =====
   async function checkDuplicateOrders() {
     try {
-      var orders = await apiFetch('/api/orders/customer/history');
+      var orders = await apiFetch('/api/orders/my');
       var warningEl = document.getElementById('duplicate-warning');
       var textEl = document.getElementById('duplicate-text');
       if (!orders || !orders.length || !warningEl) { 
@@ -420,10 +420,12 @@
     }
   }
 
-  // ===== Submit Order =====
+  // ===== Submit Order — Bug 2 FIX (report13): Chống bấm nhiều lần =====
   var submitBtn = document.getElementById('main-submit-btn');
+  var isSubmitting = false; // Flag chống bấm nhiều lần
   if (submitBtn) {
     submitBtn.addEventListener('click', async function() {
+      if (isSubmitting) return; // Đang xử lý → bỏ qua
       if (!state.date) { showToastMsg('Vui lòng chọn ngày'); return; }
       if (!state.serviceId) { showToastMsg('Không tìm thấy dịch vụ'); return; }
 
@@ -433,6 +435,23 @@
       var scheduledTime = state.date + 'T' + state.time + ':00';
       var totalPrice = state.hours * state.pricePerHour;
 
+      // Khóa nút ngay lập tức
+      isSubmitting = true;
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-50');
+      submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span> <span>Đang đặt đơn...</span>';
+
+      // Bug 4 FIX (report13): Lấy địa chỉ từ profile user thay vì hardcode
+      var userAddress = 'Chưa cập nhật địa chỉ';
+      try {
+        var profile = await apiFetch('/api/users/profile');
+        if (profile && profile.address) {
+          userAddress = profile.address;
+        }
+      } catch (e) {
+        console.warn('[Đặt DV] Không lấy được profile:', e.message);
+      }
+
       showLoading();
       try {
         var result = await apiFetch('/api/orders/book', {
@@ -440,11 +459,11 @@
           body: {
             service_id: state.serviceId,
             scheduled_time: scheduledTime,
-            address: 'Địa chỉ từ ứng dụng',
+            address: userAddress,
             total_price: totalPrice,
             longitude: 106.6297,
             latitude: 10.8231,
-            notes: state.note
+            note: state.note
           }
         });
         hideLoading();
@@ -453,6 +472,11 @@
       } catch (e) {
         hideLoading();
         showToastMsg('❌ ' + e.message);
+        // Mở khóa nút khi lỗi để user thử lại
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50');
+        submitBtn.innerHTML = '<span>Đặt dịch vụ — ' + formatVND(totalPrice) + '</span>';
       }
     });
   }

@@ -120,9 +120,8 @@
 <span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
 </button>
 <h1 class="text-headline-md font-headline-md font-extrabold text-on-primary">Theo dõi đơn</h1>
-<!-- Bug 9.4 FIX: Chat trong header → liên hệ Admin/CSKH (không phải Tasker) -->
-<button id="btn-contact-admin" class="flex items-center justify-center w-10 h-10 text-on-primary hover:bg-white/10 rounded-full active:scale-95 transition-all duration-200" title="Liên hệ Admin/CSKH">
-<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<button onclick="window.location.href='chatvoitasker.html'" class="flex items-center justify-center w-10 h-10 text-on-primary hover:bg-white/10 rounded-full active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
 </button>
 </header>
 <main class="relative z-10 px-md pt-4 pb-32 space-y-stack-gap">
@@ -384,54 +383,6 @@
         showToastMsg('🎉 Tasker đã nhận đơn!');
         renderStepper('ACCEPTED');
       }
-    });
-  }
-
-  // ===== Bug 9.4 FIX: Liên hệ Admin/CSKH (mở modal tạo support ticket) =====
-  var btnContactAdmin = document.getElementById('btn-contact-admin');
-  if (btnContactAdmin) {
-    btnContactAdmin.addEventListener('click', function() {
-      var existing = document.getElementById('admin-contact-modal');
-      if (existing) { existing.remove(); return; }
-
-      var overlay = document.createElement('div');
-      overlay.id = 'admin-contact-modal';
-      overlay.className = 'fixed inset-0 z-[999] flex items-end sm:items-center justify-center bg-black/50';
-      overlay.innerHTML =
-        '<div class="bg-white w-full sm:w-[420px] sm:rounded-2xl rounded-t-2xl p-5 space-y-4 shadow-2xl" onclick="event.stopPropagation()">' +
-        '  <div class="flex items-center justify-between">' +
-        '    <h3 class="text-title-sm font-bold flex items-center gap-2"><span class="material-symbols-outlined text-primary">support_agent</span>Liên hệ Admin/CSKH</h3>' +
-        '    <button id="admin-modal-close" class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined">close</span></button>' +
-        '  </div>' +
-        '  <p class="text-body-sm text-on-surface-variant">Mô tả vấn đề về đơn hàng hiện tại — Admin sẽ phản hồi qua thông báo.</p>' +
-        '  <input id="admin-ticket-subject" type="text" class="w-full p-3 rounded-xl border border-outline-variant text-body-sm" placeholder="Tiêu đề (vd: Tasker tới muộn)" maxlength="200">' +
-        '  <textarea id="admin-ticket-desc" class="w-full p-3 rounded-xl border border-outline-variant text-body-sm" rows="4" placeholder="Mô tả chi tiết..." maxlength="2000"></textarea>' +
-        '  <button id="admin-ticket-submit" class="w-full py-3 rounded-2xl bg-primary text-white font-bold active:scale-95 transition-all">Gửi yêu cầu hỗ trợ</button>' +
-        '  <div class="text-center text-caption text-outline">hoặc gọi hotline <a href="tel:19001234" class="text-primary font-bold">1900 1234</a></div>' +
-        '</div>';
-      overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
-      document.body.appendChild(overlay);
-
-      document.getElementById('admin-modal-close').addEventListener('click', function() { overlay.remove(); });
-      document.getElementById('admin-ticket-submit').addEventListener('click', async function() {
-        var subject = document.getElementById('admin-ticket-subject').value.trim();
-        var description = document.getElementById('admin-ticket-desc').value.trim();
-        if (subject.length < 5) { showToastMsg('Tiêu đề tối thiểu 5 ký tự'); return; }
-        if (description.length < 10) { showToastMsg('Mô tả tối thiểu 10 ký tự'); return; }
-        showLoading();
-        try {
-          await apiFetch('/api/support/tickets', {
-            method: 'POST',
-            body: { subject: subject, description: description + (orderId ? '\n[Đơn #' + orderId + ']' : '') }
-          });
-          hideLoading();
-          overlay.remove();
-          showToastMsg('✅ Đã gửi yêu cầu hỗ trợ');
-        } catch (e) {
-          hideLoading();
-          showToastMsg('❌ ' + e.message);
-        }
-      });
     });
   }
 })();

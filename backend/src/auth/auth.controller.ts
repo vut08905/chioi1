@@ -1,13 +1,7 @@
 import { Controller, Post, Body, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
-import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ApiTags, ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
-import { ChangePasswordDto } from './dto/change-password.dto';
 
 @ApiTags('Authentication')
 @Controller('api/auth')
@@ -15,10 +9,9 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
-  @Throttle({ auth: { limit: 5, ttl: 60_000 } })
-  @ApiOperation({ summary: 'Đăng nhập vào hệ thống (Customer, Tasker, Admin) — rate limit 5 lần/phút/IP' })
-  @ApiBody({ type: LoginDto })
-  async login(@Body() body: LoginDto) {
+  @ApiOperation({ summary: 'Đăng nhập vào hệ thống (Customer, Tasker, Admin)' })
+  @ApiBody({ schema: { example: { phone: '0901234567', password: 'password123' } } })
+  async login(@Body() body: any) {
     const user = await this.authService.validateUser(body.phone, body.password);
     if (!user) {
       throw new UnauthorizedException('Invalid phone or password');
@@ -27,36 +20,32 @@ export class AuthController {
   }
 
   @Post('register')
-  @Throttle({ register: { limit: 3, ttl: 60_000 } })
-  @ApiOperation({ summary: 'Đăng ký tài khoản mới — rate limit 3 lần/phút/IP' })
-  @ApiBody({ type: RegisterDto })
-  async register(@Body() body: RegisterDto) {
+  @ApiOperation({ summary: 'Đăng ký tài khoản mới' })
+  @ApiBody({ schema: { example: { phone: '0901234567', password: 'password123', full_name: 'Nguyen Van A', role: 'CUSTOMER' } } })
+  async register(@Body() body: any) {
     return this.authService.register(body);
   }
 
   @Post('forgot-password')
-  @Throttle({ otp: { limit: 3, ttl: 30 * 60_000 } })
-  @ApiOperation({ summary: 'Yêu cầu OTP quên mật khẩu (MOCK) — rate limit 3 lần/30 phút/IP' })
-  @ApiBody({ type: ForgotPasswordDto })
-  async requestPasswordReset(@Body() body: ForgotPasswordDto) {
+  @ApiOperation({ summary: 'Yêu cầu OTP quên mật khẩu (MOCK)' })
+  @ApiBody({ schema: { example: { phone: '0901234567' } } })
+  async requestPasswordReset(@Body() body: any) {
     return this.authService.requestPasswordReset(body.phone);
   }
 
   @Post('reset-password')
-  @Throttle({ otp: { limit: 5, ttl: 30 * 60_000 } })
   @ApiOperation({ summary: 'Đặt lại mật khẩu bằng OTP' })
-  @ApiBody({ type: ResetPasswordDto })
-  async resetPassword(@Body() body: ResetPasswordDto) {
+  @ApiBody({ schema: { example: { phone: '0901234567', otp: '123456', new_password: 'newpassword123' } } })
+  async resetPassword(@Body() body: any) {
     return this.authService.resetPassword(body);
   }
 
   @Post('change-password')
   @UseGuards(JwtAuthGuard)
-  @SkipThrottle()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Đổi mật khẩu (cần đăng nhập)' })
-  @ApiBody({ type: ChangePasswordDto })
-  async changePassword(@Request() req, @Body() body: ChangePasswordDto) {
+  @ApiBody({ schema: { example: { current_password: 'old123', new_password: 'new123' } } })
+  async changePassword(@Request() req, @Body() body: any) {
     return this.authService.changePassword(req.user.userId, body.current_password, body.new_password);
   }
 }

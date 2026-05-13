@@ -162,7 +162,7 @@
             <div class="w-12 h-6 bg-white/30 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00b1da]"></div>
         </label>
         <!-- Chat -->
-        <a href="chatvoikhachhang.html" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-md active:scale-95 transition-all">
+        <a id="header-chat-link" href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-md active:scale-95 transition-all">
             <span class="material-symbols-outlined text-[22px]">chat_bubble</span>
         </a>
     </div>
@@ -285,6 +285,9 @@
   var currentOrder = null; // Đơn hàng hiện tại đang hiển thị trên modal
   var countdownTimer = null;
 
+  // Bug 3 FIX (report14): Danh sách đơn đã bỏ qua — lưu vào localStorage
+  var skippedOrders = JSON.parse(localStorage.getItem('chioi_skipped_orders') || '[]');
+
   // ===== 2. Hiển thị tên user lên Header =====
   if (user && user.full_name) {
     var nameEl = document.querySelector('header h1');
@@ -302,11 +305,19 @@
   // ===== 3. Online/Offline Toggle — Bug 7 FIX: persist trạng thái =====
   var toggleInput = document.querySelector('header input[type="checkbox"]');
   if (toggleInput) {
-    // Bug 7 FIX: Khôi phục trạng thái từ localStorage
+    // Khôi phục trạng thái từ localStorage và ĐỒNG BỘ với server
     var savedOnline = localStorage.getItem('chioi_tasker_online');
     if (savedOnline !== null) {
       toggleInput.checked = savedOnline === 'true';
     }
+    
+    // Gửi status hiện tại lên server để đảm bảo DB khớp với UI
+    apiFetch('/api/taskers/status', {
+      method: 'PATCH',
+      body: { is_online: toggleInput.checked }
+    }).catch(function(err) {
+      console.warn('Lỗi đồng bộ trạng thái online:', err);
+    });
 
     toggleInput.addEventListener('change', async function() {
       try {
@@ -314,34 +325,25 @@
           method: 'PATCH',
           body: { is_online: toggleInput.checked }
         });
-        // Bug 7 FIX: Lưu trạng thái vào localStorage
         localStorage.setItem('chioi_tasker_online', String(toggleInput.checked));
         showToast(toggleInput.checked ? '🟢 Đã bật nhận việc' : '🔴 Đã tắt nhận việc');
-
-        // Lỗi 1 FIX: Khi tắt hoạt động → ẩn modal đơn mới + dừng countdown
+        // Bug 4 FIX (report14): Khi tắt → ẩn modal đơn mới (nhưng giữ đơn đang xử lý)
         if (!toggleInput.checked && !isHandlingOrder) {
           clearInterval(countdownTimer);
           hideModal();
-          currentOrder = null;
-          // Hiện trạng thái offline
-          var idle = document.getElementById('idle-state');
-          if (idle) {
-            idle.classList.remove('hidden');
-            setTimeout(function() { idle.classList.remove('translate-y-10', 'opacity-0'); }, 50);
-            var idleText = idle.querySelector('.font-bold');
-            var idleSubtext = idle.querySelector('.text-xs');
-            if (idleText) idleText.textContent = 'Bạn đang ngoại tuyến';
-            if (idleSubtext) idleSubtext.textContent = 'Bật nhận việc để nhận đơn hàng mới';
-          }
-        } else if (toggleInput.checked && !isHandlingOrder) {
           showIdleState();
-          var idleReset = document.getElementById('idle-state');
-          if (idleReset) {
-            var idleText = idleReset.querySelector('.font-bold');
-            var idleSubtext = idleReset.querySelector('.text-xs');
-            if (idleText) idleText.textContent = 'Đang tìm đơn hàng...';
-            if (idleSubtext) idleSubtext.textContent = 'Bạn đang ở chế độ trực tuyến';
-          }
+          // Cập nhật text idle
+          var idleText = document.querySelector('#idle-state .font-bold');
+          var idleSubText = document.querySelector('#idle-state .text-xs');
+          if (idleText) idleText.textContent = 'Đang tắt nhận việc';
+          if (idleSubText) idleSubText.textContent = 'Bật lại để nhận đơn hàng mới';
+          currentOrder = null;
+        } else if (toggleInput.checked) {
+          // Khi bật lại → cập nhật text idle và load đơn mới
+          var idleText = document.querySelector('#idle-state .font-bold');
+          var idleSubText = document.querySelector('#idle-state .text-xs');
+          if (idleText) idleText.textContent = 'Đang tìm đơn hàng...';
+          if (idleSubText) idleSubText.textContent = 'Bạn đang ở chế độ trực tuyến';
         }
       } catch (err) {
         showToast('Lỗi: ' + err.message);
@@ -377,51 +379,56 @@
   var taskerMarker = L.marker([defaultLat, defaultLng], { icon: taskerIcon }).addTo(map);
   // Không bindPopup — Bug 5: bỏ popup "Vị trí của bạn"
 
-  // Lấy vị trí GPS thực của Tasker ngay khi load — Bug 5
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(pos) {
-      var lat = pos.coords.latitude;
-      var lng = pos.coords.longitude;
-      map.setView([lat, lng], 16);
-      taskerMarker.setLatLng([lat, lng]);
-    }, function() {
-      console.warn('[Map] Không lấy được vị trí, dùng vị trí mặc định.');
-    }, { enableHighAccuracy: true, timeout: 10000 });
-  }
-
   // ===== 6. Kết nối Socket Realtime =====
   var socket = connectSocket();
+
+  // Hàm lấy vị trí và gửi GPS
+  function updateLocationAndSendGps() {
+    function emitGps(lat, lng) {
+      if (socket && socket.connected) {
+        socket.emit('update_gps', { latitude: lat, longitude: lng });
+      } else if (socket) {
+        socket.on('connect', function() {
+          socket.emit('update_gps', { latitude: lat, longitude: lng });
+        });
+      }
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        var lat = pos.coords.latitude;
+        var lng = pos.coords.longitude;
+        map.setView([lat, lng], 16);
+        taskerMarker.setLatLng([lat, lng]);
+        emitGps(lat, lng);
+      }, function() {
+        console.warn('[Map] Không lấy được vị trí, dùng vị trí mặc định.');
+        emitGps(defaultLat, defaultLng);
+      }, { enableHighAccuracy: true, timeout: 10000 });
+    } else {
+      emitGps(defaultLat, defaultLng);
+    }
+  }
+
+  // Cập nhật vị trí ngay khi load
+  updateLocationAndSendGps();
+
   if (socket) {
     // Nhận đơn hàng mới
-    // Lỗi 1+2 FIX: Block nhận đơn nếu đang offline hoặc đang xử lý đơn
     socket.on('new_order', function(data) {
-      if (isHandlingOrder) {
-        console.log('[Tasker] Đang xử lý đơn, bỏ qua đơn mới từ socket.');
-        return;
-      }
-      if (toggleInput && !toggleInput.checked) {
-        console.log('[Tasker] Đang offline, bỏ qua đơn mới từ socket.');
-        return;
-      }
+      // Bug 4 FIX (report14): Nếu đang offline → không hiện đơn mới
+      var toggleInput = document.querySelector('header input[type="checkbox"]');
+      if (toggleInput && !toggleInput.checked) return;
+      // Bug 3 FIX (report14): Nếu đơn đã bỏ qua → bỏ qua luôn
+      if (skippedOrders.indexOf(data.order.order_id) > -1) return;
+      // Bug 8: Nếu đang có đơn → không hiện đơn mới
+      if (isHandlingOrder) return;
       currentOrder = data.order;
       showNewOrderModal(data.order);
     });
 
     // Gửi GPS mỗi 30 giây + cập nhật marker
-    if (navigator.geolocation) {
-      setInterval(function() {
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          var lat = pos.coords.latitude;
-          var lng = pos.coords.longitude;
-          taskerMarker.setLatLng([lat, lng]);
-          map.panTo([lat, lng]);
-          socket.emit('update_gps', {
-            latitude: lat,
-            longitude: lng
-          });
-        }, function() {}, { enableHighAccuracy: true });
-      }, 30000);
-    }
+    setInterval(updateLocationAndSendGps, 30000);
 
     // Nhận tin nhắn
     socket.on('receive_message', function(msg) {
@@ -436,20 +443,15 @@
         showIdleState();
         currentOrder = null;
       }
-      // Clear handling state khi đơn bị hủy
-      isHandlingOrder = false;
-      localStorage.removeItem('chioi_tasker_handling');
-      clearOrderFromMap();
     });
   }
 
   // ===== 10. Bug 8 FIX: Kiểm tra đơn đang thực hiện trước khi hiện đơn mới =====
-  // Fix multi-order bug: persist qua localStorage để tránh reset khi F5
-  var isHandlingOrder = localStorage.getItem('chioi_tasker_handling') === 'true';
+  var isHandlingOrder = false; // Flag: đang xử lý đơn
 
   (async function loadAvailableOrders() {
     try {
-      // Bug 8 + 9.8 FIX: Check đơn hàng đang thực hiện (ACCEPTED / IN_PROGRESS / TASKER_ARRIVED)
+      // Bug 8 FIX: Check đơn hàng đang thực hiện (ACCEPTED / IN_PROGRESS / TASKER_ARRIVED)
       var history = await apiFetch('/api/taskers/history');
       if (history && history.length > 0) {
         var activeOrder = history.find(function(o) {
@@ -457,39 +459,28 @@
         });
         if (activeOrder) {
           isHandlingOrder = true;
-          localStorage.setItem('chioi_tasker_handling', 'true');
           showActiveOrderCard(activeOrder);
           return; // Không hiện đơn mới
         }
       }
-      // Không có đơn active → clear localStorage nếu bị stale
-      isHandlingOrder = false;
-      localStorage.removeItem('chioi_tasker_handling');
     } catch (e) {
       console.warn('[Tasker] Không check được đơn đang xử lý:', e.message);
     }
 
-    // Lỗi 1 FIX: Nếu đang offline, không load đơn pending
-    if (toggleInput && !toggleInput.checked) {
-      // Hiện trạng thái offline
-      var idle = document.getElementById('idle-state');
-      if (idle) {
-        idle.classList.remove('hidden');
-        setTimeout(function() { idle.classList.remove('translate-y-10', 'opacity-0'); }, 50);
-        var idleText = idle.querySelector('.font-bold');
-        var idleSubtext = idle.querySelector('.text-xs');
-        if (idleText) idleText.textContent = 'Bạn đang ngoại tuyến';
-        if (idleSubtext) idleSubtext.textContent = 'Bật nhận việc để nhận đơn hàng mới';
-      }
-      return;
-    }
+    // Bug 4 FIX (report14): Nếu đang offline → không load đơn mới
+    var toggleCheck = document.querySelector('header input[type="checkbox"]');
+    if (toggleCheck && !toggleCheck.checked) return;
 
-    // Nếu không có đơn đang xử lý VÀ đang online, load đơn pending
+    // Nếu không có đơn đang xử lý, load đơn pending
     try {
       var orders = await apiFetch('/api/taskers/available-orders');
       if (orders && orders.length > 0) {
-        currentOrder = orders[0];
-        showNewOrderModal(orders[0]);
+        // Bug 3 FIX (report14): Lọc bỏ đơn đã skip
+        var filtered = orders.filter(function(o) { return skippedOrders.indexOf(o.order_id) === -1; });
+        if (filtered.length > 0) {
+          currentOrder = filtered[0];
+          showNewOrderModal(filtered[0]);
+        }
       }
     } catch (e) {
       console.warn('[Tasker] Không load được đơn hàng có sẵn:', e.message);
@@ -523,13 +514,53 @@
         '<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold">' + (statusLabel[order.status] || order.status) + '</span></div>' +
         '<div class="flex items-center justify-between border-t border-gray-100 pt-3">' +
         '<span class="text-xs font-bold text-gray-400 uppercase">Thu nhập</span>' +
-        '<span class="text-2xl font-bold text-[#a04100]">' + formatVND(order.total_price) + '</span></div>' +
-        '<p class="text-center text-[11px] text-gray-400 italic">Hoàn thành đơn này trước khi nhận đơn mới</p></div></div>';
+        '<span class="text-2xl font-bold text-[#a04100]">' + formatVND(order.total_price) + '</span></div>';
+
+    // Tạo nút bấm cập nhật tiến độ
+    var actionHtml = '';
+    if (order.status === 'ACCEPTED') {
+      actionHtml = '<button onclick="updateOrderStatus(' + order.order_id + ', \'TASKER_ARRIVED\')" class="w-full py-3 mt-3 rounded-full bg-[#00b1da] text-white font-bold shadow-lg hover:brightness-110 active:scale-95 transition-all">ĐÃ ĐẾN NƠI</button>';
+    } else if (order.status === 'TASKER_ARRIVED') {
+      actionHtml = '<button onclick="updateOrderStatus(' + order.order_id + ', \'IN_PROGRESS\')" class="w-full py-3 mt-3 rounded-full bg-[#ff7e36] text-white font-bold shadow-lg hover:brightness-110 active:scale-95 transition-all">BẮT ĐẦU DỌN DẸP</button>';
+    } else if (order.status === 'IN_PROGRESS') {
+      actionHtml = '<button onclick="updateOrderStatus(' + order.order_id + ', \'COMPLETED\')" class="w-full py-3 mt-3 rounded-full bg-green-500 text-white font-bold shadow-lg hover:brightness-110 active:scale-95 transition-all">HOÀN THÀNH ĐƠN</button>';
+    }
+
+      // Nút Chat KH
+      var chatHtml = '<a href="chatvoikhachhang.html?orderId=' + order.order_id + '&receiverId=' + order.customer_id + '" class="w-full py-3 mt-2 rounded-full border-2 border-[#00b1da] text-[#00b1da] font-bold flex items-center justify-center gap-2 active:scale-95 transition-all"><span class="material-symbols-outlined text-[18px]">chat</span>Chat với Khách hàng</a>';
+      modal.innerHTML += actionHtml + chatHtml + '</div></div>';
+      // Cập nhật header chat link
+      var headerChat = document.getElementById('header-chat-link');
+      if (headerChat) headerChat.href = 'chatvoikhachhang.html?orderId=' + order.order_id + '&receiverId=' + order.customer_id;
       modal.style.display = 'block';
       modal.style.opacity = '1';
       modal.style.transform = 'scale(1)';
     }
   }
+
+  // Hàm cập nhật tiến độ đơn hàng
+  window.updateOrderStatus = async function(orderId, newStatus) {
+    try {
+      showToast('Đang cập nhật...');
+      var result = await apiFetch('/api/orders/' + orderId + '/status', {
+        method: 'PATCH',
+        body: { status: newStatus }
+      });
+      
+      showToast('✅ Đã cập nhật thành công!');
+      
+      if (newStatus === 'COMPLETED') {
+        isHandlingOrder = false;
+        hideModal();
+        showIdleState();
+      } else {
+        // Render lại card với trạng thái mới
+        showActiveOrderCard(result);
+      }
+    } catch (err) {
+      showToast('❌ ' + err.message);
+    }
+  };
 
   // ===== 6. Hiển thị Modal đơn mới từ Socket =====
   function showNewOrderModal(order) {
@@ -601,115 +632,26 @@
       });
       clearInterval(countdownTimer);
       isHandlingOrder = true;
-      localStorage.setItem('chioi_tasker_handling', 'true');
-      hideModal();
       showToast('✅ Đã nhận đơn! Bắt đầu di chuyển tới điểm dọn dẹp.');
-      // Bug 8 FIX: Show active order card instead of idle
-      var acceptedOrder = Object.assign({}, currentOrder, { status: 'ACCEPTED' });
-      showActiveOrderCard(acceptedOrder);
-      // Lỗi 1 FIX: Hiện vị trí đơn hàng trên map + vẽ đường đi
-      showOrderOnMap(acceptedOrder);
+      // Bug 1 FIX (report13): Không gọi hideModal() vì nó có delay 300ms gây mất modal
+      // Gọi thẳng showActiveOrderCard() — hàm này tự set display: block
+      showActiveOrderCard(Object.assign({}, currentOrder, { status: 'ACCEPTED' }));
       currentOrder = null;
     } catch (err) {
       showToast('❌ ' + err.message);
     }
   };
 
-  // ===== Lỗi 1 FIX: Hiện vị trí đơn hàng trên bản đồ =====
-  var orderMarkerLayer = null;
-  var routeLayer = null;
-
-  function showOrderOnMap(order) {
-    // Xóa marker/route cũ
-    if (orderMarkerLayer) { map.removeLayer(orderMarkerLayer); orderMarkerLayer = null; }
-    if (routeLayer) { map.removeLayer(routeLayer); routeLayer = null; }
-
-    var orderLat = order.latitude || order.lat;
-    var orderLng = order.longitude || order.lng;
-
-    // Nếu đơn hàng có tọa độ
-    if (orderLat && orderLng) {
-      // Custom icon cho đơn hàng
-      var orderIcon = L.divIcon({
-        className: '',
-        html: '<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#00b1da,#006780);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined" style="color:white;font-size:18px;font-variation-settings:\'FILL\' 1;">home</span></div>',
-        iconSize: [36, 36],
-        iconAnchor: [18, 18]
-      });
-      orderMarkerLayer = L.marker([orderLat, orderLng], { icon: orderIcon }).addTo(map);
-      orderMarkerLayer.bindPopup('<b>📍 Địa chỉ đơn hàng</b><br>' + (order.address || 'Đơn hàng'), { closeButton: false }).openPopup();
-
-      // Lấy vị trí hiện tại tasker để vẽ đường đi
-      var taskerPos = taskerMarker.getLatLng();
-      if (taskerPos) {
-        // Zoom fit cả 2 điểm
-        var bounds = L.latLngBounds([taskerPos, [orderLat, orderLng]]);
-        map.fitBounds(bounds, { padding: [80, 80], maxZoom: 16 });
-
-        // Vẽ đường đi bằng OSRM routing API
-        drawRoute(taskerPos.lat, taskerPos.lng, orderLat, orderLng);
-      }
-    } else {
-      // Nếu không có tọa độ, thử geocode từ địa chỉ
-      if (order.address) {
-        fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(order.address) + '&limit=1')
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            if (data && data[0]) {
-              var gLat = parseFloat(data[0].lat);
-              var gLng = parseFloat(data[0].lon);
-              showOrderOnMap(Object.assign({}, order, { latitude: gLat, longitude: gLng }));
-            }
-          })
-          .catch(function() { console.warn('[Map] Không geocode được địa chỉ đơn hàng'); });
-      }
-    }
-  }
-
-  function drawRoute(fromLat, fromLng, toLat, toLng) {
-    // Dùng OSRM demo server để lấy đường đi thực tế
-    var url = 'https://router.project-osrm.org/route/v1/driving/' + fromLng + ',' + fromLat + ';' + toLng + ',' + toLat + '?overview=full&geometries=geojson';
-    fetch(url)
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.routes && data.routes[0]) {
-          var coords = data.routes[0].geometry.coordinates.map(function(c) { return [c[1], c[0]]; });
-          if (routeLayer) map.removeLayer(routeLayer);
-          routeLayer = L.polyline(coords, {
-            color: '#a04100',
-            weight: 5,
-            opacity: 0.8,
-            dashArray: '10, 8',
-            lineCap: 'round'
-          }).addTo(map);
-
-          // Hiện khoảng cách + thời gian
-          var distKm = (data.routes[0].distance / 1000).toFixed(1);
-          var durMin = Math.round(data.routes[0].duration / 60);
-          showToast('🗺️ ' + distKm + 'km — ~' + durMin + ' phút di chuyển');
-        }
-      })
-      .catch(function() {
-        // Fallback: vẽ đường thẳng nếu OSRM fail
-        if (routeLayer) map.removeLayer(routeLayer);
-        routeLayer = L.polyline([[fromLat, fromLng], [toLat, toLng]], {
-          color: '#a04100',
-          weight: 4,
-          opacity: 0.6,
-          dashArray: '8, 6'
-        }).addTo(map);
-      });
-  }
-
-  // Xóa route khi hoàn thành đơn
-  function clearOrderFromMap() {
-    if (orderMarkerLayer) { map.removeLayer(orderMarkerLayer); orderMarkerLayer = null; }
-    if (routeLayer) { map.removeLayer(routeLayer); routeLayer = null; }
-  }
-
-  // ===== 9. Bỏ qua đơn =====
+  // ===== 9. Bỏ qua đơn — Bug 3 FIX (report14): lưu lại để không hiện lại =====
   window.boQuaDon = function() {
     clearInterval(countdownTimer);
+    // Bug 3 FIX: Lưu đơn đã bỏ qua vào localStorage
+    if (currentOrder && currentOrder.order_id) {
+      skippedOrders.push(currentOrder.order_id);
+      // Giữ tối đa 100 đơn gần nhất để tránh localStorage quá lớn
+      if (skippedOrders.length > 100) skippedOrders = skippedOrders.slice(-100);
+      localStorage.setItem('chioi_skipped_orders', JSON.stringify(skippedOrders));
+    }
     hideModal();
     showToast('Đã bỏ qua đơn hàng. Chú ý tỷ lệ nhận đơn!');
     showIdleState();

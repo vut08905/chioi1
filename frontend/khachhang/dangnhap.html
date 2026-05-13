@@ -205,16 +205,18 @@ async function handleLogin() {
     // Lưu token + user info
     ChiOiAuth.saveLogin(data);
 
-    // Kiểm tra role — chỉ cho phép CUSTOMER vào luồng Khách hàng
+    // Bug 1 FIX (report14): Chỉ cho phép CUSTOMER đăng nhập trang này
     var user = ChiOiAuth.getUser();
     if (user && user.role === 'CUSTOMER') {
       window.location.href = 'trangchu.html';
-    } else if (user && user.role === 'TASKER') {
-      window.location.href = '../Giupviec/trangchutasker.html';
-    } else if (user && user.role === 'ADMIN') {
-      window.location.href = '../Admin/bangdieukhien.html';
     } else {
-      window.location.href = 'trangchu.html';
+      // TASKER hoặc ADMIN cố đăng nhập trang KH → từ chối
+      ChiOiAuth.logout();
+      errorEl.textContent = 'Tài khoản không tồn tại trong hệ thống khách hàng.';
+      errorEl.style.display = 'block';
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = '<span class="text-white font-title-sm text-title-sm font-bold">ĐĂNG NHẬP</span>';
+      return;
     }
   } catch (err) {
     errorEl.textContent = err.message || 'Sai số điện thoại hoặc mật khẩu.';

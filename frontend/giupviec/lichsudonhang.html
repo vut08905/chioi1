@@ -111,7 +111,6 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
             border: 1px solid #ffdbcc;
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 <style>
     body {
@@ -133,6 +132,10 @@
         a, button { transition: all 0.2s ease; }
         /* Card hover effect */
         .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        /* Bug 5 FIX (report13): Modal styles */
+        .modal-overlay { position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.5); display:flex; align-items:flex-end; justify-content:center; }
+        .modal-box { background:#fff; border-radius:24px 24px 0 0; width:100%; max-width:430px; padding:24px; animation: slideUp 0.3s ease-out; max-height:85vh; overflow-y:auto; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-background min-h-screen pb-24">
@@ -151,80 +154,27 @@
 </button>
 </div>
 </div>
-<!-- Abstract Decoration for Premium Feel -->
-<div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+
 </header>
 <!-- Main Content -->
 <main class="pt-6 px-md relative z-10">
 <!-- Filter Row -->
-<div class="flex gap-sm overflow-x-auto pb-4 no-scrollbar">
-<button class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
+<div class="flex gap-sm overflow-x-auto pb-4 no-scrollbar" id="filter-row">
+<button id="filter-month" class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
                 Tháng này
                 <span class="material-symbols-outlined text-[16px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
 </button>
-<button class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
+<button id="filter-service" class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
                 Tất cả dịch vụ
                 <span class="material-symbols-outlined text-[16px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
 </button>
-<button class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
+<button id="filter-rating" class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
                 Đánh giá
                 <span class="material-symbols-outlined text-[16px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
 </button>
 </div>
 <!-- Orders List -->
 <div class="flex flex-col gap-md mt-2">
-<!-- Card 1 -->
-<div class="order-card bg-surface-container-lowest rounded-xl p-md flex flex-col gap-3">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-title-sm font-title-sm text-on-surface">Dọn dẹp nhà cửa</h3>
-<p class="text-body-sm text-on-surface-variant flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span>
-                            14:00 - 12/05/2026
-                        </p>
-</div>
-<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-label-caps font-bold">Hoàn thành</span>
-</div>
-<div class="flex items-center justify-between border-t border-dashed border-outline-variant pt-3">
-<span class="text-headline-md font-headline-md text-primary">150.000 đ</span>
-<div class="flex items-center gap-2">
-<img class="w-8 h-8 rounded-full border-2 border-primary-fixed" data-alt="A professional cleaning specialist profile photo, a friendly woman in her 30s wearing a clean professional polo shirt against a bright, warm domestic background. The lighting is soft and natural, emphasizing trust and cleanliness with warm orange color accents in the environment. Modern app aesthetic with professional photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs-vgupGcfQLmB1ihPersCk1KVVdi30uRObCXf-TGBHo3xY0jdA5s_dUq1VWZjp9Uc5A3pPZOUDJHpaCJ8RMqkY9GjwoloBea3EmvlUhF8YqNLG2D_5YnSCPhG6yg-4eNT0mwBiTx8LPf8Ise-DfGnxw3fiMX5P0nxnL3M2C0hmruAb2r86KLdXyYrSIranbFJ2j1IGeV71zVaJl-MVJU2M63xenJIR3ub4vRB6XEzl4rgSBhHqh2FnMapsRw10Nebqnb-oVGDgAA"/>
-<span class="text-body-sm text-on-surface-variant">Chị Lan</span>
-</div>
-</div>
-<div class="bg-surface-container-low rounded-lg p-3 mt-1">
-<p class="text-body-sm text-on-surface flex items-center gap-1 italic">
-<span class="text-yellow-500 font-bold tracking-tight">⭐⭐⭐⭐⭐</span>
-                        "Làm rất sạch sẽ"
-                    </p>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="order-card bg-surface-container-lowest rounded-xl p-md flex flex-col gap-3">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="text-title-sm font-title-sm text-on-surface">Trông trẻ (2 giờ)</h3>
-<p class="text-body-sm text-on-surface-variant flex items-center gap-1 mt-1">
-<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span>
-                            09:00 - 10/05/2026
-                        </p>
-</div>
-<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-label-caps font-bold">Hoàn thành</span>
-</div>
-<div class="flex items-center justify-between border-t border-dashed border-outline-variant pt-3">
-<span class="text-headline-md font-headline-md text-primary">200.000 đ</span>
-<div class="flex items-center gap-2">
-<img class="w-8 h-8 rounded-full border-2 border-primary-fixed" data-alt="A warm and caring childcare provider profile portrait. A middle-aged person with a kind smile, dressed in comfortable casual wear. The setting is a cozy, brightly lit nursery with soft orange and peach tones, maintaining a professional yet approachable atmosphere for a service app. High-quality portrait photography with a gentle blur in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmcq4llYwgcK9uMi7t9odKFk6HYfnLm6o6rOhjImWfY6noFv4MnuweeZLz2_bevtLx9J7YDiVAHRgsp_jijCbNadEWF3m3LlhhjX_nvzF0FyZECDfeP99Uhw4UKeipP8a5EiG_MFE5z3zeJK6EB80KR-a2-O0UZY_29KblffthIKYyZhWWDqf6RO3bYDeU4gUcvXg8QJ6m88gJyh_7bg5jTwf3t2xVbSBHNuUrwQOov_4r8UfqCXIhqDPlUIui1Pb-GCpZC6ZU1uA"/>
-<span class="text-body-sm text-on-surface-variant">Chị Mai</span>
-</div>
-</div>
-<div class="bg-surface-container-low rounded-lg p-3 mt-1">
-<p class="text-body-sm text-on-surface flex items-center gap-1 italic">
-<span class="text-yellow-500 font-bold tracking-tight">⭐⭐⭐⭐</span>
-                        "Tốt, đúng giờ"
-                    </p>
-</div>
-</div>
 <!-- Empty space for better layout rhythm -->
 <div class="h-4"></div>
 <!-- Service Banner -->
@@ -265,32 +215,6 @@
   var ordersList = document.querySelector('.flex.flex-col.gap-md');
   if (!ordersList) return;
 
-  var allOrders = []; // Lưu toàn bộ orders để filter
-  var currentFilter = { status: 'all', month: 'this' }; // Filter state
-
-  var statusMap = {
-    'COMPLETED': { label: 'Hoàn thành', bg: 'bg-green-100', text: 'text-green-700' },
-    'IN_PROGRESS': { label: 'Đang thực hiện', bg: 'bg-blue-100', text: 'text-blue-700' },
-    'PENDING': { label: 'Chờ xử lý', bg: 'bg-yellow-100', text: 'text-yellow-700' },
-    'CANCELLED': { label: 'Đã hủy', bg: 'bg-red-100', text: 'text-red-700' },
-    'ACCEPTED': { label: 'Đã nhận', bg: 'bg-blue-100', text: 'text-blue-700' },
-    'TASKER_ARRIVED': { label: 'Đã tới nơi', bg: 'bg-blue-100', text: 'text-blue-700' }
-  };
-
-  // Helper: lấy tên dịch vụ từ API response (Prisma relation = "services" không phải "service")
-  function getServiceName(order) {
-    if (order.services && order.services.name) return order.services.name;
-    if (order.service && order.service.name) return order.service.name;
-    return 'Dịch vụ';
-  }
-
-  // Helper: lấy tên khách hàng (Prisma relation: customers.users.full_name)
-  function getCustomerName(order) {
-    if (order.customers && order.customers.users && order.customers.users.full_name) return order.customers.users.full_name;
-    if (order.customer && order.customer.full_name) return order.customer.full_name;
-    return 'Khách hàng';
-  }
-
   showLoading();
   try {
     var orders = await apiFetch('/api/taskers/history');
@@ -301,7 +225,156 @@
       return;
     }
 
-    allOrders = orders;
+    // Clear static cards
+    ordersList.innerHTML = '';
+
+    // Bug 5 FIX (report14): Lưu tất cả đơn hàng để filter sau
+    var allOrders = orders;
+    var currentMonthFilter = 'all'; // 'all', 'this_month', 'last_month'
+    var currentServiceFilter = 'all'; // 'all' or service name
+    var currentRatingFilter = 'all'; // 'all', 'rated', 'unrated'
+
+    // Lấy danh sách dịch vụ duy nhất
+    var uniqueServices = [];
+    orders.forEach(function(o) {
+      var sName = (o.service && o.service.name) || (o.services && o.services.name) || 'Dịch vụ';
+      if (uniqueServices.indexOf(sName) === -1) uniqueServices.push(sName);
+    });
+
+    var statusMap = {
+      'COMPLETED': { label: 'Hoàn thành', bg: 'bg-green-100', text: 'text-green-700' },
+      'IN_PROGRESS': { label: 'Đang thực hiện', bg: 'bg-blue-100', text: 'text-blue-700' },
+      'PENDING': { label: 'Chờ xử lý', bg: 'bg-yellow-100', text: 'text-yellow-700' },
+      'CANCELLED': { label: 'Đã hủy', bg: 'bg-red-100', text: 'text-red-700' },
+      'ACCEPTED': { label: 'Đã nhận', bg: 'bg-blue-100', text: 'text-blue-700' },
+      'TASKER_ARRIVED': { label: 'Đã tới nơi', bg: 'bg-blue-100', text: 'text-blue-700' }
+    };
+
+    // Bug 5 FIX (report14): Render function dùng lại khi filter
+    function renderOrders(filteredOrders) {
+      ordersList.innerHTML = '';
+      if (filteredOrders.length === 0) {
+        ordersList.innerHTML = '<div class="text-center py-12"><span class="material-symbols-outlined text-[48px] text-outline-variant">filter_alt_off</span><p class="text-on-surface-variant mt-2">Không có đơn hàng phù hợp</p></div>';
+        return;
+      }
+      filteredOrders.forEach(function(order) {
+        var s = statusMap[order.status] || statusMap['PENDING'];
+        var serviceName = (order.service && order.service.name) || (order.services && order.services.name) || 'Dịch vụ';
+        var customerName = (order.customer && order.customer.full_name) || (order.customers && order.customers.users && order.customers.users.full_name) || 'Khách hàng';
+        var rating = order.review ? order.review.rating : 0;
+        var comment = order.review ? order.review.comment : '';
+        var starStr = '';
+        for (var i = 0; i < rating; i++) starStr += '⭐';
+
+        var card = document.createElement('div');
+        card.className = 'order-card bg-surface-container-lowest rounded-xl p-md flex flex-col gap-3 cursor-pointer active:scale-[0.98] transition-transform';
+        card.innerHTML =
+          '<div class="flex justify-between items-start">' +
+            '<div><h3 class="text-title-sm font-title-sm text-on-surface">' + serviceName + '</h3>' +
+            '<p class="text-body-sm text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-[14px]">schedule</span>' + formatDateTime(order.scheduled_time) + '</p></div>' +
+            '<span class="' + s.bg + ' ' + s.text + ' px-3 py-1 rounded-full text-label-caps font-bold">' + s.label + '</span></div>' +
+          '<div class="flex items-center justify-between border-t border-dashed border-outline-variant pt-3">' +
+            '<span class="text-headline-md font-headline-md text-primary">' + formatVND(order.total_price) + '</span>' +
+            '<div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">person</span>' +
+            '<span class="text-body-sm text-on-surface-variant">' + customerName + '</span></div></div>' +
+          (rating > 0 ? '<div class="bg-surface-container-low rounded-lg p-3 mt-1"><p class="text-body-sm text-on-surface flex items-center gap-1 italic"><span class="text-yellow-500 font-bold tracking-tight">' + starStr + '</span>"' + (comment || 'Tốt') + '"</p></div>' : '');
+
+        card.addEventListener('click', function() { showTaskerOrderDetail(order, s, serviceName, customerName); });
+        ordersList.appendChild(card);
+      });
+    }
+
+    function applyFilters() {
+      var result = allOrders;
+      // Filter theo tháng
+      if (currentMonthFilter === 'this_month') {
+        var now = new Date();
+        result = result.filter(function(o) {
+          var d = new Date(o.created_at);
+          return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+        });
+      } else if (currentMonthFilter === 'last_month') {
+        var now = new Date();
+        var lastMonth = now.getMonth() === 0 ? 11 : now.getMonth() - 1;
+        var lastYear = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+        result = result.filter(function(o) {
+          var d = new Date(o.created_at);
+          return d.getMonth() === lastMonth && d.getFullYear() === lastYear;
+        });
+      }
+      // Filter theo dịch vụ
+      if (currentServiceFilter !== 'all') {
+        result = result.filter(function(o) {
+          var sName = (o.service && o.service.name) || (o.services && o.services.name) || 'Dịch vụ';
+          return sName === currentServiceFilter;
+        });
+      }
+      // Filter theo đánh giá
+      if (currentRatingFilter === 'rated') {
+        result = result.filter(function(o) { return o.review && o.review.rating > 0; });
+      } else if (currentRatingFilter === 'unrated') {
+        result = result.filter(function(o) { return !o.review || !o.review.rating; });
+      }
+      renderOrders(result);
+    }
+
+    // Bug 5 FIX (report14): Attach filter button event listeners
+    var filterMonthBtn = document.getElementById('filter-month');
+    var filterServiceBtn = document.getElementById('filter-service');
+    var filterRatingBtn = document.getElementById('filter-rating');
+
+    var monthOptions = [{value: 'all', label: 'Tất cả'}, {value: 'this_month', label: 'Tháng này'}, {value: 'last_month', label: 'Tháng trước'}];
+    var monthIdx = 1; // bắt đầu = 'Tháng này'
+    if (filterMonthBtn) {
+      filterMonthBtn.addEventListener('click', function() {
+        monthIdx = (monthIdx + 1) % monthOptions.length;
+        currentMonthFilter = monthOptions[monthIdx].value;
+        filterMonthBtn.childNodes[0].textContent = monthOptions[monthIdx].label + ' ';
+        // Highlight nếu đang active
+        if (currentMonthFilter !== 'all') {
+          filterMonthBtn.className = filterMonthBtn.className.replace('bg-surface-container-low', 'bg-primary-fixed');
+        } else {
+          filterMonthBtn.className = filterMonthBtn.className.replace('bg-primary-fixed', 'bg-surface-container-low');
+        }
+        applyFilters();
+      });
+    }
+
+    var serviceOptions = ['Tất cả dịch vụ'].concat(uniqueServices);
+    var serviceIdx = 0;
+    if (filterServiceBtn) {
+      filterServiceBtn.addEventListener('click', function() {
+        serviceIdx = (serviceIdx + 1) % serviceOptions.length;
+        currentServiceFilter = serviceIdx === 0 ? 'all' : serviceOptions[serviceIdx];
+        filterServiceBtn.childNodes[0].textContent = serviceOptions[serviceIdx] + ' ';
+        if (currentServiceFilter !== 'all') {
+          filterServiceBtn.className = filterServiceBtn.className.replace('bg-surface-container-low', 'bg-primary-fixed');
+        } else {
+          filterServiceBtn.className = filterServiceBtn.className.replace('bg-primary-fixed', 'bg-surface-container-low');
+        }
+        applyFilters();
+      });
+    }
+
+    var ratingOptions = [{value: 'all', label: 'Đánh giá'}, {value: 'rated', label: 'Có đánh giá'}, {value: 'unrated', label: 'Chưa đánh giá'}];
+    var ratingIdx = 0;
+    if (filterRatingBtn) {
+      filterRatingBtn.addEventListener('click', function() {
+        ratingIdx = (ratingIdx + 1) % ratingOptions.length;
+        currentRatingFilter = ratingOptions[ratingIdx].value;
+        filterRatingBtn.childNodes[0].textContent = ratingOptions[ratingIdx].label + ' ';
+        if (currentRatingFilter !== 'all') {
+          filterRatingBtn.className = filterRatingBtn.className.replace('bg-surface-container-low', 'bg-primary-fixed');
+        } else {
+          filterRatingBtn.className = filterRatingBtn.className.replace('bg-primary-fixed', 'bg-surface-container-low');
+        }
+        applyFilters();
+      });
+    }
+
+    // Render ban đầu: hiển thị tất cả
+    currentMonthFilter = 'all';
+    filterMonthBtn.childNodes[0].textContent = 'Tất cả ';
     renderOrders(allOrders);
   } catch (e) {
     hideLoading();
@@ -309,167 +382,45 @@
     ordersList.innerHTML = '<div class="text-center py-12 text-on-surface-variant">Không thể tải lịch sử đơn hàng</div>';
   }
 
-  // ===== Render orders list =====
-  function renderOrders(filteredOrders) {
-    ordersList.innerHTML = '';
-
-    if (filteredOrders.length === 0) {
-      ordersList.innerHTML = '<div class="text-center py-12"><span class="material-symbols-outlined text-[48px] text-outline-variant">filter_list_off</span><p class="text-on-surface-variant mt-2">Không có đơn hàng phù hợp</p></div>';
-      return;
-    }
-
-    filteredOrders.forEach(function(order) {
-      var s = statusMap[order.status] || statusMap['PENDING'];
-      var serviceName = getServiceName(order);
-      var customerName = getCustomerName(order);
-      var rating = order.review ? order.review.rating : 0;
-      var comment = order.review ? order.review.comment : '';
-      var starStr = '';
-      for (var i = 0; i < rating; i++) starStr += '⭐';
-
-      var card = document.createElement('div');
-      card.className = 'order-card bg-surface-container-lowest rounded-xl p-md flex flex-col gap-3 cursor-pointer active:scale-[0.98] transition-all';
-      card.innerHTML =
-        '<div class="flex justify-between items-start">' +
-          '<div><h3 class="text-title-sm font-title-sm text-on-surface">' + serviceName + '</h3>' +
-          '<p class="text-body-sm text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-[14px]">schedule</span>' + formatDateTime(order.scheduled_time) + '</p></div>' +
-          '<span class="' + s.bg + ' ' + s.text + ' px-3 py-1 rounded-full text-label-caps font-bold">' + s.label + '</span></div>' +
-        '<div class="flex items-center justify-between border-t border-dashed border-outline-variant pt-3">' +
-          '<span class="text-headline-md font-headline-md text-primary">' + formatVND(order.total_price) + '</span>' +
-          '<div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">person</span>' +
-          '<span class="text-body-sm text-on-surface-variant">' + customerName + '</span></div></div>' +
-        (rating > 0 ? '<div class="bg-surface-container-low rounded-lg p-3 mt-1"><p class="text-body-sm text-on-surface flex items-center gap-1 italic"><span class="text-yellow-500 font-bold tracking-tight">' + starStr + '</span>"' + (comment || 'Tốt') + '"</p></div>' : '');
-
-      card.addEventListener('click', function() { showOrderDetail(order, s, serviceName, customerName); });
-      ordersList.appendChild(card);
-    });
-  }
-
-  // ===== Lỗi 3 FIX: Filter buttons =====
-  var filterBtns = document.querySelectorAll('.flex.gap-sm.overflow-x-auto button');
-
-  // Button 0: Tháng này / Tất cả
-  if (filterBtns[0]) {
-    filterBtns[0].addEventListener('click', function() {
-      if (currentFilter.month === 'this') {
-        currentFilter.month = 'all';
-        filterBtns[0].innerHTML = 'Tất cả thời gian <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>';
-        filterBtns[0].classList.add('bg-primary-fixed', 'border-primary', 'text-primary');
-      } else {
-        currentFilter.month = 'this';
-        filterBtns[0].innerHTML = 'Tháng này <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>';
-        filterBtns[0].classList.remove('bg-primary-fixed', 'border-primary', 'text-primary');
-      }
-      applyFilters();
-    });
-  }
-
-  // Button 1: Tất cả dịch vụ → cycle through unique services
-  var serviceNames = [];
-  var currentServiceIdx = -1; // -1 = tất cả
-  if (filterBtns[1]) {
-    // Collect unique service names
-    allOrders.forEach(function(o) {
-      var name = getServiceName(o);
-      if (name !== 'Dịch vụ' && serviceNames.indexOf(name) === -1) serviceNames.push(name);
-    });
-
-    filterBtns[1].addEventListener('click', function() {
-      currentServiceIdx++;
-      if (currentServiceIdx >= serviceNames.length) {
-        currentServiceIdx = -1;
-        currentFilter.service = null;
-        filterBtns[1].innerHTML = 'Tất cả dịch vụ <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>';
-        filterBtns[1].classList.remove('bg-primary-fixed', 'border-primary', 'text-primary');
-      } else {
-        currentFilter.service = serviceNames[currentServiceIdx];
-        filterBtns[1].innerHTML = currentFilter.service + ' <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>';
-        filterBtns[1].classList.add('bg-primary-fixed', 'border-primary', 'text-primary');
-      }
-      applyFilters();
-    });
-  }
-
-  // Button 2: Đánh giá → toggle: tất cả / chỉ có đánh giá / chưa đánh giá
-  var ratingStates = ['all', 'rated', 'unrated'];
-  var ratingLabels = ['Đánh giá', 'Có đánh giá ⭐', 'Chưa đánh giá'];
-  var currentRatingIdx = 0;
-  if (filterBtns[2]) {
-    filterBtns[2].addEventListener('click', function() {
-      currentRatingIdx = (currentRatingIdx + 1) % ratingStates.length;
-      currentFilter.rating = ratingStates[currentRatingIdx];
-      filterBtns[2].innerHTML = ratingLabels[currentRatingIdx] + ' <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>';
-      if (currentRatingIdx === 0) {
-        filterBtns[2].classList.remove('bg-primary-fixed', 'border-primary', 'text-primary');
-      } else {
-        filterBtns[2].classList.add('bg-primary-fixed', 'border-primary', 'text-primary');
-      }
-      applyFilters();
-    });
-  }
-
-  function applyFilters() {
-    var filtered = allOrders.filter(function(order) {
-      // Filter by month
-      if (currentFilter.month === 'this') {
-        var now = new Date();
-        var orderDate = new Date(order.scheduled_time || order.created_at);
-        if (orderDate.getMonth() !== now.getMonth() || orderDate.getFullYear() !== now.getFullYear()) return false;
-      }
-      // Filter by service
-      if (currentFilter.service) {
-        var svcName = getServiceName(order);
-        if (svcName !== currentFilter.service) return false;
-      }
-      // Filter by rating
-      if (currentFilter.rating === 'rated' && (!order.review || !order.review.rating)) return false;
-      if (currentFilter.rating === 'unrated' && order.review && order.review.rating) return false;
-      return true;
-    });
-    renderOrders(filtered);
-  }
-
-  // === Modal chi tiết đơn hàng ===
-  function showOrderDetail(order, status, serviceName, customerName) {
-    var existing = document.getElementById('order-detail-modal');
-    if (existing) existing.remove();
-
-    var scheduledTime = formatDateTime(order.scheduled_time);
+  // Bug 5 FIX (report13): Modal chi tiết đơn hàng cho Tasker
+  function showTaskerOrderDetail(order, statusInfo, serviceName, customerName) {
     var address = order.address || 'Chưa cập nhật';
-    var orderCode = order.order_code || '#' + order.order_id;
+    var note = order.note || 'Không có ghi chú';
+    var scheduledTime = order.scheduled_time ? formatDateTime(order.scheduled_time) : 'Chưa xác định';
     var rating = order.review ? order.review.rating : 0;
-    var comment = order.review ? (order.review.comment || '') : '';
+    var comment = order.review ? order.review.comment : '';
     var starStr = '';
-    for (var i = 0; i < 5; i++) starStr += (i < rating) ? '⭐' : '☆';
+    for (var i = 0; i < rating; i++) starStr += '⭐';
+
+    // Remove existing modal if any
+    var existingModal = document.getElementById('tasker-order-modal');
+    if (existingModal) existingModal.remove();
 
     var overlay = document.createElement('div');
-    overlay.id = 'order-detail-modal';
-    overlay.className = 'fixed inset-0 bg-black/40 z-[999] flex items-end justify-center';
-    overlay.innerHTML =
-      '<div class="bg-white rounded-t-[32px] w-full max-w-md p-6 pb-8" style="animation: slideUp 0.3s ease-out">' +
-        '<div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-4"></div>' +
-        '<h3 class="text-headline-md font-bold text-on-surface mb-4">' + serviceName + '</h3>' +
-        '<div class="space-y-3">' +
-          '<div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary" style="font-variation-settings: \'FILL\' 1;">confirmation_number</span>' +
-          '<div><p class="text-body-sm text-on-surface-variant">Mã đơn</p><p class="font-bold text-on-surface">' + orderCode + '</p></div></div>' +
-          '<div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#ff7e36]" style="font-variation-settings: \'FILL\' 1;">person</span>' +
-          '<div><p class="text-body-sm text-on-surface-variant">Khách hàng</p><p class="font-bold text-on-surface">' + customerName + '</p></div></div>' +
-          '<div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#ff7e36]" style="font-variation-settings: \'FILL\' 1;">location_on</span>' +
-          '<div><p class="text-body-sm text-on-surface-variant">Địa chỉ</p><p class="font-bold text-on-surface">' + address + '</p></div></div>' +
-          '<div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#ff7e36]" style="font-variation-settings: \'FILL\' 1;">schedule</span>' +
-          '<div><p class="text-body-sm text-on-surface-variant">Thời gian</p><p class="font-bold text-on-surface">' + scheduledTime + '</p></div></div>' +
-          '<div class="flex items-center justify-between border-t border-dashed border-outline-variant pt-3">' +
-            '<span class="text-body-sm text-on-surface-variant">Trạng thái</span>' +
-            '<span class="' + status.bg + ' ' + status.text + ' px-3 py-1 rounded-full text-label-caps font-bold">' + status.label + '</span></div>' +
-          '<div class="flex items-center justify-between border-t border-dashed border-outline-variant pt-3">' +
-            '<span class="text-body-sm text-on-surface-variant">Thu nhập</span>' +
-            '<span class="text-headline-md font-bold text-primary">' + formatVND(order.total_price) + '</span></div>' +
-          (rating > 0 ? '<div class="bg-surface-container-low rounded-xl p-3 mt-2"><p class="text-body-sm font-bold text-on-surface-variant mb-1">Đánh giá từ khách</p>' +
-            '<p class="text-lg">' + starStr + '</p>' +
-            (comment ? '<p class="text-body-sm text-on-surface italic mt-1">"' + comment + '"</p>' : '') + '</div>' : '') +
-        '</div>' +
-        '<button onclick="document.getElementById(\'order-detail-modal\').remove()" class="mt-4 w-full py-3 rounded-full border-2 border-outline-variant text-on-surface-variant font-bold active:scale-95 transition-all">Đóng</button>' +
-      '</div>';
+    overlay.id = 'tasker-order-modal';
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = '<div class="modal-box">' +
+      '<div class="flex justify-between items-center mb-4">' +
+      '<h2 class="text-[18px] font-bold">Chi tiết đơn hàng</h2>' +
+      '<button onclick="document.getElementById(\'tasker-order-modal\').remove()" class="text-outline"><span class="material-symbols-outlined">close</span></button></div>' +
+      '<div class="space-y-3">' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Mã đơn</span><span class="text-body-sm font-semibold">#' + order.order_id + '</span></div>' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Dịch vụ</span><span class="text-body-sm font-semibold">' + serviceName + '</span></div>' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Trạng thái</span><span class="' + statusInfo.bg + ' ' + statusInfo.text + ' px-2 py-0.5 rounded-full text-[11px] font-bold">' + statusInfo.label + '</span></div>' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Khách hàng</span><span class="text-body-sm font-semibold">' + customerName + '</span></div>' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Thời gian lên lịch</span><span class="text-body-sm font-semibold">' + scheduledTime + '</span></div>' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Ngày tạo</span><span class="text-body-sm font-semibold">' + formatDateTime(order.created_at) + '</span></div>' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Địa chỉ</span><span class="text-body-sm font-semibold text-right max-w-[180px]">' + address + '</span></div>' +
+      '<div class="flex justify-between"><span class="text-body-sm text-on-surface-variant">Ghi chú</span><span class="text-body-sm text-right max-w-[180px]">' + note + '</span></div>' +
+      (rating > 0 ? '<div class="bg-surface-container-low rounded-lg p-3"><p class="text-body-sm text-on-surface flex items-center gap-1"><span class="font-bold">Đánh giá:</span> <span class="text-yellow-500">' + starStr + '</span> "' + (comment || 'Tốt') + '"</p></div>' : '') +
+      '<div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center">' +
+      '<span class="text-body-lg font-bold">Thu nhập</span>' +
+      '<span class="text-[20px] font-bold text-primary">' + formatVND(order.total_price) + '</span></div>' +
+      '</div>' +
+      '<div class="flex gap-3 mt-4">' +
+      (order.customer_id ?
+        '<button onclick="window.location.href=\'chatvoikhachhang.html?orderId=' + order.order_id + '&receiverId=' + order.customer_id + '\'" class="flex-1 py-3 rounded-xl orange-gradient text-white font-bold active:scale-95 flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[18px]">chat</span>Chat khách</button>' : '') +
+      '<button onclick="document.getElementById(\'tasker-order-modal\').remove()" class="flex-1 py-3 px-6 rounded-xl border-2 border-outline-variant text-on-surface-variant font-bold active:scale-95">Đóng</button></div></div>';
     overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
     document.body.appendChild(overlay);
   }

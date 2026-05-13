@@ -469,7 +469,7 @@
 <div id="order-detail-panel" class="hidden fixed inset-y-0 right-0 w-[420px] bg-surface shadow-2xl z-50 flex flex-col border-l border-outline-variant/30" data-panel>
   <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/20 bg-surface-container-low">
     <h2 class="font-headline-md text-title-sm font-bold text-on-surface">Chi tiết đơn hàng</h2>
-    <button class="p-2 hover:bg-surface-variant rounded-full transition" data-close="order-detail-panel">
+    <button class="p-2 hover:bg-surface-variant rounded-full transition" onclick="document.getElementById('order-detail-panel').classList.add('hidden')">
       <span class="material-symbols-outlined text-on-surface-variant">close</span>
     </button>
   </div>
@@ -480,17 +480,17 @@
       <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Khách hàng</span><span class="font-medium text-on-surface" id="od-customer">Nguyễn Thị Lan</span></div>
       <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Tasker</span><span class="font-medium text-on-surface" id="od-tasker">Nguyễn Văn Minh</span></div>
       <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Thời gian</span><span class="font-medium text-on-surface">20/05/2024 14:00</span></div>
-      <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Giá trị</span><span class="font-bold text-primary text-lg">350.000 đ</span></div>
+      <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Giá trị</span><span class="font-bold text-primary text-lg" id="od-price">350.000 đ</span></div>
       <div class="flex items-center justify-between"><span class="text-xs text-on-surface-variant">Trạng thái</span><span class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700" id="od-status">Hoàn thành</span></div>
     </div>
     <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20">
       <h3 class="text-xs uppercase tracking-wider font-bold text-on-surface-variant mb-3">Ghi chú</h3>
-      <p class="text-sm text-on-surface">Vệ sinh toàn bộ căn hộ 2 phòng ngủ, chú ý nhà bếp và phòng tắm.</p>
+      <p class="text-sm text-on-surface" id="od-notes">Vệ sinh toàn bộ căn hộ 2 phòng ngủ, chú ý nhà bếp và phòng tắm.</p>
     </div>
   </div>
   <div class="p-4 border-t border-outline-variant/20 flex gap-3">
-    <button class="flex-1 bg-primary text-on-primary rounded-xl py-2.5 text-sm font-bold hover:bg-primary/90 transition" data-confirm="Bạn có chắc muốn Can thiệp đơn này?">Can thiệp</button>
-    <button class="flex-1 border border-outline-variant rounded-xl py-2.5 text-sm font-medium hover:bg-surface-variant/50 transition" data-close="order-detail-panel">Đóng</button>
+    <button class="flex-1 bg-primary text-on-primary rounded-xl py-2.5 text-sm font-bold hover:bg-primary/90 transition" id="btn-can-thiep">Can thiệp</button>
+    <button class="flex-1 border border-outline-variant rounded-xl py-2.5 text-sm font-medium hover:bg-surface-variant/50 transition" onclick="document.getElementById('order-detail-panel').classList.add('hidden')">Đóng</button>
   </div>
 </div>
 <script>
@@ -790,27 +790,14 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
     }
 
     // ===== Detail Panel: "Can thiệp" button =====
-    var interventionBtn = document.querySelector('[data-confirm]');
+    var interventionBtn = document.getElementById('btn-can-thiep');
     if (interventionBtn) {
-      interventionBtn.removeAttribute('data-confirm');
-      interventionBtn.addEventListener('click', async function() {
+      interventionBtn.addEventListener('click', function() {
         var codeEl = document.getElementById('od-code');
         var code = codeEl ? codeEl.textContent.trim() : '';
         var orderId = parseInt(code.replace(/\D/g, ''));
         if (!orderId) { showToastMsg('Không xác định được đơn hàng'); return; }
-        if (!confirm('Bạn có chắc muốn hủy đơn #' + orderId + '?')) return;
-
-        showLoading();
-        try {
-          await apiFetch('/api/admin/orders/' + orderId + '/cancel', { method: 'PATCH' });
-          hideLoading();
-          showToastMsg('✅ Đã hủy đơn #' + orderId);
-          document.getElementById('order-detail-panel').classList.add('hidden');
-          setTimeout(function() { location.reload(); }, 1500);
-        } catch (e) {
-          hideLoading();
-          showToastMsg('❌ ' + e.message);
-        }
+        window.location.href = 'canthiepdonhang.html?id=' + orderId;
       });
     }
   } catch (e) {

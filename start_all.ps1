@@ -1,73 +1,65 @@
 # Script khoi dong tat ca moi truong cho du an Chi Oi!
+# Project root: d:\Download\Chi_Oi
 
-$projectRoot = "d:\chioi2"
-
-# ----------------------------------------
-# 0. DON DEP PORT CU (tranh EADDRINUSE)
-# ----------------------------------------
-Write-Host "Dang don dep cac process cu tren port 3000 va 8080..." -ForegroundColor DarkGray
-$ports = @(3000, 8080)
-foreach ($port in $ports) {
-    $pids = (Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue).OwningProcess
-    foreach ($pid in $pids) {
-        if ($pid -and $pid -ne 0) {
-            Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue
-            Write-Host "  Da kill process $pid dang chiem port $port." -ForegroundColor DarkYellow
-        }
-    }
-}
+$projectRoot = "d:\Chi_oi-main"
+$backendDir = "$projectRoot\backend"
+$frontendDir = "$projectRoot\frontend"
 
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "1. KIEM TRA VA KHOI DONG DATABASE" -ForegroundColor Cyan
+Write-Host "  CHI OI! - KHOI DONG HE THONG" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "Dang duy tri WSL Ubuntu luon thuc (Keep-alive)..." -ForegroundColor Yellow
+
+# -------------------------------------------------------
+# 1. DATABASE (PostgreSQL qua WSL)
+# -------------------------------------------------------
+Write-Host ""
+Write-Host "[1/3] Khoi dong PostgreSQL trong WSL (Ubuntu)..." -ForegroundColor Yellow
 Start-Process "wsl.exe" -ArgumentList "-d Ubuntu", "-e", "tail", "-f", "/dev/null" -WindowStyle Hidden
-
-Write-Host "Dang bat PostgreSQL trong WSL (Ubuntu)..." -ForegroundColor Yellow
 wsl -d Ubuntu -e sudo service postgresql start
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "Khoi dong PostgreSQL thanh cong!" -ForegroundColor Green
+    Write-Host "     PostgreSQL OK!" -ForegroundColor Green
 }
 else {
-    Write-Host "Co loi xay ra khi bat PostgreSQL trong WSL." -ForegroundColor Red
+    Write-Host "     [CANH BAO] Khoi dong PostgreSQL that bai. Kiem tra WSL." -ForegroundColor Red
 }
 
+# -------------------------------------------------------
+# 2. BACKEND (NestJS - port 3000)
+# -------------------------------------------------------
+Write-Host ""
+Write-Host "[2/3] Khoi dong Backend NestJS (port 3000)..." -ForegroundColor Yellow
+Start-Process "powershell.exe" `
+    -ArgumentList "-NoExit", "-Command", "cd '$backendDir'; npm run start:dev" `
+    -WindowStyle Normal
+
+# -------------------------------------------------------
+# 3. FRONTEND (http-server - port 8080)
+# -------------------------------------------------------
+Write-Host ""
+Write-Host "[3/3] Khoi dong Frontend Web Server (port 8080)..." -ForegroundColor Yellow
+Start-Process "powershell.exe" `
+    -ArgumentList "-NoExit", "-Command", "cd '$frontendDir'; npx http-server -p 8080 -c-1 --cors" `
+    -WindowStyle Normal
+
+# -------------------------------------------------------
+# THONG TIN TRUY CAP
+# -------------------------------------------------------
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "2. KHOI DONG CAC MOI TRUONG WEB VA APP" -ForegroundColor Cyan
+Write-Host "  HOAN TAT! Cac server dang khoi dong  " -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
-
-# Kiem tra node_modules backend
-if (-not (Test-Path "$projectRoot\backend\node_modules")) {
-    Write-Host "  [!] Chua co node_modules. Dang chay npm install cho backend..." -ForegroundColor DarkYellow
-    Push-Location "$projectRoot\backend"
-    npm install
-    Pop-Location
-}
-
-# Generate Prisma Client neu chua co
-$prismaClientPath = "$projectRoot\backend\node_modules\.prisma\client"
-if (-not (Test-Path $prismaClientPath)) {
-    Write-Host "  [!] Chua co Prisma Client. Dang chay prisma generate..." -ForegroundColor DarkYellow
-    Push-Location "$projectRoot\backend"
-    npx prisma generate --schema=prisma/schema.prisma
-    Pop-Location
-    Write-Host "  Prisma Client da duoc generate!" -ForegroundColor Green
-}
-
-Write-Host "Dang khoi dong Backend (NestJS)..." -ForegroundColor Green
-Start-Process "powershell.exe" -ArgumentList "-NoExit", "-Command", "cd $projectRoot\backend; npm run start:dev" -WindowStyle Normal
-
-Write-Host "Dang khoi dong Web Server Goc (chua Admin, Khach Hang, Giup Viec)..." -ForegroundColor Green
-Start-Process "powershell.exe" -ArgumentList "-NoExit", "-Command", "cd $projectRoot\frontend; npx http-server -p 8080 -c-1" -WindowStyle Normal
-
-# Write-Host "Dang khoi dong Mobile/Web Flutter (Customer)..." -ForegroundColor Green
-# Start-Process "powershell.exe" -ArgumentList "-NoExit", "-Command", "cd $projectRoot\chioi_customer; flutter run -d chrome" -WindowStyle Normal
-
 Write-Host ""
-Write-Host "Hoan tat! Cac cua so terminal moi da duoc mo cho tung moi truong." -ForegroundColor Cyan
-Write-Host "--- Huong dan truy cap Web ---" -ForegroundColor White
-Write-Host "Khach hang: http://127.0.0.1:8080/khachhang/dangnhap.html" -ForegroundColor Yellow
-Write-Host "Giup viec:  http://127.0.0.1:8080/giupviec/dangnhaptasker.html" -ForegroundColor Yellow
-Write-Host "Admin:      http://127.0.0.1:8080/admin/bangdieukhien.html" -ForegroundColor Yellow
-Write-Host "------------------------------" -ForegroundColor White
+Write-Host "--- URL TRUY CAP ---" -ForegroundColor White
+Write-Host "Khach hang : http://localhost:8080/khachhang/dangnhap.html" -ForegroundColor Yellow
+Write-Host "Giup viec  : http://localhost:8080/giupviec/dangnhaptasker.html" -ForegroundColor Yellow
+Write-Host "Admin      : http://localhost:8080/admin/bangdieukhien.html" -ForegroundColor Yellow
+Write-Host "Backend API: http://localhost:3000/api" -ForegroundColor Magenta
+Write-Host ""
+Write-Host "--- TAI KHOAN DEMO (mat khau: 123456) ---" -ForegroundColor White
+Write-Host "  [KHACH HANG] SDT: 0901234567  | Ho ten: Khach Hang VIP"   -ForegroundColor Green
+Write-Host "  [TASKER    ] SDT: 0909876543  | Ho ten: Chi Lan Don Nha"  -ForegroundColor Green
+Write-Host "  [TASKER 2  ] SDT: 0901112222  | Ho ten: Nguyen Lan"       -ForegroundColor Green
+Write-Host "  [ADMIN     ] SDT: 0901111111  | Ho ten: Admin Quan Tri"   -ForegroundColor Red
+Write-Host ""
+Write-Host "  So du vi mau: Khach hang = 5,000,000 VND" -ForegroundColor Cyan
+Write-Host "========================================" -ForegroundColor Cyan

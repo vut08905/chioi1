@@ -205,18 +205,28 @@
     });
   }
 
-  // ===== Lỗi 9 FIX: Modal chi tiết đơn hàng =====
+  // ===== Lỗi 9 FIX + Bug 3 FIX (report13): Modal chi tiết đơn hàng + Nút hủy đơn =====
   function showOrderDetail(order) {
     var serviceName = (order.services && order.services.name) ? order.services.name : 'Dịch vụ';
     var taskerName = (order.taskers && order.taskers.users && order.taskers.users.full_name) ? order.taskers.users.full_name : 'Chưa phân công';
     var status = statusMap[order.status] || { label: order.status, bg: 'bg-gray-100', text: 'text-gray-700' };
+    // Bug 4 FIX (report13): Hiển thị đúng địa chỉ từ DB
     var address = order.address || 'Chưa cập nhật';
     var note = order.note || 'Không có ghi chú';
     var scheduledTime = order.scheduled_time ? formatDateTime(order.scheduled_time) : 'Chưa xác định';
 
+    // Bug 3 FIX (report13): Cho phép hủy đơn khi status = PENDING hoặc ACCEPTED
+    var canCancel = (order.status === 'PENDING' || order.status === 'ACCEPTED');
+
     var overlay = document.createElement('div');
     overlay.id = 'order-modal';
     overlay.className = 'modal-overlay';
+
+    var cancelBtnHtml = '';
+    if (canCancel) {
+      cancelBtnHtml = '<button id="btn-cancel-order-' + order.order_id + '" class="flex-1 py-3 rounded-xl bg-red-500 text-white font-bold active:scale-95 flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[18px]">cancel</span>Hủy đơn</button>';
+    }
+
     overlay.innerHTML = '<div class="modal-box">' +
       '<div class="flex justify-between items-center mb-4">' +
       '<h2 class="text-[18px] font-bold">Chi tiết đơn hàng</h2>' +
@@ -239,9 +249,34 @@
         '<button onclick="window.location.href=\'theodoidon.html?orderId=' + order.order_id + '\'" class="flex-1 py-3 rounded-xl orange-gradient text-white font-bold active:scale-95">Theo dõi đơn</button>' : '') +
       (order.tasker_id ?
         '<button onclick="window.location.href=\'chatvoitasker.html?orderId=' + order.order_id + '&receiverId=' + order.tasker_id + '\'" class="flex-1 py-3 rounded-xl bg-primary-container/20 text-primary border-2 border-primary font-bold active:scale-95 flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[18px]">chat</span>Chat Tasker</button>' : '') +
+      cancelBtnHtml +
       '<button onclick="document.getElementById(\'order-modal\').remove()" class="' + (order.status === 'COMPLETED' || order.status === 'CANCELLED' ? 'flex-1' : '') + ' py-3 px-6 rounded-xl border-2 border-outline-variant text-on-surface-variant font-bold active:scale-95">Đóng</button></div></div>';
     overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
     document.body.appendChild(overlay);
+
+    // Bug 3 FIX (report13): Gắn sự kiện hủy đơn
+    if (canCancel) {
+      var cancelBtn = document.getElementById('btn-cancel-order-' + order.order_id);
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', async function() {
+          if (!confirm('Bạn có chắc chắn muốn hủy đơn hàng #' + order.order_id + '?')) return;
+          cancelBtn.disabled = true;
+          cancelBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span> Đang hủy...';
+          try {
+            await apiFetch('/api/orders/' + order.order_id + '/cancel', { method: 'PATCH' });
+            showToastMsg('✅ Đã hủy đơn hàng #' + order.order_id + ' thành công');
+            overlay.remove();
+            // Reload danh sách
+            allOrders = await apiFetch('/api/orders/customer/history') || [];
+            renderOrders();
+          } catch (e) {
+            showToastMsg('❌ ' + e.message);
+            cancelBtn.disabled = false;
+            cancelBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">cancel</span>Hủy đơn';
+          }
+        });
+      }
+    }
   }
 
   // ===== Lỗi 7 FIX: Filter chips hoạt động =====

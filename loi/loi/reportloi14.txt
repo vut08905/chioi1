@@ -1,0 +1,19 @@
+lỗi 1: phân tách các tài khoản không thể nào tài khoản admin mà đăng nhập được trong dangnhap khách hàng và đăng nhập tasker tương tự tasker không đăng nhập tài khoản được với 2 luồng kia khách hàng cũng như vậy báo thì báo là chưa có tài khoản này
+lỗi 2: tao muốn trang đăng nhập tasker giao diện giống trang đăng nhập khách hàng 
+lỗi 3: tasker đã bỏ qua đơn hàng rồi thì đừng dí đơn hàng đấy cho tasker nữa xem những đơn hàng khác mà tasker chưa bỏ qua ý 
+lỗi 4: tasker đã tắt hoạt dodojngj <div class="w-12 h-6 bg-white/30 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00b1da]"></div> thì sẽ không nhận được bất kỳ đơn nào nữa nhưng đơn đang làm thì vẫn có thể được làm và hoàn thành
+lỗi 5: tasker lịch sử đơn hàng <div class="flex gap-sm overflow-x-auto pb-4 no-scrollbar">
+<button class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
+                Tháng này
+                <span class="material-symbols-outlined text-[16px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
+                Tất cả dịch vụ
+                <span class="material-symbols-outlined text-[16px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-1 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm text-on-surface-variant hover:bg-surface-container-high transition-colors whitespace-nowrap">
+                Đánh giá
+                <span class="material-symbols-outlined text-[16px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+</div> không hoạt động <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div> bỏ cái này đi
+lỗi 6: chat với khách hàng <span class="material-symbols-outlined text-white text-[24px]">arrow_back</span> không hoạt động

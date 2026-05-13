@@ -6,6 +6,19 @@ export class ApiService {
   constructor(private prisma: PrismaService) {}
 
   // --- User Profile ---
+  async getUserProfile(userId: number) {
+    const user = await this.prisma.users.findUnique({
+      where: { user_id: userId },
+      select: { user_id: true, phone: true, full_name: true, email: true, gender: true, avatar_url: true, role: true, status: true, created_at: true },
+    });
+    if (!user) throw new BadRequestException('Không tìm thấy người dùng');
+
+    const customer = await this.prisma.customers.findUnique({ where: { customer_id: userId } });
+    const tasker = await this.prisma.taskers.findUnique({ where: { tasker_id: userId } });
+
+    return { ...user, address: customer?.default_address || null, bio: tasker?.bio || null };
+  }
+
   async updateUserProfile(userId: number, data: { full_name?: string; gender?: string; email?: string; address?: string; bio?: string }) {
     // Input validation
     if (data.full_name !== undefined && (typeof data.full_name !== 'string' || data.full_name.trim().length === 0)) {
@@ -52,21 +65,12 @@ export class ApiService {
       });
     }
 
-    // Bug 5.1+6.3 FIX: Update tasker address if provided (cần migration thêm column taskers.address)
-    if (data.address !== undefined) {
-      await this.prisma.taskers.updateMany({
-        where: { tasker_id: userId },
-        data: { address: data.address.trim() },
-      });
-    }
-
     // Fetch address for response
     const customer = await this.prisma.customers.findUnique({ where: { customer_id: userId } });
-    // Fetch tasker bio + address for response
+    // Fetch tasker bio for response
     const tasker = await this.prisma.taskers.findUnique({ where: { tasker_id: userId } });
 
-    const resolvedAddress = customer?.default_address || tasker?.address || data.address || null;
-    return { ...user, address: resolvedAddress, bio: tasker?.bio || data.bio || null };
+    return { ...user, address: customer?.default_address || data.address || null, bio: tasker?.bio || data.bio || null };
   }
 
   async getServices() {

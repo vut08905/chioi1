@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
@@ -145,11 +145,11 @@
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-label-md text-label-md">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container/10 text-primary border-l-4 border-primary transition-all duration-200 ease-in-out" href="quanlydonhang.html">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="quanlydonhang.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
 <span class="font-label-md text-label-md">Đơn hàng</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="canthiepdonhang.html">
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container/10 text-primary border-l-4 border-primary transition-all duration-200 ease-in-out" href="canthiepdonhang.html">
 <span class="material-symbols-outlined">edit_note</span>
 <span class="font-label-md text-label-md">Can thiệp</span>
 </a>
@@ -218,12 +218,12 @@
 <div class="p-stack_lg border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low/30">
 <div>
 <div class="flex items-center space-x-3 mb-1">
-<h2 class="font-headline-md text-headline-md">#DH-2024-089</h2>
-<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container font-label-bold text-[10px] tracking-wider uppercase">
+<h2 class="font-headline-md text-headline-md" id="ct-code">#DH-...</h2>
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container font-label-bold text-[10px] tracking-wider uppercase" id="ct-status">
                                 Đang có tranh chấp
                             </span>
 </div>
-<p class="text-on-surface-variant font-body-sm text-body-sm">Ngày tạo: 22/05/2024 14:30</p>
+<p class="text-on-surface-variant font-body-sm text-body-sm" id="ct-date">Ngày tạo: ...</p>
 </div>
 <button class="text-primary hover:bg-primary/5 px-4 py-2 rounded-lg transition-colors font-label-bold text-label-bold border border-primary/20">
                         XEM CHI TIẾT ĐƠN
@@ -232,29 +232,28 @@
 <div class="p-stack_lg grid grid-cols-2 gap-stack_lg">
 <!-- Khách hàng -->
 <div class="flex items-start space-x-4 p-4 rounded-xl bg-surface-container-low">
-<img class="w-16 h-16 rounded-full object-cover border-2 border-surface-container-lowest" data-alt="Close up portrait of a Vietnamese woman in her late 30s with a kind expression and natural skin tone. She has long dark hair and is wearing a simple linen top. The lighting is soft and bright, set against a warm, neutral background to match the professional and clean UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiRnwlst7zjJeyPRpjr1axYqkyXbYKdMeW5bN69Pn-EM4iXIzkDCaw9JJjrJz6hPqOyAWoMiXQNrpnLoluMZUS3dajClvY4PI8o8d57IlUpnS3io28N5dt7-Et7AwcrZkiCUoGt0MuYfrUMTIt-gxqTOO5uicEXpzsgYdn7rOMbxcOeMzlncL0a8e3EXDS8WEg_-Waar5DynbKJbCi5gtk88lJJZTWtDIaJTak7iQ79FIm1xO59RSAVyhMkuG-5OhEcO0spcHc0nw"/>
+<img class="w-16 h-16 rounded-full object-cover border-2 border-surface-container-lowest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiRnwlst7zjJeyPRpjr1axYqkyXbYKdMeW5bN69Pn-EM4iXIzkDCaw9JJjrJz6hPqOyAWoMiXQNrpnLoluMZUS3dajClvY4PI8o8d57IlUpnS3io28N5dt7-Et7AwcrZkiCUoGt0MuYfrUMTIt-gxqTOO5uicEXpzsgYdn7rOMbxcOeMzlncL0a8e3EXDS8WEg_-Waar5DynbKJbCi5gtk88lJJZTWtDIaJTak7iQ79FIm1xO59RSAVyhMkuG-5OhEcO0spcHc0nw"/>
 <div class="space-y-1">
 <span class="text-[10px] font-label-bold uppercase text-primary/60 tracking-widest">Khách hàng</span>
-<h3 class="font-title-sm text-title-sm">Phạm Thị Hoa</h3>
+<h3 class="font-title-sm text-title-sm" id="ct-customer-name">...</h3>
 <p class="text-body-sm text-on-surface flex items-center">
-<span class="material-symbols-outlined text-[16px] mr-2 text-on-surface-variant">phone</span> 0901234567
+<span class="material-symbols-outlined text-[16px] mr-2 text-on-surface-variant">phone</span> <span id="ct-customer-phone">...</span>
                             </p>
 <p class="text-body-sm text-on-surface-variant flex items-start">
-<span class="material-symbols-outlined text-[16px] mr-2 mt-0.5">location_on</span> 123 Lê Lợi, Quận 1, TP.HCM
+<span class="material-symbols-outlined text-[16px] mr-2 mt-0.5">location_on</span> <span id="ct-customer-address">...</span>
                             </p>
 </div>
 </div>
 <!-- Tasker -->
 <div class="flex items-start space-x-4 p-4 rounded-xl bg-surface-container-low">
-<img class="w-16 h-16 rounded-full object-cover border-2 border-surface-container-lowest" data-alt="A portrait of a male service professional in his early 30s with a neat haircut and a confident, polite smile. He is wearing a clean, branded orange polo shirt. The lighting is clear and professional, with a minimalist, brightly lit background that emphasizes reliability and warmth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3buK_YVjjYSk-wIoTgxU42fJjzEk0lbaCj0RmkUEJN7AeIfxjzfDwGtm0-eB6k7Ct3PkHbrd4k-wk3UrT_e7sTPYzxeEAVw3n4gDyi8uv2U6abLRS0IVGZ_hzk5bbwB0kGeCTTGPy1PtlPERhG6zm2zgaXCW6sZIaH6slYrQcDr0V0grLmppSz-ztCliZiU3H16KPZbyfD2AMcwL3Ic0qzoriTIxbopdyP4877a4h097UcLme8amUd_UYrlIsejhohPVa-QEnBO0"/>
+<img class="w-16 h-16 rounded-full object-cover border-2 border-surface-container-lowest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3buK_YVjjYSk-wIoTgxU42fJjzEk0lbaCj0RmkUEJN7AeIfxjzfDwGtm0-eB6k7Ct3PkHbrd4k-wk3UrT_e7sTPYzxeEAVw3n4gDyi8uv2U6abLRS0IVGZ_hzk5bbwB0kGeCTTGPy1PtlPERhG6zm2zgaXCW6sZIaH6slYrQcDr0V0grLmppSz-ztCliZiU3H16KPZbyfD2AMcwL3Ic0qzoriTIxbopdyP4877a4h097UcLme8amUd_UYrlIsejhohPVa-QEnBO0"/>
 <div class="space-y-1">
 <span class="text-[10px] font-label-bold uppercase text-primary/60 tracking-widest">Tasker</span>
 <div class="flex items-center space-x-2">
-<h3 class="font-title-sm text-title-sm">Nguyễn Văn Minh</h3>
-<span class="text-[14px] text-[#FFB000] font-bold flex items-center">4.8 <span class="material-symbols-outlined text-[14px] ml-0.5" style="font-variation-settings: 'FILL' 1;">star</span></span>
+<h3 class="font-title-sm text-title-sm" id="ct-tasker-name">...</h3>
 </div>
 <p class="text-body-sm text-on-surface flex items-center">
-<span class="material-symbols-outlined text-[16px] mr-2 text-on-surface-variant">phone</span> 0987654321
+<span class="material-symbols-outlined text-[16px] mr-2 text-on-surface-variant">phone</span> <span id="ct-tasker-phone">...</span>
                             </p>
 <p class="text-body-sm text-on-surface-variant flex items-center">
 <span class="material-symbols-outlined text-[16px] mr-2">verified</span> Đã xác thực danh tính
@@ -265,13 +264,13 @@
 <div class="px-stack_lg py-4 bg-surface-container border-t border-outline-variant/10 flex items-center justify-between">
 <div class="flex space-x-8">
 <div class="flex items-center text-body-sm font-medium">
-<span class="material-symbols-outlined mr-2 text-primary">cleaning_services</span> Dọn dẹp nhà cửa
+<span class="material-symbols-outlined mr-2 text-primary">cleaning_services</span> <span id="ct-service-name">...</span>
                         </div>
 <div class="flex items-center text-body-sm font-medium">
-<span class="material-symbols-outlined mr-2 text-primary">calendar_today</span> 23/05/2024 08:00
+<span class="material-symbols-outlined mr-2 text-primary">calendar_today</span> <span id="ct-service-time">...</span>
                         </div>
 <div class="flex items-center text-body-sm font-bold text-primary">
-                            Giá trị: 500.000đ
+                            Giá trị: <span id="ct-price">...</span>
                         </div>
 </div>
 <div class="flex items-center text-label-bold text-[#008000] bg-[#e6f4e6] px-3 py-1 rounded-full">
@@ -364,7 +363,7 @@
 <button class="px-8 py-3 rounded-full border border-primary text-primary font-label-bold text-label-bold hover:bg-primary/5 transition-all active:scale-95">
                             HỦY
                         </button>
-<button class="px-10 py-3 rounded-full bg-primary text-white font-label-bold text-label-bold shadow-lg hover:bg-[#8b3900] transition-all active:scale-95 flex items-center">
+<button id="btn-xac-nhan-can-thiep" class="px-10 py-3 rounded-full bg-primary text-white font-label-bold text-label-bold shadow-lg hover:bg-[#8b3900] transition-all active:scale-95 flex items-center">
 <span class="material-symbols-outlined mr-2">verified_user</span>
                             XÁC NHẬN CAN THIỆP
                         </button>
@@ -573,4 +572,100 @@
 
 })();
 </script><!-- END-CHIOI-JS-INJECT -->
+<script src="../shared/api.js"></script>
+<script>
+(async function() {
+  if (!ChiOiAuth.requireAuth('../Khachhang/dangnhap.html')) return;
+
+  var statusMap = {
+    'PENDING': { label: 'Chờ xác nhận', cls: 'bg-yellow-100 text-yellow-700' },
+    'ACCEPTED': { label: 'Đã nhận', cls: 'bg-blue-100 text-blue-700' },
+    'TASKER_ARRIVED': { label: 'Đã tới nơi', cls: 'bg-blue-100 text-blue-700' },
+    'IN_PROGRESS': { label: 'Đang thực hiện', cls: 'bg-blue-100 text-blue-700' },
+    'COMPLETED': { label: 'Hoàn thành', cls: 'bg-green-100 text-green-700' },
+    'CANCELLED': { label: 'Đã hủy', cls: 'bg-red-100 text-red-700' },
+    'SEARCHING': { label: 'Đang tìm Tasker', cls: 'bg-yellow-100 text-yellow-700' }
+  };
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var currentOrderId = parseInt(urlParams.get('id'));
+
+  showLoading();
+  try {
+    var orders = await apiFetch('/api/admin/orders');
+    hideLoading();
+    
+    var targetOrder = null;
+    if (currentOrderId) {
+      targetOrder = orders.find(function(o) { return o.order_id === currentOrderId; });
+    } else {
+      // Fallback cho UI nếu không có ID: chọn đơn đầu tiên có thể can thiệp
+      targetOrder = orders.find(function(o) { return ['PENDING', 'SEARCHING', 'IN_PROGRESS', 'ACCEPTED', 'TASKER_ARRIVED'].indexOf(o.status) > -1; });
+    }
+
+    if (targetOrder) {
+      currentOrderId = targetOrder.order_id;
+      document.getElementById('ct-code').textContent = '#DH-' + String(targetOrder.order_id).padStart(4, '0');
+      document.getElementById('ct-date').textContent = 'Ngày tạo: ' + formatDateTime(targetOrder.created_at);
+      var s = statusMap[targetOrder.status] || { label: targetOrder.status, cls: 'bg-gray-100 text-gray-700' };
+      var statusEl = document.getElementById('ct-status');
+      statusEl.textContent = s.label;
+      statusEl.className = 'px-3 py-1 rounded-full font-label-bold text-[10px] tracking-wider uppercase ' + s.cls;
+      
+      var customerName = (targetOrder.users && targetOrder.users.full_name) ? targetOrder.users.full_name : '—';
+      var customerPhone = (targetOrder.users && targetOrder.users.phone_number) ? targetOrder.users.phone_number : '—';
+      var customerAddress = targetOrder.address || '—';
+      document.getElementById('ct-customer-name').textContent = customerName;
+      document.getElementById('ct-customer-phone').textContent = customerPhone;
+      document.getElementById('ct-customer-address').textContent = customerAddress;
+
+      var taskerName = (targetOrder.taskers && targetOrder.taskers.users && targetOrder.taskers.users.full_name) ? targetOrder.taskers.users.full_name : 'Chưa có Tasker';
+      var taskerPhone = (targetOrder.taskers && targetOrder.taskers.users && targetOrder.taskers.users.phone_number) ? targetOrder.taskers.users.phone_number : '—';
+      document.getElementById('ct-tasker-name').textContent = taskerName;
+      document.getElementById('ct-tasker-phone').textContent = taskerPhone;
+
+      var serviceName = (targetOrder.services && targetOrder.services.name) ? targetOrder.services.name : '—';
+      document.getElementById('ct-service-name').textContent = serviceName;
+      document.getElementById('ct-service-time').textContent = formatDateTime(targetOrder.scheduled_time || targetOrder.created_at);
+      document.getElementById('ct-price').textContent = formatVND(targetOrder.total_price);
+    } else {
+      showToastMsg('Không tìm thấy đơn hàng để can thiệp.');
+    }
+  } catch(e) {
+    hideLoading();
+    showToastMsg('Lỗi tải dữ liệu: ' + e.message);
+  }
+
+  var btnXacNhan = document.getElementById('btn-xac-nhan-can-thiep');
+  if (btnXacNhan) {
+    btnXacNhan.addEventListener('click', async function() {
+      if (!currentOrderId) {
+        showToastMsg('Không có đơn hàng nào đang hoạt động để can thiệp.');
+        return;
+      }
+      showLoading();
+      try {
+        await apiFetch('/api/admin/orders/' + currentOrderId + '/cancel', { method: 'PATCH' });
+        hideLoading();
+        showToastMsg('✅ Đã can thiệp thành công và hủy đơn #' + currentOrderId);
+        setTimeout(function() {
+          window.location.href = 'quanlydonhang.html';
+        }, 1500);
+
+      } catch (e) {
+        hideLoading();
+        showToastMsg('❌ Lỗi can thiệp: ' + e.message);
+      }
+    });
+  }
+
+  // ===== Nút Đăng xuất =====
+  var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      ChiOiAuth.logout('../Khachhang/dangnhap.html');
+    });
+  }
+})();
+</script>
 </body></html>

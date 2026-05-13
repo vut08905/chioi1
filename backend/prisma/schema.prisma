@@ -209,7 +209,6 @@ model tasker_services {
 model taskers {
   tasker_id        Int                      @id
   bio              String?
-  address          String?
   kyc_status       String?                  @default("UNVERIFIED") @db.VarChar(20)
   average_rating   Decimal?                 @default(0.00) @db.Decimal(3, 2)
   total_jobs       Int?                     @default(0)

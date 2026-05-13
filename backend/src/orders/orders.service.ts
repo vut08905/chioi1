@@ -7,29 +7,45 @@ export class OrdersService {
   constructor(
     private prisma: PrismaService,
     private walletsService: WalletsService
-  ) {}
+  ) {
+    this.fixDatabaseConstraint();
+  }
+
+  async fixDatabaseConstraint() {
+    try {
+      await this.prisma.$executeRawUnsafe(`ALTER TABLE orders DROP CONSTRAINT IF EXISTS orders_status_check;`);
+      await this.prisma.$executeRawUnsafe(`ALTER TABLE orders ADD CONSTRAINT orders_status_check CHECK (status IN ('PENDING', 'SEARCHING', 'ACCEPTED', 'TASKER_ARRIVED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'));`);
+      console.log('[Database] Fixed missing TASKER_ARRIVED constraint in orders table.');
+      
+      // FIX missing FEE constraint in transactions table
+      await this.prisma.$executeRawUnsafe(`ALTER TABLE transactions DROP CONSTRAINT IF EXISTS transactions_type_check;`);
+      await this.prisma.$executeRawUnsafe(`ALTER TABLE transactions ADD CONSTRAINT transactions_type_check CHECK (type IN ('TOP_UP', 'WITHDRAW', 'PAYMENT', 'EARNING', 'REFUND', 'BONUS', 'FEE'));`);
+      console.log('[Database] Fixed missing FEE constraint in transactions table.');
+    } catch (e) {
+      console.log('[Database] Constraint fix check skipped or failed.');
+    }
+  }
 
   async bookOrder(customerId: number, data: any) {
     const orderCode = 'ORD' + Date.now().toString().slice(-6);
-
+    
     // Insert order with PostGIS geometry using raw SQL
-    // Bonus FIX: lưu cột notes (FE phải gửi 'notes' khớp BookOrderDto)
     const [order] = await this.prisma.$queryRaw<any[]>`
       INSERT INTO orders (
-        order_code, customer_id, service_id, status, scheduled_time, address, total_price,
-        tasker_earnings, platform_fee, payment_method, location, notes, created_at, updated_at
+        order_code, customer_id, service_id, status, scheduled_time, address, total_price, 
+        tasker_earnings, platform_fee, payment_method, location, created_at, updated_at
       ) VALUES (
-        ${orderCode}, ${customerId}, ${data.service_id}, 'PENDING', ${new Date(data.scheduled_time)},
-        ${data.address}, ${data.total_price}, ${data.total_price * 0.8}, ${data.total_price * 0.2},
-        'CASH', ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326), ${data.notes ?? null},
+        ${orderCode}, ${customerId}, ${data.service_id}, 'PENDING', ${new Date(data.scheduled_time)}, 
+        ${data.address}, ${data.total_price}, ${data.total_price * 0.8}, ${data.total_price * 0.2}, 
+        'CASH', ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326), 
         NOW(), NOW()
-      ) RETURNING order_id, order_code;
+      ) RETURNING order_id, order_code, address, total_price, scheduled_time;
     `;
 
     return order;
   }
 
-  async findNearbyTaskers(longitude: number, latitude: number, radiusMeters: number = 3000) {
+  async findNearbyTaskers(longitude: number, latitude: number, radiusMeters: number = 5000000) {
     const taskers = await this.prisma.$queryRaw<any[]>`
       SELECT tasker_id, bio, average_rating, 
              ST_DistanceSphere(current_location, ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)) as distance
@@ -53,37 +69,20 @@ export class OrdersService {
   }
 
   async acceptOrder(orderId: number, taskerId: number) {
-    // ✅ FIX: Kiểm tra Tasker đang có đơn active không — chỉ cho nhận 1 đơn
-    const activeOrder = await this.prisma.orders.findFirst({
-      where: {
-        tasker_id: taskerId,
-        status: { in: ['ACCEPTED', 'TASKER_ARRIVED', 'IN_PROGRESS'] },
-      },
-    });
-
-    if (activeOrder) {
-      throw new BadRequestException(
-        `Bạn đang có đơn hàng #${activeOrder.order_id} đang xử lý. Hoàn thành trước khi nhận đơn mới.`
-      );
+    const order = await this.prisma.orders.findUnique({ where: { order_id: orderId } });
+    if (!order || order.status !== 'PENDING') {
+      throw new BadRequestException('Order is no longer available');
     }
 
-    // ✅ FIX: Dùng transaction để tránh race condition (2 tasker cùng nhận 1 đơn)
-    return this.prisma.$transaction(async (tx) => {
-      const order = await tx.orders.findUnique({ where: { order_id: orderId } });
-      if (!order || order.status !== 'PENDING') {
-        throw new BadRequestException('Đơn hàng không còn khả dụng hoặc đã được nhận');
+    return this.prisma.orders.update({
+      where: { order_id: orderId },
+      data: {
+        tasker_id: taskerId,
+        status: 'ACCEPTED',
+      },
+      include: {
+        taskers: { include: { users: true } },
       }
-
-      return tx.orders.update({
-        where: { order_id: orderId },
-        data: {
-          tasker_id: taskerId,
-          status: 'ACCEPTED',
-        },
-        include: {
-          taskers: { include: { users: true } },
-        }
-      });
     });
   }
 
@@ -127,22 +126,26 @@ export class OrdersService {
         console.warn('[Order] Không trừ được tiền ví KH:', e.message);
       }
 
-      if (order.payment_method === 'CASH') {
-        await this.walletsService.addTransaction(
-          order.tasker_id!,
-          -Number(order.platform_fee),
-          'FEE',
-          order.order_id,
-          'Thu phí nền tảng cho đơn hàng trả tiền mặt'
-        );
-      } else {
-        await this.walletsService.addTransaction(
-          order.tasker_id!,
-          Number(order.tasker_earnings),
-          'EARNING',
-          order.order_id,
-          'Thanh toán thu nhập đơn hàng'
-        );
+      try {
+        if (order.payment_method === 'CASH') {
+          await this.walletsService.addTransaction(
+            order.tasker_id!,
+            -Number(order.platform_fee),
+            'FEE',
+            order.order_id,
+            'Thu phí nền tảng cho đơn hàng trả tiền mặt'
+          );
+        } else {
+          await this.walletsService.addTransaction(
+            order.tasker_id!,
+            Number(order.tasker_earnings),
+            'EARNING',
+            order.order_id,
+            'Thanh toán thu nhập đơn hàng'
+          );
+        }
+      } catch (e) {
+        console.warn('[Order] Không cộng/trừ được tiền ví Tasker:', e.message);
       }
     }
 

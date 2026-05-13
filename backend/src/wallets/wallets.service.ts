@@ -33,8 +33,8 @@ export class WalletsService {
     }
 
     const wallet = await this.getWallet(userId);
-
-    // Create transaction + notification + update balance in a Prisma transaction
+    
+    // Create transaction and update balance in a Prisma transaction
     const result = await this.prisma.$transaction(async (prisma) => {
       const updatedWallet = await prisma.wallets.update({
         where: { wallet_id: wallet.wallet_id },
@@ -49,15 +49,6 @@ export class WalletsService {
           type: 'TOP_UP',
           status: 'COMPLETED',
           description: 'Nạp tiền vào ví',
-        },
-      });
-
-      // Bug 5.5 FIX: Tạo notification cho user
-      await prisma.notifications.create({
-        data: {
-          user_id: userId,
-          title: 'Nạp tiền thành công',
-          content: `Bạn đã nạp +${amount.toLocaleString('vi-VN')} đ vào ví. Số dư mới: ${Number(updatedWallet.balance).toLocaleString('vi-VN')} đ.`,
         },
       });
 
@@ -85,23 +76,6 @@ export class WalletsService {
           status: 'COMPLETED',
           order_id: orderId,
           description: description,
-        },
-      });
-
-      // Bug 5.5 FIX: Tạo notification cho user theo loại giao dịch
-      const titleMap: Record<string, string> = {
-        EARNING: 'Đã nhận thu nhập',
-        FEE: 'Phí nền tảng',
-        WITHDRAW: 'Rút tiền',
-        PAYMENT: 'Thanh toán dịch vụ',
-        REFUND: 'Hoàn tiền',
-      };
-      const sign = amount >= 0 ? '+' : '';
-      await prisma.notifications.create({
-        data: {
-          user_id: userId,
-          title: titleMap[type] || 'Giao dịch ví',
-          content: `${description || 'Giao dịch'}: ${sign}${amount.toLocaleString('vi-VN')} đ. Số dư: ${Number(updatedWallet.balance).toLocaleString('vi-VN')} đ.`,
         },
       });
 
@@ -137,15 +111,6 @@ export class WalletsService {
           type: 'WITHDRAW',
           status: 'PENDING',
           description: 'Yêu cầu rút tiền',
-        },
-      });
-
-      // Bug 5.5 FIX: Tạo notification cho user
-      await prisma.notifications.create({
-        data: {
-          user_id: userId,
-          title: 'Yêu cầu rút tiền đã gửi',
-          content: `Yêu cầu rút ${amount.toLocaleString('vi-VN')} đ đang chờ Admin duyệt. Số dư hiện tại: ${Number(updatedWallet.balance).toLocaleString('vi-VN')} đ.`,
         },
       });
 

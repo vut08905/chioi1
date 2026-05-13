@@ -351,13 +351,22 @@
     document.getElementById('submit-btn').textContent = 'Đặt mua hộ — ' + formatVND(total);
   }
 
-  // ===== Submit =====
+  // ===== Submit — Bug 2 FIX (report13): Chống bấm nhiều lần =====
+  var isSubmitting = false;
   document.getElementById('submit-btn').addEventListener('click', async function() {
+    if (isSubmitting) return; // Đang xử lý → bỏ qua
     if (!ChiOiAuth.requireAuth('dangnhap.html')) return;
     if (state.products.length === 0) {
       showToastMsg('Vui lòng thêm ít nhất 1 sản phẩm');
       return;
     }
+
+    // Khóa nút ngay lập tức
+    var btn = document.getElementById('submit-btn');
+    isSubmitting = true;
+    btn.disabled = true;
+    btn.classList.add('opacity-50');
+    btn.textContent = 'Đang đặt đơn...';
 
     // Tìm service_id cho Mua hộ
     var serviceId = null;
@@ -374,7 +383,23 @@
       }
     } catch(e) { console.warn('Không load được services'); }
 
-    if (!serviceId) { showToastMsg('Không tìm thấy dịch vụ Mua hộ'); return; }
+    if (!serviceId) { 
+      showToastMsg('Không tìm thấy dịch vụ Mua hộ'); 
+      isSubmitting = false; btn.disabled = false; btn.classList.remove('opacity-50');
+      updateSummary();
+      return; 
+    }
+
+    // Bug 4 FIX (report13): Lấy địa chỉ từ profile user thay vì hardcode
+    var userAddress = 'Căn A1-2003, Vinhomes';
+    try {
+      var profile = await apiFetch('/api/users/profile');
+      if (profile && profile.address) {
+        userAddress = profile.address;
+      }
+    } catch (e) {
+      console.warn('[Mua hộ] Không lấy được profile:', e.message);
+    }
 
     var totalPrice = state.budget + FEE;
     var productList = state.products.map(function(p) { return p.name + ' x' + p.qty; }).join(', ');
@@ -387,11 +412,11 @@
         body: {
           service_id: serviceId,
           scheduled_time: new Date().toISOString(),
-          address: 'Căn A1-2003, Vinhomes',
+          address: userAddress,
           total_price: totalPrice,
           longitude: 106.6297,
           latitude: 10.8231,
-          notes: note
+          note: note
         }
       });
       hideLoading();
@@ -400,6 +425,11 @@
     } catch (e) {
       hideLoading();
       showToastMsg('❌ ' + e.message);
+      // Mở khóa nút khi lỗi để user thử lại
+      isSubmitting = false;
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+      updateSummary();
     }
   });
 
