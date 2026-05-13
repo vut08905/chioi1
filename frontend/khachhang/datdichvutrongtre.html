@@ -354,7 +354,13 @@
   }
 
   // ===== Lỗi 3 FIX: Submit order to API =====
-  document.getElementById('submit-btn').addEventListener('click', async function() {
+  // Bug 12.3 FIX (report12): Chống bấm nhiều lần
+  // Bug 13.1 FIX (report13): Lấy địa chỉ từ profile user thay vì hardcode
+  // Bug regression FIX: notes (plural) khớp BookOrderDto
+  var submitBtn = document.getElementById('submit-btn');
+  var isSubmitting = false;
+  if (submitBtn) submitBtn.addEventListener('click', async function() {
+    if (isSubmitting) return;
     if (!ChiOiAuth.requireAuth('dangnhap.html')) return;
     if (!state.date) { showToastMsg('Vui lòng chọn ngày'); return; }
 
@@ -381,6 +387,22 @@
 
     if (!serviceId) { showToastMsg('Không tìm thấy dịch vụ Trông trẻ'); return; }
 
+    // Khóa nút ngay lập tức (Bug 12.3)
+    isSubmitting = true;
+    submitBtn.disabled = true;
+    submitBtn.classList.add('opacity-50');
+    var originalLabel = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span> <span>Đang đặt đơn...</span>';
+
+    // Lấy địa chỉ từ profile user (Bug 13.1)
+    var userAddress = 'Chưa cập nhật địa chỉ';
+    try {
+      var profile = await apiFetch('/api/users/profile');
+      if (profile && profile.address) userAddress = profile.address;
+    } catch (e) {
+      console.warn('[Trông trẻ] Không lấy được profile:', e.message);
+    }
+
     showLoading();
     try {
       var result = await apiFetch('/api/orders/book', {
@@ -388,11 +410,11 @@
         body: {
           service_id: serviceId,
           scheduled_time: scheduledTime,
-          address: 'Địa chỉ từ ứng dụng',
+          address: userAddress,
           total_price: totalPrice,
           longitude: 106.6297,
           latitude: 10.8231,
-          note: note
+          notes: note
         }
       });
       hideLoading();
@@ -401,6 +423,11 @@
     } catch (e) {
       hideLoading();
       showToastMsg('❌ ' + e.message);
+      // Mở khóa nút khi lỗi để user thử lại
+      isSubmitting = false;
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('opacity-50');
+      submitBtn.innerHTML = originalLabel;
     }
   });
 

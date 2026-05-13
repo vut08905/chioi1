@@ -5,6 +5,9 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { OrdersGateway } from './orders.gateway';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { BookOrderDto } from './dto/book-order.dto';
+import { UpdateOrderStatusDto } from './dto/update-status.dto';
+import { ReviewOrderDto } from './dto/review.dto';
 
 @ApiTags('Orders (Đặt đơn, Nhận đơn)')
 @ApiBearerAuth()
@@ -19,8 +22,8 @@ export class OrdersController {
   @Post('book')
   @Roles('CUSTOMER')
   @ApiOperation({ summary: 'Đặt đơn mới (Cần Token Customer)' })
-  @ApiBody({ schema: { example: { service_id: 1, scheduled_time: '2026-05-15T10:00:00Z', address: '123 Test', total_price: 150000, longitude: 106.6297, latitude: 10.8231 } } })
-  async bookOrder(@Request() req, @Body() body: any) {
+  @ApiBody({ type: BookOrderDto })
+  async bookOrder(@Request() req, @Body() body: BookOrderDto) {
     const order = await this.ordersService.bookOrder(req.user.userId, body);
     
     // Find nearby taskers
@@ -50,9 +53,9 @@ export class OrdersController {
   @Patch(':id/status')
   @Roles('TASKER')
   @ApiOperation({ summary: 'Cập nhật trạng thái đơn: TASKER_ARRIVED, IN_PROGRESS, COMPLETED (Cần Token Tasker)' })
-  @ApiBody({ schema: { example: { status: 'TASKER_ARRIVED' } } })
-  async updateStatus(@Request() req, @Param('id', ParseIntPipe) id: number, @Body('status') status: string) {
-    const order = await this.ordersService.updateOrderStatus(id, req.user.userId, status);
+  @ApiBody({ type: UpdateOrderStatusDto })
+  async updateStatus(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() body: UpdateOrderStatusDto) {
+    const order = await this.ordersService.updateOrderStatus(id, req.user.userId, body.status);
     
     // Notify customer of status change
     this.ordersGateway.notifyCustomerOrderStatus(order.customer_id, { orderId: id, status: order.status });
@@ -77,9 +80,9 @@ export class OrdersController {
   @Post(':id/review')
   @Roles('CUSTOMER')
   @ApiOperation({ summary: 'Đánh giá Tasker sau khi hoàn thành đơn (Cần Token Customer)' })
-  @ApiBody({ schema: { example: { rating: 5, comment: 'Làm việc rất sạch sẽ và đúng giờ' } } })
-  async reviewOrder(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() body: any) {
-    const review = await this.ordersService.reviewOrder(id, req.user.userId, body.rating, body.comment);
+  @ApiBody({ type: ReviewOrderDto })
+  async reviewOrder(@Request() req, @Param('id', ParseIntPipe) id: number, @Body() body: ReviewOrderDto) {
+    const review = await this.ordersService.reviewOrder(id, req.user.userId, body.rating, body.comment ?? '');
     return { message: 'Review submitted successfully', review };
   }
 
