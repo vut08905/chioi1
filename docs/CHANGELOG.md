@@ -4,6 +4,78 @@
 
 ---
 
+## [1.3.0] — 2026-05-13
+
+### 🚨 Phase 5 — Recovery + bug fixes mới
+
+#### Bối cảnh
+Sau khi PR #1 (backend hardening) merge vào main, PR #2 (`testvps1` — chat realtime + WebRTC voice calls) merge SAU đó với conflict resolution **vô tình ghi đè toàn bộ Phase 1 hardening**:
+- 15 DTOs files bị xóa
+- SMS/KYC/Payment integrations bị xóa
+- `common/throttler.config.ts` bị xóa
+- `ValidationPipe` + `ThrottlerModule` bị revert khỏi main.ts/app.module.ts
+- Controllers re-revert về `body: any` (mất DTO + @Throttle)
+- 3 FE booking files revert `notes` → `note` (mismatch DTO)
+- Build output `backend/dist/` (76 files) bị commit nhầm
+
+#### Restored từ commit f3ea490 (Phase 4)
+- `backend/src/auth/dto/`, `orders/dto/`, `wallets/dto/`, `api/dto/` (15 DTOs)
+- `backend/src/integrations/sms/`, `integrations/kyc/`, `integrations/payments/` (17 file scaffolding + READMEs)
+- `backend/src/common/throttler.config.ts`
+- `backend/.env.example`
+- `backend/prisma/migrations/manual_20260513_add_tasker_address.sql`
+- 4 controllers + 3 services (api/orders/wallets) + schema.prisma
+- npm install lại `@nestjs/throttler`, `class-validator`, `class-transformer`
+
+#### Re-applied + integrated
+- `main.ts` — re-add global `ValidationPipe` (whitelist + forbidNonWhitelisted)
+- `app.module.ts` — re-add `ThrottlerModule` + `APP_GUARD` + 3 integration modules
+- `api.controller.ts` — kept new endpoint `GET /api/users/profile` (từ PR #2) + restored DTO + throttler trên các endpoint khác
+- `api.service.ts` — kept new method `getUserProfile()` + Phase 4 logic save tasker.address
+
+#### Fixed regression (3 file FE)
+- `datdichvudonnha.html` — `note` → `notes` (line 466)
+- `datdichvumuaho.html` — `note` → `notes` (line 419)
+- `datdichvutrongtre.html` — `note` → `notes` + Bug 12.3 + Bug 13.1 (xem dưới)
+
+#### Fixed bugs mới (verify từ 11 reports + báo cáo chat)
+**11/15 bugs đã fix sẵn trong PR #2** (chat realtime: Number() sender_id, client.broadcast room, cancel skip orders, login role check, …)
+
+**4 bug fix mới trong session này:**
+1. **Bug 12.3** (`datdichvutrongtre.html`) — Spam click submit → multiple orders. Thêm `isSubmitting` flag + disable button + reset on error.
+2. **Bug 13.1** (`datdichvutrongtre.html`) — Hardcode address `'Địa chỉ từ ứng dụng'` → fetch từ `GET /api/users/profile.address`.
+3. **Bug 12.1** (route drawing tasker → khách hàng):
+   - BE `orders.service.ts` `bookOrder` — RETURN thêm `latitude`/`longitude`
+   - BE `orders.service.ts` `acceptOrder` — raw SQL `ST_X/ST_Y` để extract lat/lng từ geometry, trả về cùng response
+   - FE `trangchutasker.html` — thêm `drawRouteToCustomer(lat, lng)` dùng OSRM `https://router.project-osrm.org/route/v1/driving`, render polyline cam + customer marker, fallback vẽ đường thẳng dashed nếu OSRM fail. Wire vào `showActiveOrderCard`. Clear route khi `COMPLETED`.
+
+#### Git hygiene
+- Restored `backend/.gitignore` đầy đủ (dist, coverage, .env*, IDE folders)
+- `git rm -r --cached backend/dist` — xóa 76 build output files khỏi tracking
+
+#### Deferred (cần thiết kế lớn hơn, tracking trong issue riêng)
+
+**Bug Chat-C + Chat-D — Upload ảnh chat**
+- *Hiện tại:* Ảnh chỉ preview client (FileReader.readAsDataURL), gửi text `'[Hình ảnh]'` qua socket. Reload mất ảnh, người nhận thấy text/icon thay vì ảnh thật.
+- *Cần:*
+  1. Add multer dependency + multipart endpoint `POST /api/orders/chat/:orderId/upload-image`
+  2. Storage strategy: local `backend/uploads/chat/` (đơn giản) hoặc S3/Cloudinary (production)
+  3. Schema migration: thêm column `message_type` (TEXT|IMAGE) vào `messages` HOẶC convention nếu `content` bắt đầu bằng `/uploads/` → render ảnh
+  4. FE: sửa `imagePicker.change` để POST FormData → nhận URL → emit `send_message` với content URL
+  5. FE: sửa `appendImageMessage` thêm nhánh `else` (isMine=false) render ảnh từ URL
+  6. Static serve `/uploads/chat/*` qua Nest
+
+**Bug 14.4 — Cancel pending notifications khi tasker offline (BE edge case)**
+- *Hiện tại:* `findNearbyTaskers` đã filter `is_online=true` (FIXED). FE chặn modal khi `!toggleInput.checked` (FIXED). Nhưng nếu tasker offline GIỮA chừng broadcast, gateway vẫn gửi event.
+- *Cần:* Track `Map<orderId, taskerIds[]>` trong gateway, listen tasker disconnect/offline → pull pending notifications. Priority thấp vì FE đã chặn đủ.
+
+#### Verification & Build
+- `npm run build` — PASS sau cùng
+- 11/15 bugs mới đã fix sẵn (verify report Phase 5 trong sub-agent log)
+- 4 bug fix mới: 12.3, 13.1, 12.1, regression note→notes
+
+---
+
 ## [1.1.0] — 2026-05-12
 
 ### 🐛 Bug fixes (reportloi3.txt — 6 lỗi)

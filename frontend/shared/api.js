@@ -7,9 +7,24 @@
  */
 
 // ==============================================================
-// 1. CẤU HÌNH
+// 1. CẤU HÌNH — Auto-detect API_BASE theo môi trường
 // ==============================================================
-const API_BASE = 'http://127.0.0.1:3000'; // Backend NestJS chạy ở port 3000
+// Thứ tự ưu tiên:
+//   1. window.__CHIOI_API_BASE__ (override thủ công, vd cho test/staging)
+//   2. Local dev: nếu serve từ localhost ở port KHÁC 3033 → trỏ về localhost:3033
+//      (FE @ http-server:8080, BE @ NestJS:3033)
+//   3. Production: '' (same-origin) → nginx proxy /api/ + /socket.io/ về backend
+const API_BASE = (function() {
+  if (typeof window === 'undefined') return '';
+  if (window.__CHIOI_API_BASE__) return window.__CHIOI_API_BASE__;
+  var host = window.location.hostname;
+  var port = window.location.port;
+  var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0';
+  if (isLocal && port !== '3033') {
+    return window.location.protocol + '//' + host + ':3033';
+  }
+  return '';
+})();
 
 // ==============================================================
 // 2. TOKEN MANAGEMENT

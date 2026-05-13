@@ -1,0 +1,51 @@
+{
+  "name": "Chị Ơi! — Đặt dịch vụ giúp việc",
+  "short_name": "Chị Ơi!",
+  "description": "Ứng dụng đặt dịch vụ giúp việc, trông trẻ, mua hộ cho cư dân Vinhomes",
+  "start_url": "/khachhang/trangchu.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#a04100",
+  "background_color": "#fcf9f8",
+  "lang": "vi",
+  "dir": "ltr",
+  "categories": ["lifestyle", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Đặt dọn nhà",
+      "url": "/khachhang/datdichvudonnha.html",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Theo dõi đơn",
+      "url": "/khachhang/theodoidon.html",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Ví & Lịch sử",
+      "url": "/khachhang/vivalichsu.html",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
