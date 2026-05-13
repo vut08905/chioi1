@@ -3,7 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { OrdersService } from './orders.service';
 import { JwtService } from '@nestjs/jwt';
 
-@WebSocketGateway({ cors: true })
+@WebSocketGateway({ cors: true, maxHttpBufferSize: 10 * 1024 * 1024 })
 export class OrdersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;

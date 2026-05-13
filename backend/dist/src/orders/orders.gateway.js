@@ -275,7 +275,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersGateway.prototype, "handleCallEnded", null);
 exports.OrdersGateway = OrdersGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)({ cors: true }),
+    (0, websockets_1.WebSocketGateway)({ cors: true, maxHttpBufferSize: 10 * 1024 * 1024 }),
     __metadata("design:paramtypes", [orders_service_1.OrdersService,
         jwt_1.JwtService])
 ], OrdersGateway);
