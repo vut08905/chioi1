@@ -7,11 +7,15 @@
  */
 
 // ==============================================================
-// 1. CẤU HÌNH - TỰ ĐỘNG DETECT IP (LAN hoặc localhost)
+// 1. CẤU HÌNH - TỰ ĐỘNG DETECT MÔI TRƯỜNG
 // ==============================================================
-// Tự lấy hostname của trang đang chạy → backend cùng IP, port 3000
-// Hoạt động cả khi dùng localhost VÀ khi truy cập qua IP LAN (WiFi)
-const API_BASE = `${window.location.protocol}//${window.location.hostname}:3000`;
+// Production (Nginx port 80/443): API proxy cùng origin → không cần port
+// Dev local (http-server port 8080): API chạy riêng port 3000
+const _port = window.location.port;
+const _isProduction = (!_port || _port === '80' || _port === '443');
+const API_BASE = _isProduction
+  ? `${window.location.protocol}//${window.location.hostname}`
+  : `${window.location.protocol}//${window.location.hostname}:3000`;
 
 // ==============================================================
 // 2. TOKEN MANAGEMENT

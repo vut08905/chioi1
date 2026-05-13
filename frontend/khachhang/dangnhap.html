@@ -205,12 +205,15 @@ async function handleLogin() {
     // Lưu token + user info
     ChiOiAuth.saveLogin(data);
 
-    // Bug 1 FIX (report14): Chỉ cho phép CUSTOMER đăng nhập trang này
+    // Bug 1 FIX (report14): Phân quyền đăng nhập
     var user = ChiOiAuth.getUser();
     if (user && user.role === 'CUSTOMER') {
       window.location.href = 'trangchu.html';
+    } else if (user && user.role === 'ADMIN') {
+      // ADMIN đăng nhập chung trang này -> chuyển hướng về trang admin
+      window.location.href = '../admin/bangdieukhien.html';
     } else {
-      // TASKER hoặc ADMIN cố đăng nhập trang KH → từ chối
+      // TASKER cố đăng nhập trang KH → từ chối
       ChiOiAuth.logout();
       errorEl.textContent = 'Tài khoản không tồn tại trong hệ thống khách hàng.';
       errorEl.style.display = 'block';
