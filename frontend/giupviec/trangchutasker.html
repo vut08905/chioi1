@@ -449,8 +449,8 @@
 
   (async function loadAvailableOrders() {
     try {
-      // Bug 8 FIX: Check đơn hàng đang thực hiện (ACCEPTED / IN_PROGRESS / TASKER_ARRIVED)
-      var history = await apiFetch('/api/taskers/order-history');
+      // Bug 8 + 9.8 FIX: Check đơn hàng đang thực hiện (ACCEPTED / IN_PROGRESS / TASKER_ARRIVED)
+      var history = await apiFetch('/api/taskers/history');
       if (history && history.length > 0) {
         var activeOrder = history.find(function(o) {
           return ['ACCEPTED', 'TASKER_ARRIVED', 'IN_PROGRESS'].indexOf(o.status) > -1;

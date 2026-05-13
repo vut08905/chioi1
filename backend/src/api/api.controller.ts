@@ -4,6 +4,11 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { SubscribePackageDto } from './dto/subscribe-package.dto';
+import { CreateTicketDto } from './dto/create-ticket.dto';
+import { ManageServiceDto } from './dto/manage-service.dto';
+import { ManagePackageDto } from './dto/manage-package.dto';
 
 @ApiTags('Data (Dịch vụ, Gói, Lịch sử)')
 @ApiBearerAuth()
@@ -15,13 +20,14 @@ export class ApiController {
   @Put('users/profile')
   @Roles('CUSTOMER', 'TASKER')
   @ApiOperation({ summary: 'Cập nhật hồ sơ cá nhân' })
-  @ApiBody({ schema: { example: { full_name: 'Nguyen Van A', gender: 'male', email: 'a@b.com', address: 'VH Central Park' } } })
-  async updateProfile(@Request() req, @Body() body: any) {
+  @ApiBody({ type: UpdateProfileDto })
+  async updateProfile(@Request() req, @Body() body: UpdateProfileDto) {
     return this.apiService.updateUserProfile(req.user.userId, {
       full_name: body.full_name,
       gender: body.gender,
       email: body.email,
       address: body.address,
+      bio: body.bio,
     });
   }
 
@@ -104,7 +110,8 @@ export class ApiController {
   @Post('support/tickets')
   @Roles('CUSTOMER', 'TASKER')
   @ApiOperation({ summary: 'Tạo ticket hỗ trợ/khiếu nại' })
-  async createTicket(@Request() req, @Body() body: any) {
+  @ApiBody({ type: CreateTicketDto })
+  async createTicket(@Request() req, @Body() body: CreateTicketDto) {
     return this.apiService.createTicket(req.user.userId, body.subject, body.description);
   }
 
@@ -139,14 +146,16 @@ export class ApiController {
   @Post('services')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Tạo dịch vụ mới' })
-  async createService(@Body() body: any) {
+  @ApiBody({ type: ManageServiceDto })
+  async createService(@Body() body: ManageServiceDto) {
     return this.apiService.manageService('CREATE', body);
   }
 
   @Put('services/:id')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Cập nhật dịch vụ' })
-  async updateService(@Param('id', ParseIntPipe) id: number, @Body() body: any) {
+  @ApiBody({ type: ManageServiceDto })
+  async updateService(@Param('id', ParseIntPipe) id: number, @Body() body: ManageServiceDto) {
     return this.apiService.manageService('UPDATE', body, id);
   }
 
@@ -160,22 +169,24 @@ export class ApiController {
   @Post('packages/subscribe')
   @Roles('CUSTOMER')
   @ApiOperation({ summary: 'Khách hàng đăng ký gói gia đình' })
-  @ApiBody({ schema: { example: { package_id: 1 } } })
-  async subscribePackage(@Request() req, @Body() body: any) {
+  @ApiBody({ type: SubscribePackageDto })
+  async subscribePackage(@Request() req, @Body() body: SubscribePackageDto) {
     return this.apiService.subscribePackage(req.user.userId, body.package_id);
   }
 
   @Post('packages')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Tạo gói gia đình mới' })
-  async createPackage(@Body() body: any) {
+  @ApiBody({ type: ManagePackageDto })
+  async createPackage(@Body() body: ManagePackageDto) {
     return this.apiService.managePackage('CREATE', body);
   }
 
   @Put('packages/:id')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Cập nhật gói gia đình' })
-  async updatePackage(@Param('id', ParseIntPipe) id: number, @Body() body: any) {
+  @ApiBody({ type: ManagePackageDto })
+  async updatePackage(@Param('id', ParseIntPipe) id: number, @Body() body: ManagePackageDto) {
     return this.apiService.managePackage('UPDATE', body, id);
   }
 

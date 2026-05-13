@@ -11,16 +11,17 @@ export class OrdersService {
 
   async bookOrder(customerId: number, data: any) {
     const orderCode = 'ORD' + Date.now().toString().slice(-6);
-    
+
     // Insert order with PostGIS geometry using raw SQL
+    // Bonus FIX: lưu cột notes (FE phải gửi 'notes' khớp BookOrderDto)
     const [order] = await this.prisma.$queryRaw<any[]>`
       INSERT INTO orders (
-        order_code, customer_id, service_id, status, scheduled_time, address, total_price, 
-        tasker_earnings, platform_fee, payment_method, location, created_at, updated_at
+        order_code, customer_id, service_id, status, scheduled_time, address, total_price,
+        tasker_earnings, platform_fee, payment_method, location, notes, created_at, updated_at
       ) VALUES (
-        ${orderCode}, ${customerId}, ${data.service_id}, 'PENDING', ${new Date(data.scheduled_time)}, 
-        ${data.address}, ${data.total_price}, ${data.total_price * 0.8}, ${data.total_price * 0.2}, 
-        'CASH', ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326), 
+        ${orderCode}, ${customerId}, ${data.service_id}, 'PENDING', ${new Date(data.scheduled_time)},
+        ${data.address}, ${data.total_price}, ${data.total_price * 0.8}, ${data.total_price * 0.2},
+        'CASH', ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326), ${data.notes ?? null},
         NOW(), NOW()
       ) RETURNING order_id, order_code;
     `;

@@ -357,7 +357,7 @@
   // ===== Lỗi 3 FIX: Check duplicate orders from DB =====
   async function checkDuplicateOrders() {
     try {
-      var orders = await apiFetch('/api/orders/my');
+      var orders = await apiFetch('/api/orders/customer/history');
       var warningEl = document.getElementById('duplicate-warning');
       var textEl = document.getElementById('duplicate-text');
       if (!orders || !orders.length || !warningEl) { 
@@ -444,7 +444,7 @@
             total_price: totalPrice,
             longitude: 106.6297,
             latitude: 10.8231,
-            note: state.note
+            notes: state.note
           }
         });
         hideLoading();
