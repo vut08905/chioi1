@@ -9,7 +9,7 @@ export const throttlerConfig: ThrottlerModuleOptions = [
   {
     name: 'auth',
     ttl: 60_000,
-    limit: 5,
+    limit: 10, // 10 lần/phút/IP (cân bằng UX dev/test + chống brute force; nginx có thể thêm layer)
   },
   {
     name: 'register',
