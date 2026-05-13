@@ -1,0 +1,38 @@
+lỗi 1: trangchutasker.html khách hàng đã đặt rất nhiều đơn tại sao trang chủ lại không nhìn thấy 1 cái đơn nào để nhận vậy 
+lỗi 2: trangchutasker.html bỏ cái cam đậm rồi nhạt dần ở đầu màn hình đi 
+lỗi 3: trang thông kế tasker <div class="space-y-sm">
+<h3 class="font-title-sm text-title-sm text-on-surface px-xs">Lịch sử thu nhập</h3>
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)] flex justify-between items-center">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-light-orange overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">cleaning_services</span>
+</div>
+<div>
+<p class="font-title-sm text-[16px] text-on-surface">Dọn dẹp nhà cửa</p>
+<p class="text-body-sm text-on-surface-variant">20/10/2023 · 14:30</p>
+<p class="text-[11px] text-secondary italic">Đã trừ 15% phí nền tảng</p>
+</div>
+</div>
+<p class="font-title-sm text-title-sm text-primary">+255,000 đ</p>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)] flex justify-between items-center">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-light-orange overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">air</span>
+</div>
+<div>
+<p class="font-title-sm text-[16px] text-on-surface">Vệ sinh máy lạnh</p>
+<p class="text-body-sm text-on-surface-variant">19/10/2023 · 09:00</p>
+<p class="text-[11px] text-secondary italic">Đã trừ 15% phí nền tảng</p>
+</div>
+</div>
+<p class="font-title-sm text-title-sm text-primary">+425,000 đ</p>
+</div>
+</div> hiển thị dữ liệu không đúng trong database 
+lỗi 4: trang cá nhân tasker <button class="w-full border-2 border-dashed border-primary/40 rounded-xl py-4 flex items-center justify-center gap-sm text-primary font-title-sm transition-colors hover:bg-primary/5">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Thêm dịch vụ mới
+            </button> bấm vào thêm dịch vụ mới mà không hiện gì cả tao cần bấm vào nó hiện dịch vụ chưa đăng ký và đăng ký thì sẽ có thể nhận được đơn hàng dịch vụ đấy
+lỗi 5: trang chủ tasker <div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 83px;"><b>Vị trí của bạn</b></div></div> bỏ cái này đi khi mở map lấy luôn vị trí bản thân chứ tao thấy khi vào tao đang ở tp hcm chứ không phải ở hà nội

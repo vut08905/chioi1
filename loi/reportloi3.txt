@@ -1,0 +1,26 @@
+lỗi 1:trang nạp tiền nạp tiền bấm vào tôi đã chuyển khoản thì nó hiện thông báo đã nạp 500.000 nhưng mà ví thì vẫn chưa được cộng với tao cần nạp theo số tiền 
+mà tao muốn cơ tao muốn có thể chọn được số tiền cần nạp 
+lỗi 2: trang chỉnh sửa hồ sơ khi bấm vào lưu thay đổi nó hiện thông báo cannot put/api/users/profile
+lỗi 3: trang gói gia đình khi bấm vào đăng ký ngay thì hiện lỗi cannot get/api/wallet/balance
+lỗi 4: trang tài khoản chỉnh sửa hồ sơ <select id="edit-gender" class="w-full p-3 rounded-xl border border-outline-variant bg-surface-container-low focus:ring-2 focus:ring-primary-container text-body-lg"><option value="">-- Chọn --</option><option value="male">Nam</option><option value="female">Nữ</option><option value="other">Khác</option></select> làm lại cho nó phù hợp với điện thoại 
+lỗi 5: đổi mật khẩu khi bấm vào đổi mật khẩu thì nó hiện cannot post /api/auth/change-password
+lỗi 6: chat với người giúp việc chữ bị trắng nền trắng nên khó nhìn cho người dùng<div class="message-gradient text-on-primary p-3 rounded-2xl rounded-br-none shadow-md max-w-[80%]">
+<p class="text-body-lg">Ok em, chị ra mở cửa</p>
+<div class="flex items-center justify-end gap-1 mt-1">
+<p class="text-[10px] text-on-primary/80">10:21</p>
+<span class="material-symbols-outlined text-[14px]">done_all</span>
+</div>
+</div><div class="bg-surface-container-lowest shadow-lg rounded-full flex items-center p-2 gap-2 border border-outline-variant/20">
+<button class="w-10 h-10 flex items-center justify-center text-outline active:scale-95 transition-all">
+<span class="material-symbols-outlined">image</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-outline active:scale-95 transition-all">
+<span class="material-symbols-outlined">photo_camera</span>
+</button>
+<div class="flex-1 h-10">
+<input class="w-full h-full bg-transparent border-none focus:ring-0 text-body-lg px-2 placeholder:text-outline-variant" placeholder="Nhập tin nhắn..." type="text">
+</div>
+<button class="w-10 h-10 flex items-center justify-center bg-primary text-on-primary rounded-full shadow-md active:scale-90 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div> chụp ảnh và up ảnh không hoạt động 

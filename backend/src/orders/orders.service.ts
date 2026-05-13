@@ -52,20 +52,37 @@ export class OrdersService {
   }
 
   async acceptOrder(orderId: number, taskerId: number) {
-    const order = await this.prisma.orders.findUnique({ where: { order_id: orderId } });
-    if (!order || order.status !== 'PENDING') {
-      throw new BadRequestException('Order is no longer available');
+    // ✅ FIX: Kiểm tra Tasker đang có đơn active không — chỉ cho nhận 1 đơn
+    const activeOrder = await this.prisma.orders.findFirst({
+      where: {
+        tasker_id: taskerId,
+        status: { in: ['ACCEPTED', 'TASKER_ARRIVED', 'IN_PROGRESS'] },
+      },
+    });
+
+    if (activeOrder) {
+      throw new BadRequestException(
+        `Bạn đang có đơn hàng #${activeOrder.order_id} đang xử lý. Hoàn thành trước khi nhận đơn mới.`
+      );
     }
 
-    return this.prisma.orders.update({
-      where: { order_id: orderId },
-      data: {
-        tasker_id: taskerId,
-        status: 'ACCEPTED',
-      },
-      include: {
-        taskers: { include: { users: true } },
+    // ✅ FIX: Dùng transaction để tránh race condition (2 tasker cùng nhận 1 đơn)
+    return this.prisma.$transaction(async (tx) => {
+      const order = await tx.orders.findUnique({ where: { order_id: orderId } });
+      if (!order || order.status !== 'PENDING') {
+        throw new BadRequestException('Đơn hàng không còn khả dụng hoặc đã được nhận');
       }
+
+      return tx.orders.update({
+        where: { order_id: orderId },
+        data: {
+          tasker_id: taskerId,
+          status: 'ACCEPTED',
+        },
+        include: {
+          taskers: { include: { users: true } },
+        }
+      });
     });
   }
 

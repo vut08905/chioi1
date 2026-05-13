@@ -1,0 +1,3 @@
+lỗi 1: trangchutasker.html hiện đúng chuẩn bản đồ giống như map ứng dụng be đặt xe và biết được vị trí chính xác của người bật áp 
+lỗi 2: trang thống kê hiển thị sai thông tin database 
+lỗi 3: trang cá nhân hiển thị sai thông tin database và các nút đều không bấm được

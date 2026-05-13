@@ -1,0 +1,463 @@
+lỗi 1: dọn dẹp nhà <section class="space-y-sm">
+<h2 class="text-title-sm font-title-sm">Ngày &amp; giờ</h2>
+<div class="space-y-stack-gap">
+<div class="relative group">
+<input type="date" class="w-full h-12 px-4 rounded-2xl border-none ring-1 ring-outline-variant focus:ring-2 focus:ring-primary-container bg-white text-body-lg">
+<span class="material-symbols-outlined absolute right-4 top-3 text-on-surface-variant">calendar_today</span>
+</div>
+<div class="grid grid-cols-3 gap-sm">
+<button class="h-10 rounded-xl border border-outline-variant bg-white text-on-surface-variant text-body-sm font-semibold active:bg-primary-container active:text-white transition-colors">08:00</button>
+<button class="h-10 rounded-xl border border-outline-variant bg-white text-on-surface-variant text-body-sm font-semibold active:bg-primary-container active:text-white transition-colors">09:00</button>
+<button class="h-10 rounded-xl border-2 border-primary-container bg-surface-container-low text-primary-container text-body-sm font-bold">10:00</button>
+</div>
+</div>
+</section> nên thay bằng 1 cái đồng hồ để mình chọn giờ nói chung là theo mày thì cái nào phù hợp với người dùng app thì chọn.bỏ cái <div class="grid grid-cols-3 gap-sm">
+<button class="h-10 rounded-xl border border-outline-variant bg-white text-on-surface-variant text-body-sm font-semibold active:bg-primary-container active:text-white transition-colors">08:00</button>
+<button class="h-10 rounded-xl border border-outline-variant bg-white text-on-surface-variant text-body-sm font-semibold active:bg-primary-container active:text-white transition-colors">09:00</button>
+<button class="h-10 rounded-xl border-2 border-primary-container bg-surface-container-low text-primary-container text-body-sm font-bold">10:00</button>
+</div> này đi 
+lỗi 2: dọn dẹp nhà <section class="flex items-center justify-between p-4 bg-white rounded-2xl soft-card-shadow border border-[#FFF1EB]">
+    <div>
+        <h2 class="text-title-sm font-bold">Số giờ</h2>
+        <p id="temp-price-display" class="text-body-sm text-primary-container font-bold">Tạm tính: 300.000 đ</p>
+    </div>
+    <div class="flex items-center gap-4 bg-orange-50 rounded-full px-2 py-1 border border-orange-100">
+        <button id="hour-minus" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary-container shadow-sm active:scale-90 border border-orange-100">
+            <span class="material-symbols-outlined">remove</span>
+        </button>
+        <span id="hour-display" class="text-title-sm font-bold w-6 text-center text-primary-container">300.000 đ</span>
+        <button id="hour-plus" class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-white shadow-sm active:scale-90">
+            <span class="material-symbols-outlined">add</span>
+        </button>
+    </div>
+</section> số giờ chỉ có + mà không có - được và css nó đang bị tràn viền 
+lỗi 3: dọn dẹp nhà  <div class="bg-[#FFFBEB] border-l-4 border-yellow-500 p-4 rounded-2xl space-y-3">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-yellow-600">event_busy</span>
+<p class="text-body-sm text-on-surface">Bạn đã có đơn dọn nhà vào <span class="font-bold">20/10/2026</span> lúc <span class="font-bold">14:00</span>. Bạn có chắc muốn đặt thêm?</p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-full bg-yellow-600 text-white text-label-caps font-label-caps active:scale-95 transition-all">Tiếp tục đặt</button>
+<button class="flex-1 py-2 rounded-full border border-yellow-600 text-yellow-700 text-label-caps font-label-caps active:scale-95 transition-all">Xem đơn cũ</button>
+</div>
+</div> hiển thị không đúng thông tin chưa đặt đơn nào thì hiện cái gì phải xem database có đơn nào thì mới hiện mà hiện là phải đúng thông tin còn không có chưa đặt thì không hiện
+lỗi 4: dọn dẹp nhà  <section class="bg-white p-container-padding rounded-2xl soft-card-shadow border border-[#FFF1EB] space-y-md">
+<div class="flex items-center justify-between border-b border-surface-variant pb-2">
+<h3 class="text-title-sm font-title-sm">Tổng kết</h3>
+<span class="material-symbols-outlined text-primary-container">receipt_long</span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Dịch vụ</span>
+<span class="font-semibold">Dọn tổng vệ sinh</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Thời gian</span>
+<span class="font-semibold">2026-05-12 - 10:00</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Số lượng</span>
+<span class="font-semibold">7 giờ</span>
+</div>
+<div class="flex justify-between pt-2 border-t border-surface-variant">
+<span class="text-title-sm font-bold">Tổng cộng</span>
+<span class="text-title-sm font-bold text-primary-container">450.000 đ</span>
+</div>
+</div>
+</section> hiển thị sai thông tin không đúng thông tin
+lỗi 5: dọn dẹp nhà  <header class="sticky top-0 z-50 flex justify-between items-center w-full px-container-padding h-16 bg-transparent">
+<div class="flex items-center gap-4">
+<button onclick="window.location.href='trangchu.html'" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 text-on-primary active:scale-95 transition-all backdrop-blur-sm" style="cursor:pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-headline-md font-headline-md font-extrabold text-on-primary">Dọn dẹp nhà</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 text-on-primary active:scale-95 transition-all backdrop-blur-sm">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</header> nó màu trong suốt mà chữ màu trắng nữa nên là khi vuốt xuống dưới có chữ màu trắng thành ra cái này bị khó nhìn 
+lỗi 6: dọn dẹp nhà  <div class="bg-white/90 backdrop-blur-xl border border-orange-100 p-4 rounded-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+        <button id="main-submit-btn" class="orange-gradient w-full py-4 rounded-2xl text-white font-bold text-body-lg shadow-lg shadow-orange-500/30 active:scale-[0.98] transition-all flex justify-center items-center gap-2"><span>Đặt dịch vụ — 700.000 đ</span></button>
+    </div> để bên dưới <section class="flex items-center justify-between p-4 bg-white rounded-2xl soft-card-shadow border border-[#FFF1EB]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<div>
+<p class="text-body-sm text-on-surface-variant">Thanh toán</p>
+<p class="font-bold">Ví Chị Ơi</p>
+</div>
+</div>
+<button class="text-primary-container font-bold text-body-sm px-3 py-1 rounded-full hover:bg-primary-container/10">Thay đổi</button>
+</section> hợp lý hơn là gắn cứng
+lỗi 7: trông trẻ <button class="primary-gradient w-full py-4 rounded-full text-on-primary font-bold text-lg shadow-lg active:scale-95 transition-all duration-200">
+                Đặt dịch vụ — 300.000 đ
+            </button> nó trong suốt thành ra rất khó nhìn với người dùng để nó bên dưới <div class="flex justify-between items-center p-md bg-surface-container-lowest rounded-xl custom-shadow border border-surface-container">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-medium text-body-sm">Thanh toán: <span class="text-on-surface font-bold">Ví Chị Ơi</span></span>
+</div>
+<button class="text-primary-container font-bold text-body-sm uppercase tracking-wider">Thay đổi</button>
+</div> thay vì gắn cứng bên dưới màn hình
+lỗi 8: trông trẻ <div class="py-4 text-center">
+<p class="text-primary-container font-bold text-[18px] tracking-tight">
+                Giá: 3 giờ × 100.000 đ = <span class="text-[24px]">300.000 đ</span>
+</p>
+</div> <div class="bg-tertiary-container/10 border border-tertiary/20 p-md rounded-xl flex items-center gap-md">
+<div class="bg-tertiary-container text-on-tertiary rounded-full p-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="text-body-sm font-medium text-on-tertiary-container">
+                Chỉ Tasker có chứng chỉ trông trẻ mới được nhận đơn này
+            </p>
+</div> bỏ 2 cái này đi
+lỗi 9: trông trẻ <section class="bg-surface-container-lowest rounded-xl p-md custom-shadow border border-surface-container">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-title-sm text-on-surface">Thông tin trẻ</h2>
+<div class="flex items-center gap-sm bg-surface-container-low rounded-full px-2 py-1">
+<button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary-container shadow-sm font-bold border border-outline-variant/20">-</button>
+<span class="font-bold text-on-surface px-2">2</span>
+<button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary-container shadow-sm font-bold border border-outline-variant/20">+</button>
+</div>
+</div>
+<div class="space-y-md">
+<div class="flex items-center justify-between p-sm bg-surface-bright rounded-lg border border-outline-variant/30">
+<span class="font-body-lg text-on-surface-variant">Trẻ 1:</span>
+<div class="flex items-center gap-sm">
+<span class="text-body-sm font-semibold">3 tuổi</span>
+<span class="material-symbols-outlined text-outline text-[20px]">keyboard_arrow_down</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-sm bg-surface-bright rounded-lg border border-outline-variant/30">
+<span class="font-body-lg text-on-surface-variant">Trẻ 2:</span>
+<div class="flex items-center gap-sm">
+<span class="text-body-sm font-semibold">5 tuổi</span>
+<span class="material-symbols-outlined text-outline text-[20px]">keyboard_arrow_down</span>
+</div>
+</div>
+</div>
+</section> không thao tác được
+lỗi 10: mua hộ <div class="space-y-stack-gap">
+<!-- Active Store -->
+<div class="bg-surface-container-low border-2 border-primary p-md rounded-xl flex justify-between items-center soft-card-shadow">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center overflow-hidden">
+<img alt="Store logo" class="w-full h-full object-cover" data-alt="A professional close-up of a modern WinMart grocery store logo on a clean white background. The lighting is bright and airy, reflecting a premium retail environment. The colors are crisp and vibrant, following the brand's signature aesthetic to evoke trust and cleanliness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDirXnDurvqQ8871lDg6qafAcdusXwY-PQyXGm5GIKXY4b8ZC2dPigKCP98eNhfuk0urasAIeCiKQ8XfY7E7qmn9xXswQxucp80l17ovn4LCZpzlF4iTt0MMOwQ8dfe8GrOKP1SxBxJojc5ScInqSmwvFUNEYaGqZ6MU-45LGExwSAsiHPIih831YZ3VVIZJP0FJXHtSNypyoFfuRguunuRzr_w5y_Mc611ojii98rgwyPh7gHysvnYCyEL9WfAnexWFqRY2MO7d6E">
+</div>
+<div>
+<p class="font-title-sm text-primary">WinMart Vinhomes A</p>
+<p class="text-body-sm text-on-surface-variant">500m</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" data-weight="fill">check_circle</span>
+</div>
+<!-- Inactive Store -->
+<div class="bg-white border border-outline-variant/30 p-md rounded-xl flex justify-between items-center soft-card-shadow">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Store icon" class="w-full h-full object-cover opacity-50" data-alt="A softly blurred interior of a high-end grocery store with clean shelves and organized products. The lighting is warm and natural, creating a serene and inviting atmosphere. The color palette is muted with soft oranges and creams to match the overall UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2qdGHphJVxBycRiyEMh1nfEYRR_J2pr89Kc7qBddohDAcl2VY9b9yCh52oJO5ZSrkmPot6-n5F1aU3z5OjhwvWNLOcXau112sxlloIQDm7qWJR14c0wHxw3vn3awCBdD_zvPuUgISy0Wi8zXzsM0hugD9F3s3N780CBar8UpSQAFKakVz9RrnPLfYgWrBTozzAEbA6I_MX7H6U9yH0UeBSM2EOaKjXXzum-pobGaPBlh7TVzlP7uMPb_fH6VFEAR83NDBr_f3icc">
+</div>
+<div>
+<p class="font-title-sm text-on-surface">WinMart Vinhomes B</p>
+<p class="text-body-sm text-on-surface-variant">1km</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant">radio_button_unchecked</span>
+</div>
+</div> <main class="relative z-10 mt-4 px-container-padding space-y-lg">
+<!-- Store Selection -->
+<section class="space-y-sm">
+<h2 class="font-title-sm text-on-surface">Chọn cửa hàng</h2>
+<div class="space-y-stack-gap">
+<!-- Active Store -->
+<div class="bg-surface-container-low border-2 border-primary p-md rounded-xl flex justify-between items-center soft-card-shadow">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center overflow-hidden">
+<img alt="Store logo" class="w-full h-full object-cover" data-alt="A professional close-up of a modern WinMart grocery store logo on a clean white background. The lighting is bright and airy, reflecting a premium retail environment. The colors are crisp and vibrant, following the brand's signature aesthetic to evoke trust and cleanliness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDirXnDurvqQ8871lDg6qafAcdusXwY-PQyXGm5GIKXY4b8ZC2dPigKCP98eNhfuk0urasAIeCiKQ8XfY7E7qmn9xXswQxucp80l17ovn4LCZpzlF4iTt0MMOwQ8dfe8GrOKP1SxBxJojc5ScInqSmwvFUNEYaGqZ6MU-45LGExwSAsiHPIih831YZ3VVIZJP0FJXHtSNypyoFfuRguunuRzr_w5y_Mc611ojii98rgwyPh7gHysvnYCyEL9WfAnexWFqRY2MO7d6E">
+</div>
+<div>
+<p class="font-title-sm text-primary">WinMart Vinhomes A</p>
+<p class="text-body-sm text-on-surface-variant">500m</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" data-weight="fill">check_circle</span>
+</div>
+<!-- Inactive Store -->
+<div class="bg-white border border-outline-variant/30 p-md rounded-xl flex justify-between items-center soft-card-shadow">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Store icon" class="w-full h-full object-cover opacity-50" data-alt="A softly blurred interior of a high-end grocery store with clean shelves and organized products. The lighting is warm and natural, creating a serene and inviting atmosphere. The color palette is muted with soft oranges and creams to match the overall UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2qdGHphJVxBycRiyEMh1nfEYRR_J2pr89Kc7qBddohDAcl2VY9b9yCh52oJO5ZSrkmPot6-n5F1aU3z5OjhwvWNLOcXau112sxlloIQDm7qWJR14c0wHxw3vn3awCBdD_zvPuUgISy0Wi8zXzsM0hugD9F3s3N780CBar8UpSQAFKakVz9RrnPLfYgWrBTozzAEbA6I_MX7H6U9yH0UeBSM2EOaKjXXzum-pobGaPBlh7TVzlP7uMPb_fH6VFEAR83NDBr_f3icc">
+</div>
+<div>
+<p class="font-title-sm text-on-surface">WinMart Vinhomes B</p>
+<p class="text-body-sm text-on-surface-variant">1km</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant">radio_button_unchecked</span>
+</div>
+</div>
+</section>
+<!-- Product List -->
+<section class="space-y-sm">
+<div class="flex justify-between items-center">
+<h2 class="font-title-sm text-on-surface">Danh sách sản phẩm</h2>
+<span class="text-primary font-bold text-body-sm">3 sản phẩm</span>
+</div>
+<div class="bg-white rounded-xl soft-card-shadow overflow-hidden divide-y divide-outline-variant/20 border border-light-orange">
+<div class="p-md flex justify-between items-center">
+<div>
+<p class="font-title-sm text-on-surface">Sữa TH</p>
+<p class="text-body-sm text-on-surface-variant">Số lượng: x2</p>
+</div>
+<button class="text-error bg-error-container/20 p-2 rounded-full">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="p-md flex justify-between items-center">
+<div>
+<p class="font-title-sm text-on-surface">Trứng gà</p>
+<p class="text-body-sm text-on-surface-variant">Số lượng: x1</p>
+</div>
+<button class="text-error bg-error-container/20 p-2 rounded-full">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="p-md flex justify-between items-center">
+<div>
+<p class="font-title-sm text-on-surface">Rau xà lách</p>
+<p class="text-body-sm text-on-surface-variant">Số lượng: x1</p>
+</div>
+<button class="text-error bg-error-container/20 p-2 rounded-full">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<button class="w-full p-md flex items-center justify-center gap-sm text-primary font-bold">
+<span class="material-symbols-outlined">add</span>
+                    Thêm sản phẩm
+                </button>
+</div>
+</section>
+<!-- Delivery Address -->
+<section class="bg-white p-md rounded-xl border border-outline-variant/30 soft-card-shadow flex justify-between items-center">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary mt-1">location_on</span>
+<div>
+<p class="text-body-sm text-on-surface-variant">Địa chỉ giao hàng</p>
+<p class="font-title-sm text-on-surface">Căn A1-2003, Vinhomes</p>
+</div>
+</div>
+<button class="text-primary font-bold text-body-sm">Thay đổi</button>
+</section>
+<!-- Budget & Fees -->
+<section class="space-y-sm">
+<h2 class="font-title-sm text-on-surface">Ngân sách dự kiến</h2>
+<div class="bg-white p-md rounded-xl border border-outline-variant/30 flex items-center justify-between">
+<span class="text-on-surface-variant">Ngân sách tối đa</span>
+<span class="font-headline-md text-on-surface">500.000 đ</span>
+</div>
+<div class="bg-primary-fixed-dim/20 p-md rounded-xl flex gap-sm border border-primary/10">
+<span class="material-symbols-outlined text-primary" data-weight="fill">info</span>
+<p class="text-body-sm text-on-primary-fixed-variant leading-tight">Nếu tổng chi vượt ngân sách, Tasker sẽ chụp hóa đơn và chat xác nhận với bạn trước khi mua</p>
+</div>
+<div class="flex justify-between items-center pt-xs">
+<span class="text-on-surface">Phí DV mua hộ</span>
+<span class="font-bold text-primary">50.000 đ</span>
+</div>
+</section>
+<!-- Summary Card -->
+<section class="bg-white p-md rounded-xl soft-card-shadow border border-outline-variant/20 space-y-md">
+<div class="space-y-xs">
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Cửa hàng</span>
+<span>WinMart Vinhomes A</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Số lượng sản phẩm</span>
+<span>3 mặt hàng</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Ngân sách đi chợ</span>
+<span>500.000 đ</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Phí dịch vụ</span>
+<span>50.000 đ</span>
+</div>
+<div class="border-t border-dashed border-outline-variant my-sm pt-sm flex justify-between items-center">
+<span class="font-title-sm">Tổng cộng</span>
+<span class="text-headline-md font-bold text-primary">550.000 đ</span>
+</div>
+</div>
+<div class="flex justify-between items-center bg-surface-container-low p-sm rounded-lg">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary">account_balance_wallet</span>
+<span class="text-body-sm font-bold">Ví Chị Ơi</span>
+</div>
+<button class="text-primary font-bold text-body-sm">Thay đổi</button>
+</div>
+<button class="primary-gradient w-full py-4 rounded-full text-on-primary font-bold text-title-sm orange-shadow active:scale-95 transition-all">
+                Đặt mua hộ — 550.000 đ
+            </button>
+</section>
+</main> không thao tác được 
+lỗi 11: tài khoản <section class="bg-surface-container-lowest rounded-xl p-md custom-shadow border border-surface-container">
+<div class="flex items-center space-x-md mb-md">
+<div class="relative">
+<img alt="User Avatar" class="w-16 h-16 rounded-full border-2 border-primary-fixed" data-alt="A high-quality professional portrait of a Vietnamese man in his early 30s with a warm and friendly smile. He is wearing a clean, casual business shirt. The background is a soft-focus interior of a modern, well-lit apartment with warm orange accents and clean white walls, reflecting a pristine and organized environment. The lighting is soft and natural, emphasizing a professional yet approachable personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB97LG_LpMt4HH15ZuR3CGIBOR804D05gfGgyvYQEk6MISaXlwpBu13UvYH8wg0KAG7itg8h2yJduNHvDMeDDIQdjiBrcmZ3LqLMttMmzuI9qBxSds4s-LQlLVTOYQkLfuUEEMBCCntmzXnkvs_m4Hv6YvkDMePyJPE40tTH0pxkL1RyQnpLX1G8LTBaDOosWe5DUi3FVFE4dRjqGaIVHxZrz_xAXlUzqp0KoaKYeaF0s3goQxQTmmPC5Pm6e9kGoJ35zRpjxGHtUg">
+</div>
+<div class="flex-1">
+<h2 class="text-title-sm font-title-sm text-on-surface">Nguyễn Văn A</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">090xxxx123</p>
+<div class="flex items-center space-x-xs mt-xs">
+<span class="text-body-sm font-body-sm text-on-surface-variant">A1-2003</span>
+<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center">
+<span class="material-symbols-outlined text-[12px] mr-0.5" style="font-variation-settings: 'FILL' 1;">verified</span>
+                            Đã xác thực BQL
+                        </span>
+</div>
+</div>
+</div>
+<p class="text-[11px] text-on-surface-variant italic leading-tight mb-md">
+                Đổi SĐT cần OTP. Đổi địa chỉ cần BQL xác thực.
+            </p>
+<button class="w-full py-2.5 rounded-full border-2 border-primary text-primary font-title-sm text-sm active:scale-95 transition-all">
+                Chỉnh sửa hồ sơ
+            </button>
+</section> không hiển thị đúng thông tin bấm chỉnh sửa hồ sơ không ra cái gì 
+lỗi 12: ví chị ơi <section class="space-y-stack-gap">
+<!-- Transaction Item 1 -->
+<div class="bg-surface-container-lowest p-md rounded-2xl shadow-sm border border-surface-container flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</div>
+<div class="flex-1">
+<h3 class="text-body-lg font-bold text-on-surface">Thanh toán dọn nhà</h3>
+<p class="text-body-sm text-on-surface-variant">14:30 - 24/10/2023</p>
+<span class="text-[11px] font-bold text-tertiary bg-tertiary-container/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Thành công</span>
+</div>
+<div class="text-right">
+<span class="text-body-lg font-bold text-error">- 450.000 đ</span>
+</div>
+</div>
+<!-- Transaction Item 2 -->
+<div class="bg-surface-container-lowest p-md rounded-2xl shadow-sm border border-surface-container flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div class="flex-1">
+<h3 class="text-body-lg font-bold text-on-surface">Nạp tiền vào ví</h3>
+<p class="text-body-sm text-on-surface-variant">09:15 - 23/10/2023</p>
+<span class="text-[11px] font-bold text-tertiary bg-tertiary-container/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Thành công</span>
+</div>
+<div class="text-right">
+<span class="text-body-lg font-bold text-primary">+ 100.000 đ</span>
+</div>
+</div>
+<!-- Transaction Item 3 -->
+<div class="bg-surface-container-lowest p-md rounded-2xl shadow-sm border border-surface-container flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="cleaning_services">cleaning_services</span>
+</div>
+<div class="flex-1">
+<h3 class="text-body-lg font-bold text-on-surface">Dọn dẹp định kỳ</h3>
+<p class="text-body-sm text-on-surface-variant">16:00 - 20/10/2023</p>
+<span class="text-[11px] font-bold text-tertiary bg-tertiary-container/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Thành công</span>
+</div>
+<div class="text-right">
+<span class="text-body-lg font-bold text-error">- 320.000 đ</span>
+</div>
+</div>
+<!-- Transaction Item 4 -->
+<div class="bg-surface-container-lowest p-md rounded-2xl shadow-sm border border-surface-container flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<div class="flex-1">
+<h3 class="text-body-lg font-bold text-on-surface">Hoàn tiền dịch vụ</h3>
+<p class="text-body-sm text-on-surface-variant">10:00 - 18/10/2023</p>
+<span class="text-[11px] font-bold text-tertiary bg-tertiary-container/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Thành công</span>
+</div>
+<div class="text-right">
+<span class="text-body-lg font-bold text-primary">+ 50.000 đ</span>
+</div>
+</div>
+</section> hiển thị sai thông tin trong database
+lỗi 13: ví chị ơi <section class="space-y-md">
+<div class="flex items-center justify-between">
+<h2 class="text-title-sm font-bold text-on-surface">Lịch sử giao dịch</h2>
+<span class="text-body-sm text-primary font-semibold">Tất cả</span>
+</div>
+<div class="space-y-sm">
+<div class="flex gap-sm overflow-x-auto pb-1 no-scrollbar">
+<div class="bg-primary text-on-primary px-5 py-2 rounded-full text-label-caps font-bold flex-shrink-0 cursor-pointer shadow-sm">
+                        Tất cả
+                    </div>
+<div class="bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-caps font-bold flex-shrink-0 cursor-pointer">
+                        Nạp tiền
+                    </div>
+<div class="bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-caps font-bold flex-shrink-0 cursor-pointer">
+                        Thanh toán
+                    </div>
+<div class="bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-caps font-bold flex-shrink-0 cursor-pointer">
+                        Hoàn tiền
+                    </div>
+</div>
+<div class="flex gap-sm overflow-x-auto pb-1 no-scrollbar">
+<div class="bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-caps font-bold flex-shrink-0 cursor-pointer">
+                        Hôm nay
+                    </div>
+<div class="bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-caps font-bold flex-shrink-0 cursor-pointer">
+                        Tháng này
+                    </div>
+<div class="bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-caps font-bold flex-shrink-0 cursor-pointer flex items-center gap-xs">
+                        Tùy chọn <span class="material-symbols-outlined text-[16px]" data-icon="calendar_today">calendar_today</span>
+</div>
+</div>
+</div>
+</section> không hoạt động 
+lỗi 14: gói gia đình <div class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-surface-container shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-container-padding py-4 pb-8 flex items-center justify-between">
+    <div>
+        <p class="text-caption text-on-surface-variant">Tổng cộng</p>
+        <p class="text-[20px] font-bold text-primary">1.500.000 đ</p>
+    </div>
+    <button onclick="window.location.href='naptienqr.html'" class="orange-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg active:scale-95 transition-transform flex items-center gap-2">
+        Đăng ký ngay
+        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+    </button>
+</div> bấm đăng ký ngay đáng ra phải trừ tiền trong ví chứ sao lại vào trang nạp tiền chỉ khi nào hết tiền thì thông báo là tài khoản quý khách không đủ quý khách có muốn nạp thêm vào không nếu bấm có thì ra trang nạp tiền không thì thôi quay lại trang tài khoản
+lỗi 15: tài khoản <button class="w-full flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center space-x-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">headset_mic</span>
+</div>
+<span class="text-body-lg font-body-lg text-on-surface">Liên hệ CSKH</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center space-x-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<span class="text-body-lg font-body-lg text-on-surface">Cài đặt (TB, Ngôn ngữ)</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center space-x-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<span class="text-body-lg font-body-lg text-on-surface">Bảo mật &amp; Quyền riêng tư</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-center space-x-md">
+<div class="w-10 h-10 rounded-full bg-error-container/30 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<span class="text-body-lg font-body-lg text-error">Xóa tài khoản</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button> chưa có trang 

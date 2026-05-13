@@ -1,0 +1,88 @@
+lỗi 1: trang chủ tasker tắt hoạt động rồi mà vẫn hiển thị <div id="modal-don-moi" class="w-full max-w-sm pointer-events-auto transition-all duration-300" style="display: block; opacity: 1; transform: scale(1);">
+        <div class="bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
+            <!-- Header -->
+            <div class="bg-[#a04100] px-4 py-3 flex justify-center items-center gap-2 relative">
+                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 10px 10px;"></div>
+                <span class="material-symbols-outlined text-white text-xl animate-pulse">notifications_active</span>
+                <h2 class="text-white font-bold tracking-wide relative z-10">ĐƠN DỌN NHÀ MỚI</h2>
+            </div>
+            <!-- Body -->
+            <div class="p-5 flex flex-col gap-4">
+                <div class="flex gap-3">
+                    <span class="material-symbols-outlined text-[#ff7e36] text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">location_on</span>
+                    <div>
+                        <p class="font-bold text-gray-800">Địa chỉ từ ứng dụng</p>
+                        <p class="text-sm text-gray-500">Cách bạn 1.2km</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <span class="material-symbols-outlined text-[#ff7e36] text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                    <div>
+                        <p class="font-bold text-gray-800">12/5/2026, 10:00</p>
+                    </div>
+                </div>
+                <!-- Price -->
+                <div class="mt-2 flex items-center justify-between border-t border-b border-gray-100 py-3">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Thu nhập</span>
+                    <span class="text-3xl font-bold text-[#a04100]">300.000 đ</span>
+                </div>
+                <!-- Timer -->
+                <div class="flex flex-col gap-2 mt-1">
+                    <p class="text-red-600 font-semibold text-sm flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-[16px]">timer</span>
+                        Tự động bỏ qua sau: <span id="countdown">00:11</span>
+                    </p>
+                    <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-red-500 h-full w-[80%] rounded-full animate-pulse" style="width: 18.3333%;"></div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex gap-3 pt-2">
+                    <button onclick="boQuaDon()" class="flex-1 py-3 px-4 rounded-full border border-gray-300 text-gray-600 font-bold hover:bg-gray-50 transition-all active:scale-95">
+                        BỎ QUA
+                    </button>
+                    <button onclick="nhanDon()" class="flex-1 py-3 px-4 rounded-full gradient-primary text-white font-bold shadow-lg hover:brightness-110 transition-all active:scale-95">
+                        NHẬN ĐƠN
+                    </button>
+                </div>
+                <p class="text-center text-[11px] text-gray-400 italic">
+                    * Bỏ qua &gt;30% sẽ giảm đơn.
+                </p>
+            </div>
+        </div>
+    </div> tắt hoạt động là không hiển thị nhận đơn nữa 
+lỗi 2: trang tasker khi đã nhận đơn rồi thì chỉ được nhận 1 đơn khi đang trong đơn rồi thì không hiển thị đơn mới nữa 
+lỗi 3: trang lịch sử đơn hàng khi bấm vào <div class="order-card bg-surface-container-lowest rounded-xl p-md flex flex-col gap-3"><div class="flex justify-between items-start"><div><h3 class="text-title-sm font-title-sm text-on-surface">Dịch vụ</h3><p class="text-body-sm text-on-surface-variant flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-[14px]">schedule</span>13/5/2026, 18:00</p></div><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-label-caps font-bold">Đã nhận</span></div><div class="flex items-center justify-between border-t border-dashed border-outline-variant pt-3"><span class="text-headline-md font-headline-md text-primary">300.000 đ</span><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px]">person</span><span class="text-body-sm text-on-surface-variant">Khách hàng</span></div></div></div> sẽ hiển thị ra thông tin đơn hàng 
+lỗi 4: trang thống kê tasker <div class="bg-surface-container-lowest p-lg rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
+<h3 class="font-title-sm text-title-sm text-on-surface mb-lg">Xu hướng thu nhập</h3>
+<div class="flex items-end justify-between h-40 gap-sm">
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-full bg-primary-fixed rounded-t-lg h-24"></div>
+<span class="text-[10px] font-label-caps">T2</span>
+</div>
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-full bg-primary-fixed rounded-t-lg h-32"></div>
+<span class="text-[10px] font-label-caps">T3</span>
+</div>
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-full  rounded-t-lg h-16 shadow-md"></div>
+<span class="text-[10px] font-label-caps text-primary">T4</span>
+</div>
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-full bg-primary-fixed rounded-t-lg h-28"></div>
+<span class="text-[10px] font-label-caps">T5</span>
+</div>
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-full bg-primary-fixed rounded-t-lg h-36"></div>
+<span class="text-[10px] font-label-caps">T6</span>
+</div>
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-full bg-primary-fixed rounded-t-lg h-20"></div>
+<span class="text-[10px] font-label-caps">T7</span>
+</div>
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-full bg-primary-fixed rounded-t-lg h-12"></div>
+<span class="text-[10px] font-label-caps">CN</span>
+</div>
+</div>
+</div> bấm vào đây hiển thị cho đúng thông tin 
