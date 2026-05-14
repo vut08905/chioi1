@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
@@ -184,14 +184,18 @@
 <!-- Top Navigation Bar -->
 <header class="fixed top-0 right-0 left-[240px] h-16 z-10 bg-surface/80 backdrop-blur-md flex justify-between items-center px-container_padding">
 <div class="flex items-center">
-<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Quản lý Tasker</h2>
+<nav class="flex items-center text-label-md font-label-md text-on-surface-variant gap-2">
+<a class="hover:text-primary" href="bangdieukhien.html">Admin</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Quản lý Tasker</span>
+</nav>
 </div>
 <div class="flex items-center gap-stack_md">
 <button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
 </button>
 <button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="help_outline">help_outline</span>
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
 </button>
 <div class="flex items-center gap-2 pl-4 border-l border-outline-variant">
 <img alt="Admin Avatar" class="w-8 h-8 rounded-full border border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbS0-qBW3lbFR17S-6JJWBlBIHpEHTvFJMJxkQThFqtKlBquIf0kYhlcN-I5WDFss7geadaAiZi5W6nrrXlEpPL0kQde9NtyAF0mhfb9J3DpTBMbqc30X5KL5PJSofUF2R7zYxO7RzUINWfJUIavg6yvhLv5pHpw_gw0kwYmxK0rxMlP1-lWjwVyf7WobYpr-qGfiu9kOtjQf2xjZF_wOVVOZsxOFEEL0giW2aR6t1WNTQ_J77aYnseslORp2j9MrU15poW2NBm0E"/>
@@ -246,12 +250,16 @@
   <button id="btn-tasker-filter" class="bg-primary text-white px-5 py-2 rounded-xl font-semibold hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-1.5 text-body-sm whitespace-nowrap">
     <span class="material-symbols-outlined text-[16px]">filter_list</span>Lọc
   </button>
+  <button id="btn-clear-tasker-filter" class="h-[38px] px-3 border border-outline-variant/30 text-on-surface-variant rounded-xl hover:bg-error/10 hover:text-error hover:border-error/30 transition-all flex items-center gap-1.5 text-body-sm whitespace-nowrap">
+    <span class="material-symbols-outlined text-[16px]">filter_alt_off</span>Xóa lọc
+  </button>
 </div>
 <!-- Tasker Table -->
 <div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(36,25,20,0.04)] overflow-hidden">
 <table class="w-full text-left border-collapse">
 <thead class="bg-surface-container-low border-b border-outline-variant">
 <tr>
+<th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider w-[50px] text-center">STT</th>
 <th class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></th>
 <th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider">Họ và Tên</th>
 <th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider">Dịch vụ</th>
@@ -263,7 +271,7 @@
 </tr>
 </thead>
 <tbody id="tasker-tbody" class="divide-y divide-outline-variant/10">
-    <tr><td colspan="8" class="text-center py-8 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+    <tr><td colspan="9" class="text-center py-8 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
 <tr class="hover:bg-background transition-colors">
 <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
 <td class="p-4">
@@ -471,7 +479,8 @@
 </table>
 <!-- Pagination -->
 <div class="p-4 flex justify-between items-center bg-surface-container-low border-t border-outline-variant">
-<p id="tasker-pagination-info" class="text-body-sm text-on-surface-variant">Dang tai...</p>
+<p id="tasker-pagination-info" class="text-body-sm text-on-surface-variant">Đang tải...</p>
+<div id="tasker-pagination" class="flex items-center gap-1"></div>
 </div>
 </div>
 </div>
@@ -733,10 +742,12 @@ document.querySelectorAll('button').forEach(function(btn) {
   if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
   var kycStatusMap = {
+    'VERIFIED': { label: 'Hoạt động', cls: 'bg-green-100 text-green-700' },
     'APPROVED': { label: 'Hoạt động', cls: 'bg-green-100 text-green-700' },
     'ACTIVE':   { label: 'Hoạt động', cls: 'bg-green-100 text-green-700' },
     'PENDING':  { label: 'Chờ duyệt', cls: 'bg-orange-100 text-orange-700' },
     'PENDING_APPROVAL': { label: 'Chờ duyệt', cls: 'bg-orange-100 text-orange-700' },
+    'UNVERIFIED': { label: 'Chờ duyệt', cls: 'bg-orange-100 text-orange-700' },
     'REJECTED': { label: 'Tạm khóa', cls: 'bg-red-100 text-red-700' },
     'SUSPENDED':{ label: 'Tạm khóa', cls: 'bg-red-100 text-red-700' }
   };
@@ -774,6 +785,7 @@ document.querySelectorAll('button').forEach(function(btn) {
       var tr = document.createElement('tr');
       tr.className = (idx % 2 ? 'bg-background/40 ' : '') + 'hover:bg-background transition-colors';
       tr.innerHTML =
+        '<td class="p-4 text-body-sm text-on-surface-variant text-center">' + (idx + 1) + '</td>' +
         '<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>' +
         '<td class="p-4"><div class="flex items-center gap-3">' +
           '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-[20px]">person</span></div>' +
@@ -887,9 +899,9 @@ document.querySelectorAll('button').forEach(function(btn) {
     var filtered = allTaskers.slice();
     // Tab filter
     if (filter === 'pending') {
-      filtered = filtered.filter(function(t) { return t.kyc_status === 'PENDING' || t.kyc_status === 'PENDING_APPROVAL'; });
+      filtered = filtered.filter(function(t) { return t.kyc_status === 'PENDING' || t.kyc_status === 'PENDING_APPROVAL' || t.kyc_status === 'UNVERIFIED'; });
     } else if (filter === 'active') {
-      filtered = filtered.filter(function(t) { return t.kyc_status === 'APPROVED' || t.kyc_status === 'ACTIVE'; });
+      filtered = filtered.filter(function(t) { return t.kyc_status === 'APPROVED' || t.kyc_status === 'ACTIVE' || t.kyc_status === 'VERIFIED'; });
     } else if (filter === 'locked') {
       filtered = filtered.filter(function(t) { return t.kyc_status === 'REJECTED' || t.kyc_status === 'SUSPENDED'; });
     }
@@ -907,7 +919,7 @@ document.querySelectorAll('button').forEach(function(btn) {
       filtered = filtered.filter(function(t) { return (t.area || '').toLowerCase().includes(areaVal.toLowerCase()); });
     }
     if (statusVal) {
-      var statusKeyMap = { 'Hoat dong': ['APPROVED','ACTIVE'], 'Cho duyet': ['PENDING','PENDING_APPROVAL'], 'Tam khoa': ['REJECTED','SUSPENDED'] };
+      var statusKeyMap = { 'Hoat dong': ['APPROVED','ACTIVE','VERIFIED'], 'Cho duyet': ['PENDING','PENDING_APPROVAL','UNVERIFIED'], 'Tam khoa': ['REJECTED','SUSPENDED'] };
       var keys = statusKeyMap[statusVal] || [statusVal.toUpperCase()];
       filtered = filtered.filter(function(t) { return keys.indexOf(t.kyc_status) >= 0; });
     }
@@ -973,7 +985,7 @@ document.querySelectorAll('button').forEach(function(btn) {
       };
     });
 
-    var pendingTaskers = allTaskers.filter(function(t) { return t.kyc_status === 'PENDING' || t.kyc_status === 'PENDING_APPROVAL'; });
+    var pendingTaskers = allTaskers.filter(function(t) { return t.kyc_status === 'PENDING' || t.kyc_status === 'PENDING_APPROVAL' || t.kyc_status === 'UNVERIFIED'; });
 
     // Update stats
     var statTotal = document.getElementById('stat-total');

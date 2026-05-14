@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
@@ -229,6 +229,11 @@
 
     // Clear static cards
     ordersList.innerHTML = '';
+
+    // Lỗi 5 FIX: Sắp xếp đơn hàng mới nhất lên đầu
+    orders.sort(function(a, b) {
+      return new Date(b.created_at || b.scheduled_time) - new Date(a.created_at || a.scheduled_time);
+    });
 
     // Bug 5 FIX (report14): Lưu tất cả đơn hàng để filter sau
     var allOrders = orders;

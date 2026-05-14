@@ -313,6 +313,7 @@
 <table class="w-full text-left border-collapse">
 <thead>
 <tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-4 py-4 font-label-bold text-label-md text-on-surface-variant w-[50px] text-center">STT</th>
 <th class="px-6 py-4 font-label-bold text-label-md text-on-surface-variant">Mã đơn</th>
 <th class="px-6 py-4 font-label-bold text-label-md text-on-surface-variant">Khách hàng</th>
 <th class="px-6 py-4 font-label-bold text-label-md text-on-surface-variant">Dịch vụ</th>
@@ -324,13 +325,14 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-outline-variant/10">
-<tr><td colspan="8" class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+<tr><td colspan="9" class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
 </tbody>
 </table>
 </div>
 <!-- Pagination -->
 <div class="px-6 py-4 flex items-center justify-between bg-surface-container-low border-t border-outline-variant">
 <p id="order-pag-info" class="text-body-sm text-on-surface-variant">Đang tải...</p>
+<div id="order-pagination" class="flex items-center gap-1"></div>
 </div>
 </section>
 </div>
@@ -584,13 +586,16 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
   if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
   var STATUS_MAP = {
-    'PENDING':       { label: 'Cho xac nhan', cls: 'bg-yellow-100 text-yellow-700', val: 'Cho xac nhan' },
-    'ACCEPTED':      { label: 'Da nhan',       cls: 'bg-blue-100 text-blue-700',    val: 'Dang thuc hien' },
-    'TASKER_ARRIVED':{ label: 'Da toi noi',    cls: 'bg-blue-100 text-blue-700',    val: 'Dang thuc hien' },
-    'IN_PROGRESS':   { label: 'Dang thuc hien',cls: 'bg-blue-100 text-blue-700',    val: 'Dang thuc hien' },
-    'COMPLETED':     { label: 'Hoan thanh',    cls: 'bg-green-100 text-green-700',  val: 'Hoan thanh' },
-    'CANCELLED':     { label: 'Da huy',        cls: 'bg-red-100 text-red-700',      val: 'Da huy' },
+    'PENDING':       { label: 'Chờ xác nhận', cls: 'bg-yellow-100 text-yellow-700', val: 'Chờ xác nhận' },
+    'ACCEPTED':      { label: 'Đã nhận',       cls: 'bg-blue-100 text-blue-700',    val: 'Đang thực hiện' },
+    'TASKER_ARRIVED':{ label: 'Đã tới nơi',    cls: 'bg-blue-100 text-blue-700',    val: 'Đang thực hiện' },
+    'IN_PROGRESS':   { label: 'Đang thực hiện',cls: 'bg-blue-100 text-blue-700',    val: 'Đang thực hiện' },
+    'COMPLETED':     { label: 'Hoàn thành',    cls: 'bg-green-100 text-green-700',  val: 'Hoàn thành' },
+    'CANCELLED':     { label: 'Đã hủy',        cls: 'bg-red-100 text-red-700',      val: 'Đã hủy' },
   };
+
+  var PAGE_SIZE = 15;
+  var currentPage = 1;
 
   var allOrders = [];
 
@@ -635,14 +640,24 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
     tbody.innerHTML = '';
 
     if (!orders || orders.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="text-center py-10 text-on-surface-variant"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">search_off</span>Khong tim thay don hang nao</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" class="text-center py-10 text-on-surface-variant"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">search_off</span>Không tìm thấy đơn hàng nào</td></tr>';
       updatePaginationInfo(0, 0);
+      renderPagination(0);
       return;
     }
 
-    orders.forEach(function(order, idx) {
+    // Pagination logic
+    var totalPages = Math.ceil(orders.length / PAGE_SIZE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+    var startIdx = (currentPage - 1) * PAGE_SIZE;
+    var endIdx = Math.min(startIdx + PAGE_SIZE, orders.length);
+    var pageOrders = orders.slice(startIdx, endIdx);
+
+    pageOrders.forEach(function(order, idx) {
+      var globalIdx = startIdx + idx + 1; // STT
       var s = STATUS_MAP[order.status] || { label: order.status, cls: 'bg-gray-100 text-gray-500' };
-      var customerName = (order.customers && order.customers.users && order.customers.users.full_name) || 'Khong xac dinh';
+      var customerName = (order.customers && order.customers.users && order.customers.users.full_name) || 'Không xác định';
       var taskerName   = (order.taskers  && order.taskers.users  && order.taskers.users.full_name)   || '—';
       var serviceName  = (order.services && order.services.name) || '—';
       var orderCode    = '#DH-' + String(order.order_id).padStart(4, '0');
@@ -650,6 +665,7 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
       var tr = document.createElement('tr');
       tr.className = (idx % 2 ? 'bg-[#F8F5F3]/30 ' : '') + 'hover:bg-surface-container-low/50 transition-colors cursor-pointer';
       tr.innerHTML =
+        '<td class="px-4 py-4 text-body-sm text-on-surface-variant text-center">' + globalIdx + '</td>' +
         '<td class="px-6 py-4 font-label-bold text-primary">' + orderCode + '</td>' +
         '<td class="px-6 py-4 text-body-sm text-on-surface">' + customerName + '</td>' +
         '<td class="px-6 py-4 text-body-sm text-on-surface-variant">' + serviceName + '</td>' +
@@ -678,12 +694,49 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
 
       tbody.appendChild(tr);
     });
-    updatePaginationInfo(orders.length, allOrders.length);
+    updatePaginationInfo(startIdx + 1, endIdx, orders.length);
+    renderPagination(totalPages);
   }
 
-  function updatePaginationInfo(shown, total) {
+  function updatePaginationInfo(from, to, total) {
     var pag = document.getElementById('order-pag-info');
-    if (pag) pag.innerHTML = 'Hiển thị <span class="font-bold">' + shown + '</span> / <span class="font-bold">' + total + '</span> đơn hàng';
+    if (pag) pag.innerHTML = 'Hiển thị <span class="font-bold">' + from + ' - ' + to + '</span> / <span class="font-bold">' + total + '</span> đơn hàng';
+  }
+
+  function renderPagination(totalPages) {
+    var container = document.getElementById('order-pagination');
+    if (!container) return;
+    container.innerHTML = '';
+    if (totalPages <= 1) return;
+    // Prev
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors' + (currentPage === 1 ? ' opacity-30 cursor-not-allowed' : '');
+    prevBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">chevron_left</span>';
+    if (currentPage > 1) prevBtn.addEventListener('click', function() { currentPage--; applyFilters(); });
+    container.appendChild(prevBtn);
+    // Pages
+    for (var p = 1; p <= totalPages; p++) {
+      (function(page) {
+        var btn = document.createElement('button');
+        btn.className = 'w-8 h-8 flex items-center justify-center rounded-lg text-body-sm font-bold transition-colors ' + (page === currentPage ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-variant');
+        btn.textContent = page;
+        btn.addEventListener('click', function() { currentPage = page; applyFilters(); });
+        container.appendChild(btn);
+      })(p);
+      if (p === 3 && totalPages > 6) {
+        var dots = document.createElement('span');
+        dots.className = 'w-8 h-8 flex items-center justify-center text-on-surface-variant text-body-sm';
+        dots.textContent = '...';
+        container.appendChild(dots);
+        p = totalPages - 1; // Jump to last pages
+      }
+    }
+    // Next
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors' + (currentPage === totalPages ? ' opacity-30 cursor-not-allowed' : '');
+    nextBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">chevron_right</span>';
+    if (currentPage < totalPages) nextBtn.addEventListener('click', function() { currentPage++; applyFilters(); });
+    container.appendChild(nextBtn);
   }
 
   function updateStats(orders) {
@@ -733,7 +786,7 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
       var codeEl = document.getElementById('od-code');
       var code = codeEl ? codeEl.textContent.trim() : '';
       var orderId = parseInt(code.replace(/\D/g, ''));
-      if (!orderId) { showToastMsg('Khong xac dinh duoc don hang'); return; }
+      if (!orderId) { showToastMsg('Không xác định được đơn hàng'); return; }
       window.location.href = 'canthiepdonhang.html?id=' + orderId;
     });
   }
@@ -764,7 +817,7 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
     renderTable(allOrders);
   } catch (e) {
     hideLoading();
-    showToastMsg('Loi tai du lieu: ' + e.message);
+    showToastMsg('Lỗi tải dữ liệu: ' + e.message);
     console.error(e);
   }
 

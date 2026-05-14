@@ -185,14 +185,18 @@
   <!-- Page Header -->
   <div class="flex items-center justify-between">
     <div>
-      <h2 class="text-headline-md font-bold text-on-surface">Bao cao & Phan tich</h2>
-      <p class="text-body-sm text-on-surface-variant mt-1">Du lieu thuc theo thoi gian thuc tu he thong</p>
+      <h2 class="text-headline-md font-bold text-on-surface">Báo cáo & Phân tích</h2>
+      <p class="text-body-sm text-on-surface-variant mt-1">Dữ liệu thực theo thời gian thực từ hệ thống</p>
     </div>
     <div class="flex items-center gap-3">
+      <button id="btn-export-report" class="px-4 py-2 bg-primary text-white font-label-bold rounded-xl hover:bg-primary/90 transition-all flex items-center gap-1.5 text-body-sm shadow-sm">
+        <span class="material-symbols-outlined text-[16px]">download</span>
+        Xuất báo cáo
+      </button>
       <div class="flex bg-white rounded-xl border border-outline-variant/20 shadow-sm overflow-hidden">
-        <button data-period="7d" class="period-btn px-4 py-2 text-body-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all">7 ngay</button>
-        <button data-period="30d" class="period-btn px-4 py-2 text-body-sm font-semibold bg-primary text-white">30 ngay</button>
-        <button data-period="90d" class="period-btn px-4 py-2 text-body-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all">90 ngay</button>
+        <button data-period="7d" class="period-btn px-4 py-2 text-body-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all">7 ngày</button>
+        <button data-period="30d" class="period-btn px-4 py-2 text-body-sm font-semibold bg-primary text-white">30 ngày</button>
+        <button data-period="90d" class="period-btn px-4 py-2 text-body-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all">90 ngày</button>
       </div>
     </div>
   </div>
@@ -204,37 +208,37 @@
         <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
           <span class="material-symbols-outlined text-green-600" style="font-variation-settings:'FILL' 1;font-size:20px">payments</span>
         </div>
-        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Tong doanh thu</p>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Tổng doanh thu</p>
       </div>
       <p id="kpi-revenue" class="text-[22px] font-bold text-on-surface">--</p>
-      <p class="text-[11px] text-on-surface-variant mt-1">Phi nen tang: <span id="kpi-platform" class="text-primary font-semibold">--</span></p>
+      <p class="text-[11px] text-on-surface-variant mt-1">Phí nền tảng: <span id="kpi-platform" class="text-primary font-semibold">--</span></p>
     </div>
     <div class="bg-white rounded-2xl p-5 shadow-sm border border-outline-variant/20 stat-card">
       <div class="flex items-center gap-3 mb-3">
         <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
           <span class="material-symbols-outlined text-blue-500" style="font-variation-settings:'FILL' 1;font-size:20px">receipt_long</span>
         </div>
-        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Tong don hang</p>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Tổng đơn hàng</p>
       </div>
       <p id="kpi-orders" class="text-[22px] font-bold text-on-surface">--</p>
-      <p class="text-[11px] text-on-surface-variant mt-1">Hoan thanh: <span id="kpi-completed" class="text-green-600 font-semibold">--</span> · Huy: <span id="kpi-cancelled" class="text-error font-semibold">--</span></p>
+      <p class="text-[11px] text-on-surface-variant mt-1">Hoàn thành: <span id="kpi-completed" class="text-green-600 font-semibold">--</span> · Hủy: <span id="kpi-cancelled" class="text-error font-semibold">--</span></p>
     </div>
     <div class="bg-white rounded-2xl p-5 shadow-sm border border-outline-variant/20 stat-card">
       <div class="flex items-center gap-3 mb-3">
         <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
           <span class="material-symbols-outlined text-purple-600" style="font-variation-settings:'FILL' 1;font-size:20px">groups</span>
         </div>
-        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Nguoi dung</p>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Người dùng</p>
       </div>
       <p id="kpi-users" class="text-[22px] font-bold text-on-surface">--</p>
-      <p class="text-[11px] text-on-surface-variant mt-1">Moi ky nay: <span id="kpi-new-users" class="text-purple-600 font-semibold">--</span></p>
+      <p class="text-[11px] text-on-surface-variant mt-1">Mới kỳ này: <span id="kpi-new-users" class="text-purple-600 font-semibold">--</span></p>
     </div>
     <div class="bg-white rounded-2xl p-5 shadow-sm border border-outline-variant/20 stat-card">
       <div class="flex items-center gap-3 mb-3">
         <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
           <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;font-size:20px">engineering</span>
         </div>
-        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Ti le hoan thanh</p>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Tỉ lệ hoàn thành</p>
       </div>
       <p id="kpi-rate" class="text-[22px] font-bold text-green-600">-- %</p>
       <p class="text-[11px] text-on-surface-variant mt-1">Tasker: <span id="kpi-taskers" class="text-primary font-semibold">--</span></p>
@@ -247,10 +251,10 @@
     <!-- Revenue Chart (2/3) -->
     <div class="col-span-2 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-5">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="font-title-sm text-on-surface">Doanh thu & Don hang theo ngay</h3>
+        <h3 class="font-title-sm text-on-surface">Doanh thu & Đơn hàng theo ngày</h3>
         <div class="flex items-center gap-3 text-[11px] text-on-surface-variant">
           <span class="flex items-center gap-1.5"><span class="w-3 h-1.5 rounded-full bg-primary inline-block"></span>Doanh thu</span>
-          <span class="flex items-center gap-1.5"><span class="w-3 h-1.5 rounded-full bg-blue-400 inline-block"></span>Don hang</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1.5 rounded-full bg-blue-400 inline-block"></span>Đơn hàng</span>
         </div>
       </div>
       <div class="h-64 relative">
@@ -263,7 +267,7 @@
 
     <!-- Order Status Donut (1/3) -->
     <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-5">
-      <h3 class="font-title-sm text-on-surface mb-4">Trang thai don hang</h3>
+      <h3 class="font-title-sm text-on-surface mb-4">Trạng thái đơn hàng</h3>
       <div class="h-44 relative">
         <canvas id="status-chart"></canvas>
       </div>
@@ -279,7 +283,7 @@
     <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
       <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-[20px]">star</span>
-        <h3 class="font-title-sm text-on-surface">Dich vu pho bien nhat</h3>
+        <h3 class="font-title-sm text-on-surface">Dịch vụ phổ biến nhất</h3>
       </div>
       <div id="top-services" class="divide-y divide-outline-variant/10">
         <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Dang tai...</div>
@@ -290,7 +294,7 @@
     <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
       <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-[20px]">emoji_events</span>
-        <h3 class="font-title-sm text-on-surface">Tasker hieu qua nhat</h3>
+        <h3 class="font-title-sm text-on-surface">Tasker hiệu quả nhất</h3>
       </div>
       <div id="top-taskers" class="divide-y divide-outline-variant/10">
         <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Dang tai...</div>
@@ -309,12 +313,12 @@
       <table class="w-full text-left">
         <thead>
           <tr class="bg-surface-container-low/60 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
-            <th class="px-5 py-3 border-b border-outline-variant/20">Ma don</th>
-            <th class="px-5 py-3 border-b border-outline-variant/20">Dich vu</th>
-            <th class="px-5 py-3 border-b border-outline-variant/20">Khach hang</th>
-            <th class="px-5 py-3 border-b border-outline-variant/20">Gia tri</th>
-            <th class="px-5 py-3 border-b border-outline-variant/20">Trang thai</th>
-            <th class="px-5 py-3 border-b border-outline-variant/20">Ngay</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Mã đơn</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Dịch vụ</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Khách hàng</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Giá trị</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Trạng thái</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Ngày</th>
           </tr>
         </thead>
         <tbody id="recent-orders-tbody" class="divide-y divide-outline-variant/10 text-body-sm">
@@ -338,11 +342,11 @@
   var statusChartInstance = null;
 
   var ORDER_STATUS = {
-    'COMPLETED': { label: 'Hoan thanh', color: '#16a34a' },
-    'PENDING':   { label: 'Cho xu ly',  color: '#f59e0b' },
-    'CONFIRMED': { label: 'Da xac nhan',color: '#3b82f6' },
-    'IN_PROGRESS':{ label: 'Dang lam',  color: '#8b5cf6' },
-    'CANCELLED': { label: 'Da huy',     color: '#ef4444' },
+    'COMPLETED': { label: 'Hoàn thành', color: '#16a34a' },
+    'PENDING':   { label: 'Chờ xử lý',  color: '#f59e0b' },
+    'CONFIRMED': { label: 'Đã xác nhận',color: '#3b82f6' },
+    'IN_PROGRESS':{ label: 'Đang làm',  color: '#8b5cf6' },
+    'CANCELLED': { label: 'Đã hủy',     color: '#ef4444' },
   };
 
   function fmtVND(n) {
@@ -372,7 +376,7 @@
       document.getElementById('kpi-users').textContent     = s.totalUsers.toLocaleString();
       document.getElementById('kpi-new-users').textContent = '+' + s.newUsersThisPeriod;
       document.getElementById('kpi-rate').textContent      = s.completionRate + ' %';
-      document.getElementById('kpi-taskers').textContent   = s.totalTaskers + ' nguoi';
+      document.getElementById('kpi-taskers').textContent   = s.totalTaskers + ' người';
 
       /* Revenue Chart */
       document.getElementById('chart-loading').style.display = 'none';
@@ -427,7 +431,7 @@
         s.cancelledOrders,
         Math.max(0, s.totalOrders - s.completedOrders - s.pendingOrders - s.cancelledOrders),
       ];
-      var statusLabels = ['Hoan thanh', 'Cho xu ly', 'Da huy', 'Khac'];
+      var statusLabels = ['Hoàn thành', 'Chờ xử lý', 'Đã hủy', 'Khác'];
       var statusColors = ['#16a34a', '#f59e0b', '#ef4444', '#94a3b8'];
       statusChartInstance = new Chart(ctx2, {
         type: 'doughnut',
@@ -449,13 +453,13 @@
       var svcEl = document.getElementById('top-services');
       if (svcEl) {
         var maxSvc = Math.max.apply(null, data.topServices.map(function(s) { return s.count; }));
-        svcEl.innerHTML = data.topServices.length === 0 ? '<div class="px-5 py-4 text-body-sm text-center text-on-surface-variant">Chua co du lieu</div>' :
+        svcEl.innerHTML = data.topServices.length === 0 ? '<div class="px-5 py-4 text-body-sm text-center text-on-surface-variant">Chưa có dữ liệu</div>' :
           data.topServices.map(function(sv, i) {
             var pct = maxSvc > 0 ? Math.round(sv.count / maxSvc * 100) : 0;
             return '<div class="px-5 py-3">' +
               '<div class="flex items-center justify-between mb-1.5">' +
                 '<span class="text-body-sm font-semibold text-on-surface">' + (i+1) + '. ' + sv.name + '</span>' +
-                '<span class="text-body-sm font-bold text-primary">' + sv.count + ' don</span>' +
+                '<span class="text-body-sm font-bold text-primary">' + sv.count + ' đơn</span>' +
               '</div>' +
               '<div class="h-1.5 bg-surface-container-low rounded-full overflow-hidden">' +
                 '<div class="h-full bg-primary rounded-full transition-all" style="width:' + pct + '%"></div>' +
@@ -470,12 +474,12 @@
       if (tkEl) {
         var medals = ['emoji_events','military_tech','workspace_premium','grade','star'];
         var medalColors = ['text-yellow-500','text-gray-400','text-amber-600','text-blue-400','text-green-500'];
-        tkEl.innerHTML = data.topTaskers.length === 0 ? '<div class="px-5 py-4 text-body-sm text-center text-on-surface-variant">Chua co du lieu</div>' :
+        tkEl.innerHTML = data.topTaskers.length === 0 ? '<div class="px-5 py-4 text-body-sm text-center text-on-surface-variant">Chưa có dữ liệu</div>' :
           data.topTaskers.map(function(tk, i) {
             return '<div class="px-5 py-3 flex items-center justify-between">' +
               '<div class="flex items-center gap-3">' +
                 '<span class="material-symbols-outlined ' + (medalColors[i] || 'text-on-surface-variant') + '" style="font-variation-settings:\'FILL\' 1;font-size:22px">' + (medals[i] || 'person') + '</span>' +
-                '<div><p class="font-semibold text-on-surface text-body-sm">' + tk.name + '</p><p class="text-[11px] text-on-surface-variant">' + tk.orders + ' don hoan thanh</p></div>' +
+                '<div><p class="font-semibold text-on-surface text-body-sm">' + tk.name + '</p><p class="text-[11px] text-on-surface-variant">' + tk.orders + ' đơn hoàn thành</p></div>' +
               '</div>' +
               '<p class="font-bold text-primary text-body-sm">' + fmtVND(tk.earnings) + '</p>' +
             '</div>';
@@ -485,7 +489,7 @@
       /* Recent Orders Table */
       var tbody = document.getElementById('recent-orders-tbody');
       if (tbody) {
-        tbody.innerHTML = data.recentOrders.length === 0 ? '<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Chua co don hang</td></tr>' :
+        tbody.innerHTML = data.recentOrders.length === 0 ? '<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Chưa có đơn hàng</td></tr>' :
           data.recentOrders.map(function(o) {
             var st = ORDER_STATUS[o.status] || { label: o.status, color: '#94a3b8' };
             return '<tr class="hover:bg-primary/5 transition-colors">' +
@@ -501,7 +505,7 @@
 
     } catch(e) {
       hideLoading();
-      showToastMsg('Loi tai bao cao: ' + e.message);
+      showToastMsg('Lỗi tải báo cáo: ' + e.message);
       console.error(e);
     }
   }
@@ -523,6 +527,57 @@
   /* Logout */
   var logoutBtn = document.querySelector('button[title="Dang xuat"]');
   if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
+
+  /* Export button - Lỗi 7 FIX */
+  var exportBtn = document.getElementById('btn-export-report');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', function() {
+      try {
+        // Tạo CSV từ dữ liệu hiện tại
+        var kpiRevenue = document.getElementById('kpi-revenue').textContent;
+        var kpiOrders = document.getElementById('kpi-orders').textContent;
+        var kpiCompleted = document.getElementById('kpi-completed').textContent;
+        var kpiCancelled = document.getElementById('kpi-cancelled').textContent;
+        var kpiUsers = document.getElementById('kpi-users').textContent;
+        var kpiRate = document.getElementById('kpi-rate').textContent;
+
+        var csv = '\uFEFF'; // BOM for UTF-8
+        csv += 'B\u00e1o c\u00e1o Chi \u01a0i! - ' + new Date().toLocaleDateString('vi-VN') + '\n\n';
+        csv += 'CH\u1ec8 S\u1ed0,GI\u00c1 TR\u1eca\n';
+        csv += 'T\u1ed5ng doanh thu,' + kpiRevenue + '\n';
+        csv += 'T\u1ed5ng \u0111\u01a1n h\u00e0ng,' + kpiOrders + '\n';
+        csv += 'Ho\u00e0n th\u00e0nh,' + kpiCompleted + '\n';
+        csv += '\u0110\u00e3 h\u1ee7y,' + kpiCancelled + '\n';
+        csv += 'Ng\u01b0\u1eddi d\u00f9ng,' + kpiUsers + '\n';
+        csv += 'T\u1ec9 l\u1ec7 ho\u00e0n th\u00e0nh,' + kpiRate + '\n';
+
+        // Export recent orders if available
+        var rows = document.querySelectorAll('#recent-orders-tbody tr');
+        if (rows.length > 0 && rows[0].cells.length > 1) {
+          csv += '\n\u0110\u01a0N H\u00c0NG G\u1ea6N NH\u1ea4T\n';
+          csv += 'M\u00e3 \u0111\u01a1n,D\u1ecbch v\u1ee5,Kh\u00e1ch h\u00e0ng,Gi\u00e1 tr\u1ecb,Tr\u1ea1ng th\u00e1i,Ng\u00e0y\n';
+          rows.forEach(function(row) {
+            var cols = [];
+            for (var i = 0; i < row.cells.length; i++) {
+              cols.push('"' + row.cells[i].textContent.trim().replace(/"/g, '""') + '"');
+            }
+            csv += cols.join(',') + '\n';
+          });
+        }
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'baocao_chioi_' + currentPeriod + '_' + new Date().toISOString().slice(0,10) + '.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToastMsg('\u0110\u00e3 xu\u1ea5t b\u00e1o c\u00e1o th\u00e0nh c\u00f4ng!');
+      } catch(e) {
+        showToastMsg('L\u1ed7i xu\u1ea5t b\u00e1o c\u00e1o: ' + e.message);
+      }
+    });
+  }
 
   loadReport(currentPeriod);
 })();
