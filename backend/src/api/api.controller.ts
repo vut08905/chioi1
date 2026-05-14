@@ -252,4 +252,33 @@ export class ApiController {
   async getAdminWithdrawals() {
     return this.apiService.getAdminWithdrawals();
   }
+
+  // ===== Admin stats endpoints (from testvps1 sync) =====
+  @Get('admin/tickets/stats')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Thống kê inbox (tổng, open, in_progress, resolved)' })
+  async getAdminInboxStats() {
+    return this.apiService.getAdminInboxStats();
+  }
+
+  @Get('admin/transactions')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Lấy lịch sử giao dịch (filter type, giới hạn 100)' })
+  async getAdminTransactions(@Query('type') type?: string) {
+    return this.apiService.getAdminTransactions(type);
+  }
+
+  @Get('admin/wallet-stats')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Thống kê tổng hợp ví' })
+  async getAdminWalletStats() {
+    return this.apiService.getAdminWalletStats();
+  }
+
+  @Get('admin/report-stats')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Báo cáo: doanh thu, đơn hàng, Tasker top, dịch vụ top, biểu đồ theo ngày' })
+  async getAdminReportStats(@Query('period') period?: string) {
+    return this.apiService.getAdminReportStats(period || '30d');
+  }
 }

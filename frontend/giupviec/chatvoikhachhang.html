@@ -1,11 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
-<link rel="manifest" href="/manifest.json"/>
-<meta name="theme-color" content="#a04100"/>
-<link rel="apple-touch-icon" href="/icons/icon-192.png"/>
-<link rel="icon" type="image/png" href="/favicon.ico"/>
-<script src="/pwa-register.js" defer></script>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chat với Khách hàng | Chị Ơi!</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
@@ -166,7 +163,7 @@
 
 <!-- Scripts -->
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-<script src="../shared/api.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script src="../shared/webrtc.js"></script>
 <script>
 (async function() {
@@ -327,14 +324,15 @@
       if (file.size > 5 * 1024 * 1024) { showToastMsg('Ảnh tối đa 5MB'); return; }
       var reader = new FileReader();
       reader.onload = function(e) {
-        appendImageMessage(e.target.result, true);
+        var base64Data = e.target.result;
+        appendImageMessage(base64Data, true);
         scrollToBottom();
         showToastMsg('📷 Đã gửi ảnh');
         if (socket && orderId && receiverId) {
           socket.emit('send_message', {
             orderId: parseInt(orderId),
             receiverId: parseInt(receiverId),
-            content: '[Hình ảnh]'
+            content: '[IMG]' + base64Data
           });
         }
       };
@@ -347,17 +345,25 @@
   function appendMessage(msg, isMine) {
     var div = document.createElement('div');
     var timeStr = msg.created_at ? formatTime(msg.created_at) : 'Vừa xong';
+    var content = msg.content || '';
+
+    // Kiểm tra nếu là hình ảnh (prefix [IMG])
+    if (content.startsWith('[IMG]')) {
+      var imgSrc = content.substring(5);
+      appendImageMessage(imgSrc, isMine);
+      return;
+    }
 
     if (isMine) {
       div.className = 'flex flex-col items-end gap-base ml-auto max-w-[85%] mb-3';
       div.innerHTML = '<div class="chat-bubble-right orange-gradient text-white p-md shadow-md">' +
-        '<p class="text-body-lg">' + escapeHtml(msg.content) + '</p></div>' +
+        '<p class="text-body-lg">' + escapeHtml(content) + '</p></div>' +
         '<div class="flex items-center gap-xs"><span class="text-[10px] text-primary font-semibold msg-status-icon">done</span>' +
         '<span class="text-[10px] text-outline">' + timeStr + '</span></div>';
     } else {
       div.className = 'flex flex-col items-start gap-base max-w-[85%] mb-3';
       div.innerHTML = '<div class="chat-bubble-left bg-[#EBEBEB] text-on-surface p-md shadow-sm">' +
-        '<p class="text-body-lg">' + escapeHtml(msg.content) + '</p></div>' +
+        '<p class="text-body-lg">' + escapeHtml(content) + '</p></div>' +
         '<span class="text-[10px] text-outline ml-xs">' + timeStr + '</span>';
     }
     chatArea.appendChild(div);
@@ -365,10 +371,17 @@
 
   function appendImageMessage(src, isMine) {
     var div = document.createElement('div');
-    div.className = 'flex flex-col items-end gap-base ml-auto max-w-[70%] mb-3';
-    div.innerHTML = '<div class="chat-bubble-right bg-white p-xs shadow-md border border-outline-variant overflow-hidden">' +
-      '<img src="' + src + '" class="w-full rounded-xl object-cover" alt="Ảnh gửi" /></div>' +
-      '<span class="text-[10px] text-outline">Vừa xong</span>';
+    if (isMine) {
+      div.className = 'flex flex-col items-end gap-base ml-auto max-w-[70%] mb-3';
+      div.innerHTML = '<div class="chat-bubble-right bg-white p-xs shadow-md border border-outline-variant overflow-hidden">' +
+        '<img src="' + src + '" class="w-full rounded-xl object-cover cursor-pointer" alt="Ảnh gửi" onclick="window.open(this.src)" /></div>' +
+        '<span class="text-[10px] text-outline">Vừa xong</span>';
+    } else {
+      div.className = 'flex flex-col items-start gap-base max-w-[70%] mb-3';
+      div.innerHTML = '<div class="chat-bubble-left bg-white p-xs shadow-md border border-outline-variant overflow-hidden">' +
+        '<img src="' + src + '" class="w-full rounded-xl object-cover cursor-pointer" alt="Ảnh nhận" onclick="window.open(this.src)" /></div>' +
+        '<span class="text-[10px] text-outline">Vừa xong</span>';
+    }
     chatArea.appendChild(div);
   }
 

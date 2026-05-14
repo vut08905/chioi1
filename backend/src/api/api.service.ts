@@ -465,4 +465,164 @@ export class ApiService {
       },
     });
   }
+
+  // ===== Admin stats methods (from testvps1 sync) =====
+  async getAdminInboxStats() {
+    const [total, open, inProgress, resolved] = await Promise.all([
+      this.prisma.support_tickets.count(),
+      this.prisma.support_tickets.count({ where: { status: 'OPEN' } }),
+      this.prisma.support_tickets.count({ where: { status: 'IN_PROGRESS' } }),
+      this.prisma.support_tickets.count({ where: { status: 'RESOLVED' } }),
+    ]);
+    return { total, open, inProgress, resolved };
+  }
+
+  async getAdminTransactions(type?: string) {
+    const where: any = {};
+    if (type && type !== 'ALL') where.type = type;
+    return this.prisma.transactions.findMany({
+      where,
+      include: {
+        wallets: {
+          include: {
+            users: { select: { user_id: true, full_name: true, phone: true, role: true } }
+          }
+        },
+        orders: { select: { order_code: true } }
+      },
+      orderBy: { created_at: 'desc' },
+      take: 100
+    });
+  }
+
+  async getAdminWalletStats() {
+    const now = new Date();
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const [totalBalance, todayCount, pendingWithdrawal, paidThisMonth] = await Promise.all([
+      this.prisma.wallets.aggregate({ _sum: { balance: true } }),
+      this.prisma.transactions.count({ where: { created_at: { gte: startOfDay } } }),
+      this.prisma.transactions.aggregate({
+        where: { type: 'WITHDRAWAL', status: 'PENDING' },
+        _sum: { amount: true },
+      }),
+      this.prisma.transactions.aggregate({
+        where: { type: 'PAYMENT', status: 'COMPLETED', created_at: { gte: startOfMonth } },
+        _sum: { amount: true },
+      }),
+    ]);
+
+    return {
+      totalBalance: Number(totalBalance._sum.balance || 0),
+      todayTransactions: todayCount,
+      pendingWithdrawal: Number(pendingWithdrawal._sum.amount || 0),
+      paidThisMonth: Number(paidThisMonth._sum.amount || 0),
+    };
+  }
+
+  async getAdminReportStats(period: string = '30d') {
+    const now = new Date();
+    const days = period === '7d' ? 7 : period === '90d' ? 90 : 30;
+    const fromDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+
+    const [
+      totalOrders, completedOrders, cancelledOrders, pendingOrders,
+      totalRevenue, totalUsers, totalTaskers,
+      recentOrders, topServices, topTaskers,
+      newUsersThisPeriod, ordersByDay,
+    ] = await Promise.all([
+      this.prisma.orders.count(),
+      this.prisma.orders.count({ where: { status: 'COMPLETED' } }),
+      this.prisma.orders.count({ where: { status: 'CANCELLED' } }),
+      this.prisma.orders.count({ where: { status: 'PENDING' } }),
+      this.prisma.orders.aggregate({ where: { status: 'COMPLETED' }, _sum: { total_price: true, platform_fee: true } }),
+      this.prisma.users.count(),
+      this.prisma.taskers.count(),
+      this.prisma.orders.findMany({
+        where: { created_at: { gte: fromDate } },
+        orderBy: { created_at: 'desc' },
+        take: 10,
+        include: {
+          services: { select: { name: true } },
+          customers: { include: { users: { select: { full_name: true } } } },
+        },
+      }),
+      this.prisma.orders.groupBy({
+        by: ['service_id'],
+        _count: { service_id: true },
+        _sum: { total_price: true },
+        orderBy: { _count: { service_id: 'desc' } },
+        take: 5,
+      }),
+      this.prisma.orders.groupBy({
+        by: ['tasker_id'],
+        where: { status: 'COMPLETED', tasker_id: { not: null } },
+        _count: { order_id: true },
+        _sum: { tasker_earnings: true },
+        orderBy: { _count: { order_id: 'desc' } },
+        take: 5,
+      }),
+      this.prisma.users.count({ where: { created_at: { gte: fromDate } } }),
+      this.prisma.orders.findMany({
+        where: { created_at: { gte: fromDate } },
+        select: { created_at: true, total_price: true, status: true },
+        orderBy: { created_at: 'asc' },
+      }),
+    ]);
+
+    const serviceIds = topServices.map((s: any) => s.service_id);
+    const serviceNames = await this.prisma.services.findMany({
+      where: { service_id: { in: serviceIds } },
+      select: { service_id: true, name: true },
+    });
+    const svcMap: Record<number, string> = Object.fromEntries(serviceNames.map((s: any) => [s.service_id, s.name]));
+
+    const taskerIds = topTaskers.filter((t: any) => t.tasker_id).map((t: any) => t.tasker_id!);
+    const taskerNames = await this.prisma.taskers.findMany({
+      where: { tasker_id: { in: taskerIds } },
+      include: { users: { select: { full_name: true } } },
+    });
+    const taskerMap = Object.fromEntries(taskerNames.map((t: any) => [t.tasker_id, t.users?.full_name || 'Tasker #' + t.tasker_id]));
+
+    const dailyMap: Record<string, { revenue: number; orders: number }> = {};
+    ordersByDay.forEach((o: any) => {
+      const day = new Date(o.created_at!).toISOString().slice(0, 10);
+      if (!dailyMap[day]) dailyMap[day] = { revenue: 0, orders: 0 };
+      dailyMap[day].orders++;
+      if (o.status === 'COMPLETED') dailyMap[day].revenue += Number(o.total_price || 0);
+    });
+    const chartLabels = Object.keys(dailyMap).slice(-14);
+    const chartRevenue = chartLabels.map(d => dailyMap[d]?.revenue || 0);
+    const chartOrders = chartLabels.map(d => dailyMap[d]?.orders || 0);
+
+    return {
+      summary: {
+        totalOrders, completedOrders, cancelledOrders, pendingOrders,
+        totalRevenue: Number(totalRevenue._sum.total_price || 0),
+        platformRevenue: Number(totalRevenue._sum.platform_fee || 0),
+        totalUsers, totalTaskers, newUsersThisPeriod,
+        completionRate: totalOrders > 0 ? Math.round((completedOrders / totalOrders) * 100) : 0,
+      },
+      chart: { labels: chartLabels, revenue: chartRevenue, orders: chartOrders },
+      topServices: topServices.map((s: any) => ({
+        name: svcMap[s.service_id] || 'Dich vu #' + s.service_id,
+        count: s._count.service_id,
+        revenue: Number(s._sum.total_price || 0),
+      })),
+      topTaskers: topTaskers.map((t: any) => ({
+        name: (taskerMap as any)[t.tasker_id] || 'Tasker #' + t.tasker_id,
+        orders: t._count.order_id,
+        earnings: Number(t._sum.tasker_earnings || 0),
+      })),
+      recentOrders: (recentOrders as any[]).map((o: any) => ({
+        code: o.order_code,
+        service: (o.services as any)?.name,
+        customer: o.customers?.users?.full_name,
+        amount: Number(o.total_price),
+        status: o.status,
+        date: o.created_at,
+      })),
+    };
+  }
 }

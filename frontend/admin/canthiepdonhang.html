@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Admin CMS - Can thiệp đơn hàng | Chị Ơi</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -137,8 +139,13 @@
 <!-- Sidebar -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -212,7 +219,36 @@
 </div>
 </div>
 </header>
-<div class="max-w-5xl space-y-gutter">
+<div class="max-w-5xl space-y-gutter" id="intervention-list">
+    <h2 class="font-headline-md text-headline-md text-on-surface mb-4">Danh sách đơn hàng cần can thiệp</h2>
+    <div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[800px]">
+                <thead>
+                    <tr class="bg-surface-container-low/50 border-b border-outline-variant/30">
+                        <th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Mã đơn</th>
+                        <th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Khách hàng</th>
+                        <th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Dịch vụ</th>
+                        <th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Trạng thái</th>
+                        <th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Thời gian tạo</th>
+                        <th class="px-6 py-4 text-right"></th>
+                    </tr>
+                </thead>
+                <tbody id="ct-table-body">
+                    <tr><td colspan="6" class="text-center py-8">Đang tải...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-5xl space-y-gutter hidden" id="intervention-details">
+<div class="flex items-center mb-2">
+    <button id="btn-back-to-list" class="flex items-center text-primary hover:text-[#8b3900] transition-colors font-label-bold text-label-bold">
+        <span class="material-symbols-outlined mr-1 text-[18px]">arrow_back</span>
+        QUAY LẠI DANH SÁCH
+    </button>
+</div>
 <!-- 1. Panel Thông tin Đơn hàng -->
 <section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden">
 <div class="p-stack_lg border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low/30">
@@ -283,91 +319,49 @@
 <h3 class="font-title-sm text-title-sm mb-6 flex items-center">
 <span class="material-symbols-outlined mr-2 text-primary">history</span> Lịch sử sự kiện &amp; Tranh chấp
                 </h3>
-<div class="relative space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant/30">
-<!-- Step 1 -->
-<div class="relative pl-10">
-<div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-[#e6f4e6] flex items-center justify-center">
-<span class="material-symbols-outlined text-[16px] text-[#008000]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<p class="text-label-bold text-label-bold text-on-surface-variant">22/05 14:30</p>
-<p class="text-body-md font-medium">Đơn hàng được tạo thành công</p>
-</div>
-<!-- Step 2 -->
-<div class="relative pl-10">
-<div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-[#e6f4e6] flex items-center justify-center">
-<span class="material-symbols-outlined text-[16px] text-[#008000]" style="font-variation-settings: 'FILL' 1;">person_check</span>
-</div>
-<p class="text-label-bold text-label-bold text-on-surface-variant">22/05 15:00</p>
-<p class="text-body-md font-medium">Tasker Nguyễn Văn Minh đã nhận đơn</p>
-</div>
-<!-- Step 3 (Highlight) -->
-<div class="relative pl-10 py-3 px-4 rounded-lg bg-error-container/10 border-l-4 border-error">
-<div class="absolute -left-[14px] top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-error flex items-center justify-center ring-4 ring-background">
-<span class="material-symbols-outlined text-[18px] text-white">warning</span>
-</div>
-<p class="text-label-bold text-label-bold text-error">23/05 10:15</p>
-<p class="text-body-md font-bold text-error">Khách hàng khiếu nại</p>
-<p class="text-body-sm italic mt-1 text-on-surface">"Tasker đến muộn và làm việc không kỹ, tôi muốn hoàn tiền một phần vì phải tự dọn lại."</p>
-</div>
-<!-- Step 4 (Current) -->
-<div class="relative pl-10">
-<div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-primary-container flex items-center justify-center">
-<span class="material-symbols-outlined text-[16px] text-white" style="font-variation-settings: 'FILL' 1;">edit_note</span>
-</div>
-<p class="text-label-bold text-label-bold text-primary">Hiện tại</p>
-<p class="text-body-md font-medium text-primary">Admin đang tiếp nhận và can thiệp</p>
-</div>
+<div class="relative space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant/30" id="ct-timeline">
+    <div class="relative pl-10">
+        <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-[#e6f4e6] flex items-center justify-center">
+            <span class="material-symbols-outlined text-[16px] text-[#008000]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        </div>
+        <p class="text-label-bold text-label-bold text-on-surface-variant" id="ct-timeline-date">...</p>
+        <p class="text-body-md font-medium">Đơn hàng được tạo</p>
+    </div>
 </div>
 </section>
 <!-- 3. Panel Hành động Can thiệp -->
 <section class="bg-surface-container-lowest rounded-xl p-stack_lg shadow-md border border-primary/20">
 <h3 class="font-title-sm text-title-sm mb-6 flex items-center text-primary">
 <span class="material-symbols-outlined mr-2">gavel</span> Quyết định can thiệp của Admin
-                </h3>
+</h3>
 <div class="space-y-stack_lg">
-<div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant mb-2 uppercase tracking-wide">Ghi chú can thiệp</label>
-<textarea class="w-full h-32 p-4 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body-md resize-none" placeholder="Nhập lý do và nội dung can thiệp chi tiết..."></textarea>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-stack_lg">
-<div class="space-y-4">
-<label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wide">Hướng giải quyết</label>
-<div class="space-y-3">
-<label class="flex items-center p-3 rounded-lg border border-outline-variant/30 hover:border-primary/50 cursor-pointer transition-colors has-[:checked]:bg-primary/5 has-[:checked]:border-primary">
-<input class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="decision" type="radio"/>
-<span class="ml-3 text-body-md font-medium">Ủng hộ khách hàng (Hoàn tiền)</span>
-</label>
-<label class="flex items-center p-3 rounded-lg border border-outline-variant/30 hover:border-primary/50 cursor-pointer transition-colors has-[:checked]:bg-primary/5 has-[:checked]:border-primary">
-<input class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="decision" type="radio"/>
-<span class="ml-3 text-body-md font-medium">Ủng hộ Tasker (Giữ nguyên)</span>
-</label>
-<label class="flex items-center p-3 rounded-lg border border-outline-variant/30 hover:border-primary/50 cursor-pointer transition-colors has-[:checked]:bg-primary/5 has-[:checked]:border-primary">
-<input checked="" class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="decision" type="radio"/>
-<span class="ml-3 text-body-md font-medium">Phân xử trung lập (Hoàn tiền 50%)</span>
-</label>
-</div>
-</div>
-<div class="flex flex-col justify-start">
-<label class="block font-label-bold text-label-bold text-on-surface-variant mb-2 uppercase tracking-wide">Số tiền điều chỉnh hoàn trả (VNĐ)</label>
-<div class="relative">
-<input class="w-full p-4 pl-4 pr-12 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-headline-md text-headline-md text-primary" type="number" value="250000"/>
-<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-on-surface-variant">VNĐ</span>
-</div>
-<p class="mt-2 text-body-sm text-on-surface-variant flex items-center italic">
-<span class="material-symbols-outlined text-[16px] mr-1">info</span> 
-                                Số tiền này sẽ được trừ từ ví Tasker và hoàn về ví khách hàng.
-                            </p>
-</div>
-</div>
-<div class="flex items-center justify-end space-x-4 pt-6 border-t border-outline-variant/20">
-<button class="px-8 py-3 rounded-full border border-primary text-primary font-label-bold text-label-bold hover:bg-primary/5 transition-all active:scale-95">
-                            HỦY
-                        </button>
-<button id="btn-xac-nhan-can-thiep" class="px-10 py-3 rounded-full bg-primary text-white font-label-bold text-label-bold shadow-lg hover:bg-[#8b3900] transition-all active:scale-95 flex items-center">
-<span class="material-symbols-outlined mr-2">verified_user</span>
-                            XÁC NHẬN CAN THIỆP
-                        </button>
-</div>
+    <div>
+        <label class="block font-label-bold text-label-bold text-on-surface-variant mb-2 uppercase tracking-wide">Ghi chú can thiệp</label>
+        <textarea id="ct-note" class="w-full h-24 p-4 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body-md resize-none" placeholder="Nhập lý do và nội dung can thiệp chi tiết..."></textarea>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-stack_lg">
+        <div class="space-y-4">
+            <label class="block font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wide">Gán Tasker Thủ Công</label>
+            <select id="ct-tasker-select" class="w-full p-4 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-body-md bg-surface">
+                <option value="">-- Đang tải danh sách Tasker... --</option>
+            </select>
+            <button id="btn-assign-tasker" class="w-full py-3 rounded-full bg-primary text-white font-label-bold text-label-bold shadow-md hover:bg-[#8b3900] transition-all active:scale-95 flex items-center justify-center">
+                <span class="material-symbols-outlined mr-2 text-[18px]">engineering</span>
+                ÉP GÁN TASKER NÀY
+            </button>
+        </div>
+        <div class="space-y-4 flex flex-col justify-end">
+            <button id="btn-resolve-order" class="w-full py-3 rounded-full bg-[#e6f4e6] text-[#008000] border border-[#008000] font-label-bold text-label-bold shadow-sm hover:bg-[#ccffcc] transition-all active:scale-95 flex items-center justify-center">
+                <span class="material-symbols-outlined mr-2 text-[18px]">check_circle</span>
+                ĐÃ LIÊN HỆ & XỬ LÝ (GIỮ ĐƠN)
+            </button>
+            <button id="btn-cancel-order" class="w-full py-3 rounded-full bg-error-container text-on-error-container font-label-bold text-label-bold shadow-sm hover:bg-error-container/80 transition-all active:scale-95 flex items-center justify-center">
+                <span class="material-symbols-outlined mr-2 text-[18px]">cancel</span>
+                HỦY ĐƠN & HOÀN TIỀN
+            </button>
+        </div>
+    </div>
 </div>
 </section>
 </div>
@@ -572,10 +566,10 @@
 
 })();
 </script><!-- END-CHIOI-JS-INJECT -->
-<script src="../shared/api.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script>
 (async function() {
-  if (!ChiOiAuth.requireAuth('../Khachhang/dangnhap.html')) return;
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
   var statusMap = {
     'PENDING': { label: 'Chờ xác nhận', cls: 'bg-yellow-100 text-yellow-700' },
@@ -588,39 +582,110 @@
   };
 
   var urlParams = new URLSearchParams(window.location.search);
-  var currentOrderId = parseInt(urlParams.get('id'));
+    var currentOrderId = parseInt(urlParams.get('id'));
+    var allOrders = [];
 
-  showLoading();
-  try {
-    var orders = await apiFetch('/api/admin/orders');
-    hideLoading();
-    
-    var targetOrder = null;
-    if (currentOrderId) {
-      targetOrder = orders.find(function(o) { return o.order_id === currentOrderId; });
-    } else {
-      // Fallback cho UI nếu không có ID: chọn đơn đầu tiên có thể can thiệp
-      targetOrder = orders.find(function(o) { return ['PENDING', 'SEARCHING', 'IN_PROGRESS', 'ACCEPTED', 'TASKER_ARRIVED'].indexOf(o.status) > -1; });
+    function showOrderList() {
+      document.getElementById('intervention-list').classList.remove('hidden');
+      document.getElementById('intervention-details').classList.add('hidden');
     }
 
-    if (targetOrder) {
+    function renderOrderList(orders) {
+      var tbody = document.getElementById('ct-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      var eligibleOrders = orders.filter(function(o) {
+        return ['PENDING', 'SEARCHING', 'IN_PROGRESS', 'ACCEPTED', 'TASKER_ARRIVED'].indexOf(o.status) > -1;
+      });
+
+      if (eligibleOrders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8">Không có đơn hàng nào cần can thiệp lúc này</td></tr>';
+        return;
+      }
+
+      eligibleOrders.forEach(function(order, idx) {
+        var s = Object.assign({}, statusMap[order.status] || { label: order.status, cls: 'bg-gray-100 text-gray-700' });
+        var customerName = (order.customers && order.customers.users && order.customers.users.full_name) ? order.customers.users.full_name : '—';
+        var taskerName = (order.taskers && order.taskers.users && order.taskers.users.full_name) ? order.taskers.users.full_name : '—';
+        var serviceName = (order.services && order.services.name) ? order.services.name : '—';
+
+        var isLongWait = (order.status === 'PENDING' || order.status === 'SEARCHING') && (new Date().getTime() - new Date(order.created_at).getTime() > 8 * 60 * 1000);
+
+        var tr = document.createElement('tr');
+        tr.className = (idx % 2 ? 'bg-[#F8F5F3]/30 ' : '') + 'hover:bg-surface-container-low/50 transition-colors group cursor-pointer';
+        
+        if (isLongWait) {
+          s.label = 'Cần can thiệp';
+          s.cls = 'bg-error text-white shadow-sm';
+          tr.className += ' border-l-4 border-error bg-error/5';
+        }
+
+        tr.innerHTML =
+          '<td class="px-6 py-4 font-label-bold text-primary">#DH-' + String(order.order_id).padStart(4, '0') + '</td>' +
+          '<td class="px-6 py-4 font-body-sm text-on-surface">' + customerName + '</td>' +
+          '<td class="px-6 py-4 font-body-sm text-on-surface-variant">' + serviceName + '</td>' +
+          '<td class="px-6 py-4"><span class="mx-auto block w-max px-3 py-1 rounded-full font-label-md text-[11px] ' + s.cls + '">' + s.label + '</span></td>' +
+          '<td class="px-6 py-4 font-body-sm text-on-surface-variant">' + formatDateTime(order.created_at) + '</td>' +
+          '<td class="px-6 py-4 text-right"><button class="px-4 py-1 rounded-full bg-primary/10 text-primary font-label-bold text-[12px] hover:bg-primary hover:text-white transition-colors">CAN THIỆP</button></td>';
+
+        tr.addEventListener('click', function() {
+          showOrderDetail(order);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function loadTaskersForAssign() {
+      try {
+        var users = await apiFetch('/api/admin/users');
+        var taskerSelect = document.getElementById('ct-tasker-select');
+        if (!taskerSelect) return;
+        var taskers = users.filter(function(u) { return u.role === 'TASKER' && u.status === 'ACTIVE'; });
+        taskerSelect.innerHTML = '<option value="">-- Chọn Tasker để gán --</option>';
+        taskers.forEach(function(t) {
+          if (t.taskers && t.taskers.tasker_id) {
+            var opt = document.createElement('option');
+            opt.value = t.taskers.tasker_id;
+            opt.textContent = t.full_name + ' (' + t.phone + ')';
+            taskerSelect.appendChild(opt);
+          }
+        });
+      } catch (e) {
+        console.warn('Lỗi tải danh sách Tasker:', e);
+      }
+    }
+
+    function showOrderDetail(targetOrder) {
+      if (!targetOrder) return;
       currentOrderId = targetOrder.order_id;
+      
+      document.getElementById('intervention-list').classList.add('hidden');
+      document.getElementById('intervention-details').classList.remove('hidden');
+
       document.getElementById('ct-code').textContent = '#DH-' + String(targetOrder.order_id).padStart(4, '0');
       document.getElementById('ct-date').textContent = 'Ngày tạo: ' + formatDateTime(targetOrder.created_at);
-      var s = statusMap[targetOrder.status] || { label: targetOrder.status, cls: 'bg-gray-100 text-gray-700' };
+      var s = Object.assign({}, statusMap[targetOrder.status] || { label: targetOrder.status, cls: 'bg-gray-100 text-gray-700' });
+      
+      var isLongWait = (targetOrder.status === 'PENDING' || targetOrder.status === 'SEARCHING') && (new Date().getTime() - new Date(targetOrder.created_at).getTime() > 8 * 60 * 1000);
+      if (isLongWait) {
+        s.label = 'Cần can thiệp';
+        s.cls = 'bg-error text-white shadow-sm';
+      }
+
       var statusEl = document.getElementById('ct-status');
       statusEl.textContent = s.label;
       statusEl.className = 'px-3 py-1 rounded-full font-label-bold text-[10px] tracking-wider uppercase ' + s.cls;
       
-      var customerName = (targetOrder.users && targetOrder.users.full_name) ? targetOrder.users.full_name : '—';
-      var customerPhone = (targetOrder.users && targetOrder.users.phone_number) ? targetOrder.users.phone_number : '—';
+      var customerName = (targetOrder.customers && targetOrder.customers.users && targetOrder.customers.users.full_name) ? targetOrder.customers.users.full_name : '—';
+      var customerPhone = (targetOrder.customers && targetOrder.customers.users && targetOrder.customers.users.phone) ? targetOrder.customers.users.phone : '—';
       var customerAddress = targetOrder.address || '—';
       document.getElementById('ct-customer-name').textContent = customerName;
       document.getElementById('ct-customer-phone').textContent = customerPhone;
       document.getElementById('ct-customer-address').textContent = customerAddress;
 
       var taskerName = (targetOrder.taskers && targetOrder.taskers.users && targetOrder.taskers.users.full_name) ? targetOrder.taskers.users.full_name : 'Chưa có Tasker';
-      var taskerPhone = (targetOrder.taskers && targetOrder.taskers.users && targetOrder.taskers.users.phone_number) ? targetOrder.taskers.users.phone_number : '—';
+      var taskerPhone = (targetOrder.taskers && targetOrder.taskers.users && targetOrder.taskers.users.phone) ? targetOrder.taskers.users.phone : '—';
       document.getElementById('ct-tasker-name').textContent = taskerName;
       document.getElementById('ct-tasker-phone').textContent = taskerPhone;
 
@@ -628,33 +693,96 @@
       document.getElementById('ct-service-name').textContent = serviceName;
       document.getElementById('ct-service-time').textContent = formatDateTime(targetOrder.scheduled_time || targetOrder.created_at);
       document.getElementById('ct-price').textContent = formatVND(targetOrder.total_price);
-    } else {
-      showToastMsg('Không tìm thấy đơn hàng để can thiệp.');
+      
+      var timelineDateEl = document.getElementById('ct-timeline-date');
+      if (timelineDateEl) timelineDateEl.textContent = formatDateTime(targetOrder.created_at);
     }
-  } catch(e) {
-    hideLoading();
-    showToastMsg('Lỗi tải dữ liệu: ' + e.message);
-  }
 
-  var btnXacNhan = document.getElementById('btn-xac-nhan-can-thiep');
-  if (btnXacNhan) {
-    btnXacNhan.addEventListener('click', async function() {
-      if (!currentOrderId) {
-        showToastMsg('Không có đơn hàng nào đang hoạt động để can thiệp.');
+    showLoading();
+    try {
+      allOrders = await apiFetch('/api/admin/orders');
+      await loadTaskersForAssign();
+      hideLoading();
+      
+      if (currentOrderId) {
+        var targetOrder = allOrders.find(function(o) { return o.order_id === currentOrderId; });
+        if (targetOrder) {
+          showOrderDetail(targetOrder);
+        } else {
+          showToastMsg('Không tìm thấy đơn hàng ID=' + currentOrderId);
+          renderOrderList(allOrders);
+          showOrderList();
+        }
+      } else {
+        renderOrderList(allOrders);
+        showOrderList();
+      }
+    } catch(e) {
+      hideLoading();
+      showToastMsg('Lỗi tải dữ liệu: ' + e.message);
+    }
+    
+    var btnBack = document.getElementById('btn-back-to-list');
+    if (btnBack) {
+      btnBack.addEventListener('click', function() {
+        showOrderList();
+        currentOrderId = null;
+        history.replaceState(null, '', 'canthiepdonhang.html');
+      });
+    }
+
+  // Handle action buttons
+  var btnAssign = document.getElementById('btn-assign-tasker');
+  if (btnAssign) {
+    btnAssign.addEventListener('click', async function() {
+      var taskerId = document.getElementById('ct-tasker-select').value;
+      if (!taskerId) {
+        showToastMsg('Vui lòng chọn một Tasker để gán!');
         return;
       }
       showLoading();
       try {
-        await apiFetch('/api/admin/orders/' + currentOrderId + '/cancel', { method: 'PATCH' });
+        await apiFetch('/api/admin/orders/' + currentOrderId + '/assign', { method: 'PATCH', body: JSON.stringify({ tasker_id: parseInt(taskerId) }) });
         hideLoading();
-        showToastMsg('✅ Đã can thiệp thành công và hủy đơn #' + currentOrderId);
-        setTimeout(function() {
-          window.location.href = 'quanlydonhang.html';
-        }, 1500);
-
+        showToastMsg('✅ Đã gán Tasker thành công!');
+        setTimeout(function() { window.location.reload(); }, 1500);
       } catch (e) {
         hideLoading();
-        showToastMsg('❌ Lỗi can thiệp: ' + e.message);
+        showToastMsg('❌ Lỗi gán Tasker: ' + e.message);
+      }
+    });
+  }
+
+  var btnResolve = document.getElementById('btn-resolve-order');
+  if (btnResolve) {
+    btnResolve.addEventListener('click', async function() {
+      var note = document.getElementById('ct-note') ? document.getElementById('ct-note').value : '';
+      showLoading();
+      try {
+        await apiFetch('/api/admin/orders/' + currentOrderId + '/resolve', { method: 'PATCH', body: JSON.stringify({ note: note }) });
+        hideLoading();
+        showToastMsg('✅ Đã lưu thông tin xử lý đơn hàng!');
+        setTimeout(function() { window.location.reload(); }, 1500);
+      } catch (e) {
+        hideLoading();
+        showToastMsg('❌ Lỗi: ' + e.message);
+      }
+    });
+  }
+
+  var btnCancel = document.getElementById('btn-cancel-order');
+  if (btnCancel) {
+    btnCancel.addEventListener('click', async function() {
+      if (!confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) return;
+      showLoading();
+      try {
+        await apiFetch('/api/admin/orders/' + currentOrderId + '/cancel', { method: 'PATCH' });
+        hideLoading();
+        showToastMsg('✅ Đã hủy đơn hàng thành công!');
+        setTimeout(function() { window.location.reload(); }, 1500);
+      } catch (e) {
+        hideLoading();
+        showToastMsg('❌ Lỗi hủy đơn: ' + e.message);
       }
     });
   }
@@ -663,7 +791,7 @@
   var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
-      ChiOiAuth.logout('../Khachhang/dangnhap.html');
+      ChiOiAuth.logout('../khachhang/dangnhap.html');
     });
   }
 })();

@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chị Ơi CMS - Quản lý ví &amp; Giao dịch</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -150,8 +152,13 @@
 <!-- SideNavBar Component -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -229,325 +236,113 @@
 </header>
 <!-- Main Content -->
 <main class="ml-[240px] pt-16 min-h-screen">
-<div class="p-container_padding space-y-gutter">
-<!-- Filter Bar -->
-<div class="flex flex-wrap items-center justify-between gap-4 bg-surface p-4 rounded-xl card-shadow">
-<div class="flex items-center gap-4">
-<div class="flex flex-col gap-1">
-<span class="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Loại giao dịch</span>
-<select class="bg-surface-container-low border-none rounded-lg text-body-sm py-2 px-4 focus:ring-1 focus:ring-primary outline-none min-w-[160px]">
-<option>Tất cả giao dịch</option>
-<option>Nạp tiền</option>
-<option>Thanh toán</option>
-<option>Hoàn tiền</option>
-<option>Rút tiền</option>
-</select>
-</div>
-<div class="flex flex-col gap-1">
-<span class="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Khoảng ngày</span>
-<div class="flex items-center bg-surface-container-low rounded-lg px-3 py-2 gap-2">
-<span class="material-symbols-outlined text-sm text-on-surface-variant">calendar_today</span>
-<span class="text-body-sm">01/10/2023 - 31/10/2023</span>
-</div>
-</div>
-</div>
-<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
-<span class="material-symbols-outlined text-sm">download</span>
-                    Xuất báo cáo
-                </button>
-</div>
-<!-- Stat Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
-<!-- Card 1 -->
-<div class="bg-surface p-6 rounded-xl card-shadow border border-white flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-tertiary-container/10 flex items-center justify-center text-tertiary-container">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance</span>
-</div>
-<div>
-<p class="font-label-md text-on-surface-variant">Tổng tiền trong hệ thống</p>
-<h3 class="font-display-lg text-display-lg text-on-surface">245.8M <span class="text-title-sm font-medium">đ</span></h3>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="bg-surface p-6 rounded-xl card-shadow border border-white flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary-container">
-<span class="material-symbols-outlined">swap_horiz</span>
-</div>
-<div>
-<p class="font-label-md text-on-surface-variant">Giao dịch hôm nay</p>
-<h3 class="font-display-lg text-display-lg text-on-surface">89 <span class="text-title-sm font-medium">GD</span></h3>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="bg-surface p-6 rounded-xl card-shadow border border-white flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-[#FFD700]/10 flex items-center justify-center text-[#B8860B]">
-<span class="material-symbols-outlined">pending</span>
-</div>
-<div>
-<p class="font-label-md text-on-surface-variant">Chờ thanh toán Tasker</p>
-<h3 class="font-display-lg text-display-lg text-on-surface">12.3M <span class="text-title-sm font-medium">đ</span></h3>
-</div>
-</div>
-<!-- Card 4 -->
-<div class="bg-surface p-6 rounded-xl card-shadow border border-white flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-<span class="material-symbols-outlined">payments</span>
-</div>
-<div>
-<p class="font-label-md text-on-surface-variant">Đã thanh toán tháng này</p>
-<h3 class="font-display-lg text-display-lg text-on-surface">98.5M <span class="text-title-sm font-medium">đ</span></h3>
-</div>
-</div>
-</div>
-<!-- Two Column Layout -->
-<div class="grid grid-cols-12 gap-gutter">
-<!-- Left Column: Transaction History -->
-<div class="col-span-12 lg:col-span-7 xl:col-span-8 bg-surface rounded-xl card-shadow overflow-hidden">
-<div class="p-6 border-b border-outline-variant/20 flex justify-between items-center">
-<h3 class="font-title-sm text-title-sm">Lịch sử giao dịch gần đây</h3>
-<button class="text-primary font-label-bold hover:underline">Xem tất cả</button>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left">
-<thead class="bg-surface-container-low/50">
-<tr class="font-label-bold text-on-surface-variant">
-<th class="px-6 py-4 border-b border-outline-variant/20">ID GD</th>
-<th class="px-6 py-4 border-b border-outline-variant/20">Người dùng</th>
-<th class="px-6 py-4 border-b border-outline-variant/20">Loại</th>
-<th class="px-6 py-4 border-b border-outline-variant/20">Số tiền</th>
-<th class="px-6 py-4 border-b border-outline-variant/20">Trạng thái</th>
-<th class="px-6 py-4 border-b border-outline-variant/20">Thời gian</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-outline-variant/10 text-body-sm">
-<tr class="hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90124</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Minh Nhật" class="w-8 h-8 rounded-full" data-alt="Close-up portrait of a young professional Vietnamese man with a friendly expression, wearing a simple white polo shirt, set against a warm-toned minimalist office background with soft bokeh lighting and natural sunlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVL-P1BcJ_JjSgOXwT3rYgG-4Z-mTc_yy62tsJbBQw__wVEipF147LCKu7ruewwS1cBbcunrqpZb0j3ndPTUWh9lr_7kvZhjkkw2vkHEYnVVaew91WCUeAaKGj5OL74d7HacSm-zl0y8ZDqXFJQTg1mYfRB-nZFDyzow_L5jQmCvfEXEjsi6okD5SajTkHnGq11OorMa6_m1IpCDYpeybDX_a0LdZWjf8YACzkY_3Mw63pUyvRDoqfCjHCqiR5EV1h6GKKw1Cr6JQ"/>
-<span class="font-medium">Minh Nhật</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">Nạp tiền</span></td>
-<td class="px-6 py-4 font-bold text-green-600">+500,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span>Thành công</div></td>
-<td class="px-6 py-4 text-on-surface-variant">10:45 - 24/10</td>
-</tr>
-<tr class="bg-background/50 hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90123</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Thu Hà" class="w-8 h-8 rounded-full" data-alt="Portrait of a sophisticated Vietnamese woman in her 30s, smiling gracefully, wearing a pastel orange linen shirt that matches the brand's primary color, indoors with bright natural light reflecting off a cream-colored wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf5gRtlCjXpDGcp-AcQ-Otm3xMaxdLWe5d0JfQPnAQCwReWxxcy6Bzzh7lqugu_mWJ76eB8xulo0t00G-S6bjrIgBSXbtjqEzuGV27UixQ24YnjhEz2EYsGdFzaSe338xRcTFBlP_waDQ0Ed2amtCVQhysVcagBvITx1KNd6OXviURiSdmeuSjpliBnLJY-gOwXGRrrTQOpws2OWKOoKZCOxTMJ0zelmroYyBLDIXTukz75mpVRkbU819wuymEm8uGf9fn37OgLHU"/>
-<span class="font-medium">Thu Hà</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold">Thanh toán</span></td>
-<td class="px-6 py-4 font-bold text-error">-120,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span>Thành công</div></td>
-<td class="px-6 py-4 text-on-surface-variant">09:30 - 24/10</td>
-</tr>
-<tr class="hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90122</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Quang Linh" class="w-8 h-8 rounded-full" data-alt="Friendly looking Vietnamese delivery driver or tasker wearing a professional uniform, smiling at the camera, clean outdoor urban setting during a sunny afternoon, warm cinematic lighting emphasizing reliable character." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDItEK545Hs8SW2cb1PIbvVvCb_P0Dcre-fbxTr1oCvLaO4F7ist5LYLUt1y2Yt3H2yjYdc2FgNDZv-nGh_5_sI5ZsHJftO5lZn0dnyKRpDHLAlhiskrpa7O0fztLfrGGTZyzKPY_CFBoa_XY1OLuUWW6s-ZZSV9_8uy7xnFwaQWtugjFE3ieyR5Xpo_WeK01AOInMD0cyu9z9CsPy5AXhyPngRcnfRKzfxUVyPwPx7_LE9UCCHxUqqkf7BMwTb0cyn5IYhxQFyApo"/>
-<span class="font-medium">Quang Linh</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-[10px] font-bold">Rút tiền</span></td>
-<td class="px-6 py-4 font-bold text-error">-2,500,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-orange-400"></span>Đang xử lý</div></td>
-<td class="px-6 py-4 text-on-surface-variant">08:15 - 24/10</td>
-</tr>
-<tr class="bg-background/50 hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90121</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Bảo Trâm" class="w-8 h-8 rounded-full" data-alt="Candid shot of a young Vietnamese woman using her smartphone, sitting in a cozy modern cafe with warm lighting, wearing a professional but casual brown sweater, soft focus on the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSDPKyQnAsDKQ_jsvwlR46fK9mAhN_Su8enjd0Mf3UQVufAzdRyB-oxjdEf8sDvFZ_iRfZ6iQkveHYaFE38m2fY9hr8gtXo1Jy1ttXM4bf59VJrk-kMb0rsx3Tg6e_YOThouVlFxHdJiFEcP_ohxVGUtusFwVv3Fxn8z0h1Nx3jIj4xWkJ1NeI785TS6kksydXpcTegJ0PQlGZ5OuEic-GtQaIasWdJHfVVlS_fL3d9LNFVCaYFKgOnwjQngwax3b96Y4ASnQ-jr4"/>
-<span class="font-medium">Bảo Trâm</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-[10px] font-bold">Hoàn tiền</span></td>
-<td class="px-6 py-4 font-bold text-green-600">+85,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span>Thất bại</div></td>
-<td class="px-6 py-4 text-on-surface-variant">23:50 - 23/10</td>
-</tr>
-<tr class="hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90120</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Duy Hải" class="w-8 h-8 rounded-full" data-alt="A clean-cut Vietnamese man in his 40s, looking professional in a business casual outfit, sitting at a desk with a laptop, soft light entering from a window, professional studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbJ7BU-QPcHg374QRIUuehtYpDrONpIM-lpWeg3oftgYlrtcCCTYNvPwWp8DzFWKUaG7AxuFV6A32di1L34-txl7MH3JaNs-Ub-Tg40eqsukoF1tFLJvm4Kxqs0Ies3UmExc-5Yg5GzY0IzsDr2Jb6F81EzcOMz5hP-dbfoAdae_NAM1nrcbz-gZcP5GyyTWSmeKpcLgJ8WYU5RShlBlSIzsgI3t1jtx7CvAkmfupJQ2GERfDgjWzvm1YC-n6e1VV6uxOlX6VIIgc"/>
-<span class="font-medium">Duy Hải</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold">Thanh toán</span></td>
-<td class="px-6 py-4 font-bold text-error">-450,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span>Thành công</div></td>
-<td class="px-6 py-4 text-on-surface-variant">21:10 - 23/10</td>
-</tr>
-<tr class="bg-background/50 hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90119</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Anh Vũ" class="w-8 h-8 rounded-full" data-alt="Modern Vietnamese man wearing glasses and a denim shirt, smiling kindly, outdoor balcony background with city plants, evening golden hour lighting creating a warm and approachable feeling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1nsx3I1eU-oUABTE4NqBb2ZsfjtqTeLrHomMRlucbJsAtczRESanTN6s7b1fQC-Ox0-Y2NjjmY7Ukf4BleoI-q3eluq0or4ybNTrkVrRa-Rz6u17Cod2a3TdQrRlQU6ig3XVUr_AQsGOMVaimVFWqSLD0Boxv5ZLb8eAPzjI8IrU0EsWIcllZ10OQoCDYn9A57p5njiWwsK8nULw47EOhvzleMf__TPAt7ikC1xn-AptjtIUobY75CAlD23pKtH56dBkEKgQnCcs"/>
-<span class="font-medium">Anh Vũ</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">Nạp tiền</span></td>
-<td class="px-6 py-4 font-bold text-green-600">+1,000,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span>Thành công</div></td>
-<td class="px-6 py-4 text-on-surface-variant">19:45 - 23/10</td>
-</tr>
-<tr class="hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90118</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Lan Ý" class="w-8 h-8 rounded-full" data-alt="Elegant Vietnamese woman with long dark hair, wearing a stylish minimalist outfit, standing in a brightly lit modern apartment, warm tones, high-quality digital photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXozzzUf1pjaLRpTj2rbEpP9_I86IN4U2gzGJVdN_O4IrfjB6VUrMGSWo3UkJATKo-2tDpl5ZIBm4Wzd4fe1xYdKqhSjLIKwU_d8iloyjME3_krXEhU6mZJUgnMq5MR6ck4-NTBOHDqNF-74WXvTFIgsFS3gD1IPnjauvPBfm3OoVxkGida7NvE-P8NZpNZGVT1g-04WbDsZ_9Z7Ttv4pA2jKy1m-wlz2FsIanQgR-LLoz2iI-rYHjNBgrZJbPnQioaZkO5XNJp3c"/>
-<span class="font-medium">Lan Ý</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold">Thanh toán</span></td>
-<td class="px-6 py-4 font-bold text-error">-300,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span>Thành công</div></td>
-<td class="px-6 py-4 text-on-surface-variant">18:20 - 23/10</td>
-</tr>
-<tr class="bg-background/50 hover:bg-surface-container-lowest transition-colors">
-<td class="px-6 py-4 font-mono text-xs">#TX90117</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<img alt="Tú Xuân" class="w-8 h-8 rounded-full" data-alt="Vietnamese artisan or craftsman tasker looking focused but friendly, wearing a clean work apron, indoor workshop setting with warm wooden textures and soft ambient lighting, high definition professional portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlEtVRpqKzAfTtZRVe2PlToS1htkzP8d6oJMw5pHeHQPMoi8H3J6DanTfjsSXx2UnkeepKBsDE8NhS4g6OEJepckj9Qlj8S985ZmCzEoN40psNjt-sN0nJLf-OgpbH35MMV2oFmGwbwj3nd6Y3ysY63QLKe4AbKnK5hHCbx1XnbXzCWEtElSgTb7GAIQaF2S5wUkc6ylYYxtMyUCSD5PaoOSaWCXdPjMXSXvt63RxTuz42TZHsudbcofExcKtF5vYa2QaVLrMFZP8"/>
-<span class="font-medium">Tú Xuân</span>
-</div>
-</td>
-<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-[10px] font-bold">Rút tiền</span></td>
-<td class="px-6 py-4 font-bold text-error">-1,200,000đ</td>
-<td class="px-6 py-4"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span>Thành công</div></td>
-<td class="px-6 py-4 text-on-surface-variant">17:05 - 23/10</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="p-4 flex items-center justify-center gap-2 border-t border-outline-variant/10">
-<button class="w-8 h-8 rounded-lg border border-outline-variant/20 flex items-center justify-center hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-sm">chevron_left</span>
-</button>
-<button class="w-8 h-8 rounded-lg bg-primary text-on-primary text-xs font-bold">1</button>
-<button class="w-8 h-8 rounded-lg border border-transparent text-xs font-medium hover:bg-surface-container-low transition-colors">2</button>
-<button class="w-8 h-8 rounded-lg border border-transparent text-xs font-medium hover:bg-surface-container-low transition-colors">3</button>
-<span class="text-on-surface-variant">...</span>
-<button class="w-8 h-8 rounded-lg border border-transparent text-xs font-medium hover:bg-surface-container-low transition-colors">12</button>
-<button class="w-8 h-8 rounded-lg border border-outline-variant/20 flex items-center justify-center hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-sm">chevron_right</span>
-</button>
-</div>
-</div>
-<!-- Right Column -->
-<div class="col-span-12 lg:col-span-5 xl:col-span-4 space-y-gutter">
-<!-- Yêu cầu rút tiền Card -->
-<div class="bg-surface rounded-xl card-shadow overflow-hidden">
-<div class="p-5 border-b border-outline-variant/20 flex justify-between items-center">
-<h3 class="font-label-bold text-on-surface uppercase tracking-wider flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-lg">account_balance_wallet</span>
-                                Yêu cầu rút tiền Tasker
-                            </h3>
-<span class="bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded-full">3 mới</span>
-</div>
-<div class="p-2 space-y-2">
-<!-- Tasker Item 1 -->
-<div class="p-4 rounded-xl border border-outline-variant/10 bg-surface-container-low/30 space-y-4">
-<div class="flex justify-between items-start">
-<div class="flex items-center gap-3">
-<img alt="Hoàng Vũ" class="w-10 h-10 rounded-full" data-alt="Portrait of a diligent Vietnamese man in his 20s, wearing a branded green service uniform, looking directly at the camera with a confident and trustworthy smile, studio lighting with a warm cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD806jP-Jv0n-dnvSIEW3zxSggu3dB77tWVbKLPjXyanOdlE9dkNE304WkJe9kwFea7ertFDwLEis9BidpwWGUFMOSVDteT5nJu5J9FXsY_BbAH-Eo_WRAzzdy7nGWIa78Zf3j5YT6JfKVW-AyCF2_XNZJpaC296lvW_GQ_JZcK-VDI-aIaRlJAtPpU6D78XdXRwg1A3ZVksPLWGdOH0LryrQnlCYIaH5q_tuvnciyYD8YfqyPBM7KcyfPAz8vnF0_uAp2ENp-B0pE"/>
-<div>
-<p class="font-label-bold">Trần Hoàng Vũ</p>
-<p class="text-[10px] text-on-surface-variant italic">Số dư ví: 3,450,000đ</p>
-</div>
-</div>
-<p class="text-primary font-display-lg text-lg">2,000,000đ</p>
-</div>
-<div class="flex gap-2">
-<button class="flex-1 bg-green-600 text-white py-2 rounded-lg font-label-bold text-[11px] hover:bg-green-700 transition-colors">Duyệt rút</button>
-<button class="flex-1 border border-error text-error py-2 rounded-lg font-label-bold text-[11px] hover:bg-error/5 transition-colors">Từ chối</button>
-</div>
-</div>
-<!-- Tasker Item 2 -->
-<div class="p-4 rounded-xl border border-outline-variant/10 hover:bg-surface-container-low/30 transition-colors space-y-4">
-<div class="flex justify-between items-start">
-<div class="flex items-center gap-3">
-<img alt="Mai Lan" class="w-10 h-10 rounded-full" data-alt="Friendly Vietnamese woman wearing a professional cleaning service uniform, smiling brightly, standing in a clean and modern minimalist living room with bright soft morning light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgx6KkUr-GqMGDFgAAZBqF_i2N79n0hjBqcGAoQS4_LBOxniXTItDoXWILHMA--1CqBM0SqEXFAMR0NUD-b5YXsi0omxE7qF1poJv6L6jjB9jj8RsAxxslrLL0y-7QI70FgDd8qjpZGF8a9Qa3qqObeqZCB8_tMppEwLZpwU-23eVGe0VBbURMSjNX_csNOACNSrCHh3ahqXFihd3FsKNdQQkg9CODh7NztBlBWLiowxLBJ5AP7KaCxFt6ctuN1_Ah8GajA24yID0"/>
-<div>
-<p class="font-label-bold">Nguyễn Mai Lan</p>
-<p class="text-[10px] text-on-surface-variant italic">Số dư ví: 1,820,000đ</p>
-</div>
-</div>
-<p class="text-primary font-display-lg text-lg">1,500,000đ</p>
-</div>
-<div class="flex gap-2">
-<button class="flex-1 bg-green-600 text-white py-2 rounded-lg font-label-bold text-[11px] hover:bg-green-700 transition-colors">Duyệt rút</button>
-<button class="flex-1 border border-error text-error py-2 rounded-lg font-label-bold text-[11px] hover:bg-error/5 transition-colors">Từ chối</button>
-</div>
-</div>
-<!-- Tasker Item 3 -->
-<div class="p-4 rounded-xl border border-outline-variant/10 hover:bg-surface-container-low/30 transition-colors space-y-4">
-<div class="flex justify-between items-start">
-<div class="flex items-center gap-3">
-<img alt="Thế Cường" class="w-10 h-10 rounded-full" data-alt="Vietnamese male tasker with a professional appearance, wearing a polo shirt, leaning against a clean white wall, natural warm lighting from the side, friendly and expert look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1mKYTKQqGRgt0HL52grLgQpaOx8oo8El7PZqBgRWGIpdQFqSMKVQxSMmDv2tDP8YARrwmgdEui0ggzMxW4788-UZb81_191wiyZc06BcFXxqP4pyOcZwm9VKAw6AKjTXtX_d5N8f-J0lCGK-PQBhrV6BgDtJIgIr4CtHo1IjbaoXjSOM6yVO1L_8sAH85zWkmo6YJpmFbS05c2Sw26BIArJjBA_uIDaqazMKEpmedXxd7Cpcv6_W2aam1n83gnXT0vmtrKvUHwQw"/>
-<div>
-<p class="font-label-bold">Phan Thế Cường</p>
-<p class="text-[10px] text-on-surface-variant italic">Số dư ví: 5,600,000đ</p>
-</div>
-</div>
-<p class="text-primary font-display-lg text-lg">4,000,000đ</p>
-</div>
-<div class="flex gap-2">
-<button class="flex-1 bg-green-600 text-white py-2 rounded-lg font-label-bold text-[11px] hover:bg-green-700 transition-colors">Duyệt rút</button>
-<button class="flex-1 border border-error text-error py-2 rounded-lg font-label-bold text-[11px] hover:bg-error/5 transition-colors">Từ chối</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Giao dịch đang xử lý Card -->
-<div class="bg-surface rounded-xl card-shadow overflow-hidden">
-<div class="p-5 border-b border-outline-variant/20">
-<h3 class="font-label-bold text-on-surface uppercase tracking-wider flex items-center gap-2">
-<span class="material-symbols-outlined text-secondary animate-spin text-lg" style="animation-duration: 3s;">sync</span>
-                                Giao dịch đang xử lý
-                            </h3>
-</div>
-<div class="divide-y divide-outline-variant/10">
-<!-- Pending 1 -->
-<div class="p-4 flex items-center justify-between hover:bg-surface-container-low/30 transition-colors">
-<div class="flex items-center gap-3">
-<div class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></div>
-<div>
-<p class="text-body-sm font-medium">Lê Quang Đại</p>
-<p class="text-[10px] text-on-surface-variant italic">Chờ: 15 phút</p>
-</div>
-</div>
-<div class="text-right">
-<p class="font-label-bold text-on-surface">240,000đ</p>
-<p class="text-[10px] text-on-surface-variant">Thanh toán GD</p>
-</div>
-</div>
-<!-- Pending 2 -->
-<div class="p-4 flex items-center justify-between hover:bg-surface-container-low/30 transition-colors">
-<div class="flex items-center gap-3">
-<div class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></div>
-<div>
-<p class="text-body-sm font-medium">Nguyễn Kiều Oanh</p>
-<p class="text-[10px] text-on-surface-variant italic">Chờ: 4 phút</p>
-</div>
-</div>
-<div class="text-right">
-<p class="font-label-bold text-on-surface">1,200,000đ</p>
-<p class="text-[10px] text-on-surface-variant">Nạp tiền vào ví</p>
-</div>
-</div>
-</div>
-<button class="w-full py-3 bg-surface-container-low text-on-surface-variant text-[11px] font-label-bold uppercase tracking-widest hover:bg-surface-container transition-colors">Xem tất cả hàng chờ</button>
-</div>
-</div>
-</div>
+<div class="p-8 space-y-6">
+
+  <!-- Filter Bar -->
+  <div class="flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 bg-white rounded-xl px-4 py-2.5 shadow-sm border border-outline-variant/20">
+        <span class="material-symbols-outlined text-sm text-on-surface-variant">filter_list</span>
+        <select id="tx-type-filter" class="bg-transparent border-none text-body-sm focus:ring-0 outline-none cursor-pointer pr-1">
+          <option value="">Tất cả giao dịch</option>
+          <option value="NAP">Nạp tiền (TOPUP/DEPOSIT)</option>
+          <option value="THANHTOAN">Thanh toán (PAYMENT/CHARGE/FEE)</option>
+          <option value="HOAN">Hoàn tiền (REFUND)</option>
+          <option value="RUT">Rút tiền (WITHDRAWAL/WITHDRAW)</option>
+          <option value="THUNHAP">Thu nhập (EARNING/INCOME/COMMISSION)</option>
+          <option value="BONUS">Thưởng (BONUS)</option>
+        </select>
+      </div>
+      <span id="tx-count" class="text-body-sm text-on-surface-variant"></span>
+    </div>
+    <button class="bg-primary text-white px-5 py-2.5 rounded-xl font-label-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all text-body-sm">
+      <span class="material-symbols-outlined text-sm">download</span>
+      Xuat bao cao
+    </button>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="stat-card bg-white p-5 rounded-2xl shadow-sm border border-outline-variant/20">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-blue-500" style="font-variation-settings:'FILL' 1;font-size:20px">account_balance</span>
+        </div>
+        <p class="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-wide leading-tight">Tong so du<br>he thong</p>
+      </div>
+      <h3 id="stat-total-balance" class="text-[20px] font-bold text-on-surface">&#x2014;</h3>
+    </div>
+    <div class="stat-card bg-white p-5 rounded-2xl shadow-sm border border-outline-variant/20">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-primary" style="font-size:20px">swap_horiz</span>
+        </div>
+        <p class="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-wide leading-tight">Giao dich<br>hom nay</p>
+      </div>
+      <h3 id="stat-today-tx" class="text-[20px] font-bold text-on-surface">&#x2014;</h3>
+    </div>
+    <div class="stat-card bg-white p-5 rounded-2xl shadow-sm border border-outline-variant/20">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-yellow-50 flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-yellow-600" style="font-size:20px">pending_actions</span>
+        </div>
+        <p class="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-wide leading-tight">Cho duyet<br>rut tien</p>
+      </div>
+      <h3 id="stat-pending-wd" class="text-[20px] font-bold text-yellow-600">&#x2014;</h3>
+    </div>
+    <div class="stat-card bg-white p-5 rounded-2xl shadow-sm border border-outline-variant/20">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-green-600" style="font-variation-settings:'FILL' 1;font-size:20px">payments</span>
+        </div>
+        <p class="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-wide leading-tight">Thanh toan<br>thang nay</p>
+      </div>
+      <h3 id="stat-paid-month" class="text-[20px] font-bold text-green-600">&#x2014;</h3>
+    </div>
+  </div>
+
+  <!-- Yeu cau rut tien (full width, grid ngang) -->
+  <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+        <h3 class="font-title-sm text-on-surface">Yeu cau rut tien Tasker</h3>
+      </div>
+      <span id="wd-badge" class="bg-primary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">...</span>
+    </div>
+    <div id="wd-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
+      <p class="text-body-sm text-on-surface-variant text-center py-4 col-span-full">Dang tai...</p>
+    </div>
+  </div>
+
+  <!-- Bang lich su giao dich (full width) -->
+  <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">receipt_long</span>
+      <h3 class="font-title-sm text-on-surface">Lich su giao dich</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="bg-surface-container-low/70 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
+            <th class="px-5 py-3 border-b border-outline-variant/20">Ma GD</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Nguoi dung</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Loai</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">So tien</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Trang thai</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Thoi gian</th>
+          </tr>
+        </thead>
+        <tbody id="tx-tbody" class="divide-y divide-outline-variant/10 text-body-sm">
+          <tr><td colspan="6" class="text-center py-16 text-on-surface-variant">
+            <span class="material-symbols-outlined text-5xl block mb-3 opacity-20">hourglass_empty</span>
+            Dang tai du lieu...
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 </main>
 <!-- CHIOI-JS-INJECT -->
@@ -751,77 +546,233 @@
 })();
 </script><!-- END-CHIOI-JS-INJECT -->
 
-<script src="../shared/api.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script>
 (async function() {
-  if (!ChiOiAuth.requireAuth('../Khachhang/dangnhap.html')) return;
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
-  // ===== 1. Load Withdrawal Requests =====
+  // ---- Helpers ----
+  function fmtVND(n) {
+    n = Math.abs(Number(n || 0));
+    if (n >= 1e9) return (n / 1e9).toFixed(1).replace(/\.0$/, '') + ' Tđ';
+    if (n >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'Mđ';
+    return n.toLocaleString('vi-VN') + 'đ';
+  }
+  function fmtVNDFull(n) {
+    return Math.abs(Number(n || 0)).toLocaleString('vi-VN') + 'đ';
+  }
+  function fmtDT(d) {
+    if (!d) return '—';
+    var dt = new Date(d);
+    return dt.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' - ' +
+           dt.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+  }
+
+  var TYPE_MAP = {
+    // Standard types
+    'TOPUP':      { label: 'Nạp tiền',    cls: 'bg-green-100 text-green-700' },
+    'DEPOSIT':    { label: 'Nạp tiền',    cls: 'bg-green-100 text-green-700' },
+    'PAYMENT':    { label: 'Thanh toán', cls: 'bg-blue-100 text-blue-700' },
+    'CHARGE':     { label: 'Thanh toán', cls: 'bg-blue-100 text-blue-700' },
+    'REFUND':     { label: 'Hoàn tiền',  cls: 'bg-yellow-100 text-yellow-700' },
+    'WITHDRAWAL': { label: 'Rút tiền',  cls: 'bg-purple-100 text-purple-700' },
+    'WITHDRAW':   { label: 'Rút tiền',  cls: 'bg-purple-100 text-purple-700' },
+    'EARNING':    { label: 'Thu nhập',  cls: 'bg-teal-100 text-teal-700' },
+    'INCOME':     { label: 'Thu nhập',  cls: 'bg-teal-100 text-teal-700' },
+    'FEE':        { label: 'Phí dịch vụ', cls: 'bg-orange-100 text-orange-700' },
+    'COMMISSION': { label: 'Hoa hồng', cls: 'bg-indigo-100 text-indigo-700' },
+    'TRANSFER':   { label: 'Chuyển tiền', cls: 'bg-pink-100 text-pink-700' },
+    'BONUS':      { label: 'Thưởng',     cls: 'bg-amber-100 text-amber-700' },
+  };
+  var STATUS_MAP = {
+    'COMPLETED': { dot: 'bg-green-500', label: 'Thành công' },
+    'SUCCESS':   { dot: 'bg-green-500', label: 'Thành công' },
+    'PENDING':   { dot: 'bg-orange-400', label: 'Đang xử lý' },
+    'PROCESSING':{ dot: 'bg-orange-400', label: 'Đang xử lý' },
+    'FAILED':    { dot: 'bg-red-500', label: 'Thất bại' },
+    'CANCELLED': { dot: 'bg-gray-400', label: 'Đã hủy' },
+  };
+
+  var allTransactions = [];
+
+  // ---- Render transaction table ----
+  function renderTxTable(txs) {
+    var tbody = document.getElementById('tx-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    if (!txs || txs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center py-12 text-on-surface-variant"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">inbox</span>Không có giao dịch nào</td></tr>';
+      return;
+    }
+    txs.forEach(function(tx, idx) {
+      var user = tx.wallets && tx.wallets.users ? tx.wallets.users : null;
+      var userName = user ? user.full_name : 'Người dùng #' + tx.wallet_id;
+      var typeInfo = TYPE_MAP[tx.type] || { label: tx.type, cls: 'bg-gray-100 text-gray-700' };
+      var statusInfo = STATUS_MAP[tx.status] || { dot: 'bg-gray-400', label: tx.status };
+      var isCredit = tx.type === 'TOPUP' || tx.type === 'REFUND' || tx.type === 'EARNING';
+      var amtClass = isCredit ? 'text-green-600 font-bold' : 'text-error font-bold';
+      var amtPrefix = isCredit ? '+' : '-';
+      var txCode = tx.transaction_code ? tx.transaction_code.substring(0, 16) + (tx.transaction_code.length > 16 ? '...' : '') : ('#TX' + tx.transaction_id);
+
+      var tr = document.createElement('tr');
+      tr.className = (idx % 2 ? 'bg-surface-container-low/30 ' : '') + 'hover:bg-primary/5 transition-colors';
+      tr.innerHTML =
+        '<td class="px-5 py-3 font-mono text-[11px] text-on-surface-variant">' + txCode + '</td>' +
+        '<td class="px-5 py-3"><div class="flex items-center gap-2.5">' +
+          '<div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">' +
+            '<span class="material-symbols-outlined text-primary" style="font-size:14px">person</span></div>' +
+          '<div><p class="text-body-sm font-medium leading-tight">' + userName + '</p>' +
+          (user ? '<p class="text-[10px] text-on-surface-variant">' + user.phone + '</p>' : '') +
+          '</div></div></td>' +
+        '<td class="px-5 py-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ' + typeInfo.cls + '">' + typeInfo.label + '</span></td>' +
+        '<td class="px-5 py-3 ' + amtClass + '">' + amtPrefix + fmtVNDFull(tx.amount) + '</td>' +
+        '<td class="px-5 py-3"><div class="flex items-center gap-1.5 text-body-sm"><span class="w-1.5 h-1.5 rounded-full ' + statusInfo.dot + '"></span>' + statusInfo.label + '</div></td>' +
+        '<td class="px-5 py-3 text-on-surface-variant text-[12px]">' + fmtDT(tx.created_at) + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  // ---- Filter ----
+  var GROUP_FILTER = {
+    'NAP':      ['TOPUP', 'DEPOSIT'],
+    'THANHTOAN':['PAYMENT', 'CHARGE', 'FEE'],
+    'HOAN':     ['REFUND'],
+    'RUT':      ['WITHDRAWAL', 'WITHDRAW'],
+    'THUNHAP':  ['EARNING', 'INCOME', 'COMMISSION'],
+    'BONUS':    ['BONUS'],
+  };
+
+  function applyFilter() {
+    var val = (document.getElementById('tx-type-filter') || {}).value || '';
+    var filtered;
+    if (!val) {
+      filtered = allTransactions;
+    } else if (GROUP_FILTER[val]) {
+      var allowed = GROUP_FILTER[val];
+      filtered = allTransactions.filter(function(t) { return allowed.indexOf(t.type) !== -1; });
+    } else {
+      filtered = allTransactions.filter(function(t) { return t.type === val; });
+    }
+    renderTxTable(filtered);
+    var countEl = document.getElementById('tx-count');
+    if (countEl) countEl.textContent = 'Hiển thị ' + filtered.length + ' / ' + allTransactions.length + ' giao dịch';
+  }
+
+  var filterSelect = document.getElementById('tx-type-filter');
+  if (filterSelect) filterSelect.addEventListener('change', applyFilter);
+
+  // ---- Search ----
+  var searchInput = document.querySelector('input[placeholder*="Tìm giao dịch"]');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      var q = searchInput.value.toLowerCase();
+      var filtered = allTransactions.filter(function(t) {
+        var user = t.wallets && t.wallets.users;
+        return !q ||
+          (t.transaction_code && t.transaction_code.toLowerCase().includes(q)) ||
+          (user && user.full_name && user.full_name.toLowerCase().includes(q)) ||
+          (user && user.phone && user.phone.includes(q));
+      });
+      renderTxTable(filtered);
+    });
+  }
+
+  // ---- Load all ----
+  showLoading();
   try {
-    var withdrawals = await apiFetch('/api/admin/withdrawals');
+    var [stats, txs, withdrawals] = await Promise.all([
+      apiFetch('/api/admin/wallet-stats'),
+      apiFetch('/api/admin/transactions'),
+      apiFetch('/api/admin/withdrawals')
+    ]);
+    hideLoading();
+    allTransactions = txs || [];
 
-    if (withdrawals && withdrawals.length > 0) {
-      var pendingWithdrawals = withdrawals.filter(function(w) { return w.status === 'PENDING'; });
+    // Update stat cards
+    var elTotalBal = document.getElementById('stat-total-balance');
+    var elTodayTx  = document.getElementById('stat-today-tx');
+    var elPending   = document.getElementById('stat-pending-wd');
+    var elPaid      = document.getElementById('stat-paid-month');
+    if (elTotalBal) elTotalBal.textContent = fmtVND(stats.totalBalance);
+    if (elTodayTx)  elTodayTx.textContent  = stats.todayTransactions + ' GD';
+    if (elPending)  elPending.textContent   = fmtVND(stats.pendingWithdrawal);
+    if (elPaid)     elPaid.textContent      = fmtVND(stats.paidThisMonth);
 
-      // Update pending count badge
-      var pendingBadge = document.querySelector('.bg-primary.text-on-primary.text-\\[10px\\]');
-      if (pendingBadge) pendingBadge.textContent = pendingWithdrawals.length + ' mới';
+    // Render với filter hiện tại
+    applyFilter();
 
-      // Render withdrawal items
-      var withdrawContainer = document.querySelector('.p-2.space-y-2');
-      if (withdrawContainer && pendingWithdrawals.length > 0) {
-        withdrawContainer.innerHTML = '';
+    // ---- Withdrawals ----
+    var pendingWd = (withdrawals || []).filter(function(w) { return w.status === 'PENDING'; });
+    var wdBadge = document.getElementById('wd-badge');
+    if (wdBadge) wdBadge.textContent = pendingWd.length + ' mới';
 
-        pendingWithdrawals.forEach(function(wd) {
+    var wdContainer = document.getElementById('wd-container');
+    if (wdContainer) {
+      wdContainer.innerHTML = '';
+      if (pendingWd.length === 0) {
+        wdContainer.innerHTML = '<p class="text-body-sm text-on-surface-variant text-center py-6">Không có yêu cầu rút tiền nào</p>';
+      } else {
+        pendingWd.slice(0, 6).forEach(function(wd) {
           var userName = (wd.wallets && wd.wallets.users && wd.wallets.users.full_name) || 'Tasker #' + wd.wallet_id;
-
+          var walletBalance = (wd.wallets && wd.wallets.balance) ? fmtVNDFull(wd.wallets.balance) : '—';
+          var reqTime = wd.created_at ? fmtDT(wd.created_at) : '—';
           var item = document.createElement('div');
-          item.className = 'p-4 rounded-xl border border-outline-variant/10 bg-surface-container-low/30 space-y-4';
+          item.className = 'bg-surface-container-low/40 border border-outline-variant/20 rounded-xl p-4 flex flex-col gap-3 hover:bg-surface-container-low transition-colors';
           item.innerHTML =
-            '<div class="flex justify-between items-start">' +
-              '<div class="flex items-center gap-3">' +
-                '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>' +
-                '<div><p class="font-label-bold">' + userName + '</p>' +
-                '<p class="text-[10px] text-on-surface-variant italic">Yêu cầu: ' + formatDateTime(wd.created_at) + '</p></div></div>' +
-              '<p class="text-primary font-display-lg text-lg">' + formatVND(wd.amount) + '</p></div>' +
+            '<div class="flex items-center justify-between">' +
+              '<div class="flex items-center gap-2.5">' +
+                '<div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary" style="font-size:18px">person</span></div>' +
+                '<div><p class="font-label-bold text-on-surface text-[13px]">' + userName + '</p>' +
+                '<p class="text-[10px] text-on-surface-variant">Dư ví: ' + walletBalance + '</p></div>' +
+              '</div>' +
+              '<div class="text-right"><p class="text-primary font-bold text-[16px]">' + fmtVNDFull(wd.amount) + '</p>' +
+              '<p class="text-[10px] text-on-surface-variant">' + reqTime + '</p></div>' +
+            '</div>' +
             '<div class="flex gap-2">' +
-              '<button class="wd-approve flex-1 bg-green-600 text-white py-2 rounded-lg font-label-bold text-[11px] hover:bg-green-700 transition-colors" data-wid="' + wd.withdrawal_id + '">Duyệt rút</button>' +
-              '<button class="wd-reject flex-1 border border-error text-error py-2 rounded-lg font-label-bold text-[11px] hover:bg-error/5 transition-colors" data-wid="' + wd.withdrawal_id + '">Từ chối</button></div>';
-
-          withdrawContainer.appendChild(item);
+              '<button class="wd-approve flex-1 bg-green-600 text-white py-1.5 rounded-lg font-label-bold text-[11px] hover:bg-green-700 transition-colors flex items-center justify-center gap-1" data-wid="' + wd.transaction_id + '"><span class="material-symbols-outlined" style="font-size:14px">check_circle</span>Duyệt rút</button>' +
+              '<button class="wd-reject border border-error text-error py-1.5 px-3 rounded-lg font-label-bold text-[11px] hover:bg-error/5 transition-colors flex items-center justify-center gap-1" data-wid="' + wd.transaction_id + '"><span class="material-symbols-outlined" style="font-size:14px">cancel</span>Từ chối</button>' +
+            '</div>';
+          wdContainer.appendChild(item);
         });
 
-        // ===== Approve/Reject Actions =====
-        document.querySelectorAll('.wd-approve').forEach(function(btn) {
+        // Events
+        wdContainer.querySelectorAll('.wd-approve').forEach(function(btn) {
           btn.addEventListener('click', async function() {
+            if (!confirm('Duyệt yêu cầu rút tiền này?')) return;
             var wid = btn.getAttribute('data-wid');
             showLoading();
             try {
-              await apiFetch('/api/admin/withdrawals/' + wid + '/approve', { method: 'PATCH', body: { status: 'COMPLETED' } });
+              await apiFetch('/api/admin/withdrawals/' + wid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'COMPLETED' }) });
               hideLoading();
-              showToastMsg('✅ Đã duyệt yêu cầu rút tiền #' + wid);
-              setTimeout(function() { location.reload(); }, 1500);
-            } catch (e) { hideLoading(); showToastMsg('❌ ' + e.message); }
+              showToastMsg('✅ Đã duyệt yêu cầu rút tiền!');
+              setTimeout(function() { location.reload(); }, 1200);
+            } catch(e) { hideLoading(); showToastMsg('❌ ' + e.message); }
           });
         });
-
-        document.querySelectorAll('.wd-reject').forEach(function(btn) {
+        wdContainer.querySelectorAll('.wd-reject').forEach(function(btn) {
           btn.addEventListener('click', async function() {
-            if (!confirm('Từ chối yêu cầu rút tiền?')) return;
+            if (!confirm('Từ chối yêu cầu rút tiền này?')) return;
             var wid = btn.getAttribute('data-wid');
             showLoading();
             try {
-              await apiFetch('/api/admin/withdrawals/' + wid + '/approve', { method: 'PATCH', body: { status: 'FAILED' } });
+              await apiFetch('/api/admin/withdrawals/' + wid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'FAILED' }) });
               hideLoading();
-              showToastMsg('✅ Đã từ chối yêu cầu rút tiền #' + wid);
-              setTimeout(function() { location.reload(); }, 1500);
-            } catch (e) { hideLoading(); showToastMsg('❌ ' + e.message); }
+              showToastMsg('✅ Đã từ chối yêu cầu!');
+              setTimeout(function() { location.reload(); }, 1200);
+            } catch(e) { hideLoading(); showToastMsg('❌ ' + e.message); }
           });
         });
       }
     }
-  } catch (e) {
-    console.warn('[Admin Wallets] Lỗi load withdrawals:', e.message);
+
+    // Logout
+    var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
+
+  } catch(e) {
+    hideLoading();
+    showToastMsg('❌ Lỗi tải dữ liệu: ' + e.message);
+    console.error('[Ví]', e);
   }
 })();
 </script>

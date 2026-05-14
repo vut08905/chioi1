@@ -7,24 +7,15 @@
  */
 
 // ==============================================================
-// 1. CẤU HÌNH — Auto-detect API_BASE theo môi trường
+// 1. CẤU HÌNH - TỰ ĐỘNG DETECT MÔI TRƯỜNG
 // ==============================================================
-// Thứ tự ưu tiên:
-//   1. window.__CHIOI_API_BASE__ (override thủ công, vd cho test/staging)
-//   2. Local dev: nếu serve từ localhost ở port KHÁC 3033 → trỏ về localhost:3033
-//      (FE @ http-server:8080, BE @ NestJS:3033)
-//   3. Production: '' (same-origin) → nginx proxy /api/ + /socket.io/ về backend
-const API_BASE = (function() {
-  if (typeof window === 'undefined') return '';
-  if (window.__CHIOI_API_BASE__) return window.__CHIOI_API_BASE__;
-  var host = window.location.hostname;
-  var port = window.location.port;
-  var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0';
-  if (isLocal && port !== '3033') {
-    return window.location.protocol + '//' + host + ':3033';
-  }
-  return '';
-})();
+// Production (Nginx port 80/443): API proxy cùng origin → không cần port
+// Dev local (http-server port 8080): API chạy riêng port 3000
+const _port = window.location.port;
+const _isProduction = (!_port || _port === '80' || _port === '443');
+const API_BASE = _isProduction
+  ? `${window.location.protocol}//${window.location.hostname}`
+  : `${window.location.protocol}//${window.location.hostname}:3000`;
 
 // ==============================================================
 // 2. TOKEN MANAGEMENT
