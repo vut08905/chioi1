@@ -141,7 +141,7 @@
 <div class="flex items-center gap-3">
 <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
 <div>
-<h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
+<h1 class="text-[20px] font-bold text-primary leading-tight">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
 </div>
 </div>
@@ -199,29 +199,31 @@
 </div>
 </div>
 </aside>
-<!-- Main Content Canvas -->
-<main class="ml-[240px] flex-1 flex flex-col min-w-0">
-<!-- TopAppBar -->
-<header class="sticky top-0 z-40 h-16 bg-surface shadow-sm px-container_padding flex items-center justify-between">
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-[240px] h-16 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center px-8">
 <nav class="flex items-center text-label-md font-label-md text-on-surface-variant gap-2">
-<a class="hover:text-primary" href="#">Admin</a>
-<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<a class="hover:text-primary" href="bangdieukhien.html">Admin</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
 <span class="text-primary font-bold">Quản lý đơn hàng</span>
 </nav>
-<div class="flex items-center gap-6">
-<div class="flex items-center gap-4 text-on-surface-variant">
-<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-variant cursor-pointer transition-colors" data-icon="notifications">notifications</button>
-<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-variant cursor-pointer transition-colors" data-icon="settings">settings</button>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[16px]">person</span>
 </div>
-<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
-<div class="text-right">
-<p class="font-label-bold text-label-md leading-none">Admin User</p>
-<p class="text-[10px] text-on-surface-variant">Quản trị viên</p>
-</div>
-<img alt="Admin User Avatar" class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="A professional headshot of a friendly corporate administrator in a bright, modern office setting. The individual is smiling slightly, exuding confidence and warmth. The lighting is soft and natural, emphasizing a high-end, professional UI aesthetic. The background is slightly blurred with warm, neutral tones that align with a modern enterprise software environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLXfC19zG3rzHFzA11Ks55RauCNOuYUwJJJGJtFRvZhOe8tq69UGvReFnh6aJTLuYkmzYlZ6oklyzi_5oW82ogAHWrOspy3IsAUio1-uRHZ5YXQYpcjD4KgB76W8uZpJ5o0_mOUL42ELoijJlq5QaoOydxxqSBYQxIwjwYSFNK2ge-ssZveddwFB9WtipcZqZzT9oz6dz61NxiUcg6Xg6dTVB0Xh-FAnvkdGnd2pBYMVIl9CDrSt5d8qbpcJWn3m-V2BYMWZuTs0k"/>
+<span class="font-label-md text-label-md text-on-surface">Admin</span>
 </div>
 </div>
 </header>
+<!-- Main Content Canvas -->
+<main class="ml-[240px] flex-1 flex flex-col min-w-0 pt-16">
 <!-- Page Content -->
 <div class="p-container_padding flex flex-col gap-stack_lg overflow-y-auto">
 <!-- Mini Stat Cards -->

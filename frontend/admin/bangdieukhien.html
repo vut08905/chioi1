@@ -144,7 +144,7 @@
 <div class="flex items-center gap-3">
 <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
 <div>
-<h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
+<h1 class="text-[20px] font-bold text-primary leading-tight">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
 </div>
 </div>
@@ -203,39 +203,30 @@
 </div>
 </aside>
 <!-- Main Content Area -->
-<main class="ml-[240px] flex-1 flex flex-col">
-<!-- TopAppBar -->
-<header class="sticky top-0 z-40 w-full h-16 bg-surface shadow-sm flex items-center justify-between px-container_padding">
-<div class="flex items-center gap-4">
-<nav class="flex text-on-surface-variant/60 font-label-md text-label-md items-center gap-2">
-<span>Admin</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-[240px] h-16 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center px-8">
+<nav class="flex items-center text-label-md font-label-md text-on-surface-variant gap-2">
+<a class="hover:text-primary" href="bangdieukhien.html">Admin</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
 <span class="text-primary font-bold">Dashboard</span>
 </nav>
-</div>
-<div class="flex items-center gap-6">
-<div class="relative flex items-center bg-surface-container-low rounded-full px-4 py-2 w-64 group focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-<span class="material-symbols-outlined text-on-surface-variant/50 mr-2">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-sm w-full p-0 text-on-surface" placeholder="Tìm kiếm hệ thống..." type="text"/>
-</div>
 <div class="flex items-center gap-4">
-<button class="relative p-2 rounded-full hover:bg-surface-variant transition-colors cursor-pointer active:scale-95">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all relative">
 <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
 <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
 </button>
-<button class="p-2 rounded-full hover:bg-surface-variant transition-colors cursor-pointer active:scale-95">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
 <span class="material-symbols-outlined text-on-surface-variant">settings</span>
 </button>
-<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/30">
-<div class="text-right">
-<p class="font-label-bold text-on-surface leading-none">Quản trị viên</p>
-<p class="font-label-md text-on-surface-variant text-[10px] uppercase tracking-wider mt-1">Super Admin</p>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[16px]">person</span>
 </div>
-<img alt="Admin User Avatar" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcEQRqbMxtNon5swQmKYyRC9HkIokEpubuigUkkV902Pxuo2aOkmvpVDl1mvgF3UOLGGxwSVOqwwzr9PHyWExQAfFHIKpH-wnZUT133w8ngGt1HmmOaGB0-HusMntmg4yQKp1OqxtKCsJCBQQLtfKw1eClPOJKz2wnWQvWJ4rFeGHISXdZKuzRJdIvbDQk__svxYZQwPVa8TQjogZosLJ-0i3JPErJMupQJPlsO8KZwFM0qNzdImVfpU0IasoWK4seUE7gmsuYdzo"/>
-</div>
+<span class="font-label-md text-label-md text-on-surface">Admin</span>
 </div>
 </div>
 </header>
+<main class="ml-[240px] flex-1 flex flex-col pt-16">
 <!-- Canvas -->
 <div class="p-container_padding space-y-stack_lg">
 <!-- Row 1: Stats Grid -->

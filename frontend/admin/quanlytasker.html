@@ -123,7 +123,7 @@
 <div class="flex items-center gap-3">
 <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
 <div>
-<h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
+<h1 class="text-[20px] font-bold text-primary leading-tight">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
 </div>
 </div>
@@ -181,25 +181,26 @@
 </div>
 </div>
 </aside>
-<!-- Top Navigation Bar -->
-<header class="fixed top-0 right-0 left-[240px] h-16 z-10 bg-surface/80 backdrop-blur-md flex justify-between items-center px-container_padding">
-<div class="flex items-center">
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-[240px] h-16 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center px-8">
 <nav class="flex items-center text-label-md font-label-md text-on-surface-variant gap-2">
 <a class="hover:text-primary" href="bangdieukhien.html">Admin</a>
 <span class="material-symbols-outlined text-[16px]">chevron_right</span>
 <span class="text-primary font-bold">Quản lý Tasker</span>
 </nav>
-</div>
-<div class="flex items-center gap-stack_md">
-<button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all relative">
 <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
 </button>
 <button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
 <span class="material-symbols-outlined text-on-surface-variant">settings</span>
 </button>
-<div class="flex items-center gap-2 pl-4 border-l border-outline-variant">
-<img alt="Admin Avatar" class="w-8 h-8 rounded-full border border-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbS0-qBW3lbFR17S-6JJWBlBIHpEHTvFJMJxkQThFqtKlBquIf0kYhlcN-I5WDFss7geadaAiZi5W6nrrXlEpPL0kQde9NtyAF0mhfb9J3DpTBMbqc30X5KL5PJSofUF2R7zYxO7RzUINWfJUIavg6yvhLv5pHpw_gw0kwYmxK0rxMlP1-lWjwVyf7WobYpr-qGfiu9kOtjQf2xjZF_wOVVOZsxOFEEL0giW2aR6t1WNTQ_J77aYnseslORp2j9MrU15poW2NBm0E"/>
-<span class="font-body-sm font-semibold text-on-surface">Admin CMS</span>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[16px]">person</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Admin</span>
 </div>
 </div>
 </header>

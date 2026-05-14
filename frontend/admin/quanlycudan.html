@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
@@ -146,7 +146,7 @@
 <div class="flex items-center gap-3">
 <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
 <div>
-<h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
+<h1 class="text-[20px] font-bold text-primary leading-tight">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
 </div>
 </div>
@@ -206,22 +206,26 @@
 </aside>
 <!-- Main Content Area -->
 <main class="ml-[240px] flex-1 flex flex-col min-w-0">
-<!-- TopAppBar Component -->
-<header class="h-16 fixed top-0 right-0 left-[240px] bg-surface flex justify-between items-center px-container_padding z-40">
-<h2 class="font-headline-md text-headline-md text-on-surface">Quản lý Cư dân</h2>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-[240px] h-16 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center px-8">
+<nav class="flex items-center text-label-md font-label-md text-on-surface-variant gap-2">
+<a class="hover:text-primary" href="bangdieukhien.html">Admin</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Quản lý Cư dân</span>
+</nav>
 <div class="flex items-center gap-4">
-<div class="relative flex items-center bg-surface-container-low px-4 py-2 rounded-full w-64">
-<span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-sm p-0 w-full" placeholder="Tìm theo tên, SĐT..." type="text"/>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[16px]">person</span>
 </div>
-<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-variant rounded-xl transition-all">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-variant rounded-xl transition-all">
-<span class="material-symbols-outlined" data-icon="help">help</span>
-</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFp5N5nt0KLrQ_Kifjr1wKDbPnZ5j6862w84n2qb--szr5dPSUtZEIhJfleFXXoc1H5Xd6SxDV-dUUy__XRIOsOyItyTH5g2tdRzpp7ObxTCDl65zkeAW9_G3KE4Uh1i9EOD_6ypboS6PzOVdag5vHszq9XolR5EZSUcIj11TpC5AEFF6UZUn70bHzxxGW1ECXgmDm9JHbCj5xF7QKzPSlZ70ws59KFymgDiXI6lr056jd0HNXHBpYk9UsBwM5w-pyXyA-_A--3KA"/>
+<span class="font-label-md text-label-md text-on-surface">Admin</span>
 </div>
 </div>
 </header>

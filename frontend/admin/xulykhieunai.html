@@ -149,7 +149,7 @@
 <div class="flex items-center gap-3">
 <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
 <div>
-<h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
+<h1 class="text-[20px] font-bold text-primary leading-tight">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
 </div>
 </div>
@@ -207,29 +207,25 @@
 </div>
 </div>
 </aside>
-<!-- Top AppBar -->
-<header class="fixed top-0 right-0 w-[calc(100%-240px)] h-16 z-30 bg-surface-bright dark:bg-surface-dim border-b border-outline-variant/20 flex justify-between items-center px-gutter ml-[240px]">
-<div class="flex items-center gap-4 flex-1">
-<h2 class="font-headline-md text-headline-md text-primary">Xử lý khiếu nại</h2>
-<div class="relative w-full max-w-md ml-8 group">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60">search</span>
-<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-primary/20 text-body-sm" placeholder="Tìm kiếm mã khiếu nại, tên khách hàng..." type="text"/>
-</div>
-</div>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-[240px] h-16 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center px-8">
+<nav class="flex items-center text-label-md font-label-md text-on-surface-variant gap-2">
+<a class="hover:text-primary" href="bangdieukhien.html">Admin</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Xử lý khiếu nại</span>
+</nav>
 <div class="flex items-center gap-4">
-<button class="p-2 hover:bg-surface-container-high rounded-full relative">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all relative">
 <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface-bright"></span>
 </button>
-<button class="p-2 hover:bg-surface-container-high rounded-full">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all">
 <span class="material-symbols-outlined text-on-surface-variant">settings</span>
 </button>
-<div class="flex items-center gap-3 pl-2 border-l border-outline-variant/20">
-<div class="text-right">
-<p class="text-body-sm font-semibold leading-none">Admin Minh Anh</p>
-<p class="text-[10px] text-on-surface-variant uppercase tracking-wider mt-1">Super Admin</p>
+<div class="flex items-center gap-2 pl-4 border-l border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[16px]">person</span>
 </div>
-<img alt="Quản trị viên" class="w-10 h-10 rounded-full border-2 border-primary/20 object-cover" data-alt="A professional portrait of a young adult Vietnamese female administrator with a friendly and confident expression. She has short black hair and is wearing a stylish corporate outfit. The background is a soft, blurred modern office environment with warm morning lighting, consistent with a professional light-mode UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR44EBbXnDpy_y8s-NShe9QHOkg_R6nAwwY5SiLP8Ddkzo1KSKObZ8QK1xI4bTHp1XAN9b2JixtXm-UHxbqZdhHLF5A78SAxN2Y84pg9dCM11Rhe6PxW_fDKWW6ziJ0tHqNt1ftkW6ZDrNbYi8F42sQcN9tMK28IgmLkH4T9NqsPQ6Ei7KHVm4IisJGBgNgpyVtUVjfR_4IB789Kmh_nRBtEwW6fSFjEXVUu0pTYkHCjOFx8UFXG_C_ICiKrXOmiZ18Pa57YTDboU"/>
+<span class="font-label-md text-label-md text-on-surface">Admin</span>
 </div>
 </div>
 </header>
