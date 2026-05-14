@@ -12,9 +12,6 @@ export declare class OrdersController {
     acceptOrder(req: any, id: number): Promise<{
         taskers: ({
             users: {
-                status: string | null;
-                created_at: Date | null;
-                updated_at: Date | null;
                 user_id: number;
                 phone: string;
                 password_hash: string;
@@ -23,6 +20,9 @@ export declare class OrdersController {
                 gender: string | null;
                 avatar_url: string | null;
                 role: string;
+                status: string | null;
+                created_at: Date | null;
+                updated_at: Date | null;
             };
         } & {
             tasker_id: number;
@@ -34,13 +34,15 @@ export declare class OrdersController {
             last_heartbeat: Date | null;
         }) | null;
     } & {
-        order_id: number;
-        order_code: string;
+        status: string | null;
+        created_at: Date | null;
+        updated_at: Date | null;
         customer_id: number;
         tasker_id: number | null;
         service_id: number;
+        order_id: number;
+        order_code: string;
         voucher_id: number | null;
-        status: string | null;
         scheduled_time: Date;
         address: string;
         total_price: import("@prisma/client-runtime-utils").Decimal;
@@ -51,17 +53,17 @@ export declare class OrdersController {
         payment_status: string | null;
         notes: string | null;
         cancel_reason: string | null;
-        created_at: Date | null;
-        updated_at: Date | null;
     }>;
     updateStatus(req: any, id: number, status: string): Promise<{
-        order_id: number;
-        order_code: string;
+        status: string | null;
+        created_at: Date | null;
+        updated_at: Date | null;
         customer_id: number;
         tasker_id: number | null;
         service_id: number;
+        order_id: number;
+        order_code: string;
         voucher_id: number | null;
-        status: string | null;
         scheduled_time: Date;
         address: string;
         total_price: import("@prisma/client-runtime-utils").Decimal;
@@ -72,19 +74,19 @@ export declare class OrdersController {
         payment_status: string | null;
         notes: string | null;
         cancel_reason: string | null;
-        created_at: Date | null;
-        updated_at: Date | null;
     }>;
     cancelOrder(req: any, id: number): Promise<{
         message: string;
         order: {
-            order_id: number;
-            order_code: string;
+            status: string | null;
+            created_at: Date | null;
+            updated_at: Date | null;
             customer_id: number;
             tasker_id: number | null;
             service_id: number;
+            order_id: number;
+            order_code: string;
             voucher_id: number | null;
-            status: string | null;
             scheduled_time: Date;
             address: string;
             total_price: import("@prisma/client-runtime-utils").Decimal;
@@ -95,37 +97,23 @@ export declare class OrdersController {
             payment_status: string | null;
             notes: string | null;
             cancel_reason: string | null;
-            created_at: Date | null;
-            updated_at: Date | null;
         };
     }>;
     reviewOrder(req: any, id: number, body: any): Promise<{
         message: string;
         review: {
-            order_id: number;
+            created_at: Date | null;
             customer_id: number;
             tasker_id: number;
-            created_at: Date | null;
+            order_id: number;
+            review_id: number;
             rating: number;
             comment: string | null;
-            review_id: number;
         };
     }>;
     getCustomerHistory(req: any): Promise<({
-        services: {
-            description: string | null;
-            service_id: number;
-            created_at: Date | null;
-            name: string;
-            base_price: import("@prisma/client-runtime-utils").Decimal;
-            icon_url: string | null;
-            is_active: boolean | null;
-        };
         taskers: ({
             users: {
-                status: string | null;
-                created_at: Date | null;
-                updated_at: Date | null;
                 user_id: number;
                 phone: string;
                 password_hash: string;
@@ -134,6 +122,9 @@ export declare class OrdersController {
                 gender: string | null;
                 avatar_url: string | null;
                 role: string;
+                status: string | null;
+                created_at: Date | null;
+                updated_at: Date | null;
             };
         } & {
             tasker_id: number;
@@ -144,14 +135,25 @@ export declare class OrdersController {
             is_online: boolean | null;
             last_heartbeat: Date | null;
         }) | null;
+        services: {
+            created_at: Date | null;
+            name: string;
+            service_id: number;
+            description: string | null;
+            base_price: import("@prisma/client-runtime-utils").Decimal;
+            icon_url: string | null;
+            is_active: boolean | null;
+        };
     } & {
-        order_id: number;
-        order_code: string;
+        status: string | null;
+        created_at: Date | null;
+        updated_at: Date | null;
         customer_id: number;
         tasker_id: number | null;
         service_id: number;
+        order_id: number;
+        order_code: string;
         voucher_id: number | null;
-        status: string | null;
         scheduled_time: Date;
         address: string;
         total_price: import("@prisma/client-runtime-utils").Decimal;
@@ -162,17 +164,15 @@ export declare class OrdersController {
         payment_status: string | null;
         notes: string | null;
         cancel_reason: string | null;
-        created_at: Date | null;
-        updated_at: Date | null;
     })[]>;
     getChatHistory(orderId: number): Promise<{
-        order_id: number;
         created_at: Date | null;
+        order_id: number;
         content: string;
-        is_read: boolean | null;
         message_id: number;
         sender_id: number;
         receiver_id: number;
+        is_read: boolean | null;
     }[]>;
     getOrderById(req: any, id: number): Promise<{
         customers: {
@@ -185,15 +185,6 @@ export declare class OrdersController {
             default_address: string | null;
             loyalty_points: number | null;
         };
-        services: {
-            description: string | null;
-            service_id: number;
-            created_at: Date | null;
-            name: string;
-            base_price: import("@prisma/client-runtime-utils").Decimal;
-            icon_url: string | null;
-            is_active: boolean | null;
-        };
         taskers: ({
             users: {
                 phone: string;
@@ -209,14 +200,25 @@ export declare class OrdersController {
             is_online: boolean | null;
             last_heartbeat: Date | null;
         }) | null;
+        services: {
+            created_at: Date | null;
+            name: string;
+            service_id: number;
+            description: string | null;
+            base_price: import("@prisma/client-runtime-utils").Decimal;
+            icon_url: string | null;
+            is_active: boolean | null;
+        };
     } & {
-        order_id: number;
-        order_code: string;
+        status: string | null;
+        created_at: Date | null;
+        updated_at: Date | null;
         customer_id: number;
         tasker_id: number | null;
         service_id: number;
+        order_id: number;
+        order_code: string;
         voucher_id: number | null;
-        status: string | null;
         scheduled_time: Date;
         address: string;
         total_price: import("@prisma/client-runtime-utils").Decimal;
@@ -227,7 +229,5 @@ export declare class OrdersController {
         payment_status: string | null;
         notes: string | null;
         cancel_reason: string | null;
-        created_at: Date | null;
-        updated_at: Date | null;
     }>;
 }

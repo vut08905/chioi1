@@ -5,8 +5,8 @@ export declare class WalletsService {
     getWallet(userId: number): Promise<{
         user_id: number;
         updated_at: Date | null;
-        balance: import("@prisma/client-runtime-utils").Decimal | null;
         wallet_id: number;
+        balance: import("@prisma/client-runtime-utils").Decimal | null;
     }>;
     getTransactions(userId: number): Promise<{
         status: string | null;
@@ -23,8 +23,8 @@ export declare class WalletsService {
         wallet: {
             user_id: number;
             updated_at: Date | null;
-            balance: import("@prisma/client-runtime-utils").Decimal | null;
             wallet_id: number;
+            balance: import("@prisma/client-runtime-utils").Decimal | null;
         };
         transaction: {
             status: string | null;
@@ -42,8 +42,8 @@ export declare class WalletsService {
         wallet: {
             user_id: number;
             updated_at: Date | null;
-            balance: import("@prisma/client-runtime-utils").Decimal | null;
             wallet_id: number;
+            balance: import("@prisma/client-runtime-utils").Decimal | null;
         };
         transaction: {
             status: string | null;
@@ -61,8 +61,8 @@ export declare class WalletsService {
         wallet: {
             user_id: number;
             updated_at: Date | null;
-            balance: import("@prisma/client-runtime-utils").Decimal | null;
             wallet_id: number;
+            balance: import("@prisma/client-runtime-utils").Decimal | null;
         };
         transaction: {
             status: string | null;

@@ -89,10 +89,10 @@ export class ApiService {
       throw new BadRequestException('Gói không tồn tại hoặc đã ngưng');
     }
 
-    // Lấy ví
-    const wallet = await this.prisma.wallets.findUnique({ where: { user_id: userId } });
+    // Lấy ví (tự tạo nếu chưa có)
+    let wallet = await this.prisma.wallets.findUnique({ where: { user_id: userId } });
     if (!wallet) {
-      throw new BadRequestException('Ví không tồn tại. Vui lòng liên hệ hỗ trợ.');
+      wallet = await this.prisma.wallets.create({ data: { user_id: userId, balance: 0 } });
     }
 
     const price = Number(pkg.price);

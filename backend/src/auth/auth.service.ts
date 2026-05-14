@@ -41,14 +41,22 @@ export class AuthService {
     const saltOrRounds = 10;
     const password_hash = await bcrypt.hash(data.password, saltOrRounds);
 
+    // Tasker mới phải chờ Admin phê duyệt
+    const userStatus = data.role === 'TASKER' ? 'PENDING' : 'ACTIVE';
+
     const user = await this.prisma.users.create({
       data: {
         phone: data.phone,
         password_hash,
-        full_name: data.full_name,
+        full_name: data.full_name || 'Chưa cập nhật',
         role: data.role,
-        status: 'ACTIVE',
+        status: userStatus,
       },
+    });
+
+    // Auto-create wallet cho user mới
+    await this.prisma.wallets.create({
+      data: { user_id: user.user_id, balance: 0 },
     });
 
     if (data.role === 'CUSTOMER') {
@@ -57,7 +65,7 @@ export class AuthService {
       });
     } else if (data.role === 'TASKER') {
       await this.prisma.taskers.create({
-        data: { tasker_id: user.user_id },
+        data: { tasker_id: user.user_id, kyc_status: 'PENDING_APPROVAL' },
       });
     } else if (data.role === 'ADMIN') {
       await this.prisma.admins.create({

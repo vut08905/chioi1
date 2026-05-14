@@ -21,3 +21,16 @@ export declare class AuthController {
         message: string;
     }>;
 }
+export declare class OcrController {
+    ocrCCCD(body: any): Promise<{
+        full_name: string;
+        cccd_number: string;
+        error: string;
+        message?: undefined;
+    } | {
+        full_name: string;
+        cccd_number: string;
+        message: string;
+        error?: undefined;
+    }>;
+}

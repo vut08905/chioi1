@@ -1,0 +1,601 @@
+﻿TESTCASE ID,Tên testcase(Mục đích),Các bước thực hiện ,Kết quả mong muốn,Độ ưu tiên,Kết quả thực tế ,Trạng thái,Ghi chú,Dev,Unnamed: 9
+UC_01 Đăng nhập với vai trò Tasker,,,,,,,,,
+TC_T01_001,Kiểm tra màn hình đăng nhập của Tasker hiển thị,"1. Mở app Chị Ơi!
+2. Màn hình đăng nhập
+3. Quan sát màn hình ","Màn hình đăng nhập hiển thị Thông tin
+- Nhập Số điện thoại
+- Nhập mật khẩu 
+- Quên mật khẩu
+- Đăng nhập
+- Đăng ký tasker 
+Tiếp tục đăng nhập với Tk
++ Google
++ Facebook
+Hiện thị 
++ Điều khoản 
++ Bảo mật",,,Pass,,,
+TC_T01_002,Kiểm tra đăng nhập thành công với tài khoản hợp lệ,"1. Mở app Chị Ơi! 
+ 2. Chọn tab Tasker 
+ 3. Nhập SĐT hợp lệ 
+ 4. Nhập mật khẩu đúng 
+ 5. Nhấn “Đăng nhập”",Điều hướng vào M16 – Trang chủ Tasker,High,Hệ thống đăng nhập thành công và hiển thị màn hình trang chủ của tasker ,Pass,,,
+TC_T01_003,Kiểm tra đăng nhập khi sai mật khẩu,"1. Mở màn hình login 
+ 2. Chọn tab Tasker 
+ 3. Nhập SĐT đúng 
+ 4. Nhập mật khẩu sai 
+ 5. Nhấn “Đăng nhập”",Hiển thị lỗi “Sai số điện thoại hoặc mật khẩu”,High,"Hệ thống hiển thị lỗi ""Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại""",Fail,,Dev-Completed,
+TC_T01_004,Kiểm tra validate khi bỏ trống số điện thoại,"1. Chọn tab Tasker 
+ 2. Để trống SĐT 
+ 3. Nhập mật khẩu 
+ 4. Nhấn “Đăng nhập”",Hiển thị “Vui lòng nhập số điện thoại”,Medium,"Hệ thống hiển thị thông báo "" Vui lòng đăng nhập SDT và mật khẩu"" ",Pass,,,
+TC_T01_005,Kiểm tra định dạng số điện thoại không hợp lệ,"1. Nhập SĐT sai format 
+ 2. Nhập password 
+ 3. Nhấn “Đăng nhập”",Hệ thống tự chặn khi nhập sai định dạng và Hiển thị “Số điện thoại không hợp lệ”,Medium,"Hệ thống hiển thị thông báo "" Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại"" ",Fail,,Dev-Completed,
+TC_T01_006,Kiểm tra validate khi bỏ trống mật khẩu,"1. Nhập SĐT hợp lệ 
+ 2. Để trống mật khẩu 
+ 3. Nhấn “Đăng nhập”",Hiển thị “Vui lòng nhập mật khẩu”,Medium,"Hệ thống hiển thị thông báo "" Vui lòng đăng nhập SDT và mật khẩu"" ",Pass,,,
+TC_T01_007,Kiểm tra validate khi bỏ trống toàn bộ field,"1. Không nhập dữ liệu 
+ 2. Nhấn “Đăng nhập”",Hiển thị validate cho cả 2 field,Medium,"Hệ thống hiển thị thông báo "" Vui lòng đăng nhập SDT và mật khẩu"" ",Pass,,,
+TC_T01_008,Kiểm tra trim khoảng trắng đầu/cuối số điện thoại,"1. Nhập “ 0901234567 ” 
+ 2. Nhập password đúng 
+ 3. Nhấn login",Hệ thống chặn không cho nhập khoảng trắng,Medium,Hệ thống đăng nhập thành công,Fail,,,
+TC_T01_009,Kiểm tra password phân biệt hoa thường,"1. Nhập đúng SĐT 
+ 2. Nhập password sai chữ hoa/thường 
+ 3. Login",Đăng nhập thất bại,High,,Not Run,,Dev-Completed,
+TC_T01_010,Kiểm tra nhập khoảng trắng đầu cuối password,"1. Nhập đúng Số điện thoại
+2. Nhập khoảng trắng đầu cuối mật khẩu",Chặn không cho phép nhập,Medium,Hệ thống đang cho phép nhập,Fail,,Dev-Completed,
+TC_T01_011,Kiểm tra submit form bằng phím Enter,"1. Nhập đúng thông tin 
+ 2. Nhấn Enter",Hệ thống thực hiện login,Low,Hệ thống đăng nhập thành công ,Pass,,,
+TC_T01_012,Kiểm tra chức năng ẩn/hiện mật khẩu,"1. Nhập password 
+ 2. Nhấn icon mắt 
+ 3. Nhấn lại icon mắt",Password hiển thị/ẩn đúng,Low,"Hệ thống hiển thị đúng password, kích chuột để ẩn/ hiển mật khẩu",Pass,,,
+TC_T01_013,Kiểm tra link “Quên mật khẩu”,"1. Mở màn hình login 
+ 2. Nhấn “Quên mật khẩu”",Điều hướng sang M03,High,"Hệ thống hiển thị màn hình ""Quên mật khẩu"" ",Pass,,,
+TC_T01_014,Kiểm tra link “Đăng ký Tasker”,"1. Chọn tab Tasker 
+ 2. Nhấn “Đăng ký Tasker”",Điều hướng sang màn hình đăng ký,Medium,"Hệ thống hiển thị màn hình ""Đăng kí"" ",Pass,,,
+TC_T01_015,Kiểm tra login khi mất kết nối mạng,"1. Tắt Internet 
+ 2. Nhập thông tin hợp lệ 
+ 3. Nhấn login",Hiển thị “Không có kết nối mạng”,High,"Hệ thống hiển thị thông báo "" failed to fetch""",Fail,,Dev-Completed,
+TC_T01_016,Kiểm tra spam nút đăng nhập,"1. Nhập dữ liệu đúng 
+ 2. Nhấn liên tục nút login",Chỉ gửi 1 request login,Medium,Hệ thống đăng nhập thành công và hiển thị màn hình trang chủ tasker,Pass,,,
+TC_T01_017,Kiểm tra lưu session đăng nhập,"1. Login thành công 
+ 2. Tắt app 
+ 3. Mở lại app",Người dùng vẫn đăng nhập,High,,Not Run,,Dev-Completed,
+TC_T01_018,Kiểm tra giới hạn ký tự mật khẩu,1. Nhập password vượt giới hạn,"Không cho nhập vượt max length "" Nhập tối đa từ 8-20 Ký tự""",Low,Hệ thống không giới hạn các ký tự ,Fail,,Dev-Completed,
+TC_T01_019,Kiểm tra tài khoản không tồn tại,"1. Nhập SĐT chưa đăng ký 
+ 2. Nhập password bất kỳ 
+ 3. Login",Hiển thị lỗi tài khoản không tồn tại,High,"Hệ thống hiện thị thôg báo ""Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại""",Fail,,Dev-Completed,
+TC_T01_020,Kiểm tra đăng nhập nhiều thiết bị,"1. Login trên thiết bị A 
+ 2. Login trên thiết bị B",Hệ thống xử lý đúng theo business,Medium,,Not Run,,Dev-Completed,
+TC_T01_021,Kiểm tra copy/paste vào field password,"1. Copy password 
+ 2. Paste vào field password",Dữ liệu được nhập đúng,Low,Hệ thống dán đúng pass đã copy,Pass,,,
+TC_T01_022,Kiểm tra keyboard mobile hiển thị đúng,1. Focus field SĐT,Hiển thị bàn phím số,Low,,Not Run,,Dev-Completed,đang làm tới đây
+TC_T01_023,Kiểm tra bảo mật password,1. Nhập password,Password hiển thị dạng chấm/ẩn,High,,Pass,,,
+TC_T01_024,Kiểm tra đăng xuất rồi login lại,"1. Login thành công 
+ 2. Logout 
+ 3. Login lại",Login thành công bình thường,Medium,,Pass,,,
+TC_T01_025,"Kiểm tra đăng nhập bằng google, facebook,...","Màn hình đăng nhập 
+1. Đăng nhập bằng google hoặc facebook
+2. Quan sát màn hình ",Hệ thống đăng nhập thành công,High,Hệ thống chưa có dữ liệu,Fail,,,
+TC_T01_026,Kiểm tra hệ thống khi nhấn điều khoản ,"Màn hình đăng nhập 
+1. Nhấn điều khoản 
+2. Quan sát màn hình ",Hệ thống hiển thị điều khoản của app,High,Hệ thống chưa có dữ liệu,Fail,,,
+TC_T01_027,Kiểm tra hệ thống khi nhấn bảo mật,"Màn hình đăng nhập 
+1. Nhấn bảo mật 
+2. Quan sát màn hình  ",,Medium,Hệ thống chưa có dữ liệu,Fail,,,
+TC_T01_028,Kiểm tra tài khoản chưa được duyệt,"1. Mở màn hình login 
+ 2. Chọn tab Tasker 
+ 3. Nhập tài khoản Pending 
+ 4. Nhập đúng password 
+ 5. Nhấn “Đăng nhập”",Hiển thị “Tài khoản đang chờ duyệt”,High,,Not Run,,,
+TC_T01_029,Kiểm tra chuyển tab Customer → Tasker,"1. Mở login 
+ 2. Chọn tab Tasker",Form Tasker hiển thị đúng,Low,,,,,
+TC_T01_030,Kiểm tra chống SQL Injection,"1. Nhập ' OR '1'='1 
+ 2. Nhấn login","Không đăng nhập được, không lỗi server",High,,,,,
+TC_T01_031,Kiểm tra chống XSS,"1. Nhập <script>alert('xss')</script> 
+ 2. Nhấn login",Script không được thực thi,Medium,,,,,
+TC_T01_032,Kiểm tra timeout API login,"1. Mô phỏng mạng chậm 
+ 2. Nhập dữ liệu đúng 
+ 3. Login",Hiển thị timeout/error phù hợp,Medium,,,,,
+UC_02 Đăng ký trở thành Tasker,,,,,,,,,
+TC_T02_001,Kiểm tra đăng ký Tasker thành công với dữ liệu hợp lệ,"1. Mở M01 
+ 2. Nhấn “Đăng ký Tasker” 
+ 3. Nhập họ tên hợp lệ 
+ 4. Số điện thoại
+ 5. Nhập CCCD 12 số hợp lệ 
+ 6. Mật khẩu
+ 7. Nhâpj lại 
+ 8. Đăng ký dịch vụ 
+ 9 . Gừi hồ sơ đăng ký",Hồ sơ được gửi thành công và hiển thị trạng thái chờ duyệt,High,Hệ thống đăng ký thành công và tasker đang chờ duyệt,Pass,,,
+TC_T02_002,Kiểm tra điều hướng từ M01 sang màn hình đăng ký,"1. Mở M01 
+ 2. Nhấn “Đăng ký Tasker”",Điều hướng đúng sang M02,Medium,,Pass,,,
+TC_T02_003,Kiểm tra validate khi bỏ trống họ tên,"1. Để trống họ tên 
+ 2. Nhập các field khác hợp lệ 
+ 3. Nhấn “Gửi đăng ký”",Hiển thị “Vui lòng nhập họ tên”,High,"Hệ thống hiển thị thông báo "" Vui lòng nhập đầy đủ thông tin bắt buộc""",Pass,,,
+TC_T02_004,Kiểm tra validate khi bỏ trống CCCD,"1. Nhập họ tên 
+ 2. Để trống CCCD 
+ 3. Các trường khác nhập hợp lệ
+ 4. Nhấn gửi",Hiển thị “Vui lòng nhập CCCD”,High,"Hệ thống hiển thị thông báo "" Vui lòng nhập đầy đủ thông tin bắt buộc""",Pass,,,
+TC_T02_005,Kiểm tra validate CCCD nhỏ hơn 12 số,"1. Nhập CCCD 10 hoặc 11 số 
+ 2. Nhấn gửi đăng ký",Hiển thị “CCCD không hợp lệ”,High,Hệ thống đăng ký thành công,Fail,TRƯỜNG ĐKI:  chỉ cho phép nhập SDT và mật khẩu. upload ảnh lên sẽ đọc cứng trường họ tên và CCCD,,
+TC_T02_009,Kiểm tra validate khi chưa chọn dịch vụ,"1. Nhập đầy đủ thông tin 
+ 2. Không chọn dịch vụ 
+ 3. Nhấn gửi",Hiển thị “Vui lòng chọn ít nhất 1 dịch vụ”,High,Hệ thống đăng ký thành công,Fail,,,
+TC_T02_010,Kiểm tra chọn 1 dịch vụ,"1. Chọn “Dọn nhà” 
+ 2. Gửi đăng ký",Hệ thống lưu đúng dịch vụ đã chọn,Medium,Hệ thống không hiển thị gói đã đăng ký ,Fail,,,
+TC_T02_011,Kiểm tra chọn nhiều dịch vụ,"1. Chọn nhiều dịch vụ 
+ 2. Gửi đăng ký",Hệ thống lưu đầy đủ các dịch vụ,Medium,,,,,
+TC_T02_012,Kiểm tra upload ảnh selfie + CCCD hợp lệ,"1. Nhấn icon camera 
+ 2. Upload ảnh rõ nét đúng định dạng",Ảnh upload thành công,High,,,,,
+TC_T02_013,Kiểm tra upload ảnh sai định dạng,"1. Upload file .exe/.txt 
+ 2. Nhấn gửi",Hiển thị lỗi định dạng file,High,,,,,
+TC_T02_014,Kiểm tra upload ảnh quá dung lượng,1. Upload ảnh vượt giới hạn size,Hiển thị lỗi dung lượng ảnh,Medium,,,,,
+TC_T02_015,Kiểm tra upload ảnh mờ/không nhận diện được CCCD,"1. Upload ảnh bị mờ 
+ 2. Nhấn gửi",Hiển thị “Ảnh không đủ điều kiện”,High,,,,,
+TC_T02_016,Kiểm tra upload ảnh thiếu CCCD,1. Upload selfie không có CCCD,Hệ thống yêu cầu upload lại,High,,,,,
+TC_T02_017,Kiểm tra upload ảnh không có khuôn mặt,1. Upload ảnh chỉ có CCCD,Hiển thị lỗi xác minh ảnh,Medium,,,,,
+TC_T02_018,Kiểm tra bỏ trống toàn bộ field,"1. Không nhập dữ liệu 
+ 2. Nhấn gửi đăng ký",Hiển thị validate tất cả field bắt buộc,Medium,,,,,
+TC_T02_019,Kiểm tra trim khoảng trắng họ tên,"1. Nhập “ Nguyễn Văn A ” 
+ 2. Submit form",Hệ thống tự trim dữ liệu,Low,,,,,
+TC_T02_020,Kiểm tra nhập họ tên có số,1. Nhập “Nguyễn Văn A123”,Hiển thị lỗi họ tên không hợp lệ,Medium,,,,,
+TC_T02_021,Kiểm tra nhập họ tên có ký tự đặc biệt,1. Nhập “Nguyễn @ Văn A”,Hiển thị lỗi validate,Medium,,,,,
+TC_T02_022,Kiểm tra giới hạn ký tự họ tên,1. Nhập họ tên vượt max length,Không cho nhập vượt giới hạn,Low,,,,,
+TC_T02_023,Kiểm tra nút “Gửi đăng ký” khi thiếu dữ liệu,1. Không nhập đủ thông tin,Nút disabled hoặc validate đúng,Low,,,,,
+TC_T02_024,Kiểm tra loading khi submit hồ sơ,"1. Nhập đủ dữ liệu 
+ 2. Nhấn gửi",Hiển thị loading trong lúc xử lý,Medium,,,,,
+TC_T02_025,Kiểm tra spam nút “Gửi đăng ký”,1. Nhấn nhiều lần liên tục nút gửi,Chỉ tạo 1 hồ sơ đăng ký,Medium,,,,,
+TC_T02_026,Kiểm tra timeout API đăng ký,"1. Giả lập mạng chậm 
+ 2. Submit hồ sơ",Hiển thị timeout phù hợp,Medium,,,,,
+TC_T02_027,Kiểm tra mất mạng khi gửi đăng ký,"1. Tắt Internet 
+ 2. Submit form",Hiển thị lỗi kết nối mạng,High,,,,,
+TC_T02_028,Kiểm tra đăng ký với CCCD đã tồn tại,"1. Nhập CCCD đã đăng ký 
+ 2. Submit form",Hiển thị “CCCD đã tồn tại”,High,,,,,
+TC_T02_029,Kiểm tra chống XSS tại field họ tên,"1. Nhập <script>alert(1)</script> 
+ 2. Submit",Script không được thực thi,Medium,,,,,
+TC_T02_030,Kiểm tra upload nhiều lần ảnh CCCD,"1. Upload ảnh lần 1 
+ 2. Upload lại ảnh khác",Ảnh mới được cập nhật,Low,,,,,
+TC_T02_031,Kiểm tra preview ảnh sau upload,1. Upload ảnh CCCD,Hiển thị preview ảnh đúng,Low,,,,,
+TC_T02_032,Kiểm tra xóa ảnh đã upload,"1. Upload ảnh 
+ 2. Nhấn xóa ảnh",Ảnh bị remove khỏi form,Low,,,,,
+TC_T02_033,Kiểm tra giữ dữ liệu khi submit lỗi,1. Submit form thiếu field,Các dữ liệu đã nhập vẫn được giữ,Medium,,,,,
+TC_T02_034,Kiểm tra keyboard số tại field CCCD trên mobile,1. Focus field CCCD,Hiển thị bàn phím số,Low,,,,,
+TC_T02_035,Kiểm tra thứ tự tab/focus field,1. Nhấn Tab trên keyboard,Focus di chuyển đúng thứ tự field,Low,,,,,
+TC_T02_036,Kiểm tra khả năng copy/paste CCCD,"1. Copy CCCD 
+ 2. Paste vào field",Dữ liệu được nhập đúng,Low,,,,,
+TC_T02_037,Kiểm tra ký tự Unicode trong họ tên,1. Nhập tên tiếng Việt có dấu,Hệ thống lưu đúng Unicode,Medium,,,,,
+TC_T02_038,Kiểm tra submit bằng phím Enter,"1. Nhập đầy đủ dữ liệu 
+ 2. Nhấn Enter",Form được submit đúng,Low,,,,,
+TC_T02_039,Kiểm tra trạng thái hồ sơ sau đăng ký,"1. Đăng ký thành công 
+ 2. Kiểm tra hồ sơ",Trạng thái = Pending/Chờ duyệt,High,,,,,
+UC_03 Quên mật khẩu / Đặt lại qua OTP,,,,,,,,,
+TC_T03_001,Mở màn Quên mật khẩu,"1. Mở màn hình đăng nhập Tasker 
+2. Nhấn “Quên mật khẩu?”",Hệ thống chuyển sang màn M03,High,,,,,
+TC_T03_002,Gửi OTP thành công,"1. Nhập SĐT hợp lệ 
+2. Nhấn “Gửi OTP”",OTP được gửi qua SMS và hiển thị màn nhập OTP,Medium,,,,,
+TC_T03_003,Bỏ trống số điện thoại,"1. Để trống field SĐT 
+2. Nhấn “Gửi OTP”",Hiển thị lỗi yêu cầu nhập số điện thoại,Medium,,,,,
+TC_T03_004,Nhập SĐT sai định dạng,"1. Nhập ký tự chữ hoặc SĐT không đủ số 
+2. Nhấn “Gửi OTP”",Hiển thị lỗi SĐT không hợp lệ,High,,,,,
+TC_T03_005,SĐT chưa đăng ký,"1. Nhập SĐT chưa tồn tại
+2. Nhấn “Gửi OTP”",Hiển thị “Tài khoản không tồn tại”,High,,,,,
+TC_T03_006,Hiển thị màn nhập OTP,"1. Nhập SĐT hợp lệ 
+2. Nhấn “Gửi OTP”",Hiển thị 6 ô nhập OTP,High,,,,,
+TC_T03_007,Nhập OTP đúng,"1. Nhập đúng 6 số OTP 
+2. Nhấn “Xác nhận”",OTP hợp lệ và chuyển sang màn đặt mật khẩu mới,Medium,,,,,
+TC_T03_008,Nhập sai OTP,"1. Nhập OTP sai 
+2. Nhấn “Xác nhận”",Hiển thị “OTP không chính xác”,Medium,,,,,
+TC_T03_009,OTP hết hạn,"1. Chờ OTP hết hạn 
+2. Nhập OTP 
+3. Nhấn “Xác nhận”",Hiển thị “OTP đã hết hạn”,High,,,,,
+TC_T03_010,Gửi lại OTP,"1. Chờ countdown 30s kết thúc 
+2. Nhấn “Gửi lại OTP”",OTP mới được gửi thành công,Medium,,,,,
+TC_T03_011,Không cho resend trước 30s,"1. Gửi OTP 
+2. Nhấn “Gửi lại OTP” trước 30s",Nút resend bị disable hoặc không hoạt động,Medium,,,,,
+TC_T03_012,Đặt mật khẩu mới thành công,"1. Nhập mật khẩu mới 
+2. Nhập xác nhận mật khẩu
+3. Nhấn “Lưu mật khẩu”",Hiển thị “Đặt lại mật khẩu thành công”,High,,,,,
+TC_T03_013,Confirm password không khớp,"1. Nhập mật khẩu mới 
+2. Nhập confirm password khác 
+3. Nhấn lưu",Hiển thị lỗi mật khẩu không khớp,High,,,,,
+TC_T03_014,Login bằng mật khẩu mới,"1. Quay lại màn login 
+2. Nhập SĐT và mật khẩu mới 
+3. Nhấn đăng nhập",Đăng nhập thành công,High,,,,,
+TC_T03_015,Không login được bằng mật khẩu cũ,"1. Nhập SĐT 
+2. Nhập mật khẩu cũ 
+3. Nhấn đăng nhập",Hiển thị sai mật khẩu,High,,,,,
+TC_T03_016,Mất internet khi gửi OTP,"1. Tắt kết nối mạng 
+2. Nhập SĐT 
+3. Nhấn “Gửi OTP”",Hiển thị lỗi kết nối mạng,Medium,,,,,
+TC_T03_017,Server lỗi khi reset password,"1. Nhập OTP hợp lệ 
+2. Nhập mật khẩu mới 
+3. Nhấn lưu khi server lỗi",Hiển thị “Vui lòng thử lại sau”,Medium,,,,,
+TC_T03_018,Double click không tạo duplicate request,"1. Nhập OTP đúng 
+2. Double click nút “Xác nhận”",Hệ thống chỉ gửi 1 request,Medium,,,,,
+TC_T03_019,Responsive UI,"1. Mở màn hình trên mobile/tablet 
+2. Resize màn hình","UI hiển thị đúng, không vỡ layout",Low,,,,,
+TC_T03_020,Bảo mật thông tin OTP,"1. Gửi OTP 
+2. Kiểm tra response/API",Không hiển thị OTP hoặc dữ liệu nhạy cảm,High,,,,,
+UC_04 Trạng thái Online / Offline,,,,,,,,,
+TC_T04_001,Hiển thị trạng thái hiện tại của Tasker,"1. Đăng nhập vào M16 
+2. Quan sát header",Hiển thị đúng trạng thái Online/Offline hiện tại,High,,,,,
+TC_T04_002,Chuyển từ Online sang Offline,"1. Đang ở trạng thái Online 
+2. Nhấn nút trạng thái trên header",Trạng thái chuyển sang Offline ngay lập tức,High,,,,,
+TC_T04_003,Chuyển từ Offline sang Online,"1. Đang ở trạng thái Offline 
+2. Nhấn nút trạng thái",Trạng thái chuyển sang Online thành công,High,,,,,
+TC_T04_004,Hiển thị màu trạng thái đúng,1. Chuyển trạng thái Online/Offline,"Online hiển thị chấm xanh, Offline hiển thị đúng màu thiết kế",Medium,,,,,
+TC_T04_005,Cập nhật trạng thái realtime,"1. Chuyển trạng thái 
+2. Refresh trang",Trạng thái vẫn được giữ đúng,High,,,,,
+TC_T04_006,Không nhận đơn mới khi Offline,"1. Chuyển sang Offline 
+2. Chờ hệ thống phân đơn",Không nhận đơn mới,Medium,,,,,
+TC_T04_007,Nhận đơn khi Online,"1. Chuyển sang Online 
+2. Chờ hệ thống phân đơn",Có thể nhận đơn mới,Medium,,,,,
+TC_T04_008,Mất mạng khi chuyển trạng thái,"1. Tắt mạng 
+2. Nhấn đổi trạng thái",Hiển thị lỗi cập nhật trạng thái thất bại,High,,,,,
+TC_T04_009,Double click nút trạng thái,1. Double click nút Online/Offline,Hệ thống chỉ xử lý 1 request,Medium,,,,,
+TC_T04_010,Loading khi cập nhật trạng thái,1. Nhấn đổi trạng thái,Hiển thị loading/spinner khi xử lý,Medium,,,,,
+TC_T04_011,Không đổi trạng thái khi server lỗi,1. Nhấn đổi trạng thái khi server lỗi,Hiển thị “Vui lòng thử lại sau” và trạng thái không đổi,High,,,,,
+TC_T04_012,Đồng bộ trạng thái giữa nhiều thiết bị,"1. Login cùng tài khoản trên 2 thiết bị 
+2. Đổi trạng thái ở thiết bị A",Thiết bị B cập nhật trạng thái đúng,Medium,,,,,
+TC_T04_013,Giữ trạng thái sau khi đăng nhập lại,"1. Chuyển Online 
+2. Logout/Login lại",Hệ thống hiển thị đúng trạng thái trước đó,Medium,,,,,
+TC_T04_014,Không cho truy cập chức năng khi chưa login,"1. Chưa đăng nhập 
+2. Truy cập M16",Redirect về màn login,Medium,,,,,
+TC_T04_015,Responsive UI nút trạng thái,1. Mở trên mobile/tablet,Nút trạng thái hiển thị đúng UI,Low,,,,,
+TC_T04_016,Kiểm tra tốc độ cập nhật trạng thái,1. Nhấn đổi trạng thái,Trạng thái cập nhật trong thời gian cho phép,Medium,,,,,
+TC_T04_017,Ghi log thay đổi trạng thái,1. Đổi Online/Offline,Hệ thống lưu log thay đổi trạng thái,Medium,,,,,
+TC_T04_018,Không expose lỗi hệ thống,1. Trigger API error khi đổi trạng thái,Không hiển thị SQL/API detail,High,,,,,
+TC_T04_019,API cập nhật trạng thái trả đúng mã,1. Gửi request đổi trạng thái,Response trả đúng status code,Medium,,,,,
+TC_T04_020,Spam click đổi trạng thái liên tục,1. Nhấn đổi trạng thái liên tục nhiều lần,"Hệ thống xử lý ổn định, không crash",Medium,,,,,
+UC_05 Xem đơn mới,,,,,,,,,
+TC_T05_001,Kiểm tra hiển thị đơn mới khi Tasker Online,"1. Đăng nhập Tasker 
+ 2. Chuyển trạng thái Online 
+ 3. Chờ hệ thống đẩy đơn mới",Đơn mới hiển thị trong mục “Đơn mới”,High,,,,,
+TC_T05_002,Kiểm tra không nhận đơn khi Tasker Offline,"1. Chuyển trạng thái Offline 
+ 2. Chờ có đơn mới",Không hiển thị đơn mới,High,,,,,
+TC_T05_003,Kiểm tra hiển thị tên dịch vụ,1. Có đơn mới được đẩy về,Hiển thị đúng tên dịch vụ (Dọn nhà/Trông trẻ/Mua hộ),High,,,,,
+TC_T05_004,Kiểm tra hiển thị số giờ làm việc,1. Có đơn mới,Hiển thị đúng số giờ của đơn,Medium,,,,,
+TC_T05_005,Kiểm tra hiển thị mức thu nhập,1. Có đơn mới,Hiển thị đúng thu nhập (+Xk),High,,,,,
+TC_T05_006,Kiểm tra hiển thị khoảng cách địa lý,1. Có đơn mới,Hiển thị đúng khoảng cách (vd: 0.4km),Medium,,,,,
+TC_T05_007,Kiểm tra hiển thị thời gian thực hiện,1. Có đơn mới,Hiển thị đúng thời gian thực hiện đơn,Medium,,,,,
+TC_T05_008,Kiểm tra hiển thị đầy đủ thông tin đơn,1. Có đơn mới,"Hiển thị đầy đủ dịch vụ, giờ, thu nhập, khoảng cách, thời gian",High,,,,,
+TC_T05_009,Kiểm tra nhận đơn thành công,"1. Có đơn mới 
+ 2. Nhấn “Nhận đơn”",Đơn được nhận thành công,High,,,,,
+TC_T05_010,Kiểm tra bỏ qua đơn,"1. Có đơn mới 
+ 2. Nhấn “Bỏ qua”",Đơn bị ẩn hoặc chuyển trạng thái bỏ qua,Medium,,,,,
+TC_T05_011,Kiểm tra trạng thái chờ khi không có đơn,"1. Tasker Online 
+ 2. Không có đơn phù hợp",Hiển thị trạng thái “Đang chờ đơn mới”,Medium,,,,,
+TC_T05_012,Kiểm tra thông báo realtime khi có đơn mới,"1. Tasker Online 
+ 2. Hệ thống tạo đơn phù hợp",Hiển thị notification/popup đơn mới realtime,High,,,,,
+TC_T05_013,Kiểm tra âm thanh thông báo đơn mới,1. Có đơn mới được gửi,Phát âm thanh thông báo,Low,,,,,
+TC_T05_014,Kiểm tra rung thiết bị khi có đơn mới trên mobile,1. Có đơn mới,Thiết bị rung thông báo,Low,,,,,
+TC_T05_015,Kiểm tra nhiều đơn mới cùng lúc,1. Hệ thống gửi nhiều đơn,"Danh sách đơn hiển thị đúng, không trùng",High,,,,,
+TC_T05_016,Kiểm tra thứ tự hiển thị đơn mới,1. Có nhiều đơn mới,Đơn mới nhất hiển thị trên cùng,Medium,,,,,
+TC_T05_017,Kiểm tra tự động refresh danh sách đơn,"1. Tasker đang online 
+ 2. Có đơn mới",Danh sách cập nhật realtime không cần reload,Medium,,,,,
+TC_T05_018,Kiểm tra đơn hết hạn,1. Chờ đơn quá thời gian nhận,Đơn tự biến mất hoặc disabled,Medium,,,,,
+TC_T05_019,Kiểm tra nhận đơn đã bị người khác nhận,"1. Tasker A và B cùng thấy đơn 
+ 2. Tasker A nhận trước 
+ 3. Tasker B nhận sau",Tasker B nhận thông báo đơn đã được nhận,High,,,,,
+TC_T05_020,Kiểm tra loading khi nhận đơn,1. Nhấn “Nhận đơn”,Hiển thị loading trong lúc xử lý,Low,,,,,
+TC_T05_021,Kiểm tra spam nút “Nhận đơn”,1. Nhấn nhiều lần nút nhận đơn,Chỉ gửi 1 request nhận đơn,Medium,,,,,
+TC_T05_022,Kiểm tra spam nút “Bỏ qua”,1. Nhấn nhiều lần nút bỏ qua,Chỉ xử lý 1 request,Low,,,,,
+TC_T05_023,Kiểm tra mất mạng khi nhận đơn,"1. Có đơn mới 
+ 2. Tắt mạng 
+ 3. Nhấn nhận đơn",Hiển thị lỗi kết nối mạng,High,,,,,
+TC_T05_024,Kiểm tra timeout API nhận đơn,"1. Mô phỏng mạng chậm 
+ 2. Nhấn nhận đơn",Hiển thị timeout phù hợp,Medium,,,,,
+TC_T05_025,Kiểm tra chuyển trạng thái Online/Offline realtime,"1. Đang Online 
+ 2. Chuyển Offline",Ngừng nhận đơn mới ngay lập tức,Medium,,,,,
+TC_T05_026,Kiểm tra đơn không phù hợp không hiển thị,"1. Tasker chỉ nhận Dọn nhà 
+ 2. Hệ thống tạo đơn Trông trẻ",Không hiển thị đơn không phù hợp,High,,,,,
+TC_T05_027,Kiểm tra khoảng cách làm tròn đúng format,1. Có đơn khoảng cách thực tế,Hiển thị đúng format km,Low,,,,,
+TC_T05_028,Kiểm tra định dạng thu nhập,1. Có đơn mới,Thu nhập hiển thị đúng format (+100k),Low,,,,,
+TC_T05_029,Kiểm tra scroll danh sách nhiều đơn,1. Có nhiều đơn mới,"Scroll mượt, không vỡ UI",Medium,,,,,
+TC_T05_030,Kiểm tra UI responsive trên mobile,1. Mở app trên nhiều kích thước màn hình,UI hiển thị đúng,Medium,,,,,
+TC_T05_031,Kiểm tra giữ trạng thái danh sách đơn sau refresh app,"1. Có danh sách đơn 
+ 2. Refresh app",Danh sách được load lại đúng,Medium,,,,,
+TC_T05_032,Kiểm tra hiển thị icon/trạng thái đơn mới,1. Có đơn mới,Đơn có badge/tag “Mới”,Low,,,,,
+TC_T05_033,Kiểm tra nhận đơn thành công điều hướng đúng,1. Nhấn “Nhận đơn”,Điều hướng sang màn chi tiết đơn,High,,,,,
+TC_T05_034,Kiểm tra không hiển thị đơn đã bỏ qua,"1. Bỏ qua đơn 
+ 2. Reload màn hình",Đơn không hiển thị lại,Medium,,,,,
+TC_T05_035,Kiểm tra hiệu năng tải danh sách đơn,1. Có nhiều đơn mới,"Danh sách load nhanh, không lag",Medium,,,,,
+TC_T05_036,Kiểm tra chống duplicate đơn,1. Hệ thống gửi cùng 1 đơn nhiều lần,Chỉ hiển thị 1 đơn duy nhất,High,,,,,
+TC_T05_037,Kiểm tra khi app chạy background có đơn mới,"1. Đưa app xuống background 
+ 2. Có đơn mới",Hiển thị push notification,Medium,,,,,
+TC_T05_038,Kiểm tra khi mở lại app từ notification,1. Nhấn notification đơn mới,Điều hướng đúng tới màn hình đơn,Medium,,,,,
+TC_T05_039,Kiểm tra logout khi đang có đơn mới,"1. Có đơn mới 
+ 2. Logout",Không còn nhận đơn sau logout,Medium,,,,,
+TC_T05_040,Kiểm tra quyền truy cập màn hình đơn mới,1. Truy cập M16 khi chưa login,Hệ thống yêu cầu đăng nhập,High,,,,,
+UC_06 Nhận đơn,,,,,,,,,
+TC-T06-001,Nhận đơn thành công,"1. Mở danh sách đơn mới 
+2. Nhấn “Nhận đơn”",Đơn chuyển sang mục “Đang thực hiện”,High,,,,,
+TC-T06-002,Hiển thị thông báo nhận đơn thành công,1. Nhấn “Nhận đơn”,Hiển thị message xác nhận thành công,Medium,,,,,
+TC-T06-003,Đơn xuất hiện trong mục “Đang thực hiện”,1. Mở mục Đang thực hiện,Đơn hiển thị đúng thông tin,High,,,,,
+TC-T06-004,Khách hàng nhận notification khi Tasker nhận đơn,1. Tasker nhận đơn,Customer nhận thông báo “Tasker đã nhận đơn”,High,,,,,
+TC-T06-005,Tasker khác nhận trước,"1. Tasker A nhận đơn trước 
+2. Tasker B nhấn “Nhận đơn”",Hiển thị “Đơn đã được nhận”,High,,,,,
+TC-T06-006,Double click nút “Nhận đơn”,1. Double click nút nhận đơn,Không tạo duplicate request,Medium,,,,,
+TC-T06-007,Spam click nút “Nhận đơn” liên tục,1. Click liên tục nhiều lần,Chỉ nhận đơn 1 lần,Medium,,,,,
+TC-T06-008,Mất mạng khi nhận đơn,"1. Tắt mạng 
+2. Nhấn “Nhận đơn”",Hiển thị lỗi kết nối,Medium,,,,,
+TC-T06-009,Server timeout khi nhận đơn,1. Nhấn “Nhận đơn” khi server chậm,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T06-010,Tasker Offline nhưng cố nhận đơn,1. Nhấn “Nhận đơn”,Không cho phép nhận đơn,High,,,,,
+TC-T06-011,Đơn hết hạn trước khi nhận,"1. Chờ đơn hết hạn 
+2. Nhấn “Nhận đơn”",Hiển thị đơn không còn khả dụng,Medium,,,,,
+TC-T06-012,Refresh app sau khi nhận đơn,1. Reload app,Đơn vẫn nằm trong “Đang thực hiện”,Medium,,,,,
+TC-T06-013,App crash sau khi nhận đơn,"1. Force close app 
+2. Mở lại app",Đơn vẫn được lưu đúng trạng thái,Medium,,,,,
+TC-T06-014,Nhận nhiều đơn cùng lúc,1. Nhận liên tiếp nhiều đơn,Các đơn hiển thị đúng,Medium,,,,,
+TC-T06-015,Không cho nhận thêm đơn nếu vượt giới hạn,"1. Đã đạt limit
+2. Nhận thêm đơn",Hiển thị lỗi business rule,Medium,,,,,
+TC-T06-016,Hiển thị đúng thông tin đơn sau khi nhận,1. Kiểm tra chi tiết đơn,"Hiển thị đúng dịch vụ, khách hàng, địa chỉ",High,,,,,
+TC-T06-017,Đồng bộ trạng thái đơn realtime,"1. Nhận đơn trên device A
+2. Kiểm tra device B",Trạng thái sync realtime,Medium,,,,,
+TC-T06-018,Push notification biến mất sau khi nhận đơn,1. Nhận đơn,Notification được cập nhật/xóa đúng,Low,,,,,
+TC-T06-019,App background khi nhận đơn,1. Nhận đơn từ notification background,Điều hướng đúng vào đơn đang thực hiện,Medium,,,,,
+TC-T06-020,Session hết hạn khi nhận đơn,1. Nhấn “Nhận đơn”,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T06-021,Hiển thị loading khi đang nhận đơn,1. Nhấn “Nhận đơn”,Hiển thị trạng thái loading,Low,,,,,
+TC-T06-022,Không duplicate đơn trong mục Đang thực hiện,1. Reload nhiều lần,Chỉ hiển thị 1 bản ghi đơn,Medium,,,,,
+TC-T06-023,GPS/location bị tắt khi nhận đơn,"1. Tắt GPS
+2. Nhận đơn",Hiển thị yêu cầu bật location,Medium,,,,,
+TC-T06-024,Nhận đơn đúng với dịch vụ đã đăng ký,1. Nhận đơn Dọn nhà,Cho phép nhận đơn hợp lệ,High,,,,,
+TC-T06-025,Không cho nhận đơn sai dịch vụ,1. Nhấn nhận đơn Trông trẻ,Không cho phép nhận,High,,,,,
+UC_07 Bỏ qua đơn ,,,,,,,,,
+TC-T07-001,Bỏ qua đơn thành công,"1. Mở danh sách đơn mới 
+2. Nhấn “Bỏ qua”",Đơn biến mất khỏi danh sách,High,,,,,
+TC-T07-002,Hệ thống phân phối đơn cho Tasker khác,1. Tasker A nhấn “Bỏ qua”,Hệ thống chuyển đơn sang Tasker khác phù hợp,High,,,,,
+TC-T07-003,Hiển thị thông báo bỏ qua thành công,1. Nhấn “Bỏ qua”,Hiển thị message thành công,Medium,,,,,
+TC-T07-004,Refresh app sau khi bỏ qua,1. Reload app,Đơn không còn hiển thị,Medium,,,,,
+TC-T07-005,Double click nút “Bỏ qua”,1. Double click “Bỏ qua”,Không gửi duplicate request,Medium,,,,,
+TC-T07-006,Spam click nút “Bỏ qua” liên tục,1. Click liên tục nhiều lần,Chỉ xử lý 1 request,Medium,,,,,
+TC-T07-007,Mất mạng khi bỏ qua đơn,"1. Tắt mạng 
+2. Nhấn “Bỏ qua”
+",Hiển thị lỗi kết nối,Medium,,,,,
+TC-T07-008,Server timeout khi bỏ qua đơn,1. Nhấn “Bỏ qua” khi server chậm,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T07-009,Đơn đã bị Tasker khác nhận trước khi bỏ qua,"1. Tasker khác nhận đơn 
+2. Nhấn “Bỏ qua”",Đơn tự biến mất hoặc update trạng thái,Medium,,,,,
+TC-T07-010,Đơn hết hạn trước khi bỏ qua,"1. Chờ đơn hết hạn
+2. Nhấn “Bỏ qua”",Đơn không còn khả dụng,Medium,,,,,
+TC-T07-011,Bỏ qua nhiều đơn liên tiếp,1. Bỏ qua nhiều đơn,Hệ thống xử lý đúng từng đơn,Medium,,,,,
+TC-T07-012,Bỏ qua nhiều lần làm giảm ưu tiên phân phối,1. Liên tục bỏ qua đơn,Tỷ lệ phân phối đơn giảm theo rule,Medium,,,,,
+TC-T07-013,Không hiển thị lại đơn vừa bỏ qua,"1. Refresh app 
+2. Chờ realtime sync",Đơn không xuất hiện lại,Medium,,,,,
+TC-T07-014,App crash sau khi bỏ qua đơn,"1. Force close app 
+2. Mở lại app",Đơn vẫn không hiển thị,Medium,,,,,
+TC-T07-015,App background khi bỏ qua đơn,"1. Đưa app background 
+2. Nhấn action từ notification",Xử lý bỏ qua thành công,Medium,,,,,
+TC-T07-016,Session hết hạn khi bỏ qua đơn,1. Nhấn “Bỏ qua”,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T07-017,Toggle Offline sau khi bỏ qua đơn,"1. Nhấn “Bỏ qua” 
+2. Chuyển Offline",Không nhận thêm đơn mới,Medium,,,,,
+TC-T07-018,Hiển thị loading khi đang bỏ qua đơn,1. Nhấn “Bỏ qua”,Hiển thị trạng thái loading,Low,,,,,
+TC-T07-019,Đồng bộ realtime trạng thái đơn sau khi bỏ qua,"1. Bỏ qua trên device A
+2. Kiểm tra device B",Dữ liệu sync đúng,Medium,,,,,
+TC-T07-020,Không ảnh hưởng đơn khác khi bỏ qua,1. Bỏ qua 1 đơn,Các đơn còn lại vẫn hiển thị bình thường,Medium,,,,,
+UC_08 Xem đơn đang thực hiện,,,,,,,,,
+TC-T08-001,Hiển thị đơn đang thực hiện sau khi nhận đơn,"1. Mở M16 
+2. Xem mục “Đang thực hiện”",Đơn hiển thị đúng trong danh sách,High,,,,,
+TC-T08-002,Hiển thị đúng tên dịch vụ,1. Quan sát thông tin đơn,Hiển thị đúng tên dịch vụ,High,,,,,
+TC-T08-003,Hiển thị đúng tên khách hàng,1. Quan sát thông tin khách hàng,Hiển thị đúng tên khách hàng,High,,,,,
+TC-T08-004,Hiển thị đúng địa chỉ khách hàng,1. Quan sát địa chỉ,Hiển thị đúng địa chỉ (vd: S2.06/08B12),High,,,,,
+TC-T08-005,Hiển thị đúng giờ bắt đầu,1. Quan sát thời gian bắt đầu,Hiển thị đúng giờ bắt đầu,Medium,,,,,
+TC-T08-006,Bộ đếm thời gian chạy realtime,1. Quan sát timer trong vài phút,Timer tăng realtime liên tục,High,,,,,
+TC-T08-007,Timer tiếp tục chạy sau khi reload app,1. Reload app,Timer sync đúng với server,High,,,,,
+TC-T08-008,Timer không reset sau khi reload,1. Reload nhiều lần,Timer vẫn đúng thời gian thực tế,Medium,,,,,
+TC-T08-009,Hiển thị đúng trạng thái “Đang thực hiện”,1. Quan sát trạng thái đơn,Status hiển thị đúng,Medium,,,,,
+TC-T08-010,Không hiển thị đơn đã hoàn thành trong mục Đang thực hiện,"1. Complete đơn 
+2. Kiểm tra mục Đang thực hiện",Đơn biến mất khỏi danh sách,High,,,,,
+TC-T08-011,Không hiển thị đơn đã hủy,"1. Cancel đơn 
+2. Kiểm tra mục Đang thực hiện",Đơn không còn hiển thị,Medium,,,,,
+TC-T08-012,Nhấn nút Chat từ đơn đang thực hiện,1. Nhấn “Chat”,Điều hướng tới M10,High,,,,,
+TC-T08-013,Hiển thị đúng cửa sổ chat tương ứng đơn,1. Nhấn Chat của từng đơn,Mở đúng chat của đơn đó,Medium,,,,,
+TC-T08-014,Refresh app khi có đơn đang thực hiện,1. Reload app,Dữ liệu đơn vẫn đúng,Medium,,,,,
+TC-T08-015,App crash khi đang thực hiện đơn,"1. Force close app 
+2. Mở lại app",Đơn vẫn hiển thị đúng,Medium,,,,,
+TC-T08-016,App background khi đang thực hiện đơn,"1. Đưa app background
+2. Mở lại",Timer và dữ liệu vẫn sync đúng,Medium,,,,,
+TC-T08-017,Mất mạng khi xem đơn đang thực hiện,1. Tắt mạng,Hiển thị lỗi kết nối hoặc cached data,Medium,,,,,
+TC-T08-018,Server timeout khi load dữ liệu đơn,1. Load màn hình khi server chậm,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T08-019,Có nhiều đơn đang thực hiện,1. Nhận nhiều đơn,Hiển thị đầy đủ danh sách đơn,Medium,,,,,
+TC-T08-020,Scroll danh sách đơn đang thực hiện,1. Scroll danh sách,Load dữ liệu đúng,Low,,,,,
+TC-T08-021,Session hết hạn khi đang xem đơn,1. Mở màn hình Đang thực hiện,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T08-022,Đồng bộ trạng thái realtime giữa nhiều device,1. Kiểm tra trên device A và B,Dữ liệu sync đúng realtime,Medium,,,,,
+TC-T08-023,Không có đơn đang thực hiện,1. Mở mục Đang thực hiện,Hiển thị empty state,Medium,,,,,
+TC-T08-024,UI hiển thị đúng định dạng thời gian,1. Quan sát timer,Format HH:mm:ss đúng,Low,,,,,
+TC-T08-025,Hiển thị loading khi tải dữ liệu đơn,1. Mở màn hình,Hiển thị loading trước khi load xong,Low,,,,,
+UC-09 Hoàn thành đơn ,,,,,,,,,
+TC-T09-001,Hoàn thành đơn thành công,"1. Mở đơn đang thực hiện 
+2. Nhấn “Hoàn thành đơn”",Đơn chuyển sang trạng thái “Hoàn thành”,High,,,,,
+TC-T09-002,Hiển thị thông báo hoàn thành thành công,1. Nhấn “Hoàn thành đơn”,Hiển thị message thành công,Medium,,,,,
+TC-T09-003,Đơn biến mất khỏi mục “Đang thực hiện”,1. Kiểm tra mục Đang thực hiện,Đơn không còn hiển thị,High,,,,,
+TC-T09-004,Đơn xuất hiện trong lịch sử đơn,1. Mở tab Lịch sử,Đơn hiển thị trong lịch sử,High,,,,,
+TC-T09-005,Thu nhập được cộng vào tài khoản Tasker,"1. Complete đơn 
+2. Kiểm tra số dư",Thu nhập được cộng chính xác,High,,,,,
+TC-T09-006,Hiển thị đúng số tiền thu nhập,1. Kiểm tra thống kê thu nhập,Số tiền hiển thị đúng,High,,,,,
+TC-T09-007,Khách hàng nhận notification đánh giá,1. Tasker complete đơn,Customer nhận thông báo đánh giá,High,,,,,
+TC-T09-008,Double click nút “Hoàn thành đơn”,1. Double click nút hoàn thành,Không tạo duplicate request,Medium,,,,,
+TC-T09-009,Spam click nút hoàn thành liên tục,1. Click liên tục nhiều lần,Chỉ xử lý 1 lần complete,Medium,,,,,
+TC-T09-010,Mất mạng khi hoàn thành đơn,"1. Tắt mạng 
+2. Nhấn hoàn thành",Hiển thị lỗi kết nối,Medium,,,,,
+TC-T09-011,Server timeout khi hoàn thành đơn,1. Nhấn complete khi server chậm,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T09-012,Khách hàng chưa xác nhận hoàn thành,1. Tasker nhấn complete,Hệ thống chờ customer xác nhận,High,,,,,
+TC-T09-013,Customer xác nhận hoàn thành,1. Customer xác nhận,Đơn chuyển Completed,High,,,,,
+TC-T09-014,Customer từ chối hoàn thành,1. Customer từ chối,Đơn không chuyển completed,High,,,,,
+TC-T09-015,Refresh app sau khi complete đơn,1. Reload app,Trạng thái đơn vẫn chính xác,Medium,,,,,
+TC-T09-016,App crash sau khi complete đơn,"1. Force close app 
+2. Mở lại",Dữ liệu vẫn sync đúng,Medium,,,,,
+TC-T09-017,Đồng bộ trạng thái đơn realtime,"1. Complete trên device A 
+2. Kiểm tra device B",Status sync realtime,Medium,,,,,
+TC-T09-018,Không cho complete đơn đã completed,1. Nhấn lại nút complete,Không cho phép thao tác,Medium,,,,,
+TC-T09-019,Không cho complete đơn đã hủy,1. Nhấn complete,Không cho phép thao tác,Medium,,,,,
+TC-T09-020,Timer dừng sau khi complete,1. Complete đơn,Timer dừng hoạt động,Medium,,,,,
+TC-T09-021,Session hết hạn khi complete đơn,1. Nhấn complete,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T09-022,Hiển thị loading khi hoàn thành đơn,1. Nhấn complete,Hiển thị loading,Low,,,,,
+TC-T09-023,Không duplicate dữ liệu lịch sử đơn,1. Reload nhiều lần,Chỉ có 1 record lịch sử,Medium,,,,,
+TC-T09-024,Cập nhật đúng số đơn hoàn thành trong thống kê,"1. Complete đơn 
+2. Kiểm tra stats",Tổng số đơn completed tăng đúng,Medium,,,,,
+TC-T09-025,App background khi hoàn thành đơn,1. Complete từ background/notification,Trạng thái cập nhật đúng,Low,,,,,
+UC_10 Lịch sử đơn,,,,,,,,,
+TC-T10-001,Xem danh sách lịch sử đơn hoàn thành,"1. Mở app 
+2. Nhấn tab “Lịch sử”",Hiển thị danh sách đơn completed,High,,,,,
+TC-T10-002,Hiển thị đúng thông tin đơn trong lịch sử,1. Mở tab Lịch sử,"Hiển thị đúng tên dịch vụ, khách hàng, thời gian",High,,,,,
+TC-T10-003,Hiển thị đúng trạng thái đơn,1. Quan sát trạng thái đơn,Status hiển thị “Hoàn thành”,Medium,,,,,
+TC-T10-004,Hiển thị đúng thu nhập từng đơn,1. Kiểm tra thu nhập,Số tiền hiển thị đúng,High,,,,,
+TC-T10-005,Xem chi tiết đơn từ lịch sử,1. Nhấn vào 1 đơn trong lịch sử,Mở đúng chi tiết đơn,High,,,,,
+TC-T10-006,Không có đơn hoàn thành,1. Mở tab Lịch sử,Hiển thị empty state,Medium,,,,,
+TC-T10-007,Refresh danh sách lịch sử,1. Reload app hoặc pull refresh,Danh sách cập nhật đúng,Medium,,,,,
+TC-T10-008,Scroll danh sách lịch sử,1. Scroll danh sách,Load dữ liệu đúng,Low,,,,,
+TC-T10-009,Pagination/load more lịch sử,1. Scroll cuối danh sách,Load thêm dữ liệu thành công,Medium,,,,,
+TC-T10-010,Hiển thị đúng thứ tự lịch sử,1. Quan sát thứ tự đơn,Hiển thị theo thời gian mới nhất,Medium,,,,,
+TC-T10-011,Đơn mới completed tự động cập nhật vào lịch sử,"1. Complete đơn 
+2. Mở tab lịch sử",Đơn mới xuất hiện,High,,,,,
+TC-T10-012,Không hiển thị đơn canceled trong lịch sử completed,1. Mở tab lịch sử,Không hiển thị đơn canceled,Medium,,,,,
+TC-T10-013,Không duplicate dữ liệu lịch sử,1. Refresh nhiều lần,Không có record trùng,Medium,,,,,
+TC-T10-014,Mất mạng khi load lịch sử,"1. Tắt mạng 
+2. Mở tab lịch sử",Hiển thị lỗi kết nối,Medium,,,,,
+TC-T10-015,Server timeout khi load lịch sử,1. Mở tab lịch sử khi server chậm,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T10-016,App crash khi đang xem lịch sử,"1. Force close app 
+2. Mở lại",Dữ liệu lịch sử vẫn đúng,Low,,,,,
+TC-T10-017,App background khi xem lịch sử,"1. Đưa app background 
+2. Mở lại",Dữ liệu không bị mất,Low,,,,,
+TC-T10-018,Session hết hạn khi xem lịch sử,1. Mở tab lịch sử,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T10-019,Đồng bộ lịch sử giữa nhiều device,"1. Complete đơn trên device A 
+2. Kiểm tra device B",Lịch sử sync realtime,Medium,,,,,
+TC-T10-020,Hiển thị loading khi tải lịch sử,1. Mở tab lịch sử,Hiển thị loading trước khi load xong,Low,,,,,
+TC-T10-021,Hiển thị đúng format thời gian,1. Quan sát thời gian đơn,Format ngày giờ đúng,Low,,,,,
+TC-T10-022,Hiển thị đúng địa chỉ đơn,1. Kiểm tra chi tiết đơn,Địa chỉ hiển thị đúng,Medium,,,,,
+TC-T10-023,Tìm kiếm đơn trong lịch sử (nếu có),1. Nhập keyword tìm kiếm,Trả về kết quả đúng,Medium,,,,,
+TC-T10-024,Filter lịch sử theo thời gian (nếu có),1. Chọn filter thời gian,Hiển thị đúng dữ liệu filter,Medium,,,,,
+TC-T10-025,Hiển thị đúng tổng số đơn lịch sử,1. Kiểm tra tổng số đơn,Tổng số khớp dữ liệu thực tế,Low,,,,,
+UC_11 Chat với khách hàng,,,,,,,,,
+TC-T11-001,Mở cửa sổ chat thành công,"1. Mở app 
+2. Nhấn Chat từ đơn",Điều hướng tới M10 thành công,High,,,,,
+TC-T11-002,Hiển thị lịch sử tin nhắn,1. Mở cửa sổ chat,Hiển thị đầy đủ lịch sử chat,High,,,,,
+TC-T11-003,Gửi tin nhắn văn bản thành công,"1. Nhập nội dung 
+2. Nhấn gửi",Tin nhắn gửi thành công,High,,,,,
+TC-T11-004,Nhận phản hồi từ khách hàng realtime,1. Customer gửi tin nhắn,Tasker nhận tin nhắn realtime,High,,,,,
+TC-T11-005,Hiển thị đúng thời gian tin nhắn,1. Quan sát timestamp,Hiển thị đúng thời gian gửi,Low,,,,,
+TC-T11-006,Hiển thị đúng người gửi/người nhận,1. Quan sát giao diện chat,Phân biệt đúng sender/receiver,Medium,,,,,
+TC-T11-007,Không cho gửi tin nhắn rỗng,"1. Không nhập nội dung 
+2. Nhấn gửi",Không gửi message rỗng,Medium,,,,,
+TC-T11-008,Gửi tin nhắn dài,1. Nhập text dài,Tin nhắn gửi thành công đúng format,Medium,,,,,
+TC-T11-009,Gửi ký tự đặc biệt/emoji,1. Nhập emoji/ký tự đặc biệt,Hiển thị đúng nội dung,Low,,,,,
+TC-T11-010,Đính kèm ảnh thành công,"1. Nhấn icon ảnh 
+2. Chọn ảnh
+3. Gửi",Ảnh gửi thành công,High,,,,,
+TC-T11-011,Preview ảnh trước khi gửi,1. Chọn ảnh,Hiển thị preview ảnh,Low,,,,,
+TC-T11-012,Upload file ảnh không hợp lệ,1. Upload file không hỗ trợ,Hiển thị lỗi validate,Medium,,,,,
+TC-T11-013,Upload ảnh dung lượng lớn,1. Upload ảnh vượt limit,Hiển thị lỗi giới hạn dung lượng,Medium,,,,,
+TC-T11-014,Mất mạng khi gửi tin nhắn,"1. Tắt mạng 
+2. Gửi tin nhắn",Hiển thị lỗi gửi thất bại,High,,,,,
+TC-T11-015,Server timeout khi gửi tin nhắn,1. Gửi message,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T11-016,Retry gửi lại tin nhắn thất bại,1. Nhấn gửi lại,Tin nhắn resend thành công,Medium,,,,,
+TC-T11-017,Double click nút gửi,1. Double click send,Không duplicate tin nhắn,Medium,,,,,
+TC-T11-018,Spam gửi nhiều tin nhắn liên tục,1. Gửi nhiều message nhanh,Hệ thống xử lý đúng thứ tự,Medium,,,,,
+TC-T11-019,Notification khi có tin nhắn mới,1. Customer gửi message,Nhận push notification,High,,,,,
+TC-T11-020,Click notification mở đúng chat,1. Nhấn notification,Mở đúng cửa sổ chat,Medium,,,,,
+TC-T11-021,App background khi chat,"1. Đưa app background 
+2. Mở lại",Không mất dữ liệu chat,Low,,,,,
+TC-T11-022,Refresh app khi chat,1. Reload app,Chat history vẫn đúng,Low,,,,,
+TC-T11-023,Session hết hạn khi gửi tin nhắn,1. Gửi tin nhắn,Redirect login hoặc báo lỗi session,Medium,,,,,
+TC-T11-024,Nhấn icon điện thoại để gọi khách hàng,1. Nhấn icon call,Mở chức năng gọi điện,Medium,,,,,
+TC-T11-025,Đồng bộ chat realtime giữa nhiều device,"1. Gửi message trên device A
+ 2. Kiểm tra device B",Tin nhắn sync realtime,Medium,,,,,
+UC_12 Thu nhập & thống kê,,,,,,,,,
+TC-T12-001,Mở màn hình Thu nhập thành công,"1. Mở app 
+2. Nhấn tab “Thu nhập”",Điều hướng tới M17 thành công,High,,,,,
+TC-T12-002,Hiển thị đúng tổng thu nhập,1. Mở màn hình thống kê,Tổng thu hiển thị đúng,High,,,,,
+TC-T12-003,Hiển thị đúng % so sánh tuần trước,1. Kiểm tra % thống kê,% hiển thị đúng theo dữ liệu,Medium,,,,,
+TC-T12-004,Hiển thị đúng biểu đồ thu nhập,1. Quan sát biểu đồ,Biểu đồ hiển thị đúng dữ liệu,Medium,,,,,
+TC-T12-005,Hiển thị đúng dữ liệu theo ngày trong tuần,1. Kiểm tra từng cột biểu đồ,Giá trị từng ngày đúng,Medium,,,,,
+TC-T12-006,Hiển thị đúng số đơn hoàn thành,1. Kiểm tra card “Số đơn”,Tổng số đơn đúng,High,,,,,
+TC-T12-007,Hiển thị đúng đánh giá trung bình,1. Kiểm tra card “Đánh giá TB”,Rating hiển thị đúng,Medium,,,,,
+TC-T12-008,Hiển thị đúng tỷ lệ nhận đơn,1. Kiểm tra tỷ lệ nhận,Tỷ lệ hiển thị chính xác,Medium,,,,,
+TC-T12-009,Hiển thị đúng phí Chị Ơi 15%,1. Kiểm tra phí hệ thống,Tính đúng 15%,High,,,,,
+TC-T12-010,Filter “Hôm nay” hoạt động đúng,1. Chọn filter “Hôm nay”,Hiển thị đúng dữ liệu hôm nay,Medium,,,,,
+TC-T12-011,Filter “Tuần này” hoạt động đúng,1. Chọn “Tuần này”,Hiển thị đúng dữ liệu tuần,Medium,,,,,
+TC-T12-012,Filter “Tháng” hoạt động đúng,1. Chọn “Tháng”,Hiển thị đúng dữ liệu tháng,Medium,,,,,
+TC-T12-013,Chuyển đổi filter liên tục,1. Đổi nhiều filter liên tục,Dữ liệu update đúng,Medium,,,,,
+TC-T12-014,Không có thu nhập,1. Mở màn hình thống kê,Tất cả chỉ số hiển thị 0,Medium,,,,,
+TC-T12-015,Hiển thị empty state khi chưa có dữ liệu,1. Mở M17,Hiển thị trạng thái empty phù hợp,Low,,,,,
+TC-T12-016,Refresh màn hình thống kê,1. Pull refresh/reload app,Dữ liệu cập nhật đúng,Medium,,,,,
+TC-T12-017,Mất mạng khi load thống kê,"1. Tắt mạng 
+2. Mở M17",Hiển thị lỗi kết nối,Medium,,,,,
+TC-T12-018,Server timeout khi load thống kê,1. Mở màn hình,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T12-019,Session hết hạn khi xem thống kê,1. Mở tab Thu nhập,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T12-020,Đồng bộ dữ liệu thống kê realtime,"1. Complete đơn trên device A 
+2. Kiểm tra stats device B",Dữ liệu sync đúng,Medium,,,,,
+TC-T12-021,Hiển thị đúng format tiền tệ,1. Quan sát số tiền,Format currency đúng,Low,,,,,
+TC-T12-022,Hiển thị loading khi tải dữ liệu,1. Mở màn hình,Hiển thị loading trước khi load xong,Low,,,,,
+TC-T12-023,Scroll màn hình thống kê,1. Scroll xuống cuối màn hình,UI hiển thị đúng,Low,,,,,
+TC-T12-024,Nút “Yêu cầu rút tiền” hiển thị đúng,1. Mở cuối màn hình,Hiển thị button đúng,Medium,,,,,
+TC-T12-025,Nút “Yêu cầu rút tiền” disabled khi số dư = 0,1. Mở M17,Button bị disable,Medium,,,,,
+UC_13 Yêu cầu rút tiền,,,,,,,,,
+TC-T13-001,Gửi yêu cầu rút tiền thành công,"1. Mở M17 
+2. Nhấn “Yêu cầu rút tiền” 
+3. Nhập số tiền 
+4. Chọn tài khoản ngân hàng
+5. Xác nhận",Yêu cầu rút tiền được tạo thành công,High,,,,,
+TC-T13-002,Hiển thị thông báo gửi yêu cầu thành công,1. Hoàn tất request rút tiền,Hiển thị message thành công,Medium,,,,,
+TC-T13-003,Button “Yêu cầu rút tiền” bị disable khi số dư = 0,1. Mở M17,Button bị disable,High,,,,,
+TC-T13-004,Không cho nhập số tiền lớn hơn số dư,1. Nhập số tiền > balance,Hiển thị lỗi validate,High,,,,,
+TC-T13-005,Không cho nhập số tiền bằng 0,1. Nhập số tiền = 0,Hiển thị lỗi validate,Medium,,,,,
+TC-T13-006,Không cho nhập số tiền âm,1. Nhập số âm,Hiển thị lỗi validate,Medium,,,,,
+TC-T13-007,Không cho để trống số tiền,"1. Để trống field số tiền 
+2. Submit",Hiển thị required validate,Medium,,,,,
+TC-T13-008,Hiển thị đúng danh sách tài khoản ngân hàng,1. Mở dropdown ngân hàng,Hiển thị đúng danh sách bank,Medium,,,,,
+TC-T13-009,Chọn tài khoản ngân hàng thành công,1. Chọn bank,Bank được selected đúng,Medium,,,,,
+TC-T13-010,Không cho submit khi chưa chọn ngân hàng,"1. Không chọn bank 
+2. Submit",Hiển thị validate,Medium,,,,,
+TC-T13-011,Double click nút xác nhận rút tiền,1. Double click submit,Không tạo duplicate request,Medium,,,,,
+TC-T13-012,Spam click submit nhiều lần,1. Click liên tục nhiều lần,Chỉ tạo 1 request,Medium,,,,,
+TC-T13-013,Mất mạng khi gửi yêu cầu rút tiền,"1. Tắt mạng 
+2. Submit request",Hiển thị lỗi kết nối,Medium,,,,,
+TC-T13-014,Server timeout khi gửi yêu cầu,1. Submit khi server chậm,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T13-015,Refresh app sau khi gửi request,1. Reload app,Request vẫn tồn tại đúng trạng thái,Medium,,,,,
+TC-T13-016,Đồng bộ số dư sau khi tạo request,1. Submit request,Balance được update đúng theo business,High,,,,,
+TC-T13-017,Admin nhận được yêu cầu rút tiền,1. Tasker submit request,Request hiển thị ở Admin,High,,,,,
+TC-T13-018,Hiển thị trạng thái request “Chờ xử lý”,1. Kiểm tra request,Status hiển thị đúng,Medium,,,,,
+TC-T13-019,Session hết hạn khi submit request,1. Nhấn submit,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T13-020,Không cho rút khi chưa liên kết ngân hàng,1. Mở form rút tiền,Hiển thị yêu cầu liên kết ngân hàng,High,,,,,
+TC-T13-021,Hiển thị loading khi gửi request,1. Submit request,Hiển thị loading,Low,,,,,
+TC-T13-022,App crash sau khi gửi request,"1. Force close app 
+2. Mở lại",Dữ liệu request vẫn đúng,Medium,,,,,
+TC-T13-023,App background khi gửi request,"1. Submit request 
+2. Đưa app background",Request vẫn xử lý đúng,Low,,,,,
+TC-T13-024,Hiển thị đúng format tiền tệ,1. Quan sát số tiền,Format currency đúng,Low,,,,,
+TC-T13-025,Không cho nhập ký tự chữ vào số tiền,1. Nhập text vào field amount,Chỉ cho nhập số,Medium,,,,,
+UC_14 Thông tin cá nhân Tasker,,,,,,,,,
+TC-T14-001,Mở tab Cá nhân thành công,"1. Mở app 
+2. Nhấn tab “Cá nhân”",Điều hướng đúng màn hình hồ sơ,High,,,,,
+TC-T14-002,Hiển thị đúng họ tên Tasker,1. Mở tab Cá nhân,Hiển thị đúng họ tên,High,,,,,
+TC-T14-003,Hiển thị đúng số điện thoại,1. Kiểm tra thông tin SĐT,SĐT hiển thị đúng,High,,,,,
+TC-T14-004,Hiển thị đúng dịch vụ cung cấp,1. Kiểm tra danh sách dịch vụ,Hiển thị đúng dịch vụ đã đăng ký,High,,,,,
+TC-T14-005,Hiển thị đúng rating sao,1. Kiểm tra rating,Hiển thị đúng số sao trung bình,Medium,,,,,
+TC-T14-006,Hiển thị đúng số việc đã hoàn thành,1. Kiểm tra thống kê công việc,Hiển thị đúng tổng số việc,Medium,,,,,
+TC-T14-007,Hiển thị avatar/profile image đúng,1. Quan sát avatar,Avatar hiển thị đúng,Low,,,,,
+TC-T14-008,Chỉnh sửa thông tin cá nhân thành công,"1. Nhấn Edit 
+2. Update thông tin 
+3. Save",Thông tin cập nhật thành công,High,,,,,
+TC-T14-009,Validate khi để trống field bắt buộc,"1. Xóa field required 
+2. Save",Hiển thị validate required,Medium,,,,,
+TC-T14-010,Không cho nhập SĐT sai format,1. Nhập SĐT sai format,Hiển thị validate lỗi,Medium,,,,,
+TC-T14-011,Update avatar thành công,1. Upload avatar mới,Avatar cập nhật thành công,Medium,,,,,
+TC-T14-012,Upload avatar sai định dạng,1. Upload file không hỗ trợ,Hiển thị lỗi validate,Medium,,,,,
+TC-T14-013,Upload avatar vượt dung lượng,1. Upload ảnh lớn,Hiển thị lỗi dung lượng,Medium,,,,,
+TC-T14-014,Refresh app sau khi cập nhật profile,1. Reload app,Dữ liệu vẫn đúng,Medium,,,,,
+TC-T14-015,App crash khi xem profile,"1. Force close app 
+2. Mở lại",Dữ liệu không bị mất,Low,,,,,
+TC-T14-016,App background khi xem profile,"1. Đưa app background 
+2. Mở lại",Dữ liệu vẫn giữ đúng,Low,,,,,
+TC-T14-017,Mất mạng khi load profile,"1. Tắt mạng 
+2. Mở tab Cá nhân",Hiển thị lỗi kết nối,Medium,,,,,
+TC-T14-018,Server timeout khi load profile,1. Mở tab Cá nhân,Hiển thị loading/error phù hợp,Medium,,,,,
+TC-T14-019,Session hết hạn khi mở profile,1. Mở tab Cá nhân,Redirect login hoặc báo session expired,Medium,,,,,
+TC-T14-020,Đồng bộ profile giữa nhiều device,"1. Update profile trên device A 
+2. Kiểm tra device B",Dữ liệu sync đúng,Medium,,,,,
+TC-T14-021,Hiển thị thông báo khi profile chưa đầy đủ,1. Mở tab Cá nhân,Hiển thị nhắc cập nhật profile,Medium,,,,,
+TC-T14-022,Không duplicate dữ liệu dịch vụ,1. Kiểm tra danh sách service,Không hiển thị trùng dữ liệu,Low,,,,,
+TC-T14-023,Hiển thị loading khi tải profile,1. Mở tab Cá nhân,Hiển thị loading trước khi load xong,Low,,,,,
+TC-T14-024,Hiển thị đúng format thông tin,1. Quan sát UI,Dữ liệu hiển thị đúng format,Low,,,,,
+TC-T14-025,Logout từ màn hình Cá nhân,1. Nhấn Logout,Đăng xuất thành công và quay về màn Login,High,,,,,

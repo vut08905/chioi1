@@ -5,8 +5,8 @@ export declare class WalletsController {
     getBalance(req: any): Promise<{
         user_id: number;
         updated_at: Date | null;
-        balance: import("@prisma/client-runtime-utils").Decimal | null;
         wallet_id: number;
+        balance: import("@prisma/client-runtime-utils").Decimal | null;
     }>;
     getTransactions(req: any): Promise<{
         status: string | null;
@@ -23,8 +23,8 @@ export declare class WalletsController {
         wallet: {
             user_id: number;
             updated_at: Date | null;
-            balance: import("@prisma/client-runtime-utils").Decimal | null;
             wallet_id: number;
+            balance: import("@prisma/client-runtime-utils").Decimal | null;
         };
         transaction: {
             status: string | null;
@@ -42,8 +42,8 @@ export declare class WalletsController {
         wallet: {
             user_id: number;
             updated_at: Date | null;
-            balance: import("@prisma/client-runtime-utils").Decimal | null;
             wallet_id: number;
+            balance: import("@prisma/client-runtime-utils").Decimal | null;
         };
         transaction: {
             status: string | null;

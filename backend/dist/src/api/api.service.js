@@ -83,9 +83,9 @@ let ApiService = class ApiService {
         if (!pkg || !pkg.is_active) {
             throw new common_1.BadRequestException('Gói không tồn tại hoặc đã ngưng');
         }
-        const wallet = await this.prisma.wallets.findUnique({ where: { user_id: userId } });
+        let wallet = await this.prisma.wallets.findUnique({ where: { user_id: userId } });
         if (!wallet) {
-            throw new common_1.BadRequestException('Ví không tồn tại. Vui lòng liên hệ hỗ trợ.');
+            wallet = await this.prisma.wallets.create({ data: { user_id: userId, balance: 0 } });
         }
         const price = Number(pkg.price);
         const balance = Number(wallet.balance);
@@ -177,6 +177,13 @@ let ApiService = class ApiService {
         return this.prisma.taskers.update({
             where: { tasker_id: taskerId },
             data: { is_online: isOnline },
+        });
+    }
+    async getUserTickets(userId) {
+        return this.prisma.support_tickets.findMany({
+            where: { user_id: userId },
+            orderBy: { created_at: 'desc' },
+            take: 50,
         });
     }
     async createTicket(userId, subject, description) {

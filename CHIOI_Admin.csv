@@ -1,0 +1,342 @@
+﻿TESTCASE ID,Tên testcase(Mục đích),Các bước thực hiện ,Kết quả mong muốn,Độ ưu tiên,Kết quả thực tế ,Trạng thái,Ghi chú,Dev
+UC_01 Xem bảng điều khiển tổng quan,,,,,,,,
+TC-AD01-001,Kiểm tra Admin truy cập Dashboard thành công,"1. Mở hệ thống 
+2. Đăng nhập bằng tài khoản Admin hợp lệ 
+3. Truy cập trang admin.php",Dashboard hiển thị thành công với đầy đủ dữ liệu tổng quan,High,,Fail,chưa hiện biểu đồ,
+TC-AD01-002,Kiểm tra hiển thị thẻ “Đơn hôm nay”,"1. Đăng nhập Admin 
+2. Quan sát thẻ “Đơn hôm nay”",Hiển thị đúng số lượng đơn trong ngày và trạng thái tăng/giảm so với hôm qua,High,,Fail,không có thẻ này,
+TC-AD01-003,Kiểm tra hiển thị thẻ “Doanh thu”,"1. Đăng nhập Admin
+ 2. Quan sát thẻ “Doanh thu”",Hiển thị đúng tổng doanh thu và phí hệ thống 15%,High,,Fail,không có thẻ này,
+TC-AD01-004,Kiểm tra hiển thị thẻ “Đang xử lý”,"1. Đăng nhập Admin 
+2. Quan sát thẻ “Đang xử lý”",Hiển thị đúng số đơn đang xử lý và số đơn cần chú ý,High,,Fail,không có thẻ này,
+TC-AD01-005,Kiểm tra hiển thị thẻ “Khiếu nại”,"1. Đăng nhập Admin 
+2. Quan sát thẻ “Khiếu nại”",Hiển thị đúng số khiếu nại chưa giải quyết,High,,Fail,chưa có dữ liệu để test ,
+TC-AD01-006,Kiểm tra danh sách đơn gần đây hiển thị,"1. Đăng nhập Admin 
+2. Cuộn xuống khu vực danh sách đơn gần đây",Danh sách đơn gần đây hiển thị đầy đủ thông tin đơn hàng,High,,Pass,,
+TC-AD01-007,Kiểm tra chuyển tab quản lý,"1. Đăng nhập Admin 
+2. Nhấn lần lượt vào các tab quản lý",Hệ thống chuyển đúng tab tương ứng và dữ liệu hiển thị chính xác,High,,Pass,,
+TC-AD01-008,Kiểm tra dữ liệu Dashboard tự động tải khi vào trang,"1. Đăng nhập Admin 
+2. Quan sát khi trang vừa mở",Dashboard tự động tải dữ liệu mà không cần refresh,Medium,,Fail,chưa hiện biểu đồ,
+TC-AD01-009,Kiểm tra refresh Dashboard,"1. Đăng nhập Admin 
+2. Nhấn refresh trình duyệt",Dashboard tải lại thành công và dữ liệu cập nhật,Medium,,Pass,,
+TC-AD01-010,Kiểm tra phân quyền người dùng thường,"1. Đăng nhập bằng tài khoản User 
+2. Truy cập admin.php",Hệ thống từ chối truy cập hoặc chuyển về trang không có quyền,High,,,,
+TC-AD01-011,Kiểm tra truy cập Dashboard khi chưa đăng nhập,1. Mở trực tiếp URL admin.php khi chưa đăng nhập,Hệ thống chuyển hướng tới trang đăng nhập,High,,,,
+TC-AD01-012,Kiểm tra phiên đăng nhập hết hạn,"1. Đăng nhập Admin 
+2. Chờ session hết hạn 
+3. Thao tác trên Dashboard",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC-AD01-013,Kiểm tra khi không có đơn hôm nay,1. Đăng nhập Admin với dữ liệu không có đơn hôm nay,Thẻ “Đơn hôm nay” hiển thị giá trị 0 và không lỗi giao diện,Medium,,Fail,ko có thẻ đơn hôm nay,
+TC-AD01-014,Kiểm tra khi không có doanh thu,1. Đăng nhập Admin với dữ liệu doanh thu bằng 0,Thẻ doanh thu hiển thị 0đ chính xác,Medium,,Fail,không có thẻ này,
+TC-AD01-015,Kiểm tra khi không có đơn xử lý,1. Đăng nhập Admin với dữ liệu không có đơn xử lý,Thẻ “Đang xử lý” hiển thị 0,Medium,,Fail,không có thẻ này,
+TC-AD01-016,Kiểm tra khi không có khiếu nại,1. Đăng nhập Admin với dữ liệu không có khiếu nại,Thẻ “Khiếu nại” hiển thị 0 chưa giải quyết,Medium,,Pass,,
+TC-AD01-017,Kiểm tra hiển thị số liệu lớn,1. Đăng nhập Admin với dữ liệu doanh thu lớn (ví dụ hàng tỷ VNĐ),"Giao diện hiển thị đúng định dạng số, không vỡ layout",Medium,,Fail,không có thẻ doanh thu,
+TC-AD01-018,Kiểm tra tốc độ tải Dashboard,"1. Đăng nhập Admin 
+2. Đo thời gian tải trang",Dashboard tải trong thời gian cho phép theo yêu cầu hệ thống,Medium,,Pass,,
+TC-AD01-019,Kiểm tra lỗi mất kết nối mạng,"1. Đăng nhập Admin 
+2. Ngắt mạng khi Dashboard tải dữ liệu",Hiển thị thông báo lỗi phù hợp hoặc trạng thái loading thất bại,High,,,,
+TC-AD01-020,Kiểm tra dữ liệu cập nhật realtime sau khi có đơn mới,"1. Đăng nhập Admin 
+2. Tạo đơn mới từ hệ thống khác 
+3. Refresh Dashboard",Chỉ số “Đơn hôm nay” và danh sách đơn cập nhật chính xác,Medium,,Fail,ko có thẻ đơn hôm nay,
+TC-AD01-021,Kiểm tra giao diện Dashboard trên màn hình nhỏ,"1. Đăng nhập Admin 
+2. Thu nhỏ trình duyệt hoặc dùng thiết bị mobile","Dashboard responsive, không chồng lấn nội dung",Low,,Pass,,
+TC-AD01-022,Kiểm tra tab khi dữ liệu rỗng,"1. Đăng nhập Admin 
+2. Chuyển vào tab không có dữ liệu",Hiển thị trạng thái “Không có dữ liệu” phù hợp,Medium,,Fail,không hiển thị trạng thái,
+TC-AD01-023,Kiểm tra điều hướng tab liên tục,"1. Đăng nhập Admin 
+2. Chuyển tab liên tục nhiều lần","Hệ thống không bị lag, treo hoặc lỗi hiển thị",Medium,,Pass,,
+TC-AD01-024,Kiểm tra bảo mật URL Dashboard,"1. Sao chép URL admin.php 
+2. Mở trên trình duyệt khác chưa đăng nhập",Không thể truy cập Dashboard nếu chưa xác thực,High,,,,
+TC-AD01-025,Kiểm tra đồng bộ dữ liệu giữa thẻ chỉ số và danh sách đơn,"1. Đăng nhập Admin 
+2. So sánh số liệu Dashboard với danh sách đơn thực tế",Dữ liệu giữa các khu vực hiển thị đồng nhất,High,,,,
+UC_02 Xem & theo dõi danh sách đơn hàng,,,,,,,,
+TC-AD02-001,Hiển thị danh sách đơn hàng thành công,"1. Đăng nhập Admin
+2. Vào Dashboard
+3. Nhấn tab “Đơn (23)”",Danh sách đơn hàng hiển thị đầy đủ,High,,Pass,,
+TC-AD02-002,Hiển thị đúng số lượng đơn hàng,"1. Mở tab “Đơn”
+2. Đếm số lượng đơn hiển thị",Tổng số đơn hiển thị đúng với dữ liệu hệ thống,High,,Pass,,
+TC-AD02-003,Hiển thị đúng trạng thái màu đơn hàng,"1. Mở danh sách đơn
+2. Kiểm tra màu trạng thái từng đơn","Đơn “Đang làm” màu cam, “Sắp tới” màu xanh dương, “Tìm tasker” màu vàng, “Hoàn thành” màu xanh lá",High,,Fail,"chưa có dữ liệu cho trạng thái ""Đang làm"", “Sắp tới”, “Tìm tasker”",
+TC-AD02-004,Hiển thị đầy đủ thông tin đơn,"1. Mở tab Đơn
+2. Quan sát từng item","Mỗi đơn hiển thị mã đơn, dịch vụ, khách hàng, Tasker, giá trị đơn",High,,Pass,,
+TC-AD02-005,Xem chi tiết đơn hàng,1. Nhấn vào một đơn bất kỳ,Màn hình chi tiết đơn hiển thị đúng thông tin,High,,Pass,,
+TC-AD02-006,Danh sách cập nhật theo thời gian thực,"1. Có đơn mới phát sinh
+2. Refresh trang hoặc chờ auto update",Danh sách cập nhật đúng đơn mới,Medium,,,,
+TC-AD02-007,Hiển thị danh sách khi không có đơn,1. Đăng nhập vào ngày không có đơn,Hiển thị danh sách rỗng hoặc thông báo “Không có đơn hàng”,High,,,,
+TC-AD02-008,Kiểm tra tải danh sách số lượng lớn,"1. Seed >1000 đơn hàng
+2. Mở tab Đơn","Hệ thống tải danh sách ổn định, không lag/crash",Medium,,,,
+TC-AD02-009,Kiểm tra trạng thái không hợp lệ,1. Tạo đơn có trạng thái lạ trong DB,Hệ thống hiển thị trạng thái mặc định hoặc báo lỗi phù hợp,Medium,,,,
+TC-AD02-010,Kiểm tra đơn thiếu Tasker,"1. Tạo đơn chưa có Tasker
+2. Mở danh sách",Đơn vẫn hiển thị bình thường với thông tin Tasker trống,Medium,,,,
+TC-AD02-011,Kiểm tra click liên tục vào đơn,1. Click nhiều lần liên tục vào cùng đơn,Không bị mở nhiều popup/trang lỗi,Low,,,,
+TC-AD02-012,Kiểm tra phân quyền User thường,"1. Đăng nhập tài khoản không phải Admin
+2. Truy cập admin.php",Không được phép truy cập màn hình quản trị,High,,,,
+TC-AD02-013,Kiểm tra session hết hạn,"1. Đăng nhập Admin
+2. Chờ session timeout
+3. Truy cập tab Đơn",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC-AD02-014,Kiểm tra dữ liệu đặc biệt,1. Tạo đơn có tên khách hàng ký tự đặc biệt/dài,"Dữ liệu hiển thị đúng format, không vỡ UI",Medium,,,,
+TC-AD02-015,Kiểm tra responsive UI,1. Mở trang trên desktop/tablet/mobile,Danh sách hiển thị đúng giao diện trên các thiết bị,Low,,,,
+UC_03 Can thiệp đơn hàng cần xử lý,,,,,,,,
+TC_AD03_001,Hiển thị đơn cần can thiệp,"1. Tạo đơn chờ quá thời gian quy định
+2. Mở Dashboard",Đơn được đánh dấu viền cam “cần can thiệp”,High,,,,
+TC_AD03_002,Hiển thị đúng số lượng đơn cần chú ý,"1. Có nhiều đơn cần xử lý
+2. Kiểm tra thẻ Dashboard",Số lượng “cần chú ý” hiển thị chính xác,High,,Pass,,
+TC_AD03_003,Xem chi tiết đơn cần can thiệp,1. Nhấn vào đơn viền cam,Hiển thị đầy đủ chi tiết đơn,High,,Not Run,chưa có chi tiết,
+TC_AD03_004,Gán Tasker thủ công thành công,"1. Mở đơn cần xử lý
+2. Chọn Tasker
+3. Xác nhận gán","Tasker được gán thành công, trạng thái cập nhật",High,,Fail,không có chức năng gắn Tasker,
+TC_AD03_005,Liên hệ khách hàng xử lý đơn,1. Chọn chức năng liên hệ khách,Thông tin liên hệ hiển thị đúng,Medium,,Fail,không có chức năng này,
+TC_AD03_006,Chuyển trạng thái về bình thường sau xử lý,1. Gán Tasker thành công,Đơn không còn hiển thị “cần can thiệp”,High,,Fail,không có chức năng này,
+TC_AD03_007,Không có Tasker phù hợp,"1. Không có Tasker online
+2. Thử gán Tasker",Hệ thống hiển thị thông báo không tìm được Tasker,High,,Fail,không có chức năng gắn Tasker,
+TC_AD03_008,Hoàn tiền cho khách hàng,1. Chọn hoàn tiền cho đơn lỗi,Hệ thống hoàn tiền thành công,High,,Fail,không có chức năng này,
+TC_AD03_009,Dời lịch đơn hàng,1. Chọn đổi lịch xử lý đơn,Lịch mới được cập nhật thành công,Medium,,Fail,không có chức năng này,
+TC_AD03_010,Gán cùng lúc nhiều Admin,"1. Hai Admin mở cùng đơn
+2. Cùng thao tác gán Tasker","Chỉ một thao tác thành công, tránh race condition",High,,,,
+TC_AD03_011,Gán Tasker không hoạt động,1. Chọn Tasker bị khóa/tạm dừng,Hệ thống không cho phép gán,High,,Fail,không có chức năng gắn Tasker,
+TC_AD03_012,Đơn đã được xử lý bởi Admin khác,"1. Admin A xử lý đơn
+2. Admin B tiếp tục thao tác",Hệ thống cảnh báo đơn đã được cập nhật,High,,,,
+TC_AD03_013,Kiểm tra refresh trạng thái,"1. Xử lý đơn
+2. Refresh Dashboard",Thông tin trạng thái cập nhật chính xác,Medium,,,,
+TC_AD03_014,Session hết hạn khi xử lý,"1. Đang thao tác xử lý đơn 
+2. Session timeout",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC_AD03_015,Kiểm tra hiệu năng khi nhiều đơn cảnh báo,1. Tạo nhiều đơn cần can thiệp,Dashboard vẫn hoạt động ổn định,Medium,,,,
+UC_04 Xem & quản lý danh sách Tasker,,,,,,,,
+TC_AD04_001,Hiển thị danh sách Tasker thành công,"1. Đăng nhập bằng tài khoản Admin
+2. Truy cập admin.php
+3. Nhấn tab “Tasker”",Danh sách Tasker hiển thị đầy đủ,High,,Pass,,
+TC_AD04_002,Hiển thị đúng thông tin Tasker,"1. Mở tab Tasker
+2. Quan sát từng dòng dữ liệu","Hiển thị đúng tên, SĐT, trạng thái, ngày đăng ký",High,,Fail,Không xem được chi tiết Tasker,
+TC_AD04_003,Hiển thị Tasker chờ duyệt,"1. Tạo Tasker mới ở trạng thái “Chờ duyệt”
+2. Mở tab Tasker",Tasker hiển thị đúng trạng thái “Chờ duyệt”,High,,,,
+TC_AD04_004,Hiển thị Tasker đang hoạt động,"1. Tạo Tasker trạng thái active
+2. Mở tab Tasker",Tasker hiển thị đúng trạng thái “Đang hoạt động”,High,,,,
+TC_AD04_005,Lọc Tasker theo trạng thái hoạt động,1. Nhấn bộ lọc “Đang hoạt động”,Chỉ hiển thị Tasker active,High,,,,
+TC_AD04_006,Lọc Tasker theo trạng thái chờ duyệt,1. Nhấn bộ lọc “Chờ duyệt”,Chỉ hiển thị hồ sơ chờ duyệt,High,,,,
+TC_AD04_007,Duyệt hồ sơ Tasker hợp lệ,"1. Chọn Tasker chờ duyệt
+2. Nhấn “Duyệt”
+3. Xác nhận thao tác",Hồ sơ chuyển sang trạng thái hoạt động,High,,,,
+TC_AD04_008,Từ chối hồ sơ thiếu thông tin,"1. Chọn hồ sơ thiếu giấy tờ
+2. Nhấn “Từ chối”",Hệ thống từ chối hồ sơ và hiển thị lý do,High,,,,
+TC_AD04_009,Tạm dừng Tasker vi phạm,"1. Chọn Tasker đang hoạt động
+2. Nhấn “Tạm dừng”",Tasker chuyển sang trạng thái bị khóa/tạm dừng,High,,,,
+TC_AD04_010,Xem chi tiết hồ sơ Tasker,1. Nhấn vào một Tasker bất kỳ,Hiển thị đầy đủ thông tin hồ sơ,Medium,,,,
+TC_AD04_011,Tìm kiếm Tasker theo tên,"1. Nhập tên Tasker vào ô tìm kiếm
+2. Nhấn tìm kiếm",Hiển thị đúng Tasker cần tìm,Medium,,,,
+TC_AD04_012,Tìm kiếm Tasker theo SĐT,"1. Nhập số điện thoại Tasker
+2. Nhấn tìm kiếm",Hiển thị đúng Tasker tương ứng,Medium,,,,
+TC_AD04_013,Không tìm thấy Tasker,1. Nhập từ khóa không tồn tại,Hiển thị “Không tìm thấy dữ liệu”,Medium,,,,
+TC_AD04_014,Duyệt hồ sơ đã được duyệt trước đó,"1. Chọn hồ sơ đã active
+2. Nhấn “Duyệt”",Hệ thống không cho phép duyệt lại,Medium,,,,
+TC_AD04_015,Tạm dừng Tasker đang có đơn thực hiện,"1. Chọn Tasker đang xử lý đơn
+2. Nhấn “Tạm dừng”",Hệ thống hiển thị cảnh báo xác nhận,High,,,,
+TC_AD04_016,Hồ sơ Tasker thiếu avatar,"1. Tạo hồ sơ không có ảnh đại diện
+2. Mở danh sách",Hiển thị avatar mặc định,Low,,,,
+TC_AD04_017,Hồ sơ có ký tự đặc biệt,1. Tạo Tasker có tên chứa ký tự đặc biệt,"Dữ liệu hiển thị đúng, không lỗi font/UI",Medium,,,,
+TC_AD04_018,Danh sách Tasker rỗng,"1. Xóa toàn bộ dữ liệu Tasker
+2. Mở tab Tasker",Hiển thị danh sách rỗng đúng UI,Medium,,,,
+TC_AD04_019,Kiểm tra phân quyền User thường,"1. Đăng nhập tài khoản User thường
+2. Truy cập admin.php",Không được phép truy cập,High,,,,
+TC_AD04_020,Session hết hạn,"1. Đăng nhập Admin
+2. Đợi session timeout
+3. Thao tác trên tab Tasker",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC_AD04_021,Hai Admin cùng duyệt một hồ sơ,"1. Admin A và B mở cùng hồ sơ
+2. Cùng nhấn duyệt",Chỉ một thao tác thành công,High,,,,
+TC_AD04_022,Refresh dữ liệu sau khi duyệt,"1. Duyệt hồ sơ
+2. Refresh trang",Trạng thái hồ sơ được cập nhật đúng,Medium,,,,
+TC_AD04_023,Tải danh sách lớn,"1. Seed >5000 Tasker
+2. Mở tab Tasker",Hệ thống hoạt động ổn định,Medium,,,,
+TC_AD04_024,Click liên tục nút duyệt,1. Click nhiều lần nút “Duyệt”,Không tạo nhiều request trùng,Medium,,,,
+TC_AD04_025,Kiểm tra responsive UI,1. Mở trang trên mobile/tablet/desktop,UI hiển thị đúng trên các thiết bị,Low,,,,
+UC_05 Xem & quản lý danh sách Cư dân,,,,,,,,
+TC_AD05_001,Hiển thị danh sách Cư dân thành công,"1. Đăng nhập Admin
+2. Truy cập tab “Cư dân”",Danh sách cư dân hiển thị đầy đủ,High,,,,
+TC_AD05_002,Hiển thị đúng thông tin Cư dân,"1. Mở danh sách cư dân
+2. Kiểm tra dữ liệu","Hiển thị đúng tên, SĐT, email, trạng thái tài khoản",High,,,,
+TC_AD05_003,Tìm kiếm cư dân theo tên,"1. Nhập tên cư dân
+2. Nhấn tìm kiếm",Hiển thị đúng kết quả tương ứng,High,,,,
+TC_AD05_004,Tìm kiếm cư dân theo SĐT,"1. Nhập số điện thoại
+2. Nhấn tìm kiếm",Hiển thị đúng cư dân cần tìm,High,,,,
+TC_AD05_005,Tìm kiếm không có kết quả,1. Nhập dữ liệu không tồn tại,Hiển thị thông báo không tìm thấy,Medium,,,,
+TC_AD05_006,Xem lịch sử đặt dịch vụ,"1. Chọn một cư dân
+2. Nhấn “Lịch sử dịch vụ”",Hiển thị đầy đủ lịch sử đặt dịch vụ,High,,,,
+TC_AD05_007,Hiển thị đúng số lượng đơn của cư dân,1. Mở lịch sử dịch vụ của cư dân,Tổng số đơn đúng với dữ liệu DB,Medium,,,,
+TC_AD05_008,Khóa tài khoản cư dân vi phạm,"1. Chọn cư dân vi phạm
+2. Nhấn “Khóa tài khoản”",Tài khoản bị khóa thành công,High,,,,
+TC_AD05_009,Mở khóa tài khoản cư dân,"1. Chọn cư dân bị khóa
+2. Nhấn “Mở khóa”",Tài khoản hoạt động trở lại,High,,,,
+TC_AD05_010,Cư dân bị khóa không đăng nhập được,"1. Khóa tài khoản cư dân
+2. Đăng nhập bằng tài khoản đó",Hệ thống từ chối đăng nhập,High,,,,
+TC_AD05_011,Danh sách cư dân rỗng,"1. Không có dữ liệu cư dân
+2. Mở tab Cư dân",Hiển thị danh sách rỗng đúng UI,Medium,,,,
+TC_AD05_012,Tìm kiếm với ký tự đặc biệt,1. Nhập ký tự đặc biệt vào ô tìm kiếm,Không gây lỗi hệ thống,Medium,,,,
+TC_AD05_013,Tìm kiếm với khoảng trắng,1. Nhập khoảng trắng liên tục,Hệ thống xử lý hợp lệ hoặc báo dữ liệu không hợp lệ,Low,,,,
+TC_AD05_014,Dữ liệu cư dân quá dài,1. Tạo tên/email rất dài,UI không bị vỡ layout,Medium,,,,
+TC_AD05_015,Xem lịch sử khi chưa có đơn,1. Chọn cư dân chưa từng đặt dịch vụ,Hiển thị “Chưa có lịch sử dịch vụ”,Medium,,,,
+TC_AD05_016,Hai Admin cùng khóa tài khoản,1. Admin A và B cùng thao tác khóa,Chỉ một thao tác thành công,High,,,,
+TC_AD05_017,Kiểm tra phân quyền User thường,"1. Đăng nhập User thường
+2. Truy cập tab Cư dân",Không được phép truy cập,High,,,,
+TC_AD05_018,Session hết hạn khi thao tác,"1. Đăng nhập Admin
+2. Chờ timeout
+3. Thao tác khóa tài khoản",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC_AD05_019,Kiểm tra dữ liệu realtime,"1. Cập nhật dữ liệu cư dân từ hệ thống khác
+2. Refresh trang",Danh sách cập nhật đúng,Medium,,,,
+TC_AD05_020,Tải danh sách cư dân số lượng lớn,"1. Seed >10000 cư dân
+2. Mở tab Cư dân",Hệ thống tải ổn định,Medium,,,,
+TC_AD05_021,Click liên tục nút khóa tài khoản,1. Click nhiều lần nút “Khóa”,Không tạo request trùng lặp,Medium,,,,
+TC_AD05_022,Kiểm tra responsive UI,1. Mở trên desktop/tablet/mobile,UI hiển thị đúng trên các thiết bị,Low,,,,
+UC 06 Quản lý ví & giao dịch tài chính,,,,,,,,
+TC-AD06-00,Hiển thị tab Ví thành công,"1. Đăng nhập bằng tài khoản Admin
+2. Truy cập admin.php
+3. Nhấn tab “Ví”",Màn hình quản lý ví hiển thị thành công,High,,,,
+TC-AD06-01,Hiển thị tổng quan tài chính,"1. Mở tab Ví
+2. Quan sát dashboard tài chính","Hiển thị đúng tổng doanh thu, số dư ví, phí hoa hồng, tiền tạm giữ",High,,,,
+TC-AD06-02,Hiển thị danh sách giao dịch,"1. Mở tab Ví
+2. Kiểm tra danh sách giao dịch",Danh sách giao dịch hiển thị đầy đủ,High,,,,
+TC-AD06-03,Hiển thị đúng loại giao dịch,1. Quan sát từng giao dịch,"Hiển thị đúng loại: nạp tiền, thanh toán, hoàn tiền, rút tiền",High,,,,
+TC-AD06-04,Hiển thị đúng số tiền giao dịch,1. So sánh dữ liệu giao dịch với DB,Số tiền hiển thị chính xác,High,,,,
+TC-AD06-05,Hiển thị đúng trạng thái giao dịch,1. Kiểm tra trạng thái giao dịch,Trạng thái hiển thị đúng: thành công/chờ xử lý/thất bại,High,,,,
+TC-AD06-06,Tính đúng phí hoa hồng 15%,"1. Tạo đơn hàng giá trị cụ thể
+2. Hoàn thành giao dịch",Hệ thống tính đúng phí hoa hồng 15%,High,,,,
+TC-AD06-07,Duyệt yêu cầu rút tiền Tasker thành công,"1. Tạo yêu cầu rút tiền từ Tasker
+2. Admin nhấn “Duyệt”",Yêu cầu được phê duyệt và cập nhật trạng thái,High,,,,
+TC-AD06-08,Từ chối yêu cầu rút tiền,"1. Chọn yêu cầu rút tiền
+2. Nhấn “Từ chối”",Hệ thống cập nhật trạng thái từ chối,High,,,,
+TC-AD06-09,Hoàn tiền đơn hàng thành công,"1. Chọn giao dịch cần hoàn tiền
+2. Nhấn “Hoàn tiền”",Tiền được hoàn về ví khách hàng,High,,,,
+TC-AD06-10,Xem chi tiết giao dịch,1. Nhấn vào một giao dịch bất kỳ,Hiển thị đầy đủ thông tin giao dịch,Medium,,,,
+TC-AD06-11,Tìm kiếm giao dịch theo mã,"1. Nhập mã giao dịch
+2. Nhấn tìm kiếm",Hiển thị đúng giao dịch cần tìm,Medium,,,,
+TC-AD06-12,Lọc giao dịch theo loại,1. Chọn filter “Nạp tiền” hoặc “Rút tiền”,Danh sách hiển thị đúng loại giao dịch,Medium,,,,
+TC-AD06-13,Lọc giao dịch theo thời gian,"1. Chọn khoảng thời gian
+2. Nhấn áp dụng bộ lọc",Chỉ hiển thị giao dịch trong khoảng thời gian đã chọn,Medium,,,,
+TC-AD06-14,Không có giao dịch trong hệ thống,"1. Xóa dữ liệu giao dịch
+2. Mở tab Ví",Hiển thị danh sách rỗng đúng UI,Medium,,,,
+TC-AD06-15,Yêu cầu rút tiền vượt số dư,1. Tasker gửi yêu cầu vượt quá số dư ví,Hệ thống không cho phép duyệt,High,,,,
+TC-AD06-16,Duyệt lại yêu cầu đã xử lý,"1. Chọn yêu cầu đã duyệt
+2. Nhấn duyệt lại",Hệ thống không cho phép xử lý lần 2,High,,,,
+TC-AD06-17,Hoàn tiền vượt giá trị đơn,1. Nhập số tiền hoàn vượt giá trị giao dịch,Hệ thống hiển thị lỗi validation,High,,,,
+TC-AD06-18,Giao dịch có giá trị âm,1. Tạo giao dịch số tiền âm,Hệ thống từ chối dữ liệu không hợp lệ,High,,,,
+TC-AD06-19,Giao dịch bất thường,1. Tạo giao dịch lớn bất thường liên tục,Hệ thống đánh dấu và khóa giao dịch để điều tra,High,,,,
+TC-AD06-20,Hai Admin cùng duyệt rút tiền,"1. Admin A và B mở cùng yêu cầu
+2. Cùng nhấn duyệt",Chỉ một thao tác thành công,High,,,,
+TC-AD06-21,Mất kết nối khi xử lý giao dịch,"1. Đang duyệt giao dịch
+2. Ngắt mạng giữa chừng",Hệ thống rollback hoặc hiển thị trạng thái phù hợp,High,,,,
+TC-AD06-22,Session hết hạn khi thao tác,"1. Đăng nhập Admin
+2. Chờ session timeout
+3. Thực hiện duyệt giao dịch",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC-AD06-23,Kiểm tra realtime số dư ví,"1. Phát sinh giao dịch mới
+2. Refresh màn hình Ví",Số dư và dữ liệu được cập nhật đúng,Medium,,,,
+TC-AD06-24,Kiểm tra dữ liệu giao dịch lớn,"1. Seed >100000 giao dịch
+2. Mở tab Ví",Hệ thống tải dữ liệu ổn định,Medium,,,,
+TC-AD06-25,Click liên tục nút duyệt,1. Click nhiều lần nút “Duyệt”,Không tạo giao dịch trùng lặp,Medium,,,,
+TC-AD06-26,Kiểm tra phân quyền User thường,"1. Đăng nhập User thường
+2. Truy cập admin.php tab Ví",Không được phép truy cập,High,,,,
+TC-AD06-27,Xuất danh sách giao dịch,1. Nhấn “Xuất Excel/PDF”,File xuất đúng dữ liệu giao dịch,Low,,,,
+TC-AD06-28,Kiểm tra ký tự đặc biệt khi tìm kiếm,1. Nhập ký tự đặc biệt vào ô tìm kiếm,Không gây lỗi hệ thống,Low,,,,
+TC-AD06-29,Kiểm tra responsive UI,1. Mở tab Ví trên mobile/tablet/desktop,UI hiển thị đúng trên các thiết bị,Low,,,,
+UC 07 Xem & quản lý hộp thư (Inbox),,,,,,,,
+TC-AD07-01,Hiển thị danh sách tin nhắn chưa trả lời,"1. Đăng nhập bằng tài khoản Admin
+2. Truy cập admin.php
+3. Nhấn tab “Inbox”",Danh sách tin nhắn chưa phản hồi hiển thị đầy đủ,High,,,,
+TC-AD07-02,Hiển thị đúng thông tin tin nhắn,"1. Mở tab Inbox
+2. Kiểm tra từng tin nhắn","Hiển thị đúng tên người gửi, thời gian, nội dung preview, trạng thái",High,,,,
+TC-AD07-03,Xem chi tiết nội dung tin nhắn,1. Nhấn vào một tin nhắn bất kỳ,Hiển thị đầy đủ nội dung hội thoại,High,,,,
+TC-AD07-04,Trả lời tin nhắn thành công,"1. Mở chi tiết tin nhắn
+2. Nhập nội dung phản hồi
+3. Nhấn “Gửi”",Tin nhắn phản hồi được gửi thành công,High,,,,
+TC-AD07-05,Tin nhắn chuyển trạng thái đã phản hồi,"1. Trả lời tin nhắn
+2. Quay lại danh sách Inbox",Tin nhắn được đánh dấu “Đã phản hồi”,High,,,,
+TC-AD07-06,Nhận tin nhắn mới realtime,"1. Người dùng gửi yêu cầu hỗ trợ mới
+2. Admin đang mở Inbox",Tin nhắn mới hiển thị realtime hoặc sau refresh,Medium,,,,
+TC-AD07-07,Hiển thị Inbox rỗng,"1. Không có tin nhắn hỗ trợ
+2. Mở Inbox",Hiển thị trạng thái “Không có yêu cầu mới”,Medium,,,,
+TC-AD07-08,Gửi phản hồi rỗng,"1. Mở tin nhắn
+2. Để trống nội dung
+3. Nhấn gửi",Hệ thống hiển thị validation bắt buộc nhập nội dung,High,,,,
+TC-AD07-09,Gửi phản hồi quá dài,"1. Nhập nội dung vượt giới hạn ký tự
+2. Nhấn gửi",Hệ thống hiển thị lỗi validation,Medium,,,,
+TC-AD07-10,Gửi phản hồi chứa ký tự đặc biệt,"1. Nhập emoji/ký tự đặc biệt
+2. Nhấn gửi","Nội dung hiển thị đúng, không lỗi font",Medium,,,,
+TC-AD07-11,Tìm kiếm tin nhắn theo tên người gửi,"1. Nhập tên người gửi
+2. Nhấn tìm kiếm",Hiển thị đúng kết quả tương ứng,Medium,,,,
+TC-AD07-12,Tìm kiếm tin nhắn không tồn tại,1. Nhập từ khóa không có dữ liệu,Hiển thị “Không tìm thấy kết quả”,Low,,,,
+TC-AD07-13,Hai Admin cùng trả lời một tin nhắn,"1. Admin A và B mở cùng hội thoại
+2. Cùng gửi phản hồi",Hệ thống xử lý đúng thứ tự hoặc cảnh báo conflict,High,,,,
+TC-AD07-14,Mất kết nối khi gửi phản hồi,"1. Nhập nội dung phản hồi
+2. Tắt mạng trước khi gửi",Hệ thống hiển thị lỗi gửi thất bại,High,,,,
+TC-AD07-15,Session hết hạn khi trả lời,"1. Đăng nhập Admin
+2. Chờ session timeout
+3. Gửi phản hồi",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC-AD07-16,Tin nhắn chứa nội dung XSS,1. Gửi nội dung chứa script HTML,"Hệ thống sanitize dữ liệu, không execute script",High,,,,
+TC-AD07-17,Tải danh sách tin nhắn lớn,"1. Seed >10000 tin nhắn
+2. Mở Inbox",Hệ thống tải ổn định,Medium,,,,
+TC-AD07-18,Kiểm tra responsive UI,1. Mở Inbox trên mobile/tablet/desktop,UI hiển thị đúng trên các thiết bị,Low,,,,
+TC-AD07-19,User thường truy cập Inbox Admin,"1. Đăng nhập User thường
+2. Truy cập admin.php Inbox",Không được phép truy cập,High,,,,
+TC-AD07-20,Click gửi nhiều lần liên tục,1. Nhấn liên tục nút “Gửi”,Không tạo phản hồi trùng lặp,Medium,,,,
+UC 08 Xử lý khiếu nại,,,,,,,,
+TC-AD08-01,Hiển thị số lượng khiếu nại chưa giải quyết,"1. Đăng nhập Admin
+2. Mở Dashboard",Thẻ “Khiếu nại” hiển thị đúng số lượng chưa xử lý,High,,,,
+TC-AD08-02,Xem danh sách khiếu nại,1. Nhấn vào thẻ “Khiếu nại”,Danh sách khiếu nại hiển thị đầy đủ,High,,,,
+TC-AD08-03,Xem chi tiết khiếu nại,1. Chọn một khiếu nại bất kỳ,Hiển thị đầy đủ nội dung khiếu nại,High,,,,
+TC-AD08-04,Xem lịch sử đơn liên quan,"1. Mở chi tiết khiếu nại
+2. Nhấn xem lịch sử đơn",Hiển thị đúng lịch sử đơn hàng liên quan,High,,,,
+TC-AD08-05,Xem lịch sử chat,"1. Mở chi tiết khiếu nại
+2. Nhấn xem chat",Hiển thị đúng nội dung trao đổi,High,,,,
+TC-AD08-06,Hoàn tiền cho khách hàng,"1. Chọn quyết định “Hoàn tiền”
+2. Xác nhận xử lý",Hệ thống hoàn tiền thành công,High,,,,
+TC-AD08-07,Cảnh cáo Tasker,"1. Chọn “Cảnh cáo Tasker”
+2. Xác nhận",Tasker nhận trạng thái cảnh cáo,High,,,,
+TC-AD08-08,Đánh dấu khiếu nại đã giải quyết,"1. Hoàn tất xử lý khiếu nại
+2. Nhấn “Đánh dấu đã giải quyết”",Khiếu nại chuyển trạng thái “Đã giải quyết”,High,,,,
+TC-AD08-09,Số lượng khiếu nại giảm sau xử lý,"1. Giải quyết xong khiếu nại
+2. Quay về Dashboard",Tổng số khiếu nại chưa xử lý giảm đúng,High,,,,
+TC-AD08-10,Liên hệ hai bên để bổ sung thông tin,1. Chọn “Yêu cầu thêm thông tin”,Hệ thống gửi yêu cầu bổ sung tới hai bên,Medium,,,,
+TC-AD08-11,Không có khiếu nại trong hệ thống,"1. Không có dữ liệu khiếu nại
+2. Mở Dashboard",Hiển thị trạng thái không có khiếu nại,Medium,,,,
+TC-AD08-12,Giải quyết khiếu nại đã đóng,"1. Mở khiếu nại đã giải quyết
+2. Thực hiện xử lý tiếp",Hệ thống không cho phép xử lý lại,Medium,,,,
+TC-AD08-13,Hoàn tiền vượt giá trị đơn,1. Nhập số tiền vượt tổng giá trị đơn,Hệ thống hiển thị lỗi validation,High,,,,
+TC-AD08-14,Hai Admin cùng xử lý một khiếu nại,"1. Admin A và B mở cùng khiếu nại
+2. Cùng thao tác xử lý",Chỉ một thao tác thành công,High,,,,
+TC-AD08-15,Mất kết nối khi xử lý,"1. Đang xử lý khiếu nại
+2. Tắt mạng",Hệ thống rollback hoặc báo lỗi phù hợp,High,,,,
+TC-AD08-16,Session hết hạn khi xử lý,"1. Đăng nhập Admin
+2. Chờ timeout
+3. Xử lý khiếu nại",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC-AD08-17,Nội dung khiếu nại chứa script XSS,1. Tạo khiếu nại chứa script HTML,Hệ thống sanitize dữ liệu,High,,,,
+TC-AD08-18,Dữ liệu khiếu nại quá dài,1. Tạo nội dung khiếu nại > giới hạn ký tự,Hệ thống xử lý đúng hoặc validation phù hợp,Medium,,,,
+TC-AD08-19,Tải danh sách khiếu nại lớn,"1. Seed >5000 khiếu nại
+2. Mở danh sách",Hệ thống tải ổn định,Medium,,,,
+TC-AD08-20,Kiểm tra responsive UI,1. Mở màn hình khiếu nại trên nhiều thiết bị,UI hiển thị đúng,Low,,,,
+UC 09 Theo dõi doanh thu & phí hoa hồng,,,,,,,,
+TC-AD09-01,Hiển thị doanh thu hôm nay,"1. Đăng nhập Admin
+2. Mở Dashboard",Thẻ doanh thu hiển thị đúng tổng doanh thu hôm nay,High,,,,
+TC-AD09-02,Hiển thị đúng phí hoa hồng 15%,"1. Kiểm tra tổng doanh thu
+2. Đối chiếu phí nền tảng",Phí nền tảng được tính đúng 15%,High,,,,
+TC-AD09-03,Hiển thị đúng số đơn hôm nay,"1. Mở Dashboard
+2. Kiểm tra thẻ “Đơn hôm nay”",Hiển thị đúng tổng số đơn,High,,,,
+TC-AD09-04,Hiển thị chênh lệch so với hôm qua,1. Kiểm tra chỉ số tăng/giảm,Giá trị tăng giảm hiển thị chính xác,High,,,,
+TC-AD09-05,Xem xu hướng doanh thu,"1. Mở Dashboard
+2. Quan sát biểu đồ/thống kê",Hiển thị đúng xu hướng doanh thu,Medium,,,,
+TC-AD09-06,Doanh thu cập nhật realtime,"1. Phát sinh đơn hoàn thành mới
+2. Refresh Dashboard",Doanh thu được cập nhật chính xác,Medium,,,,
+TC-AD09-07,Không có doanh thu trong ngày,"1. Không có giao dịch hoàn tất
+2. Mở Dashboard",Hiển thị doanh thu = 0,Medium,,,,
+TC-AD09-08,Doanh thu giảm đột ngột,1. Giảm mạnh số đơn trong DB,Hệ thống hiển thị đúng dữ liệu giảm,High,,,,
+TC-AD09-09,Dữ liệu doanh thu âm,1. Insert dữ liệu âm bất thường,Hệ thống không cho phép hoặc cảnh báo lỗi,High,,,,
+TC-AD09-10,Sai lệch phí hoa hồng,1. Thay đổi dữ liệu commission trong DB,Hệ thống hiển thị cảnh báo sai lệch,High,,,,
+TC-AD09-11,Tải dữ liệu doanh thu lớn,1. Seed dữ liệu doanh thu nhiều năm,Dashboard vẫn tải ổn định,Medium,,,,
+TC-AD09-12,Hai Admin xem cùng lúc,1. Hai Admin mở Dashboard đồng thời,Dữ liệu hiển thị đồng nhất,Medium,,,,
+TC-AD09-13,Session hết hạn,"1. Đăng nhập Admin
+2. Chờ timeout
+3. Refresh Dashboard",Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC-AD09-14,User thường truy cập Dashboard doanh thu,"1. Đăng nhập User thường
+2. Truy cập admin.php",Không được phép truy cập,High,,,,
+TC-AD09-15,Kiểm tra responsive UI,1. Mở Dashboard trên mobile/tablet/desktop,UI hiển thị đúng,Low,,,,
+TC-AD09-16,Mất kết nối khi tải Dashboard,1. Tắt mạng khi load Dashboard,Hệ thống hiển thị thông báo lỗi phù hợp,Medium,,,,
+TC-AD09-17,So sánh doanh thu ngày hiện tại và hôm qua,"1. Seed dữ liệu 2 ngày liên tiếp
+2. Mở Dashboard",Chênh lệch doanh thu hiển thị chính xác,High,,,,
+TC-AD09-18,Kiểm tra format tiền tệ,1. Mở Dashboard,Giá trị tiền hiển thị đúng định dạng VNĐ,Medium,,,,
+TC-AD09-19,Kiểm tra refresh liên tục,1. Refresh Dashboard nhiều lần liên tiếp,Không gây crash hoặc duplicate request,Low,,,,
+TC-AD09-20,Kiểm tra biểu đồ khi không có dữ liệu,"1. Xóa dữ liệu doanh thu
+2. Mở Dashboard",Biểu đồ hiển thị trạng thái rỗng hợp lệ,Low,,,,

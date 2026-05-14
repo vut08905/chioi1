@@ -206,18 +206,31 @@ export declare class ApiController {
         tasker_id: number;
         service_id: number;
     }>;
+    getUserTickets(req: any): Promise<{
+        user_id: number;
+        status: string | null;
+        created_at: Date | null;
+        updated_at: Date | null;
+        admin_id: number | null;
+        description: string;
+        order_id: number | null;
+        ticket_id: number;
+        ticket_code: string;
+        subject: string;
+        priority: string | null;
+    }[]>;
     createTicket(req: any, body: any): Promise<{
         user_id: number;
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        admin_id: number | null;
         description: string;
         order_id: number | null;
+        ticket_id: number;
         ticket_code: string;
         subject: string;
         priority: string | null;
-        ticket_id: number;
-        admin_id: number | null;
     }>;
     approveTaskerKyc(req: any, id: number, status: string): Promise<{
         tasker_id: number;
@@ -326,26 +339,26 @@ export declare class ApiController {
     approveWithdrawal(req: any, id: number, status: string): Promise<{
         status: string | null;
         created_at: Date | null;
-        description: string | null;
         wallet_id: number;
+        description: string | null;
+        order_id: number | null;
+        type: string;
         transaction_id: number;
         transaction_code: string;
         amount: import("@prisma/client-runtime-utils").Decimal;
-        type: string;
-        order_id: number | null;
     }>;
     resolveTicket(req: any, id: number, status: string): Promise<{
         user_id: number;
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        admin_id: number | null;
         description: string;
         order_id: number | null;
+        ticket_id: number;
         ticket_code: string;
         subject: string;
         priority: string | null;
-        ticket_id: number;
-        admin_id: number | null;
     }>;
     getAdminUsers(): Promise<{
         user_id: number;
@@ -519,13 +532,13 @@ export declare class ApiController {
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        admin_id: number | null;
         description: string;
         order_id: number | null;
+        ticket_id: number;
         ticket_code: string;
         subject: string;
         priority: string | null;
-        ticket_id: number;
-        admin_id: number | null;
     })[]>;
     getAdminTicketDetail(id: number): Promise<{
         ticket: ({
@@ -548,13 +561,13 @@ export declare class ApiController {
             status: string | null;
             created_at: Date | null;
             updated_at: Date | null;
+            admin_id: number | null;
             description: string;
             order_id: number | null;
+            ticket_id: number;
             ticket_code: string;
             subject: string;
             priority: string | null;
-            ticket_id: number;
-            admin_id: number | null;
         }) | null;
         messages: any[];
     }>;
@@ -566,24 +579,24 @@ export declare class ApiController {
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        admin_id: number | null;
         description: string;
         order_id: number | null;
+        ticket_id: number;
         ticket_code: string;
         subject: string;
         priority: string | null;
-        ticket_id: number;
-        admin_id: number | null;
     }>;
     getAdminWithdrawals(): Promise<{
         status: string | null;
         created_at: Date | null;
-        description: string | null;
         wallet_id: number;
+        description: string | null;
+        order_id: number | null;
+        type: string;
         transaction_id: number;
         transaction_code: string;
         amount: import("@prisma/client-runtime-utils").Decimal;
-        type: string;
-        order_id: number | null;
     }[]>;
     getAdminTransactions(type?: string): Promise<({
         wallets: {
@@ -605,13 +618,13 @@ export declare class ApiController {
     } & {
         status: string | null;
         created_at: Date | null;
-        description: string | null;
         wallet_id: number;
+        description: string | null;
+        order_id: number | null;
+        type: string;
         transaction_id: number;
         transaction_code: string;
         amount: import("@prisma/client-runtime-utils").Decimal;
-        type: string;
-        order_id: number | null;
     })[]>;
     getAdminWalletStats(): Promise<{
         totalBalance: number;

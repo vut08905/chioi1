@@ -12,7 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthController = void 0;
+exports.OcrController = exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const jwt_auth_guard_1 = require("./jwt-auth.guard");
@@ -25,7 +25,7 @@ let AuthController = class AuthController {
     async login(body) {
         const user = await this.authService.validateUser(body.phone, body.password);
         if (!user) {
-            throw new common_1.UnauthorizedException('Invalid phone or password');
+            throw new common_1.UnauthorizedException('Sai số điện thoại hoặc mật khẩu.');
         }
         return this.authService.login(user);
     }
@@ -96,4 +96,31 @@ exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('api/auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
+let OcrController = class OcrController {
+    async ocrCCCD(body) {
+        const imageData = body.image || '';
+        if (!imageData) {
+            return { full_name: '', cccd_number: '', error: 'No image provided' };
+        }
+        return {
+            full_name: '',
+            cccd_number: '',
+            message: 'OCR service chưa tích hợp. Vui lòng nhập thủ công.'
+        };
+    }
+};
+exports.OcrController = OcrController;
+__decorate([
+    (0, common_1.Post)('cccd'),
+    (0, swagger_1.ApiOperation)({ summary: 'OCR nhận diện CCCD từ ảnh base64' }),
+    (0, swagger_1.ApiBody)({ schema: { example: { image: 'data:image/jpeg;base64,...' } } }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OcrController.prototype, "ocrCCCD", null);
+exports.OcrController = OcrController = __decorate([
+    (0, swagger_1.ApiTags)('OCR'),
+    (0, common_1.Controller)('api/ocr')
+], OcrController);
 //# sourceMappingURL=auth.controller.js.map

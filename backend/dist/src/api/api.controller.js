@@ -67,6 +67,9 @@ let ApiController = class ApiController {
     async registerService(req, serviceId) {
         return this.apiService.registerTaskerService(req.user.userId, serviceId);
     }
+    async getUserTickets(req) {
+        return this.apiService.getUserTickets(req.user.userId);
+    }
     async createTicket(req, body) {
         return this.apiService.createTicket(req.user.userId, body.subject, body.description);
     }
@@ -262,6 +265,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Number]),
     __metadata("design:returntype", Promise)
 ], ApiController.prototype, "registerService", null);
+__decorate([
+    (0, common_1.Get)('support/tickets'),
+    (0, roles_decorator_1.Roles)('CUSTOMER', 'TASKER'),
+    (0, swagger_1.ApiOperation)({ summary: 'Lấy danh sách ticket khiếu nại của user' }),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ApiController.prototype, "getUserTickets", null);
 __decorate([
     (0, common_1.Post)('support/tickets'),
     (0, roles_decorator_1.Roles)('CUSTOMER', 'TASKER'),

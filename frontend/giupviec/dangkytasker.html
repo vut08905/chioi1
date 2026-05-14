@@ -80,9 +80,10 @@
     .orange-gradient { background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%); }
     .card-shadow { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); }
     .soft-shadow { box-shadow: 0 4px 12px rgba(255, 126, 54, 0.08); }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     a, button { transition: all 0.2s ease; }
+    .cccd-preview { max-height: 180px; object-fit: contain; border-radius: 12px; }
+    @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(255,126,54,0.4); } 100% { box-shadow: 0 0 0 12px rgba(255,126,54,0); } }
+    .ocr-loading { animation: pulse-ring 1.2s infinite; }
 </style>
 </head>
 <body class="bg-surface-dim text-on-surface min-h-screen flex flex-col items-center">
@@ -109,27 +110,15 @@
 
         <!-- Welcome text -->
         <div class="text-center">
-            <p class="text-on-surface-variant text-body-sm">Điền thông tin bên dưới để trở thành đối tác</p>
+            <p class="text-on-surface-variant text-body-sm">Chỉ cần SĐT, mật khẩu và ảnh CCCD để đăng ký</p>
         </div>
 
         <!-- Form fields -->
         <div class="flex flex-col gap-4">
-            <!-- Họ tên -->
-            <div class="relative flex items-center">
-                <span class="material-symbols-outlined absolute left-4 text-outline">person</span>
-                <input id="nameInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all text-body-lg" placeholder="Họ và tên (*)" type="text"/>
-            </div>
-
             <!-- SĐT -->
             <div class="relative flex items-center">
                 <span class="material-symbols-outlined absolute left-4 text-outline">phone</span>
                 <input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all text-body-lg" placeholder="Số điện thoại (*)" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="11"/>
-            </div>
-
-            <!-- Số CCCD -->
-            <div class="relative flex items-center">
-                <span class="material-symbols-outlined absolute left-4 text-outline">badge</span>
-                <input id="cccdInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all text-body-lg" placeholder="Số CCCD (*)" type="text" inputmode="numeric" maxlength="12"/>
             </div>
 
             <!-- Mật khẩu -->
@@ -151,6 +140,47 @@
             </div>
         </div>
 
+        <!-- Upload CCCD Section -->
+        <div>
+            <p class="text-label-caps font-label-caps text-on-surface-variant mb-2">XÁC MINH CCCD / CMND</p>
+            <div id="cccd-upload-area" class="border-2 border-dashed border-outline-variant rounded-[16px] p-6 text-center cursor-pointer hover:border-primary-container hover:bg-primary-fixed/5 transition-all">
+                <input type="file" id="cccdFileInput" accept="image/*" class="hidden"/>
+                <div id="upload-placeholder">
+                    <span class="material-symbols-outlined text-[48px] text-outline mb-2" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+                    <p class="text-body-sm text-on-surface-variant font-medium">Chụp hoặc tải ảnh CCCD</p>
+                    <p class="text-[11px] text-outline mt-1">Hệ thống sẽ tự đọc Họ tên & Số CCCD</p>
+                </div>
+                <div id="upload-preview" class="hidden">
+                    <img id="cccd-img" class="cccd-preview mx-auto mb-3" alt="Ảnh CCCD"/>
+                    <p class="text-[12px] text-primary font-bold">Đã tải ảnh CCCD</p>
+                    <button type="button" id="re-upload-btn" class="mt-2 text-[12px] text-outline underline hover:text-primary">Chọn ảnh khác</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OCR Results (auto-filled, read-only) -->
+        <div id="ocr-results" class="hidden">
+            <p class="text-label-caps font-label-caps text-on-surface-variant mb-2">THÔNG TIN TỰ ĐỘNG NHẬN DIỆN</p>
+            <div class="flex flex-col gap-3">
+                <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-4 text-primary">person</span>
+                    <input id="nameFromOCR" class="w-full pl-12 pr-4 py-3 bg-primary-fixed/20 border-2 border-primary/20 rounded-[16px] text-on-surface text-body-sm font-semibold" placeholder="Họ tên (từ CCCD)" readonly/>
+                    <span class="material-symbols-outlined absolute right-4 text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                </div>
+                <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-4 text-primary">badge</span>
+                    <input id="cccdFromOCR" class="w-full pl-12 pr-4 py-3 bg-primary-fixed/20 border-2 border-primary/20 rounded-[16px] text-on-surface text-body-sm font-semibold" placeholder="Số CCCD (từ CCCD)" readonly/>
+                    <span class="material-symbols-outlined absolute right-4 text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- OCR Loading indicator -->
+        <div id="ocr-loading" class="hidden text-center py-3">
+            <div class="w-10 h-10 mx-auto rounded-full border-4 border-primary/30 border-t-primary animate-spin mb-2"></div>
+            <p class="text-body-sm text-on-surface-variant">Đang nhận diện thông tin CCCD...</p>
+        </div>
+
         <!-- Dịch vụ đăng ký -->
         <div>
             <p class="text-label-caps font-label-caps text-on-surface-variant mb-2">DỊCH VỤ ĐĂNG KÝ</p>
@@ -168,6 +198,12 @@
         <div class="flex gap-2 items-start px-1">
             <span class="material-symbols-outlined text-primary text-[18px] mt-0.5">verified_user</span>
             <p class="text-[12px] text-on-surface-variant leading-relaxed">Bằng việc đăng ký, bạn cam kết thông tin cung cấp là chính xác và đồng ý với <a href="#" class="text-primary hover:underline">Điều khoản</a> của Chị Ơi!</p>
+        </div>
+
+        <!-- Info: Pending approval -->
+        <div class="flex gap-2 items-start px-1 bg-yellow-50 rounded-xl p-3 border border-yellow-200">
+            <span class="material-symbols-outlined text-yellow-600 text-[18px] mt-0.5">info</span>
+            <p class="text-[12px] text-yellow-700 leading-relaxed">Sau khi gửi hồ sơ, tài khoản sẽ chờ <strong>Admin phê duyệt</strong> trước khi hoạt động.</p>
         </div>
 
         <!-- CTA -->
@@ -221,51 +257,181 @@
             });
         });
 
+        // ===== CCCD Upload + OCR =====
+        var cccdBase64 = '';
+        var ocrName = '';
+        var ocrCCCD = '';
+
+        var uploadArea = document.getElementById('cccd-upload-area');
+        var fileInput = document.getElementById('cccdFileInput');
+        var placeholder = document.getElementById('upload-placeholder');
+        var preview = document.getElementById('upload-preview');
+        var cccdImg = document.getElementById('cccd-img');
+        var reUploadBtn = document.getElementById('re-upload-btn');
+
+        uploadArea.addEventListener('click', function() { fileInput.click(); });
+        if (reUploadBtn) reUploadBtn.addEventListener('click', function(e) { e.stopPropagation(); fileInput.click(); });
+
+        fileInput.addEventListener('change', function() {
+            var file = fileInput.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showError('Vui lòng chọn file ảnh (JPG, PNG)');
+                return;
+            }
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showError('Ảnh quá lớn. Vui lòng chọn ảnh dưới 10MB.');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                cccdBase64 = e.target.result;
+                cccdImg.src = cccdBase64;
+                placeholder.classList.add('hidden');
+                preview.classList.remove('hidden');
+                // Start OCR
+                performOCR(cccdBase64);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function performOCR(base64Data) {
+            var ocrLoading = document.getElementById('ocr-loading');
+            var ocrResults = document.getElementById('ocr-results');
+            ocrLoading.classList.remove('hidden');
+            ocrResults.classList.add('hidden');
+
+            // Extract text from image using local regex-based OCR simulation
+            // In production, this would call a real OCR API (Google Vision, FPT.AI eKYC, etc.)
+            // For now, we parse the image client-side using canvas + basic heuristics
+            
+            var img = new Image();
+            img.onload = function() {
+                // Simulate OCR processing delay
+                setTimeout(function() {
+                    // Try to extract from image using canvas
+                    extractTextFromCCCD(img, base64Data);
+                }, 800);
+            };
+            img.src = base64Data;
+        }
+
+        function extractTextFromCCCD(img, base64Data) {
+            var ocrLoading = document.getElementById('ocr-loading');
+            var ocrResults = document.getElementById('ocr-results');
+            
+            // Send image to backend for OCR processing
+            apiFetch('/api/ocr/cccd', {
+                method: 'POST',
+                body: { image: base64Data }
+            }).then(function(result) {
+                ocrLoading.classList.add('hidden');
+                if (result && (result.full_name || result.cccd_number)) {
+                    ocrName = result.full_name || '';
+                    ocrCCCD = result.cccd_number || '';
+                    document.getElementById('nameFromOCR').value = ocrName;
+                    document.getElementById('cccdFromOCR').value = ocrCCCD;
+                    ocrResults.classList.remove('hidden');
+                    showError('');
+                } else {
+                    // Fallback: let user enter manually
+                    showManualInput();
+                }
+            }).catch(function(err) {
+                console.warn('[OCR] API error, fallback to manual:', err.message);
+                ocrLoading.classList.add('hidden');
+                // Fallback: show manual input fields
+                showManualInput();
+            });
+        }
+
+        function showManualInput() {
+            var ocrResults = document.getElementById('ocr-results');
+            ocrResults.classList.remove('hidden');
+            // Make fields editable
+            document.getElementById('nameFromOCR').removeAttribute('readonly');
+            document.getElementById('nameFromOCR').classList.remove('bg-primary-fixed/20', 'border-primary/20');
+            document.getElementById('nameFromOCR').classList.add('bg-surface-container-low', 'border-none');
+            document.getElementById('nameFromOCR').placeholder = 'Nhập họ tên thủ công';
+
+            document.getElementById('cccdFromOCR').removeAttribute('readonly');
+            document.getElementById('cccdFromOCR').classList.remove('bg-primary-fixed/20', 'border-primary/20');
+            document.getElementById('cccdFromOCR').classList.add('bg-surface-container-low', 'border-none');
+            document.getElementById('cccdFromOCR').placeholder = 'Nhập số CCCD thủ công';
+
+            // Remove verified icons
+            ocrResults.querySelectorAll('.material-symbols-outlined[style*="FILL"]').forEach(function(el) {
+                if (el.textContent === 'verified') el.textContent = 'edit';
+            });
+
+            showError('Không nhận diện được CCCD tự động. Vui lòng nhập thủ công.');
+        }
+
+        function showError(msg) {
+            var el = document.getElementById('errorMsg');
+            if (msg) {
+                el.textContent = msg;
+                el.style.display = 'block';
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
         async function handleTaskerRegister() {
-            var name = document.getElementById('nameInput').value.trim();
             var phone = document.getElementById('phoneInput').value.trim();
-            var cccd = document.getElementById('cccdInput').value.trim();
             var pass = document.getElementById('passwordInput').value.trim();
             var confirmPass = document.getElementById('confirmPasswordInput').value.trim();
-            var errorEl = document.getElementById('errorMsg');
+            var name = (document.getElementById('nameFromOCR') || {}).value || '';
+            var cccd = (document.getElementById('cccdFromOCR') || {}).value || '';
+            name = name.trim();
+            cccd = cccd.trim();
             var registerBtn = document.getElementById('registerBtn');
 
             // Validation
-            if (!name || !phone || !cccd || !pass || !confirmPass) {
-                errorEl.textContent = 'Vui lòng nhập đầy đủ thông tin bắt buộc (*).';
-                errorEl.style.display = 'block';
+            if (!phone || !pass || !confirmPass) {
+                showError('Vui lòng nhập đầy đủ SĐT và mật khẩu.');
                 return;
             }
 
             var phoneRegex = /^0[0-9]{8,10}$/;
             if (!phoneRegex.test(phone)) {
-                errorEl.textContent = 'Số điện thoại không hợp lệ. VD: 0901234567';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (cccd.length < 9 || cccd.length > 12) {
-                errorEl.textContent = 'Số CCCD không hợp lệ.';
-                errorEl.style.display = 'block';
+                showError('Số điện thoại không hợp lệ. VD: 0901234567');
                 return;
             }
 
             if (pass.length < 8 || pass.length > 20) {
-                errorEl.textContent = 'Mật khẩu phải từ 8 đến 20 ký tự.';
-                errorEl.style.display = 'block';
+                showError('Mật khẩu phải từ 8 đến 20 ký tự.');
                 return;
             }
 
             if (pass !== confirmPass) {
-                errorEl.textContent = 'Mật khẩu xác nhận không khớp.';
-                errorEl.style.display = 'block';
+                showError('Mật khẩu xác nhận không khớp.');
+                return;
+            }
+
+            if (!cccdBase64) {
+                showError('Vui lòng upload ảnh CCCD để xác minh danh tính.');
+                return;
+            }
+
+            if (!name) {
+                showError('Chưa có họ tên. Vui lòng đợi OCR hoặc nhập thủ công.');
+                return;
+            }
+
+            if (!cccd || cccd.length < 9) {
+                showError('Chưa có số CCCD hợp lệ. Vui lòng đợi OCR hoặc nhập thủ công.');
                 return;
             }
 
             // Disable button + loading
             registerBtn.disabled = true;
             registerBtn.innerHTML = '<span class="text-white text-[15px] font-bold">Đang xử lý...</span>';
-            errorEl.style.display = 'none';
+            showError('');
 
             try {
                 var data = await apiFetch('/api/auth/register', {
@@ -280,21 +446,20 @@
 
                 // Tự động đăng nhập sau khi đăng ký thành công
                 ChiOiAuth.saveLogin(data);
-                showToastMsg('✅ Đăng ký thành công! Tài khoản đang chờ phê duyệt KYC.');
+                showToastMsg('✅ Đăng ký thành công! Tài khoản đang chờ Admin phê duyệt.');
                 setTimeout(function() {
                     window.location.href = 'trangchutasker.html';
                 }, 1500);
 
             } catch (err) {
-                errorEl.textContent = err.message || 'Đăng ký thất bại. Vui lòng thử lại.';
-                errorEl.style.display = 'block';
+                showError(err.message || 'Đăng ký thất bại. Vui lòng thử lại.');
                 registerBtn.disabled = false;
                 registerBtn.innerHTML = '<span class="text-white text-[15px] font-bold">GỬI HỒ SƠ ĐĂNG KÝ</span>';
             }
         }
 
         // Enter key support
-        ['nameInput', 'phoneInput', 'cccdInput', 'passwordInput', 'confirmPasswordInput'].forEach(function(id) {
+        ['phoneInput', 'passwordInput', 'confirmPasswordInput'].forEach(function(id) {
             document.getElementById(id).addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') handleTaskerRegister();
             });

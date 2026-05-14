@@ -24,23 +24,23 @@ export declare class OrdersService {
                 updated_at: Date | null;
             };
         } & {
+            tasker_id: number;
             bio: string | null;
             kyc_status: string | null;
             average_rating: import("@prisma/client-runtime-utils").Decimal | null;
             total_jobs: number | null;
             is_online: boolean | null;
             last_heartbeat: Date | null;
-            tasker_id: number;
         }) | null;
     } & {
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        customer_id: number;
+        tasker_id: number | null;
         service_id: number;
         order_id: number;
         order_code: string;
-        customer_id: number;
-        tasker_id: number | null;
         voucher_id: number | null;
         scheduled_time: Date;
         address: string;
@@ -57,11 +57,11 @@ export declare class OrdersService {
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        customer_id: number;
+        tasker_id: number | null;
         service_id: number;
         order_id: number;
         order_code: string;
-        customer_id: number;
-        tasker_id: number | null;
         voucher_id: number | null;
         scheduled_time: Date;
         address: string;
@@ -78,11 +78,11 @@ export declare class OrdersService {
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        customer_id: number;
+        tasker_id: number | null;
         service_id: number;
         order_id: number;
         order_code: string;
-        customer_id: number;
-        tasker_id: number | null;
         voucher_id: number | null;
         scheduled_time: Date;
         address: string;
@@ -97,9 +97,9 @@ export declare class OrdersService {
     }>;
     reviewOrder(orderId: number, customerId: number, rating: number, comment: string): Promise<{
         created_at: Date | null;
-        order_id: number;
         customer_id: number;
         tasker_id: number;
+        order_id: number;
         review_id: number;
         rating: number;
         comment: string | null;
@@ -111,9 +111,9 @@ export declare class OrdersService {
                 full_name: string;
             };
         } & {
+            customer_id: number;
             default_address: string | null;
             loyalty_points: number | null;
-            customer_id: number;
         };
         taskers: ({
             users: {
@@ -122,13 +122,13 @@ export declare class OrdersService {
                 avatar_url: string | null;
             };
         } & {
+            tasker_id: number;
             bio: string | null;
             kyc_status: string | null;
             average_rating: import("@prisma/client-runtime-utils").Decimal | null;
             total_jobs: number | null;
             is_online: boolean | null;
             last_heartbeat: Date | null;
-            tasker_id: number;
         }) | null;
         services: {
             created_at: Date | null;
@@ -143,11 +143,11 @@ export declare class OrdersService {
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        customer_id: number;
+        tasker_id: number | null;
         service_id: number;
         order_id: number;
         order_code: string;
-        customer_id: number;
-        tasker_id: number | null;
         voucher_id: number | null;
         scheduled_time: Date;
         address: string;
@@ -176,13 +176,13 @@ export declare class OrdersService {
                 updated_at: Date | null;
             };
         } & {
+            tasker_id: number;
             bio: string | null;
             kyc_status: string | null;
             average_rating: import("@prisma/client-runtime-utils").Decimal | null;
             total_jobs: number | null;
             is_online: boolean | null;
             last_heartbeat: Date | null;
-            tasker_id: number;
         }) | null;
         services: {
             created_at: Date | null;
@@ -197,11 +197,11 @@ export declare class OrdersService {
         status: string | null;
         created_at: Date | null;
         updated_at: Date | null;
+        customer_id: number;
+        tasker_id: number | null;
         service_id: number;
         order_id: number;
         order_code: string;
-        customer_id: number;
-        tasker_id: number | null;
         voucher_id: number | null;
         scheduled_time: Date;
         address: string;
@@ -223,18 +223,18 @@ export declare class OrdersService {
         created_at: Date | null;
         order_id: number;
         content: string;
-        is_read: boolean | null;
         message_id: number;
         sender_id: number;
         receiver_id: number;
+        is_read: boolean | null;
     }>;
     getChatHistory(orderId: number): Promise<{
         created_at: Date | null;
         order_id: number;
         content: string;
-        is_read: boolean | null;
         message_id: number;
         sender_id: number;
         receiver_id: number;
+        is_read: boolean | null;
     }[]>;
 }

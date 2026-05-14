@@ -88,7 +88,10 @@ async function seed() {
         { name: 'Mua ho WinMart', description: 'Mua ho hang hoa tai WinMart', base_price: 120000, icon_url: 'icon_winmart.png' },
     ];
     for (const svc of services) {
-        await prisma.services.upsert({ where: { name: svc.name }, update: {}, create: svc });
+        const existing = await prisma.services.findFirst({ where: { name: svc.name } });
+        if (!existing) {
+            await prisma.services.create({ data: svc });
+        }
     }
     console.log('Seed completed!');
     await prisma.$disconnect();

@@ -1,0 +1,675 @@
+﻿TESTCASE ID,Tên Test Case,Các bước thực hiện,Kết quả mong đợi,Độ ưu tiên,Kết quả thực tế,Trạng thái,Note,Dev
+UC-REG-01,Đăng ký thành công với dữ liệu hợp lệ,"1. Mở màn hình Đăng ký
+2. Nhập Họ tên hợp lệ
+3. Nhập SĐT hợp lệ
+4. Nhập mật khẩu hợp lệ
+5. Nhập xác nhận mật khẩu trùng
+6. Nhấn Đăng ký",Tạo tài khoản thành công,High,,PASS,,
+UC-REG-02,Đăng ký với họ tên tiếng Việt có dấu,"Nhập ""Nguyễn Văn A"" và các thông tin hợp lệ",Hệ thống chấp nhận,High,,PASS,,
+UC-REG-03,Đăng ký với họ tên có khoảng trắng giữa tên,"Nhập ""Nguyễn Văn Minh""",Hệ thống lưu đúng,Medium,,PASS,,
+UC-REG-04,Hiển thị/ẩn mật khẩu,Nhập mật khẩu → nhấn icon mắt,Chuyển đổi trạng thái ẩn/hiện,Medium,,PASS,,
+UC-REG-05,Hiển thị/ẩn xác nhận mật khẩu,Nhấn icon mắt tại trường xác nhận,Trường hiển thị đúng,Medium,,PASS,,
+UC-REG-06,Chuyển sang màn hình đăng nhập,"Nhấn ""Đăng nhập""",Điều hướng đúng màn hình,High,,PASS,,
+UC-REG-07,Mở điều khoản sử dụng,"Nhấn ""Điều khoản""",Mở trang điều khoản,Medium,Vẫn ở màn hình Đăng nhập ,FAIL,,
+UC-REG-08,Mở chính sách bảo mật,"Nhấn ""Chính sách bảo mật""",Mở đúng trang,Medium,Vẫn ở màn hình Đăng nhập ,FAIL,,
+UC-REG-09,Bỏ trống toàn bộ trường,Không nhập dữ liệu → nhấn Đăng ký,Hiển thị thông báo Vui lòng nhập đầy đủ thông tin ,High,,PASS,,
+UC-REG-10,Bỏ trống Họ tên,Không nhập Họ tên,Hiển thị thông báo Vui lòng nhập đầy đủ thông tin ,High,,PASS,,
+UC-REG-11,Bỏ trống SĐT,Không nhập SĐT,Hiển thị thông báo Vui lòng nhập đầy đủ thông tin ,High,,PASS,,
+UC-REG-12,Bỏ trống Mật khẩu,Không nhập mật khẩu,Hiển thị thông báo Vui lòng nhập đầy đủ thông tin ,High,,PASS,,
+UC-REG-13,Bỏ trống Xác nhận mật khẩu,Không nhập xác nhận,Hiển thị thông báo Vui lòng nhập đầy đủ thông tin ,High,,PASS,,
+UC-REG-14,Họ tên chỉ chứa khoảng trắng,"Nhập "" """,Hiển thị thông báo Vui lòng nhập đầy đủ thông tin ,High,,PASS,,
+UC-REG-15,Họ tên chỉ chứa số,"Nhập ""123456""",Chặn luôn định dạng số ở trường Họ tên ,Medium,Vẫn hiển thị số ở trường Họ tên ,FAIL,,
+UC-REG-16,Họ tên chứa ký tự đặc biệt,"Nhập ""@@@###""",Chặn luôn định dạng đặc biệt ở trường Họ tên ,Medium,Vẫn hiển thị số ở trường Họ tên ,FAIL,,
+UC-REG-17,Họ tên quá ngắn,"Nhập ""A""",Báo lỗi độ dài,Medium,,,,
+UC-REG-18,Họ tên vượt ký tự tối đa,Nhập >255 ký tự,Hiển thị lỗi,Medium,,,,
+UC-REG-19,SĐT ít hơn quy định,"Nhập ""12345""",Hiển thị lỗi sai định dạng ,High,Vẫn đăng ký thành công ,FAIL,,
+UC-REG-20,SĐT dài hơn quy định,"Nhập ""12345678912345""",Hiển thị lỗi sai định dạng ,High,Vẫn đăng ký thành công ,FAIL,,
+UC-REG-21,SĐT chứa chữ,"Nhập ""098abc123""",Chặn luôn ký tự chữ ,High,Vẫn nhập chữ được bình thường ,FAIL,,
+UC-REG-22,SĐT chứa ký tự đặc biệt,"Nhập ""098@#123""",Chặn luôn ký tự đặc biệt ,High,Vẫn nhập được bình thường ,FAIL,,
+UC-REG-23,SĐT có khoảng trắng đầu/cuối,"Nhập "" 0987654321 """,Chặn luôn khoảng trắng đầu cuối ,Medium,Vẫn nhập được bình thường ,FAIL,,
+UC-REG-24,Đăng ký bằng SĐT đã tồn tại,Dùng số đã đăng ký,"Hiển thị ""SĐT đã tồn tại""",High,"Hiển thị thông báo Phone number already exists
+
+",FAIL,,
+UC-REG-25,Mật khẩu<8 ký tự ,Nhập mật khẩu 6 ký tự ,Hiển thị lỗi,High,Vẫn nhập được mật khẩu ,FAIL,Mật khẩu từ 8-20,
+UC-REG-26,Mật khẩu không đúng format,Chỉ nhập chữ thường,Báo lỗi ,High,Vẫn nhập được binh thường và đăng ký thành công ,FAIL,,
+UC-REG-27,Mật khẩu không có ký tự đặc biệt,Nhập Abc12345,Hiển thị lỗi,Medium,Vẫn nhập được binh thường và đăng ký thành công ,FAIL,,
+UC-REG-28,Mật khẩu vượt giới hạn 20 ký tự,Nhập 21 ký tự ,Hiển thị lỗi,Medium,Vẫn nhập được mật khẩu ,FAIL,,
+UC-REG-29,Xác nhận mật khẩu không trùng,Nhập khác mật khẩu,"Hiển thị ""Mật khẩu không khớp""",High,,PASS,,
+UC-REG-30,Copy/Paste mật khẩu,Copy và paste,Hoạt động bình thường,Low,,PASS,,
+UC-REG-32,Đăng ký khi mất mạng,Tắt internet rồi submit,Hiển thị lỗi kết nối,High,,PASS,,
+UC-REG-34,Refresh khi nhập dở,Nhập dữ liệu → refresh,Hệ thống quay lại màn đăng ký và không lưu dữ liệu ,Low,,PASS,,
+UC-REG-35,Nhập emoji vào họ tên,Nhập 😀 Nguyễn Văn A,Chỉ được nhập ký tự chữ ,Medium,,Not run,,
+UC-REG-38,Paste chuỗi cực dài,Dán >1000 ký tự,Không crash,Medium,,PASS,,
+UC-REG-39,Điều hướng bằng Tab,Dùng phím Tab,Focus đúng thứ tự,Medium,,PASS,,
+UC-REG-40,Kiểm tra màn hình nhỏ,Test trên mobile nhỏ,Không vỡ UI,Medium,,Not run,,
+UC-REG-41,Test đa trình duyệt,"Chrome, Edge, Firefox",Hiển thị đúng,Medium,,Not run,,
+UC-REG-43,Kiểm tra footer,Quan sát cuối trang,Hiển thị đúng nội dung,Low,,PASS,,
+UC-REG-44,Submit khi dữ liệu chưa hợp lệ,Điền thiếu dữ liệu,Hiển thị thông báo lỗi ,Medium,,PASS,,
+UC-REG-45,Server phản hồi chậm,Giả lập mạng yếu,Không treo ứng dụng,Medium,,Not run,,
+UC-REG-46,Kiểm tra bố cục layout ,"1. Tại màn hình Đăng ký 
+2. Kiểm tra toàn bộ bố cục ","Màn hình hiển thị bố cục rõ ràng, không xô lệch ",Medium,Bố cục màn hình bị xô lệch ,FAIL,,
+UC-KH-01 — Đăng nhập hệ thống,,,,,,,,
+TC-KH01-001,Đăng nhập thành công với tài khoản hợp lệ,"1. Mở ứng dụng Chị Ơi! 
+2. Chọn tab “Cư dân” 
+3. Nhập số điện thoại đã đăng ký hợp lệ 
+4. Nhập đúng mật khẩu 
+5. Nhấn nút “Đăng nhập”",Hệ thống xác thực thành công và chuyển sang Trang chủ M04,High,,PASS,,
+TC-KH01-002,Đăng nhập sai mật khẩu,"1. Mở ứng dụng 
+2. Chọn tab “Cư dân” 
+3. Nhập số điện thoại hợp lệ 
+4. Nhập sai mật khẩu 
+5. Nhấn “Đăng nhập”","Hiển thị thông báo “Sai mật khẩu” hoặc thông báo tương ứng, không cho đăng nhập",High,"Hiển thị thông báo"" phiên đăng nhập hết hạn""",FAIL,,
+TC-KH01-003,Đăng nhập với số điện thoại chưa đăng ký,"1. Mở ứng dụng 
+2. Chọn tab “Cư dân” 
+3. Nhập số điện thoại chưa tồn tại trong hệ thống 
+4. Nhập mật khẩu bất kỳ 
+5. Nhấn “Đăng nhập”",Hiển thị thông báo tài khoản không tồn tại,High,"Hiển thị thông báo"" phiên đăng nhập hết hạn""",FAIL,,
+TC-KH01-004,Để trống số điện thoại khi đăng nhập,"1. Mở ứng dụng 
+2. Chọn tab “Cư dân” 
+3. Để trống trường số điện thoại 
+4. Nhập mật khẩu hợp lệ 
+5. Nhấn “Đăng nhập”",Hiển thị validate yêu cầu nhập số điện thoại,High,,PASS,,
+TC-KH01-005,Để trống mật khẩu khi đăng nhập,"1. Mở ứng dụng 
+2. Chọn tab “Cư dân” 
+3. Nhập số điện thoại hợp lệ 
+4. Để trống mật khẩu 
+5. Nhấn “Đăng nhập”",Hiển thị validate yêu cầu nhập mật khẩu,High,,PASS,,
+TC-KH01-006,Để trống cả số điện thoại và mật khẩu,"1. Mở ứng dụng 
+2. Chọn tab “Cư dân” 
+3. Không nhập dữ liệu 
+4. Nhấn “Đăng nhập”",Hiển thị validate cho cả hai trường bắt buộc,Medium,,PASS,,
+TC-KH01-007,Kiểm tra định dạng số điện thoại không hợp lệ,"1. Mở ứng dụng 
+2. Chọn tab “Cư dân” 
+3. Nhập số điện thoại chứa chữ cái/ký tự đặc biệt 
+4. Nhập mật khẩu bất kỳ 
+5. Nhấn “Đăng nhập”",Hệ thống hiển thị lỗi định dạng số điện thoại không hợp lệ ngay khi nhập ký tự không hợp lệ ,High,"Ngay khi nhập ký tự lạ không hiển thị thông báo. Khi click vào Đăng nhập hiển thị thông báo ""phiên đăng nhập hết hạn""",FAIL,,
+TC-KH01-008,Kiểm tra số điện thoại ít hơn quy định,"1. Nhập số điện thoại dưới số ký tự cho phép 
+2. Nhập mật khẩu 
+3. Nhấn “Đăng nhập”",Hệ thống hiển thị lỗi độ dài số điện thoại không hợp lệ,Medium,"Ngay khi nhập ít hơn không hiển thị thông báo. Khi click vào Đăng nhập hiển thị thông báo ""phiên đăng nhập hết hạn""",FAIL,,
+TC-KH01-009,Kiểm tra số điện thoại vượt quá độ dài quy định,"1. Nhập số điện thoại vượt số ký tự cho phép 
+2. Nhập mật khẩu 
+3. Nhấn “Đăng nhập”",Hệ thống hiển thị lỗi độ dài số điện thoại không hợp lệ,Medium,"Ngay khi nhập dài hơn không hiển thị thông báo. Khi click vào Đăng nhập hiển thị thông báo ""phiên đăng nhập hết hạn""",FAIL,,
+TC-KH01-010,Kiểm tra mật khẩu phân biệt chữ hoa chữ thường,"1. Nhập đúng số điện thoại 
+2. Nhập mật khẩu sai kiểu chữ hoa/thường 
+3. Nhấn “Đăng nhập”",Đăng nhập thất bại và hiển thị thông báo sai mật khẩu,Medium,"Hiển thị thông báo"" phiên đăng nhập hết hạn""",FAIL,,
+TC-KH01-011,Kiểm tra khoảng trắng đầu/cuối ở số điện thoại,"1. Nhập số điện thoại có khoảng trắng đầu/cuối 
+2. Nhập đúng mật khẩu 
+3. Nhấn “Đăng nhập”",Chặn luôn khoảng trắng đầu/ cuối ,Medium,Vẫn nhập được bình thường,FAIL,,
+TC-KH01-012,Kiểm tra khoảng trắng đầu/cuối ở mật khẩu,"1. Nhập số điện thoại hợp lệ 
+2. Nhập mật khẩu có khoảng trắng đầu/cuối 
+3. Nhấn “Đăng nhập”",Chặn luôn khoảng trắng đầu/ cuối ,Medium,Vẫn hiển thị ký tự ,FAIL,,
+TC-KH01-013,Điều hướng sang màn hình Quên mật khẩu,"1. Mở màn hình đăng nhập 
+2. Nhấn “Quên mật khẩu?”",Hệ thống chuyển sang màn hình M03 – forgot-password.php,High,,PASS,,
+TC-KH01-014,Kiểm tra nút Đăng nhập hoạt động nhiều lần liên tiếp,"1. Nhập thông tin hợp lệ 
+2. Nhấn liên tục nút “Đăng nhập” nhiều lần","Hệ thống chỉ xử lý một request đăng nhập, không bị duplicate session",Medium,,PASS,,
+TC-KH01-015,Kiểm tra session sau khi đăng nhập thành công,"1. Đăng nhập thành công 
+2. Tắt app hoặc refresh trang 
+3. Mở lại hệ thống",Người dùng vẫn còn session đăng nhập nếu chưa hết hạn,Medium,,PASS,,
+TC-KH01-016,Kiểm tra session hết hạn,"1. Đăng nhập hệ thống 
+2. Chờ quá thời gian timeout session 
+3. Thực hiện thao tác bất kỳ",Hệ thống yêu cầu đăng nhập lại,Medium,,Not run,,
+TC-KH01-017,Kiểm tra tốc độ phản hồi đăng nhập,"1. Nhập thông tin hợp lệ 
+2. Nhấn “Đăng nhập”","Hệ thống phản hồi trong thời gian cho phép, không treo màn hình",Low,,Not run,,
+TC-KH01-018,Kiểm tra UI màn hình đăng nhập,"1. Mở màn hình đăng nhập 
+2. Quan sát giao diện, font chữ, vị trí button, input","Giao diện hiển thị đúng thiết kế, không vỡ layout",Low,"Logo kết nối đăng nhập Facebook, google hiển thị lỗi",FAIL,,
+TC-KH01-019,Kiểm tra đăng nhập khi mất kết nối mạng,"1. Tắt mạng internet 
+2. Nhập tài khoản hợp lệ 
+3. Nhấn “Đăng nhập”",Hiển thị thông báo lỗi kết nối mạng,High,"Hiển thị lỗi thông báo"" Fail to fetch""",FAIL,,
+TC-KH01-020,Kiểm tra bảo mật trường mật khẩu,"1. Mở màn hình đăng nhập 
+2. Nhập mật khẩu",Mật khẩu được ẩn dưới dạng ký tự “•” hoặc “*”,Medium,,PASS,,
+UC-KH-02 — Quên mật khẩu / Đặt lại qua OTP,,,,,,,,
+TC-KH02-001,Chuyển sang màn hình Quên mật khẩu thành công,1. Tại màn hình đăng nhập nhấn “Quên mật khẩu?”,Hệ thống mở màn hình M03,High,,,,
+TC-KH02-002,Gửi OTP thành công với số điện thoại hợp lệ,"1. Nhập số điện thoại đã đăng ký 
+2. Nhấn gửi OTP",Hệ thống gửi OTP 6 số qua SMS thành công,High,,,,
+TC-KH02-003,Nhập OTP đúng và đặt lại mật khẩu thành công,"1. Nhập số điện thoại hợp lệ 
+2. Nhận OTP 
+3. Nhập đúng OTP 
+4. Nhấn “Xác nhận” 
+5. Nhập mật khẩu mới",Mật khẩu được cập nhật thành công,High,,,,
+TC-KH02-004,Nhập OTP sai,"1. Nhập số điện thoại hợp lệ 
+2. Nhập OTP không đúng 
+3. Nhấn “Xác nhận”",Hiển thị thông báo OTP không chính xác,High,,,,
+TC-KH02-005,OTP hết hạn,"1. Yêu cầu gửi OTP 
+2. Chờ quá thời gian hiệu lực OTP 
+3. Nhập OTP cũ",Hệ thống thông báo OTP hết hạn,High,,,,
+TC-KH02-006,Gửi lại OTP sau 30 giây,"1. Yêu cầu OTP 
+2. Chờ đủ 30 giây 
+3. Nhấn “Gửi lại OTP”",Hệ thống gửi OTP mới thành công,Medium,,,,
+TC-KH02-007,Không cho gửi lại OTP trước 30 giây,"1. Yêu cầu OTP 
+2. Nhấn “Gửi lại OTP” trước 30 giây",Nút gửi lại bị disable hoặc hiển thị countdown,Medium,,,,
+TC-KH02-008,Để trống số điện thoại khi yêu cầu OTP,"1. Không nhập số điện thoại 
+2. Nhấn gửi OTP",Hiển thị validate bắt buộc nhập số điện thoại,High,,,,
+TC-KH02-009,Nhập số điện thoại chưa đăng ký,"1. Nhập số điện thoại không tồn tại 
+2. Nhấn gửi OTP",Hệ thống thông báo tài khoản không tồn tại,High,,,,
+TC-KH02-010,Kiểm tra định dạng OTP không hợp lệ,"1. Nhập OTP chứa ký tự chữ hoặc ít hơn 6 số 
+2. Nhấn xác nhận",Hiển thị lỗi OTP không hợp lệ,Medium,,,,
+TC-KH02-011,Kiểm tra nhập thiếu OTP,"1. Chỉ nhập một phần OTP 
+2. Nhấn “Xác nhận”",Hệ thống yêu cầu nhập đủ 6 số OTP,Medium,,,,
+TC-KH02-012,Đặt mật khẩu mới thành công,"1. Xác thực OTP đúng 
+2. Nhập mật khẩu mới hợp lệ 
+3. Xác nhận đổi mật khẩu",Hệ thống lưu mật khẩu mới thành công,High,,,,
+TC-KH02-013,Đăng nhập bằng mật khẩu mới sau khi reset,"1. Reset mật khẩu thành công 
+2. Quay lại màn hình đăng nhập 
+3. Đăng nhập bằng mật khẩu mới",Đăng nhập thành công vào hệ thống,High,,,,
+TC-KH02-014,Không đăng nhập được bằng mật khẩu cũ sau khi reset,"1. Reset mật khẩu thành công 
+2. Thử đăng nhập bằng mật khẩu cũ",Hệ thống từ chối đăng nhập,High,,,,
+TC-KH02-015,Kiểm tra giới hạn số lần nhập sai OTP,1. Nhập sai OTP nhiều lần liên tiếp,Hệ thống khóa OTP hoặc yêu cầu gửi OTP mới theo rule bảo mật,Medium,,,,
+TC-KH02-016,Kiểm tra bảo mật OTP,"1. Yêu cầu OTP 
+2. Quan sát dữ liệu hiển thị trên màn hình",OTP không hiển thị công khai trên UI hoặc log,Medium,,,,
+TC-KH02-017,Kiểm tra UI màn hình nhập OTP,"1. Mở màn hình nhập OTP 
+2. Kiểm tra layout 6 ô OTP, button xác nhận",Giao diện hiển thị đúng thiết kế,Low,,,,
+TC-KH02-018,Kiểm tra reset mật khẩu khi mất kết nối mạng,"1. Tắt internet 
+2. Thực hiện xác nhận OTP hoặc đổi mật khẩu",Hệ thống hiển thị lỗi kết nối mạng,High,,,,
+TC-KH02-019,Kiểm tra lưu dữ liệu sau khi đổi mật khẩu,"1. Đổi mật khẩu thành công 
+2. Đăng xuất 
+3. Đăng nhập lại bằng mật khẩu mới",Dữ liệu mật khẩu mới được lưu chính xác,High,,,,
+TC-KH02-020,Kiểm tra nhập nhiều OTP liên tục (Race condition),"1. Nhập nhiều OTP khác nhau liên tục 
+2. Nhấn xác nhận nhiều lần",Hệ thống chỉ xử lý một OTP hợp lệ duy nhất,Low,,,,
+UC-KH-03 — Xem trang chủ,,,,,,,,
+TC-KH03-001,Hiển thị Trang chủ sau khi đăng nhập thành công,"1. Đăng nhập bằng tài khoản hợp lệ 
+2. Quan sát màn hình sau đăng nhập",Hệ thống chuyển đến màn hình Trang chủ M04 thành công,High,,PASS,,
+TC-KH03-002,Hiển thị lời chào người dùng,"1. Đăng nhập vào hệ thống 
+2. Quan sát phần đầu Trang chủ",Hiển thị đúng lời chào và tên người dùng,High,,PASS,,
+TC-KH03-003,Hiển thị đúng địa chỉ căn hộ,"1. Đăng nhập vào hệ thống 
+2. Quan sát thông tin địa chỉ căn hộ tại Trang chủ",Hiển thị đúng địa chỉ căn hộ của cư dân (ví dụ: S2.05 · 12A05),High,,Not run,,
+TC-KH03-004,Hiển thị thanh tìm kiếm dịch vụ,"1. Mở Trang chủ 
+2. Quan sát khu vực tìm kiếm",Thanh tìm kiếm “Tìm kiếm dịch vụ...” hiển thị đầy đủ,High,,PASS,,
+TC-KH03-005,Hiển thị đầy đủ 3 dịch vụ chính,"1. Mở Trang chủ 
+2. Quan sát danh sách dịch vụ","Hiển thị đủ 3 dịch vụ: Dọn nhà, Trông trẻ, Mua hộ",High,,PASS,,
+TC-KH03-006,Kiểm tra icon và tên dịch vụ hiển thị đúng,"1. Mở Trang chủ 
+2. Quan sát icon và text từng dịch vụ",Icon và tên dịch vụ hiển thị đúng thiết kế,Medium,,PASS,,
+TC-KH03-007,Hiển thị banner “Gói gia đình 30 ngày”,"1. Mở Trang chủ 
+2. Cuộn xuống khu vực banner",Banner “Gói gia đình 30 ngày” hiển thị đầy đủ,High,,PASS,,
+TC-KH03-008,Hiển thị danh sách Tasker gần bạn,"1. Mở Trang chủ 
+2. Cuộn xuống phần “Chị Ơi! gần bạn”",Danh sách Tasker khả dụng được hiển thị,High,,PASS,,
+TC-KH03-009,"Hiển thị avatar, tên và đánh giá sao của Tasker","1. Mở danh sách Tasker gần bạn 
+2. Quan sát từng Tasker","Hiển thị đầy đủ avatar, tên và số sao đánh giá",Medium,,PASS,,
+TC-KH03-010,Kiểm tra thanh điều hướng dưới màn hình,"1. Mở Trang chủ 
+2. Quan sát bottom navigation","Hiển thị đủ các tab: Trang chủ, Hoạt động, Thông báo, tài khoản ",High,,PASS,,
+TC-KH03-011,Chuyển sang màn hình Thông báo từ icon thông báo,"1. Mở Trang chủ 
+2. Nhấn icon thông báo",Hệ thống chuyển sang màn hình M11 – notifications.php,High,,PASS,,
+TC-KH03-012,Kiểm tra load dữ liệu Trang chủ khi có internet,"1. Đăng nhập hệ thống 
+2. Mở Trang chủ",Dữ liệu Trang chủ tải thành công và đầy đủ,High,,PASS,,
+TC-KH03-013,Kiểm tra hiển thị khi mất kết nối mạng,"1. Tắt internet 
+2. Mở lại Trang chủ",Hệ thống hiển thị thông báo lỗi mạng hoặc trạng thái offline,Medium,,Not run,,
+TC-KH03-014,Kiểm tra giao diện responsive của Trang chủ,"1. Mở ứng dụng trên nhiều kích thước màn hình 
+2. Quan sát layout",Giao diện không bị vỡ hoặc chồng lấn,Medium,,Not run,,
+TC-KH03-015,Kiểm tra tốc độ tải Trang chủ,"1. Đăng nhập vào hệ thống 
+2. Đo thời gian tải Trang chủ",Trang chủ tải trong thời gian cho phép,Low,,Not run,,
+UC-KH-04 — Tìm kiếm dịch vụ,,,,,,,,
+TC-KH04-001,Tìm kiếm dịch vụ với từ khóa hợp lệ,"1. Tại Trang chủ nhấn thanh tìm kiếm 
+2. Nhập từ khóa “Dọn nhà” 
+3. Quan sát kết quả",Hệ thống hiển thị danh sách dịch vụ phù hợp,High,,,,
+TC-KH04-002,Hiển thị bàn phím khi nhấn vào thanh tìm kiếm,1. Nhấn vào thanh tìm kiếm dịch vụ,Bàn phím hiển thị để người dùng nhập liệu,Medium,,,,
+TC-KH04-003,Tìm kiếm không phân biệt chữ hoa chữ thường,"1. Nhập từ khóa “dỌn NHà” 
+2. Quan sát kết quả",Hệ thống vẫn trả về kết quả đúng,Medium,,,,
+TC-KH04-004,Tìm kiếm với ký tự đặc biệt,"1. Nhập ký tự đặc biệt như “@@@” 
+2. Quan sát kết quả",Hệ thống không bị lỗi và xử lý đúng dữ liệu,Medium,,,,
+TC-KH04-005,Tìm kiếm với từ khóa không tồn tại,"1. Nhập từ khóa không có trong hệ thống 
+2. Quan sát kết quả",Hiển thị thông báo “Không có kết quả”,High,,,,
+TC-KH04-006,Để trống ô tìm kiếm,"1. Nhấn vào thanh tìm kiếm 
+2. Không nhập dữ liệu",Hệ thống hiển thị danh sách mặc định hoặc không thực hiện tìm kiếm,Medium,,,,
+TC-KH04-007,Kiểm tra kết quả gợi ý khi nhập từ khóa,1. Nhập một phần từ khóa “Dọn”,Hệ thống hiển thị danh sách gợi ý liên quan,Medium,,,,
+TC-KH04-008,Kiểm tra tốc độ phản hồi tìm kiếm,"1. Nhập từ khóa tìm kiếm 
+2. Quan sát thời gian phản hồi",Kết quả tìm kiếm hiển thị nhanh và không lag,Low,,,,
+TC-KH04-009,Kiểm tra tìm kiếm khi mất mạng,"1. Tắt internet 
+2. Thực hiện tìm kiếm dịch vụ",Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH04-010,Kiểm tra xóa từ khóa tìm kiếm,"1. Nhập từ khóa tìm kiếm 
+2. Xóa toàn bộ ký tự",Hệ thống trở về trạng thái tìm kiếm ban đầu,Low,,,,
+UC-KH-05 — Xem Tasker gần bạn,,,,,,,,
+TC-KH05-001,Hiển thị danh sách Tasker gần vị trí cư dân,"1. Mở Trang chủ 
+2. Cuộn xuống phần “Chị Ơi! gần bạn”",Hiển thị danh sách Tasker gần vị trí cư dân,High,,PASS,Sau test thêm case khi task có vị trí gần có hiển thị không ,
+TC-KH05-002,Hiển thị đầy đủ thông tin Tasker,1. Quan sát từng Tasker trong danh sách,"Hiển thị avatar, tên và đánh giá sao đầy đủ",High,,PASS,,
+TC-KH05-003,Hiển thị đúng số sao đánh giá Tasker,1. Quan sát số sao đánh giá của từng Tasker,Điểm đánh giá hiển thị đúng dữ liệu hệ thống,Medium,,Not run,,
+TC-KH05-004,Chuyển sang danh sách đầy đủ khi nhấn “Xem tất cả”,1. Nhấn nút “Xem tất cả”,Hệ thống chuyển sang màn hình danh sách đầy đủ Tasker,High,,PASS,,
+TC-KH05-005,Hiển thị khi không có Tasker khả dụng,"1. Kiểm tra tại khu vực không có Tasker 
+2. Mở Trang chủ",Hệ thống hiển thị thông báo không có Tasker khả dụng,High,,Not run,,
+TC-KH05-006,Kiểm tra scroll danh sách Tasker,1. Cuộn danh sách Tasker gần bạn,Danh sách scroll mượt và không bị lỗi UI,Low,,Not run,,
+TC-KH05-007,Kiểm tra tải avatar Tasker,"1. Mở danh sách Tasker 
+2. Quan sát hình ảnh avatar",Avatar hiển thị đúng và không bị lỗi ảnh,Medium,,Not run,,
+TC-KH05-008,Kiểm tra lại avatar Tasker khi tasker thay đổi avatar ,"1. Mở danh sách Tasker 
+2. Quan sát hình ảnh avatar",avatar mới hiển thị đầy đủ ,Medium,,Not run,,
+TC-KH05-009,Kiểm tra dữ liệu Tasker khi mất mạng,"1. Tắt internet 
+2. Mở phần Tasker gần bạn",Hệ thống hiển thị lỗi tải dữ liệu,Medium,,Not run,,
+UC-KH-06 — Xem gói gia đình 30 ngày,,,,,,,,
+TC-KH06-001,Hiển thị banner gói gia đình,"1. Mở Trang chủ 
+2. Quan sát banner gói gia đình",Banner “Gói gia đình 30 ngày” hiển thị đúng,High,,PASS,,
+TC-KH06-002,Hiển thị nhãn “GÓI GIA ĐÌNH”,1. Quan sát banner gói gia đình,Nhãn “GÓI GIA ĐÌNH” hiển thị đúng thiết kế,Medium,,PASS,,
+TC-KH06-003,Xem chi tiết gói khi nhấn “Tìm hiểu”,1. Nhấn nút “Tìm hiểu” trên banner,Hệ thống chuyển sang màn hình chi tiết gói gia đình,High,,PASS,,
+TC-KH06-004,Kiểm tra nội dung chi tiết gói gia đình,"1. Mở màn hình chi tiết gói 
+2. Kiểm tra thông tin hiển thị",Hiển thị đầy đủ thông tin gói gia đình 30 ngày,High,,PASS,,
+TC-KH06-005,Điều hướng sang gói  gia đình từ trang Cá nhân,"1. Vào tab “Cá nhân” 
+2. Nhấn “Gói gia đình”",Hệ thống mở đúng màn hình thông tin gói gia đình,Medium,,,,
+TC-KH06-006,Kiểm tra hiển thị banner khi mất mạng,"1. Tắt internet 
+2. Mở Trang chủ",Banner vẫn hiển thị hoặc hiển thị lỗi tải dữ liệu phù hợp,Low,,,,
+TC-KH06-007,Kiểm tra giao diện banner gói gia đình,"1. Mở Trang chủ 
+2. Quan sát banner","Banner hiển thị đúng màu sắc, hình ảnh và bố cục thiết kế",Low,,,,
+UC-KH-07 — Đặt dịch vụ dọn nhà,,,,,,,,
+TC-KH07-001,Đặt dịch vụ dọn nhà cơ bản thành công,"1. Đăng nhập hệ thống 
+2. Từ Trang chủ nhấn “Dọn nhà” 
+3. Chọn loại “Cơ bản” 
+4. Chọn ngày và giờ hợp lệ 
+5. Chọn số giờ 2h 
+6. Nhập ghi chú 
+7. Nhấn “Đặt & thanh toán”",Đơn dọn nhà được tạo thành công và hệ thống bắt đầu tìm Tasker,High,,,,
+TC-KH07-002,Đặt dịch vụ dọn nhà cao cấp thành công,"1. Mở màn hình đặt dịch vụ dọn nhà 
+2. Chọn loại “Cao cấp” 
+3. Nhập đầy đủ thông tin hợp lệ 
+4. Nhấn “Đặt & thanh toán”",Đơn được tạo thành công với loại dịch vụ Cao cấp,High,,,,
+TC-KH07-003,Kiểm tra hiển thị loại dịch vụ,"1. Mở màn hình M05 
+2. Quan sát danh sách loại dịch vụ",Hiển thị đầy đủ lựa chọn “Cơ bản” và “Cao cấp”,Medium,,,,
+TC-KH07-004,Kiểm tra chọn ngày thực hiện hợp lệ,"1. Chọn ngày hiện tại hoặc ngày tương lai 
+2. Tiếp tục đặt đơn",Hệ thống cho phép chọn ngày hợp lệ,High,,,,
+TC-KH07-005,Kiểm tra không cho chọn ngày quá khứ,1. Chọn ngày nhỏ hơn ngày hiện tại,Hệ thống không cho phép chọn ngày quá khứ,High,,,,
+TC-KH07-006,Kiểm tra chọn giờ thực hiện hợp lệ,1. Chọn giờ nằm trong khung thời gian hỗ trợ,Hệ thống lưu đúng giờ thực hiện,High,,,,
+TC-KH07-007,Kiểm tra hiển thị các mốc số giờ,1. Mở dropdown/chọn số giờ,"Hiển thị đủ các lựa chọn 2h, 3h, 4h, 5h",Medium,,,,
+TC-KH07-008,Kiểm tra nhập ghi chú cho Tasker,1. Nhập nội dung ghi chú yêu cầu dọn nhà 2. Đặt dịch vụ,Ghi chú được lưu cùng đơn hàng,Medium,,,,
+TC-KH07-009,Kiểm tra để trống ghi chú,"1. Không nhập ghi chú 
+2. Thực hiện đặt đơn",Hệ thống vẫn cho phép đặt đơn thành công,Medium,,,,
+TC-KH07-010,Kiểm tra tính tổng tiền tự động,"1. Chọn loại dịch vụ và số giờ khác nhau 
+2. Quan sát tổng tiền",Tổng tiền được cập nhật đúng theo lựa chọn,High,,,,
+TC-KH07-011,Kiểm tra khấu trừ ví sau khi đặt đơn,"1. Ghi nhận số dư ví trước khi đặt 
+2. Đặt dịch vụ thành công",Số dư ví bị trừ đúng số tiền dịch vụ,High,,,,
+TC-KH07-012,Kiểm tra đặt đơn khi ví không đủ số dư,"1. Sử dụng tài khoản có số dư không đủ 
+2. Thực hiện đặt đơn",Hệ thống hiển thị yêu cầu nạp tiền và chuyển đến M14,High,,,,
+TC-KH07-013,Kiểm tra validate khi chưa chọn loại dịch vụ,"1. Không chọn loại dịch vụ 
+2. Nhấn “Đặt & thanh toán”",Hệ thống hiển thị thông báo yêu cầu chọn loại dịch vụ,High,,,,
+TC-KH07-014,Kiểm tra validate khi chưa chọn ngày giờ,"1. Không chọn ngày hoặc giờ 
+2. Nhấn “Đặt & thanh toán”",Hệ thống hiển thị validate yêu cầu chọn ngày giờ,High,,,,
+TC-KH07-015,Kiểm tra validate khi chưa chọn số giờ,"1. Không chọn số giờ 
+2. Nhấn “Đặt & thanh toán”",Hệ thống hiển thị thông báo yêu cầu chọn số giờ,High,,,,
+TC-KH07-016,Kiểm tra đặt đơn khi mất kết nối mạng,"1. Tắt internet 
+2. Thực hiện đặt dịch vụ",Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH07-017,Kiểm tra nhấn nhiều lần nút đặt đơn,"1. Nhập đầy đủ thông tin 
+2. Nhấn liên tục “Đặt & thanh toán”",Hệ thống chỉ tạo một đơn duy nhất,Medium,,,,
+TC-KH07-018,Kiểm tra giao diện màn hình đặt dịch vụ,"1. Mở màn hình M05 
+2. Quan sát layout, button, textbox",Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-08 — Đặt dịch vụ trông trẻ,,,,,,,,
+TC-KH08-000,Đặt dịch vụ trông trẻ thành công,"1. Vào Trang chủ M04
+2. Nhấn dịch vụ “Trông trẻ”
+3. Chọn số trẻ là “2”
+4. Nhập độ tuổi trẻ
+5. Chọn ngày bắt đầu
+6. Chọn khoảng giờ từ 18:00 đến 21:00
+7. Nhập yêu cầu đặc biệt
+8. Kiểm tra tổng tiền hiển thị
+9. Nhấn “Tìm Tasker”","- Hệ thống tính đúng tổng tiền = 3 giờ × 100.000 VNĐ
+- Ví khách hàng bị khấu trừ đúng số tiền
+- Đơn trông trẻ được tạo thành công
+- Hiển thị trạng thái “Đang tìm Tasker”
+- Khách hàng nhận thông báo đặt dịch vụ thành công",High,,,,
+TC-KH08-001,Kiểm tra hiển thị lựa chọn số trẻ,"1. Mở màn hình M06 
+2. Quan sát lựa chọn số trẻ",Hiển thị đủ các lựa chọn 1 / 2 / 3+,Medium,,,,
+TC-KH08-002,Kiểm tra nhập độ tuổi trẻ hợp lệ,"1. Nhập độ tuổi hợp lệ của trẻ 
+2. Tiếp tục đặt đơn",Hệ thống lưu đúng độ tuổi trẻ,High,,,,
+TC-KH08-003,Kiểm tra validate khi để trống độ tuổi,"1. Không nhập độ tuổi trẻ 
+2. Nhấn “Tìm Tasker”",Hệ thống hiển thị validate bắt buộc nhập độ tuổi,High,,,,
+TC-KH08-004,Kiểm tra chọn khoảng giờ hợp lệ,1. Chọn giờ bắt đầu và giờ kết thúc hợp lệ,Hệ thống lưu đúng khoảng thời gian,High,,,,
+TC-KH08-005,Kiểm tra giờ kết thúc nhỏ hơn giờ bắt đầu,"1. Chọn giờ kết thúc nhỏ hơn giờ bắt đầu 
+2. Nhấn “Tìm Tasker”",Hệ thống hiển thị lỗi thời gian không hợp lệ,High,,,,
+TC-KH08-006,Kiểm tra nhập yêu cầu đặc biệt,"1. Nhập lịch ăn/ngủ hoặc yêu cầu riêng 
+2. Đặt đơn",Yêu cầu đặc biệt được lưu trong đơn,Medium,,,,
+TC-KH08-007,Kiểm tra tính tổng tiền theo số giờ,"1. Chọn khoảng thời gian khác nhau 
+2. Quan sát tổng tiền",Tổng tiền được tính đúng theo công thức số giờ × 100k,High,,,,
+TC-KH08-008,Kiểm tra đặt đơn khi ví không đủ tiền,"1. Dùng tài khoản ví không đủ số dư 
+2. Đặt dịch vụ",Hệ thống yêu cầu nạp tiền,High,,,,
+TC-KH08-009,Kiểm tra khấu trừ ví sau khi đặt đơn,"1. Đặt đơn thành công 
+2. Kiểm tra số dư ví",Số dư ví giảm đúng số tiền thanh toán,High,,,,
+TC-KH08-010,Kiểm tra đặt đơn khi mất mạng,"1. Tắt internet 
+2. Đặt dịch vụ",Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH08-011,Kiểm tra giao diện màn hình trông trẻ,"1. Mở màn hình M06 
+2. Quan sát layout giao diện",Giao diện hiển thị đúng thiết kế,Low,,,,
+UC-KH-09 — Đặt dịch vụ mua hộ WinMart,,,,,,,,
+TC-KH09-001,Đặt dịch vụ mua hộ thành công,"1. Đăng nhập hệ thống 
+2. Chọn dịch vụ “Mua hộ” 
+3. Chọn cửa hàng WinMart 
+4. Nhập danh sách sản phẩm 
+5. Chọn địa chỉ giao 
+6. Nhấn “Đặt mua hộ”",Đơn mua hộ được tạo thành công,High,,,,
+TC-KH09-002,Kiểm tra chọn cửa hàng WinMart,"1. Mở màn hình M07 
+2. Chọn cửa hàng",Hệ thống lưu đúng cửa hàng được chọn,High,,,,
+TC-KH09-003,Kiểm tra thêm sản phẩm vào danh sách mua,"1. Nhập tên sản phẩm và số lượng 
+2. Nhấn “+ Thêm sản phẩm”",Sản phẩm được thêm vào danh sách,High,,,,
+TC-KH09-004,Kiểm tra thêm nhiều sản phẩm,1. Thêm nhiều sản phẩm liên tiếp,Hệ thống lưu đầy đủ các sản phẩm,Medium,,,,
+TC-KH09-005,Kiểm tra validate khi chưa nhập sản phẩm,"1. Không nhập sản phẩm 
+2. Nhấn “Đặt mua hộ”",Hệ thống hiển thị lỗi yêu cầu nhập sản phẩm,High,,,,
+TC-KH09-006,Kiểm tra nhập ngân sách dự kiến,1. Nhập ngân sách dự kiến hợp lệ,Hệ thống lưu đúng ngân sách,Medium,,,,
+TC-KH09-007,Kiểm tra hiển thị phí dịch vụ cố định,1. Mở màn hình đặt mua hộ,Hiển thị phí dịch vụ cố định 50.000đ,High,,,,
+TC-KH09-008,Kiểm tra đặt đơn khi ví không đủ số dư,"1. Dùng tài khoản ví không đủ tiền 
+2. Đặt đơn",Hệ thống yêu cầu nạp tiền,High,,,,
+TC-KH09-009,Kiểm tra khấu trừ ví sau khi đặt đơn,"1. Đặt đơn thành công 
+2. Kiểm tra số dư ví",Ví bị trừ đúng số tiền thanh toán,High,,,,
+TC-KH09-010,Kiểm tra đặt mua hộ khi mất mạng,"1. Tắt internet 
+2. Thực hiện đặt mua hộ",Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+UC-KH-10 — Theo dõi tiến trình đơn,,,,,,,,
+TC-KH10-001,Xem chi tiết tiến trình đơn thành công,"1. Vào tab Hoạt động 
+2. Nhấn “Theo dõi” trên đơn đang thực hiện",Hệ thống mở màn hình tracking.php,High,,,,
+TC-KH10-002,Hiển thị trạng thái hiện tại của đơn,1. Mở màn hình theo dõi đơn,Hiển thị đúng trạng thái hiện tại của đơn hàng,High,,,,
+TC-KH10-003,Hiển thị đủ 5 bước tiến trình đơn,"1. Mở màn hình tracking 
+2. Quan sát tiến trình",Hiển thị đủ 5 bước theo đúng flow hệ thống,High,,,,
+TC-KH10-004,Hiển thị thời gian tại từng bước,1. Quan sát timeline tiến trình đơn,Mỗi bước hiển thị đúng timestamp,Medium,,,,
+TC-KH10-005,Hiển thị thông tin Tasker,1. Mở màn hình tracking,"Hiển thị tên, sao đánh giá và số việc của Tasker",High,,,,
+TC-KH10-006,Kiểm tra nút Chat với Tasker,1. Nhấn nút Chat trên tracking,Hệ thống chuyển sang màn hình chat M10,High,,,,
+TC-KH10-007,Kiểm tra nút Gọi Tasker,1. Nhấn icon gọi điện trên tracking,Hệ thống thực hiện gọi điện cho Tasker,High,,,,
+TC-KH10-008,Kiểm tra hiển thị nút Hủy đơn trước khi Tasker bắt đầu,1. Mở đơn ở trạng thái chưa bắt đầu,Nút “Hủy đơn” vẫn hiển thị,Medium,,,,
+TC-KH10-009,Kiểm tra ẩn nút Hủy khi đơn đang thực hiện,1. Mở đơn ở trạng thái “Đang thực hiện”,Nút “Hủy đơn” bị ẩn hoặc disable,Medium,,,,
+TC-KH10-010,Kiểm tra cập nhật trạng thái theo thời gian thực,1. Theo dõi đơn trong quá trình xử lý,Trạng thái đơn tự động cập nhật realtime,High,,,,
+UC-KH-11+12  CHAT VÀ GỌI TASKER,,,,,,,,
+TC-KH11-001,Mở màn hình chat thành công từ tracking,"1. Vào màn hình theo dõi đơn M08 
+2. Nhấn nút “Chat”",Hệ thống mở màn hình chat M10 thành công,High,,,,
+TC-KH11-002,Mở màn hình chat từ danh sách hoạt động,"1. Vào màn hình Hoạt động M09 
+2. Chọn đơn đang thực hiện 3. Nhấn “Chat”",Hệ thống mở đúng cửa sổ chat với Tasker,High,,,,
+TC-KH11-003,Hiển thị lịch sử tin nhắn,"1. Mở màn hình chat 
+2. Quan sát khu vực hội thoại",Hiển thị đầy đủ lịch sử tin nhắn trước đó,High,,,,
+TC-KH11-004,Gửi tin nhắn văn bản thành công,"1. Nhập nội dung tin nhắn 
+2. Nhấn icon gửi",Tin nhắn được gửi thành công và hiển thị trên màn hình chat,High,,,,
+TC-KH11-005,Nhận phản hồi từ Tasker,"1. Gửi tin nhắn đến Tasker 
+2. Chờ phản hồi",Tin nhắn phản hồi từ Tasker hiển thị realtime,High,,,,
+TC-KH11-006,Kiểm tra gửi nhiều tin nhắn liên tiếp,1. Nhập và gửi nhiều tin nhắn liên tục,Tất cả tin nhắn được gửi đúng thứ tự,Medium,,,,
+TC-KH11-007,Kiểm tra gửi tin nhắn rỗng,"1. Không nhập nội dung 
+2. Nhấn nút gửi",Hệ thống không cho gửi tin nhắn rỗng,High,,,,
+TC-KH11-008,Kiểm tra giới hạn ký tự tin nhắn,"1. Nhập nội dung vượt giới hạn ký tự 
+2. Nhấn gửi",Hệ thống hiển thị validate hoặc giới hạn số ký tự,Medium,,,,
+TC-KH11-009,Gửi ảnh đính kèm thành công,"1. Nhấn icon đính kèm 
+2. Chọn ảnh từ thiết bị 
+3. Gửi ảnh",Ảnh được gửi thành công trong cuộc trò chuyện,High,,,,
+TC-KH11-010,Gửi file đính kèm thành công,"1. Nhấn icon đính kèm 
+2. Chọn file hợp lệ 
+3. Gửi file",File được gửi thành công,Medium,,,,
+TC-KH11-011,Kiểm tra upload file không hợp lệ,"1. Chọn file không đúng định dạng hỗ trợ 
+2. Gửi file",Hệ thống hiển thị lỗi file không hợp lệ,Medium,,,,
+TC-KH11-012,Kiểm tra trạng thái online của Tasker,1. Mở màn hình chat khi Tasker online,Hiển thị trạng thái online của Tasker,Medium,,,,
+TC-KH11-013,Kiểm tra trạng thái offline của Tasker,1. Mở màn hình chat khi Tasker offline,Hiển thị trạng thái offline hoặc last seen,Medium,,,,
+TC-KH11-014,Kiểm tra tự động scroll xuống tin nhắn mới,1. Nhận tin nhắn mới từ Tasker,Màn hình chat tự động scroll xuống cuối,Low,,,,
+TC-KH11-015,Kiểm tra gọi điện từ màn hình chat,1. Nhấn icon điện thoại trong chat,Hệ thống chuyển sang chức năng gọi điện UC-KH-12,High,,,,
+TC-KH11-016,Kiểm tra gửi tin nhắn khi mất mạng,"1. Tắt internet 
+2. Gửi tin nhắn",Hệ thống hiển thị lỗi gửi tin nhắn thất bại,High,,,,
+TC-KH11-017,Kiểm tra hiển thị thời gian gửi tin nhắn,"1. Gửi và nhận tin nhắn 
+2. Quan sát timestamp",Mỗi tin nhắn hiển thị đúng thời gian gửi,Low,,,,
+TC-KH12-018,Kiểm tra giao diện màn hình chat,"1. Mở màn hình M10 
+2. Quan sát UI chat",Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+TC-KH12-019,Gọi điện từ màn hình tracking thành công,"1. Mở màn hình tracking M08 
+2. Nhấn icon điện thoại",Hệ thống kết nối cuộc gọi đến Tasker,High,,,,
+TC-KH12-020,Gọi điện từ màn hình chat thành công,"1. Mở màn hình chat M10 
+2. Nhấn icon điện thoại",Cuộc gọi được thực hiện thành công,High,,,,
+TC-KH12-021,Kiểm tra hiển thị popup quyền gọi điện,1. Nhấn gọi điện lần đầu tiên,Hệ thống yêu cầu cấp quyền gọi điện,Medium,,,,
+TC-KH12-022,Kiểm tra từ chối quyền gọi điện,1. Từ chối quyền gọi điện khi hệ thống yêu cầu,Hệ thống hiển thị thông báo không thể thực hiện cuộc gọi,Medium,,,,
+TC-KH12-023,Kiểm tra Tasker không nghe máy,1. Thực hiện gọi điện khi Tasker không bắt máy,Hệ thống hiển thị thông báo không liên lạc được,Medium,,,,
+TC-KH12-024,Kiểm tra số điện thoại Tasker không hợp lệ,1. Thực hiện gọi đến số không hợp lệ,Hệ thống hiển thị lỗi cuộc gọi thất bại,Medium,,,,
+TC-KH12-025,Kiểm tra gọi điện khi mất sóng/mất mạng,"1. Tắt sóng điện thoại hoặc internet 
+2. Thực hiện gọi",Hệ thống hiển thị lỗi kết nối cuộc gọi,Medium,,,,
+TC-KH12-026,Kiểm tra quay lại app sau khi kết thúc cuộc gọi,"1. Gọi điện cho Tasker 
+2. Kết thúc cuộc gọi",Ứng dụng quay lại đúng màn hình trước đó,Low,,,,
+UC-KH-13  Hủy đơn,,,,,,,,
+TC-KH13-001,Hủy đơn thành công từ màn hình tracking,"1. Mở tracking của đơn chưa bắt đầu 
+2. Nhấn “Hủy đơn” 
+3. Xác nhận hủy",Đơn chuyển sang trạng thái “Đã hủy”,High,,,,
+TC-KH13-002,Hủy đơn thành công từ màn hình hoạt động,"1. Vào M09 
+2. Chọn đơn sắp tới 
+3. Nhấn “Hủy” 
+4. Xác nhận",Đơn được hủy thành công,High,,,,
+TC-KH13-003,Kiểm tra popup xác nhận hủy đơn,1. Nhấn “Hủy đơn”,Hệ thống hiển thị popup xác nhận hủy,High,,,,
+TC-KH13-004,Kiểm tra từ chối xác nhận hủy đơn,"1. Nhấn “Hủy đơn” 
+2. Chọn “Không” hoặc “Đóng”",Đơn vẫn giữ nguyên trạng thái ban đầu,Medium,,,,
+TC-KH13-005,Kiểm tra hoàn tiền vào ví sau khi hủy,"1. Hủy đơn thành công 
+2. Kiểm tra số dư ví",Tiền được hoàn về ví theo chính sách,High,,,,
+TC-KH13-006,Kiểm tra trạng thái đơn sau khi hủy,"1. Hủy đơn thành công 
+2. Mở lại chi tiết đơn",Đơn hiển thị trạng thái “Đã hủy”,High,,,,
+TC-KH13-007,Kiểm tra không cho hủy khi đơn đang thực hiện,"1. Mở đơn ở trạng thái “Đang thực hiện” 
+2. Nhấn “Hủy đơn”",Hệ thống không cho phép hủy hoặc hiển thị chính sách phí hủy,High,,,,
+TC-KH13-008,Kiểm tra áp dụng phí hủy đơn,"1. Hủy đơn trong thời gian áp dụng phí 
+2. Kiểm tra ví",Hệ thống trừ phí hủy đúng theo chính sách,Medium,,,,
+TC-KH13-009,Kiểm tra hủy đơn khi mất mạng,1. Tắt internet 2. Thực hiện hủy đơn,Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH13-010,Kiểm tra nhấn nhiều lần nút hủy,1. Nhấn liên tục nút “Xác nhận hủy”,Hệ thống chỉ xử lý một lần hủy đơn,Medium,,,,
+UC-KH-14 — Xem lịch sử hoạt động,,,,,,,,
+TC-KH14-001,Mở màn hình hoạt động thành công,1. Nhấn tab “Hoạt động” trên thanh điều hướng,Hệ thống mở màn hình activity.php,High,,,,
+TC-KH14-002,Hiển thị tab “Đang & sắp tới” mặc định,1. Mở màn hình hoạt động,Tab “Đang & sắp tới” được chọn mặc định,High,,,,
+TC-KH14-003,Chuyển sang tab “Đã hoàn tất”,1. Nhấn tab “Đã hoàn tất”,Hệ thống hiển thị danh sách đơn đã hoàn tất,High,,,,
+TC-KH14-004,Chuyển sang tab “Đã hủy”,1. Nhấn tab “Đã hủy”,Hệ thống hiển thị danh sách đơn đã hủy,High,,,,
+TC-KH14-005,Hiển thị thông tin đơn hàng đầy đủ,1. Quan sát danh sách đơn,"Hiển thị loại dịch vụ, mã đơn, Tasker, thời gian và trạng thái",High,,,,
+TC-KH14-006,Xem chi tiết đơn từ lịch sử hoạt động,1. Nhấn vào một đơn bất kỳ,Hệ thống mở màn hình chi tiết đơn,High,,,,
+TC-KH14-007,Theo dõi đơn từ tab đang thực hiện,1. Chọn đơn đang thực hiện 2. Nhấn “Theo dõi”,Hệ thống chuyển sang màn hình tracking,High,,,,
+TC-KH14-008,Chat với Tasker từ lịch sử hoạt động,1. Chọn đơn đang thực hiện 2. Nhấn “Chat”,Hệ thống mở màn hình chat với Tasker,High,,,,
+TC-KH14-009,Kiểm tra trạng thái rỗng khi chưa có đơn,"1. Đăng nhập bằng tài khoản chưa từng đặt đơn 
+2. Vào Hoạt động",Hệ thống hiển thị trạng thái rỗng phù hợp,Medium,,,,
+TC-KH14-010,Kiểm tra scroll danh sách hoạt động,"1. Có nhiều đơn hàng trong hệ thống 
+2. Cuộn danh sách",Danh sách scroll mượt và không lỗi UI,Low,,,,
+TC-KH14-011,Kiểm tra load dữ liệu khi mất mạng,"1. Tắt internet 
+2. Mở màn hình hoạt động",Hệ thống hiển thị lỗi tải dữ liệu,Medium,,,,
+UC-KH-15 — Xem thông báo,,,,,,,,
+TC-KH15-001,Mở màn hình thông báo thành công,1. Nhấn tab “Thông báo”,Hệ thống mở màn hình notifications.php,High,,,,
+TC-KH15-002,Hiển thị danh sách thông báo,1. Mở màn hình thông báo,Hiển thị đầy đủ danh sách thông báo,High,,,,
+TC-KH15-003,Hiển thị dấu chấm đỏ với thông báo chưa đọc,"1. Có thông báo chưa đọc 
+2. Mở danh sách thông báo",Thông báo chưa đọc hiển thị dấu chấm đỏ,High,,,,
+TC-KH15-004,Xem chi tiết thông báo,1. Nhấn vào một thông báo bất kỳ,Hệ thống mở chi tiết thông báo,High,,,,
+TC-KH15-005,Đánh dấu tất cả đã đọc,1. Nhấn “Đánh dấu tất cả đã đọc”,Tất cả thông báo chuyển sang trạng thái đã đọc,High,,,,
+TC-KH15-006,Kiểm tra xóa dấu chấm đỏ sau khi đọc,1. Mở thông báo chưa đọc,Dấu chấm đỏ biến mất sau khi đọc,Medium,,,,
+TC-KH15-007,Kiểm tra hiển thị thông báo nạp ví thành công,"1. Thực hiện nạp ví thành công 
+2. Mở thông báo",Xuất hiện thông báo nạp ví thành công,Medium,,,,
+TC-KH15-008,Kiểm tra hiển thị thông báo Tasker nhận đơn,"1. Tasker nhận đơn 
+2. Mở thông báo",Hiển thị đúng nội dung thông báo,Medium,,,,
+TC-KH15-009,Kiểm tra trạng thái rỗng khi chưa có thông báo,"1. Đăng nhập tài khoản chưa có thông báo 
+2. Mở màn hình thông báo",Hệ thống hiển thị trạng thái rỗng,Medium,,,,
+TC-KH15-010,Kiểm tra tải thông báo khi mất mạng,"1. Tắt internet 
+2. Mở màn hình thông báo",Hệ thống hiển thị lỗi tải dữ liệu,Medium,,,,
+TC-KH15-011,Kiểm tra giao diện màn hình thông báo,"1. Mở màn hình M11 
+2. Quan sát giao diện",Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-16 — Đánh giá Tasker,,,,,,,,
+TC-KH16-001,Mở màn hình đánh giá từ thông báo,"1. Nhận thông báo “Hãy đánh giá đơn #BKXXXX” 
+2. Nhấn vào thông báo",Hệ thống mở màn hình đánh giá M12 thành công,High,,,,
+TC-KH16-002,Đánh giá Tasker với 5 sao,"1. Mở màn hình đánh giá 
+2. Chọn 5 sao 
+3. Nhấn “Gửi đánh giá”",Đánh giá được lưu thành công,High,,,,
+TC-KH16-003,Đánh giá Tasker với 1 sao,"1. Mở màn hình đánh giá 
+2. Chọn 1 sao 
+3. Nhấn “Gửi đánh giá”",Hệ thống lưu đánh giá 1 sao thành công,High,,,,
+TC-KH16-004,Kiểm tra hiển thị đầy đủ mức sao,1. Mở màn hình đánh giá,Hiển thị đầy đủ lựa chọn từ 1 đến 5 sao,Medium,,,,
+TC-KH16-005,Chọn tags trải nghiệm,"1. Chọn các tags như “Đúng giờ”, “Sạch sẽ” 
+2. Gửi đánh giá",Tags được lưu cùng đánh giá,Medium,,,,
+TC-KH16-006,Chọn nhiều tags cùng lúc,"1. Chọn nhiều tags trải nghiệm 
+2. Nhấn gửi đánh giá",Hệ thống lưu đầy đủ các tags đã chọn,Medium,,,,
+TC-KH16-007,Nhập nhận xét văn bản,"1. Nhập nội dung nhận xét 
+2. Gửi đánh giá",Nhận xét được lưu thành công,Medium,,,,
+TC-KH16-008,Để trống nhận xét văn bản,"1. Chỉ chọn số sao 
+2. Không nhập nhận xét 3. Nhấn gửi",Hệ thống vẫn cho phép gửi đánh giá,Medium,,,,
+TC-KH16-009,Validate khi chưa chọn số sao,"1. Không chọn số sao 
+2. Nhấn “Gửi đánh giá”",Hệ thống hiển thị thông báo yêu cầu chọn số sao,High,,,,
+TC-KH16-010,Kiểm tra cập nhật điểm sao Tasker,"1. Gửi đánh giá thành công 
+2. Kiểm tra hồ sơ Tasker",Điểm đánh giá Tasker được cập nhật đúng,High,,,,
+TC-KH16-011,Kiểm tra gửi đánh giá nhiều lần cho cùng đơn,"1. Đánh giá đơn đã hoàn tất 
+2. Thử đánh giá lại cùng đơn",Hệ thống không cho phép đánh giá trùng,Medium,,,,
+TC-KH16-012,Bỏ qua đánh giá đơn,"1. Nhận thông báo đánh giá 
+2. Đóng màn hình mà không gửi",Hệ thống nhắc lại đánh giá qua thông báo M11,Medium,,,,
+TC-KH16-013,Kiểm tra giới hạn ký tự nhận xét,"1. Nhập nhận xét vượt giới hạn ký tự 
+2. Nhấn gửi",Hệ thống validate hoặc giới hạn ký tự,Medium,,,,
+TC-KH16-014,Kiểm tra đánh giá khi mất mạng,"1. Tắt internet 
+2. Gửi đánh giá",Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH16-015,Kiểm tra giao diện màn hình đánh giá,"1. Mở màn hình M12 
+2. Quan sát giao diện",Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-17 — Xem ví & lịch sử giao dịch,,,,,,,,
+TC_KH17-001,Mở màn hình ví thành công,1. Từ tab Cá nhân nhấn “Ví & phương thức TT”,Hệ thống mở màn hình M13 thành công,High,,,,
+TC_KH17-002,Hiển thị số dư ví khả dụng,1. Mở màn hình ví,Hiển thị đúng số dư hiện tại của ví,High,,,,
+TC_KH17-003,Hiển thị lịch sử giao dịch,"1. Mở màn hình ví 
+2. Cuộn danh sách giao dịch",Hiển thị đầy đủ lịch sử giao dịch,High,,,,
+TC_KH17-004,Hiển thị giao dịch nạp tiền,"1. Thực hiện nạp tiền 
+2. Mở lịch sử giao dịch",Giao dịch nạp tiền hiển thị đúng,Medium,,,,
+TC_KH17-005,Hiển thị giao dịch thanh toán dịch vụ,"1. Đặt dịch vụ thành công 
+2. Mở lịch sử giao dịch",Giao dịch thanh toán hiển thị đúng,Medium,,,,
+TC_KH17-006,Hiển thị giao dịch hoàn tiền hủy đơn,"1. Hủy đơn thành công 
+2. Kiểm tra lịch sử giao dịch",Giao dịch hoàn tiền hiển thị đúng,Medium,,,,
+TC_KH17-007,Kiểm tra nút “Nạp tiền”,"1. Mở màn hình ví 
+2. Nhấn “Nạp tiền”",Hệ thống chuyển sang UC-KH-18,High,,,,
+TC_KH17-008,Kiểm tra nút “Rút”,"1. Mở màn hình ví 
+2. Nhấn “Rút”",Hệ thống chuyển sang UC-KH-19,High,,,,
+TC_KH17-009,Kiểm tra trạng thái số dư bằng 0,"1. Đăng nhập tài khoản có ví = 0 
+2. Mở màn hình ví",Hệ thống gợi ý nạp tiền,Medium,,,,
+TC_KH17-010,Kiểm tra scroll lịch sử giao dịch,"1. Có nhiều giao dịch trong ví 
+2. Cuộn danh sách",Danh sách scroll mượt và không lỗi UI,Low,,,,
+TC_KH17-011,Kiểm tra tải dữ liệu ví khi mất mạng,"1. Tắt internet 
+2. Mở màn hình ví",Hệ thống hiển thị lỗi tải dữ liệu,Medium,,,,
+UC-KH-18 — Nạp tiền vào ví,,,,,,,,
+TC-KH18-001,Nạp tiền thành công bằng QR Bank,"1. Mở màn hình nạp tiền 
+2. Chọn mệnh giá 
+3. Chọn QR Bank 
+4. Chuyển khoản đúng nội dung 
+5. Nhấn “Tôi đã chuyển khoản”",Ví được cộng đúng số tiền đã nạp,High,,,,
+TC-KH18-002,Nạp tiền thành công bằng MoMo,"1. Chọn phương thức MoMo 
+2. Thực hiện thanh toán",Ví được cộng tiền thành công,High,,,,
+TC-KH18-003,Nạp tiền thành công bằng VNPay,"1. Chọn phương thức VNPay 
+2. Thực hiện thanh toán",Giao dịch nạp tiền thành công,High,,,,
+TC-KH18-004,Kiểm tra hiển thị các mệnh giá mặc định,1. Mở màn hình nạp tiền,Hiển thị đầy đủ 200k/500k/1tr/2tr/5tr,Medium,,,,
+TC-KH18-005,Nhập số tiền tùy chỉnh hợp lệ,"1. Chọn nhập số tiền tùy chỉnh 
+2. Nhập số tiền hợp lệ",Hệ thống chấp nhận số tiền nhập,Medium,,,,
+TC-KH18-006,Validate khi nhập số tiền không hợp lệ,1. Nhập số tiền âm hoặc ký tự đặc biệt,Hệ thống hiển thị validate lỗi,High,,,,
+TC-KH18-007,Kiểm tra hiển thị mã QR và thông tin chuyển khoản,1. Chọn phương thức thanh toán,Hệ thống hiển thị đúng mã QR và thông tin tài khoản,High,,,,
+TC-KH18-008,Kiểm tra nội dung chuyển khoản đúng format,1. Quan sát nội dung chuyển khoản,Hiển thị đúng format “NAPVI + SĐT”,High,,,,
+TC-KH18-009,Kiểm tra chuyển khoản sai nội dung,"1. Chuyển khoản sai cú pháp nội dung 
+2. Nhấn xác nhận",Hệ thống chưa cộng tiền vào ví,High,,,,
+TC-KH18-010,Kiểm tra giao dịch thất bại,1. Thực hiện thanh toán thất bại,Hệ thống hiển thị trạng thái thất bại và cho phép thử lại,High,,,,
+TC-KH18-011,Kiểm tra cập nhật số dư sau nạp tiền,"1. Nạp tiền thành công 
+2. Kiểm tra ví",Số dư được cập nhật chính xác,High,,,,
+TC-KH18-012,Kiểm tra nhấn nhiều lần “Tôi đã chuyển khoản”,1. Nhấn nhiều lần nút xác nhận,Hệ thống chỉ xử lý một giao dịch,Medium,,,,
+TC-KH18-013,Kiểm tra nạp tiền khi mất mạng,"1. Tắt internet 
+2. Thực hiện nạp tiền",Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+UC-KH-19 — Rút tiền từ ví,,,,,,,,
+TC-KH19-001,Rút tiền thành công,"1. Mở màn hình ví 
+2. Nhấn “Rút” 
+3. Nhập số tiền hợp lệ 
+4. Chọn tài khoản ngân hàng 
+5. Xác nhận",Hệ thống xử lý rút tiền thành công,High,,,,
+TC-KH19-002,Kiểm tra validate khi để trống số tiền rút,"1. Không nhập số tiền 
+2. Nhấn xác nhận",Hệ thống hiển thị validate yêu cầu nhập số tiền,High,,,,
+TC-KH19-003,Kiểm tra rút tiền vượt số dư,1. Nhập số tiền lớn hơn số dư ví,Hệ thống hiển thị lỗi số dư không đủ,High,,,,
+TC-KH19-004,Kiểm tra nhập số tiền không hợp lệ,1. Nhập ký tự chữ hoặc số âm,Hệ thống hiển thị validate lỗi,Medium,,,,
+TC-KH19-005,Kiểm tra chọn tài khoản ngân hàng nhận tiền,1. Nhấn chọn tài khoản ngân hàng,Hệ thống hiển thị danh sách tài khoản liên kết,Medium,,,,
+TC-KH19-006,Kiểm tra khi chưa chọn tài khoản ngân hàng,"1. Không chọn tài khoản ngân hàng 
+2. Nhấn xác nhận",Hệ thống yêu cầu chọn tài khoản ngân hàng,High,,,,
+TC-KH19-007,Kiểm tra cập nhật số dư sau rút tiền,"1. Rút tiền thành công 
+2. Kiểm tra ví",Số dư giảm đúng số tiền rút,High,,,,
+TC-KH19-008,Kiểm tra lịch sử giao dịch sau rút tiền,"1. Rút tiền thành công 
+2. Mở lịch sử giao dịch",Giao dịch rút tiền được ghi nhận,Medium,,,,
+TC-KH19-009,Kiểm tra rút tiền khi mất mạng,"1. Tắt internet 
+2. Thực hiện rút tiền",Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+UC-KH-20 — Xem & quản lý thông tin cá nhân,,,,,,,,
+TC-KH20-001,Mở màn hình cá nhân thành công,1. Nhấn tab “Cá nhân”,Hệ thống mở màn hình profile.php,High,,,,
+TC-KH20-002,Hiển thị avatar người dùng,1. Mở màn hình cá nhân,Avatar hiển thị đúng dữ liệu tài khoản,Medium,,,,
+TC-KH20-003,"Hiển thị họ tên, SĐT và địa chỉ căn hộ",1. Mở màn hình cá nhân,Hiển thị đầy đủ thông tin tài khoản,High,,,,
+TC-KH20-004,Hiển thị thẻ thống kê tài khoản,1. Quan sát phần thống kê,"Hiển thị số đơn đặt, điểm đánh giá và số dư ví",Medium,,,,
+TC-KH20-005,Chỉnh sửa thông tin cá nhân thành công,"1. Nhấn “Thông tin cá nhân” 
+2. Chỉnh sửa dữ liệu 
+3. Lưu thay đổi",Hệ thống cập nhật thông tin thành công,High,,,,
+TC-KH20-006,Validate khi nhập SĐT không hợp lệ,"1. Nhập SĐT sai định dạng 
+2. Lưu thông tin",Hệ thống hiển thị validate lỗi,High,,,,
+TC-KH20-007,Kiểm tra để trống họ tên,"1. Xóa họ tên 
+2. Nhấn lưu",Hệ thống hiển thị yêu cầu nhập họ tên,High,,,,
+TC-KH20-008,Kiểm tra hiển thị nhắc cập nhật thông tin,1. Đăng nhập tài khoản thiếu thông tin cá nhân,Hệ thống hiển thị nhắc cập nhật thông tin,Medium,,,,
+TC-KH20-009,Kiểm tra điều hướng đến Ví & phương thức TT,1. Nhấn “Ví & phương thức TT”,Hệ thống chuyển sang màn hình ví M13,Medium,,,,
+TC-KH20-010,Kiểm tra điều hướng đến Gói gia đình,1. Nhấn “Gói gia đình”,Hệ thống mở màn hình gói gia đình,Medium,,,,
+TC-KH20-011,Kiểm tra chức năng đăng xuất,1. Nhấn “Đăng xuất”,Người dùng bị đăng xuất và quay về màn hình login,High,,,,
+TC-KH20-012,Kiểm tra giao diện màn hình cá nhân,"1. Mở màn hình M15 
+2. Quan sát giao diện",Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-21 — Quản lý ví & phương thức thanh toán,,,,,,,,
+TC-KH21-001,Mở màn hình Ví & phương thức thanh toán,"1. Đăng nhập vào hệ thống 
+2. Từ thanh điều hướng chọn tab “Cá nhân”
+3. Nhấn mục “Ví & phương thức TT”",- Hệ thống mở màn hình quản lý ví và phương thức thanh toán thành công- Hiển thị danh sách phương thức đã liên kết,High,,,,
+TC-KH21-002,Hiển thị danh sách phương thức thanh toán đã liên kết,"1. Mở màn hình “Ví & phương thức TT”
+2. Quan sát danh sách phương thức thanh toán","- Hiển thị đầy đủ các phương thức đã liên kết như MoMo, VNPay, QR Bank",High,,,,
+TC-KH21-003,Thêm mới phương thức thanh toán thành công,"1. Mở màn hình “Ví & phương thức TT”
+2. Nhấn nút “Thêm phương thức thanh toán”
+3. Chọn phương thức MoMo
+4. Nhập thông tin liên kết hợp lệ
+5. Xác nhận liên kết",- Phương thức thanh toán được thêm thành công- Hiển thị trong danh sách phương thức liên kết,High,,,,
+TC-KH21-004,Xóa phương thức thanh toán thành công,"1. Mở danh sách phương thức thanh toán
+2. Chọn một phương thức đã liên kết
+3. Nhấn “Xóa”
+4. Xác nhận xóa",- Phương thức thanh toán được xóa khỏi danh sách,High,,,,
+TC-KH21-005,Kiểm tra popup xác nhận khi xóa phương thức thanh toán,1. Nhấn nút “Xóa” trên phương thức thanh toán,- Hệ thống hiển thị popup xác nhận xóa,Medium,,,,
+TC-KH21-006,Hủy thao tác xóa phương thức thanh toán,"1. Nhấn “Xóa” trên phương thức thanh toán
+2. Chọn “Hủy” tại popup xác nhận",- Phương thức thanh toán vẫn được giữ nguyên,Medium,,,,
+TC-KH21-007,Kiểm tra trạng thái chưa liên kết phương thức nào,"1. Đăng nhập bằng tài khoản chưa liên kết phương thức thanh toán
+2. Mở màn hình “Ví & phương thức TT”",- Hệ thống hiển thị trạng thái trống- Gợi ý thêm mới phương thức thanh toán,Medium,,,,
+TC-KH21-008,Kiểm tra thêm phương thức thanh toán bị lỗi,1. Thực hiện thêm phương thức thanh toán2. Nhập thông tin không hợp lệ3. Xác nhận liên kết,- Hệ thống hiển thị thông báo lỗi liên kết thất bại,Medium,,,,
+TC-KH21-009,Kiểm tra tải dữ liệu khi mất mạng,"1. Tắt internet
+2. Mở màn hình “Ví & phương thức TT”",- Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH21-010,Kiểm tra giao diện màn hình quản lý phương thức thanh toán,"1. Mở màn hình “Ví & phương thức TT”
+2. Quan sát giao diện",- Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-22 — Đăng ký gói gia đình,,,,,,,,
+TC-KH22-001,Đăng ký gói gia đình thành công bằng ví,"1. Đăng nhập vào hệ thống
+2. Từ màn hình Cá nhân nhấn “Gói gia đình”
+3. Xem thông tin chi tiết gói
+4. Nhấn “Đăng ký gói”
+5. Chọn thanh toán bằng ví
+6. Xác nhận thanh toán",- Gói gia đình được kích hoạt thành công- Số dư ví bị trừ đúng số tiền gói,High,,,,
+TC-KH22-002,Đăng ký gói gia đình bằng phương thức liên kết,"1. Mở màn hình “Gói gia đình”
+2. Nhấn “Đăng ký gói”
+3. Chọn phương thức thanh toán MoMo/VNPay
+4. Xác nhận thanh toán",- Thanh toán thành công- Gói gia đình được kích hoạt,High,,,,
+TC-KH22-003,Kiểm tra hiển thị badge “MỚI”,"1. Mở màn hình Cá nhân
+2. Quan sát mục “Gói gia đình”",- Badge “MỚI” màu đỏ hiển thị đúng,Low,,,,
+TC-KH22-004,Xem thông tin chi tiết gói gia đình,1. Nhấn mục “Gói gia đình”,- Hiển thị đầy đủ thông tin gói 30 ngày,Medium,,,,
+TC-KH22-005,Kiểm tra đăng ký gói khi ví không đủ số dư,"1. Sử dụng tài khoản có ví không đủ tiền
+2. Thực hiện đăng ký gói",- Hệ thống yêu cầu nạp tiền và chuyển đến M14,High,,,,
+TC-KH22-006,Kiểm tra cập nhật trạng thái sau khi đăng ký gói,"1. Đăng ký gói thành công
+2. Quay lại màn hình Cá nhân",- Tài khoản hiển thị trạng thái đã kích hoạt gói,Medium,,,,
+TC-KH22-007,Kiểm tra giao dịch thanh toán được lưu lịch sử,"1. Đăng ký gói thành công 
+2. Mở lịch sử giao dịch ví",- Hiển thị giao dịch thanh toán gói gia đình,Medium,,,,
+TC-KH22-008,Kiểm tra đăng ký gói khi mất mạng,"1. Tắt internet
+2. Thực hiện đăng ký gói",- Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH22-009,Kiểm tra giao diện màn hình gói gia đình,"1. Mở màn hình “Gói gia đình” 
+2. Quan sát giao diện",- Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-23 — Liên hệ CSKH hỗ trợ 24/7,,,,,,,,
+TC-KH23-001,Mở màn hình CSKH hỗ trợ 24/7,"1. Đăng nhập vào hệ thống
+2. Từ màn hình Cá nhân nhấn “CSKH — Hỗ trợ 24/7”",- Hệ thống mở màn hình hỗ trợ khách hàng thành công,High,,,,
+TC-KH23-002,Liên hệ CSKH qua chat thành công,"1. Mở màn hình CSKH
+2. Chọn hình thức “Chat”
+3. Nhập nội dung hỗ trợ 
+4. Nhấn gửi yêu cầu",- Yêu cầu hỗ trợ được gửi thành công đến CSKH,High,,,,
+TC-KH23-003,Liên hệ CSKH qua gọi điện thành công,"1. Mở màn hình CSKH
+2. Chọn hình thức “Gọi điện”",- Hệ thống thực hiện cuộc gọi đến CSKH,High,,,,
+TC-KH23-004,Kiểm tra nhập nội dung hỗ trợ,"1. Nhập nội dung hỗ trợ hợp lệ
+2. Nhấn gửi",- Nội dung hỗ trợ được ghi nhận thành công,Medium,,,,
+TC-KH23-005,Validate khi gửi yêu cầu hỗ trợ rỗng,"1. Không nhập nội dung hỗ trợ
+2. Nhấn gửi",- Hệ thống hiển thị thông báo yêu cầu nhập nội dung,High,,,,
+TC-KH23-006,Kiểm tra chatbot hỗ trợ ngoài giờ hành chính,1. Liên hệ CSKH ngoài giờ hành chính,- Chatbot tự động phản hồi hỗ trợ,Medium,,,,
+TC-KH23-007,Kiểm tra gửi yêu cầu hỗ trợ khi mất mạng,"1. Tắt internet
+2. Gửi yêu cầu hỗ trợ",- Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH23-008,Kiểm tra giao diện màn hình CSKH,"1. Mở màn hình hỗ trợ CSKH
+2. Quan sát giao diện",- Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-24 — Cài đặt tài khoản,,,,,,,,
+TC-KH24-001,Mở màn hình cài đặt tài khoản,"1. Đăng nhập hệ thống
+2. Từ màn hình Cá nhân nhấn “Cài đặt”",- Hệ thống mở màn hình cài đặt thành công,High,,,,
+TC-KH24-002,Hiển thị danh sách tùy chỉnh tài khoản,1. Mở màn hình cài đặt,"- Hiển thị đầy đủ tùy chỉnh như thông báo, ngôn ngữ, quyền riêng tư",Medium,,,,
+TC-KH24-003,Bật/tắt thông báo tài khoản,"1. Mở cài đặt thông báo
+2. Bật hoặc tắt thông báo
+3. Nhấn lưu",- Thiết lập thông báo được cập nhật thành công,High,,,,
+TC-KH24-004,Thay đổi ngôn ngữ ứng dụng,"1. Mở cài đặt ngôn ngữ
+2. Chọn ngôn ngữ khác
+3. Lưu thay đổi",- Ngôn ngữ ứng dụng được cập nhật đúng,Medium,,,,
+TC-KH24-005,Cập nhật cài đặt quyền riêng tư,"1. Mở cài đặt quyền riêng tư
+2. Điều chỉnh thiết lập
+3. Nhấn lưu",- Thiết lập quyền riêng tư được cập nhật,Medium,,,,
+TC-KH24-006,Kiểm tra lưu thay đổi cài đặt,"1. Thay đổi bất kỳ thiết lập nào
+2. Nhấn “Lưu thay đổi”",- Hệ thống lưu thay đổi thành công,High,,,,
+TC-KH24-007,Thoát màn hình cài đặt khi không thay đổi dữ liệu,"1. Mở màn hình cài đặt
+2. Không chỉnh sửa dữ liệu
+3. Thoát màn hình",- Hệ thống quay về màn hình Cá nhân,Low,,,,
+TC-KH24-008,Kiểm tra lưu cài đặt khi mất mạng,"1. Tắt internet
+2. Thay đổi cài đặt
+3. Nhấn lưu",- Hệ thống hiển thị lỗi kết nối mạng,Medium,,,,
+TC-KH24-009,Kiểm tra giao diện màn hình cài đặt,"1. Mở màn hình cài đặt
+2. Quan sát giao diện",- Giao diện hiển thị đúng thiết kế UI/UX,Low,,,,
+UC-KH-25 — Đăng xuất,,,,,,,,
+TC-KH25-001,Đăng xuất thành công,"1. Đăng nhập vào hệ thống
+2. Từ màn hình Cá nhân nhấn “Đăng xuất”
+3. Xác nhận đăng xuất",- Phiên đăng nhập được xóa- Hệ thống chuyển về màn hình đăng nhập M01,High,,,,
+TC-KH25-002,Kiểm tra popup xác nhận đăng xuất,1. Nhấn nút “Đăng xuất”,- Hệ thống hiển thị popup xác nhận đăng xuất,High,,,,
+TC-KH25-003,Hủy thao tác đăng xuất,"1. Nhấn “Đăng xuất”
+2. Chọn “Hủy” tại popup xác nhận",- Người dùng vẫn ở lại màn hình Cá nhân,Medium,,,,
+TC-KH25-004,Kiểm tra truy cập lại màn hình sau khi đăng xuất,"1. Đăng xuất khỏi hệ thống
+2. Nhấn nút Back trên thiết bị",- Không thể quay lại màn hình bên trong hệ thống,High,,,,
+TC-KH25-005,Kiểm tra xóa session sau khi đăng xuất,"1. Đăng xuất khỏi hệ thống
+2. Mở lại ứng dụng",- Hệ thống yêu cầu đăng nhập lại,High,,,,
+TC-KH25-006,Kiểm tra đăng xuất khi mất mạng,"1. Tắt internet
+2. Nhấn “Đăng xuất”",- Hệ thống vẫn cho phép đăng xuất hoặc hiển thị thông báo phù hợp,Medium,,,,
+TC-KH25-007,Kiểm tra giao diện popup đăng xuất,"1. Nhấn “Đăng xuất”
+2. Quan sát popup xác nhận",- Popup hiển thị đúng UI/UX thiết kế,Low,,,,
