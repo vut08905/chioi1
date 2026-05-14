@@ -1,0 +1,154 @@
+# =============================================================================
+# Codemagic CI/CD config cho Chị Ơi! iOS
+# Build IPA → upload App Store Connect (TestFlight + Production)
+# =============================================================================
+#
+# YÊU CẦU TRƯỚC KHI TRIGGER:
+# 1. Apple Developer Program account active ($99/năm)
+# 2. App ID 'vn.chioi.app' đã tạo trong Apple Developer Portal
+# 3. Codemagic environment variables setup:
+#    - APP_STORE_CONNECT_PRIVATE_KEY     (file .p8 từ App Store Connect API key)
+#    - APP_STORE_CONNECT_KEY_IDENTIFIER  (vd "ABCD1234EF")
+#    - APP_STORE_CONNECT_ISSUER_ID       (UUID dạng "12345678-...")
+#    - CERTIFICATE_PRIVATE_KEY           (private key cho code signing cert)
+#    Setup tại: https://docs.codemagic.io/yaml-publishing/app-store-connect/
+# 4. (Optional) Bundle ID matching trong Codemagic UI:
+#    Teams → Code signing identities → Connect Apple Developer Account
+
+workflows:
+  ios-release:
+    name: iOS Release (App Store)
+    instance_type: mac_mini_m2  # Free tier OK
+    max_build_duration: 60
+
+    environment:
+      groups:
+        - app_store_credentials      # Group chứa env vars secrets (setup trên Codemagic UI)
+      vars:
+        XCODE_WORKSPACE: "mobile-ios/ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        BUNDLE_ID: "vn.chioi.app"
+        APP_STORE_APPLE_ID: 0000000000  # ⚠️ THAY: Apple ID của app trong App Store Connect (10-digit)
+      node: 20.20.2
+      xcode: latest
+      cocoapods: default
+
+    integrations:
+      app_store_connect: chioi-app-store-key  # ⚠️ THAY: tên integration setup trong Codemagic Teams → Integrations
+
+    triggering:
+      events:
+        - tag                # Trigger khi push tag (vd v1.0.0)
+      tag_patterns:
+        - pattern: 'v*'
+          include: true
+
+    scripts:
+      - name: Set up code signing
+        script: |
+          keychain initialize
+          # Auto-fetch signing identities từ App Store Connect API
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+
+      - name: Install Capacitor deps
+        script: |
+          cd mobile-ios
+          npm ci --no-audit --no-fund
+
+      - name: Sync Capacitor iOS
+        script: |
+          cd mobile-ios
+          npx cap sync ios
+          cd ios/App
+          pod install
+
+      - name: Bump versionCode (build number)
+        script: |
+          cd mobile-ios/ios/App
+          # Codemagic provides $BUILD_NUMBER auto-increment
+          agvtool new-version -all $BUILD_NUMBER
+
+      - name: Build .ipa
+        script: |
+          cd mobile-ios
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - mobile-ios/ios/App/build/ios/ipa/*.ipa
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app.dSYM.zip
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration              # Dùng integration config phía trên
+        submit_to_testflight: true     # Auto upload TestFlight cho internal testing
+        beta_groups:                   # ⚠️ Tạo trong App Store Connect → TestFlight → Groups
+          - "Internal Testers"
+        submit_to_app_store: false     # KHÔNG auto submit Production — manual review trong App Store Connect
+
+      email:
+        recipients:
+          - admin@chioi.vn             # ⚠️ THAY email nhận notification
+        notify:
+          success: true
+          failure: true
+
+  # =============================================================================
+  # Optional: Debug build cho development testing (không upload, output IPA local)
+  # =============================================================================
+  ios-debug:
+    name: iOS Debug Build (TestFlight Internal)
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+
+    environment:
+      vars:
+        XCODE_WORKSPACE: "mobile-ios/ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+      node: 20.20.2
+      xcode: latest
+      cocoapods: default
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'feature/*'
+          include: true
+        - pattern: 'main'
+          include: true
+        - pattern: 'fix/*'
+          include: true
+
+    scripts:
+      - name: Install deps
+        script: |
+          cd mobile-ios
+          npm ci --no-audit --no-fund
+
+      - name: Sync iOS
+        script: |
+          cd mobile-ios
+          npx cap sync ios
+          cd ios/App && pod install
+
+      - name: Build .app (no signing — for verification only)
+        script: |
+          cd mobile-ios
+          xcodebuild -workspace "ios/App/App.xcworkspace" \
+            -scheme "App" \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+    artifacts:
+      - mobile-ios/ios/App/build/**/*.app
+      - /tmp/xcodebuild_logs/*.log

@@ -1,7 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chị Ơi CMS - Báo cáo doanh thu</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -115,8 +117,13 @@
 <!-- Sidebar Navigation -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -172,602 +179,352 @@
 </div>
 </aside>
 <!-- Main Content -->
-<main class="ml-[240px] min-h-screen">
-<!-- Top Bar -->
-<header class="h-16 sticky top-0 bg-surface shadow-sm px-container_padding flex items-center justify-between z-40">
-<h2 class="font-headline-md text-headline-md text-on-surface">Báo cáo doanh thu</h2>
-<div class="flex items-center gap-4">
-<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors cursor-pointer active:scale-95">
-<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-</button>
-<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors cursor-pointer active:scale-95">
-<span class="material-symbols-outlined text-on-surface-variant">settings</span>
-</button>
-<div class="flex items-center gap-2 ml-2 pl-4 border-l border-outline-variant">
-<div class="text-right">
-<p class="font-label-md text-label-md text-on-surface font-bold">Admin User</p>
-<p class="text-[10px] text-on-surface-variant">Super Administrator</p>
-</div>
-<img alt="Admin User Avatar" class="w-10 h-10 rounded-full border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChrTSZomWNZmxTXv9PHdyiUQF6EAcLEfwFiPhsRU3CUz2FkyGCwr9Zxh8u8MKiggRV7qFUa7Q2_Pn9MRnorgSH2tKItWrWI-BpnSMUeKNxCtFqEJR1P1_QpX-KB_NmH-AtWK1-YxzhElIVEtLKDrAvF0TCymUbMUOLZHGjGLMyWgzNo0LpPeQlkHZIZ_Bb7zLQ6zDjvsCbQNpOkAA_mtVf2vFhx1GMmDnlthVtrBx-7F5FzAoRNuChYGhrcyLAIwbYh1jt4RTbLbg"/>
-</div>
-</div>
-</header>
-<!-- Page Canvas -->
-<div class="p-container_padding space-y-stack_lg">
-<!-- Filters & Actions Header -->
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-<div class="flex items-center bg-surface-container-low p-1 rounded-xl w-fit">
-<button class="px-4 py-2 text-label-md font-label-md rounded-lg text-on-surface-variant hover:text-primary transition-colors">Hôm nay</button>
-<button class="px-4 py-2 text-label-md font-label-md rounded-lg text-on-surface-variant hover:text-primary transition-colors">Tuần này</button>
-<button class="px-4 py-2 text-label-md font-label-md rounded-lg bg-primary-container text-white shadow-sm">Tháng này</button>
-<button class="px-4 py-2 text-label-md font-label-md rounded-lg text-on-surface-variant hover:text-primary transition-colors">Quý</button>
-<button class="px-4 py-2 text-label-md font-label-md rounded-lg text-on-surface-variant hover:text-primary transition-colors">Năm</button>
-<div class="w-[1px] h-6 bg-outline-variant mx-2"></div>
-<button class="px-4 py-2 text-label-md font-label-md rounded-lg text-on-surface-variant flex items-center gap-2 hover:bg-surface-variant/30">
-<span class="material-symbols-outlined text-[18px]">calendar_today</span>
-                        Tùy chỉnh
-                    </button>
-</div>
-<div class="flex items-center gap-3">
-<button class="flex items-center gap-2 px-4 py-2 border border-primary text-primary font-label-md text-label-md rounded-xl hover:bg-primary/5 transition-colors">
-<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
-                        Xuất PDF
-                    </button>
-<button class="flex items-center gap-2 px-4 py-2 bg-primary-container text-white font-label-md text-label-md rounded-xl shadow-md hover:brightness-110 active:scale-95 transition-all">
-<span class="material-symbols-outlined text-[20px]">table_view</span>
-                        Xuất Excel
-                    </button>
-</div>
-</div>
-<!-- KPI Row -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
-<!-- KPI Card 1 -->
-<div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container flex items-start justify-between">
-<div class="space-y-2">
-<p class="text-label-md font-label-md text-on-surface-variant">Doanh thu tháng này</p>
-<h3 class="text-display-lg font-display-lg text-on-surface">245.8M đ</h3>
-<div class="flex items-center gap-1 text-[13px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full w-fit">
-<span class="material-symbols-outlined text-[16px]">trending_up</span>
-                            +18.5%
-                        </div>
-</div>
-<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
-</div>
-</div>
-<!-- KPI Card 2 -->
-<div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container flex items-start justify-between">
-<div class="space-y-2">
-<p class="text-label-md font-label-md text-on-surface-variant">Tổng đơn hàng</p>
-<h3 class="text-display-lg font-display-lg text-on-surface">1,847</h3>
-<div class="flex items-center gap-1 text-[13px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full w-fit">
-<span class="material-symbols-outlined text-[16px]">trending_up</span>
-                            +12.3%
-                        </div>
-</div>
-<div class="w-12 h-12 rounded-full bg-tertiary-container/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary-container" style="font-variation-settings: 'FILL' 1;">receipt</span>
-</div>
-</div>
-<!-- KPI Card 3 -->
-<div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container flex items-start justify-between">
-<div class="space-y-2">
-<p class="text-label-md font-label-md text-on-surface-variant">Tasker hoạt động</p>
-<h3 class="text-display-lg font-display-lg text-on-surface">94 <span class="text-label-md text-on-surface-variant">người/ngày</span></h3>
-<div class="flex items-center gap-1 text-[13px] font-bold text-on-surface-variant bg-surface-variant px-2 py-0.5 rounded-full w-fit">
-<span>Ổn định</span>
-</div>
-</div>
-<div class="w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">engineering</span>
-</div>
-</div>
-<!-- KPI Card 4 -->
-<div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container flex items-start justify-between">
-<div class="space-y-2">
-<p class="text-label-md font-label-md text-on-surface-variant">Tỷ lệ đơn hủy</p>
-<h3 class="text-display-lg font-display-lg text-on-surface">3.2%</h3>
-<div class="flex items-center gap-1 text-[13px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full w-fit">
-<span class="material-symbols-outlined text-[16px]">trending_down</span>
-                            -0.5%
-                        </div>
-</div>
-<div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">cancel</span>
-</div>
-</div>
-</div>
-<!-- Charts Section -->
-<div class="grid grid-cols-12 gap-gutter">
-<!-- Revenue Line Chart -->
-<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest p-stack_lg rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container">
-<div class="flex items-center justify-between mb-8">
-<div>
-<h4 class="font-title-sm text-title-sm">Doanh thu theo ngày</h4>
-<p class="text-label-md text-on-surface-variant">Xu hướng doanh thu trong 30 ngày qua</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-2">
-<span class="w-3 h-3 rounded-full bg-primary-container"></span>
-<span class="text-label-md text-on-surface-variant">Doanh thu (VNĐ)</span>
-</div>
-</div>
-</div>
-<!-- Mock Chart Visualization -->
-<div class="relative h-64 w-full flex items-end justify-between px-2">
-<!-- Horizontal Grid Lines -->
-<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
-<div class="w-full border-t border-on-surface-variant"></div>
-<div class="w-full border-t border-on-surface-variant"></div>
-<div class="w-full border-t border-on-surface-variant"></div>
-<div class="w-full border-t border-on-surface-variant"></div>
-</div>
-<!-- Area Chart SVG -->
-<svg class="absolute inset-0 h-full w-full pointer-events-none" preserveaspectratio="none" viewbox="0 0 100 100">
-<path class="fill-primary-container/10" d="M0,80 Q10,75 20,60 T40,65 T60,40 T80,30 T100,10 L100,100 L0,100 Z"></path>
-<path class="stroke-primary-container fill-none" d="M0,80 Q10,75 20,60 T40,65 T60,40 T80,30 T100,10" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-<circle class="fill-primary-container" cx="100" cy="10" r="4"></circle>
-</svg>
-<!-- Tooltip Mockup -->
-<div class="absolute top-2 right-[2%] bg-primary-container text-white p-2 rounded-lg shadow-lg text-[10px] font-bold z-10">
-                            Hôm nay: 12.5M đ
-                        </div>
-<!-- Labels -->
-<div class="absolute bottom-[-24px] w-full flex justify-between text-[10px] text-on-surface-variant px-1 font-bold">
-<span>01/10</span>
-<span>05/10</span>
-<span>10/10</span>
-<span>15/10</span>
-<span>20/10</span>
-<span>25/10</span>
-<span>30/10</span>
-</div>
-</div>
-<div class="mt-12 flex items-center justify-between border-t border-outline-variant pt-4">
-<div class="flex gap-4">
-<div>
-<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider">Ngày cao nhất</p>
-<p class="font-bold text-on-surface">30/10 (12.5M đ)</p>
-</div>
-<div class="w-[1px] h-8 bg-outline-variant"></div>
-<div>
-<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-wider">Ngày thấp nhất</p>
-<p class="font-bold text-on-surface">02/10 (4.2M đ)</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Service Donut Chart -->
-<div class="col-span-12 lg:col-span-5 bg-surface-container-lowest p-stack_lg rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container flex flex-col">
-<h4 class="font-title-sm text-title-sm mb-1">Phân bổ dịch vụ</h4>
-<p class="text-label-md text-on-surface-variant mb-8">Cơ cấu doanh thu theo loại hình dịch vụ</p>
-<div class="flex-grow flex items-center justify-around gap-6">
-<div class="relative w-44 h-44">
-<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
-<circle class="stroke-primary-container" cx="18" cy="18" fill="none" r="16" stroke-dasharray="42, 100" stroke-width="4"></circle>
-<circle class="stroke-tertiary-container" cx="18" cy="18" fill="none" r="16" stroke-dasharray="28, 100" stroke-dashoffset="-42" stroke-width="4"></circle>
-<circle class="stroke-secondary-container" cx="18" cy="18" fill="none" r="16" stroke-dasharray="18, 100" stroke-dashoffset="-70" stroke-width="4"></circle>
-<circle class="stroke-surface-container-highest" cx="18" cy="18" fill="none" r="16" stroke-dasharray="12, 100" stroke-dashoffset="-88" stroke-width="4"></circle>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center">
-<span class="text-label-md font-bold text-on-surface-variant">Tổng cộng</span>
-<span class="text-title-sm font-bold text-on-surface">100%</span>
-</div>
-</div>
-<div class="flex flex-col gap-3">
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-primary-container"></div>
-<span class="text-label-md font-bold text-on-surface min-w-[70px]">Dọn dẹp</span>
-<span class="text-label-md text-on-surface-variant">42%</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-tertiary-container"></div>
-<span class="text-label-md font-bold text-on-surface min-w-[70px]">Giặt ủi</span>
-<span class="text-label-md text-on-surface-variant">28%</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-secondary-container"></div>
-<span class="text-label-md font-bold text-on-surface min-w-[70px]">Nấu ăn</span>
-<span class="text-label-md text-on-surface-variant">18%</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-surface-container-highest"></div>
-<span class="text-label-md font-bold text-on-surface min-w-[70px]">Trông trẻ</span>
-<span class="text-label-md text-on-surface-variant">8%</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-outline"></div>
-<span class="text-label-md font-bold text-on-surface min-w-[70px]">Khác</span>
-<span class="text-label-md text-on-surface-variant">4%</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Row: Table & List -->
-<div class="grid grid-cols-12 gap-gutter pb-8">
-<!-- Service Table -->
-<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container overflow-hidden">
-<div class="p-stack_md flex items-center justify-between border-b border-outline-variant">
-<h4 class="font-title-sm text-title-sm">Doanh thu theo dịch vụ</h4>
-<button class="text-primary text-label-md font-bold hover:underline">Xem chi tiết</button>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead class="bg-surface-container-low">
-<tr>
-<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Dịch vụ</th>
-<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider text-center">Số đơn</th>
-<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Doanh thu</th>
-<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider text-center">% Tổng</th>
-<th class="px-6 py-4 font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider text-right">Tăng trưởng</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-outline-variant">
-<tr class="hover:bg-surface-variant/30 transition-colors">
-<td class="px-6 py-4 font-body-md text-body-md font-bold">Tổng vệ sinh</td>
-<td class="px-6 py-4 text-center font-body-md">742</td>
-<td class="px-6 py-4 font-body-md font-bold">103.2M đ</td>
-<td class="px-6 py-4 text-center">
-<span class="text-label-md font-bold px-2 py-1 bg-surface-variant rounded-lg">42%</span>
-</td>
-<td class="px-6 py-4 text-right">
-<span class="inline-flex items-center gap-1 text-emerald-600 font-bold">
-<span class="material-symbols-outlined text-[16px]">arrow_upward</span> 15.4%
-                                        </span>
-</td>
-</tr>
-<tr class="bg-background/40 hover:bg-surface-variant/30 transition-colors">
-<td class="px-6 py-4 font-body-md text-body-md font-bold">Giặt ủi chuyên sâu</td>
-<td class="px-6 py-4 text-center font-body-md">518</td>
-<td class="px-6 py-4 font-body-md font-bold">68.8M đ</td>
-<td class="px-6 py-4 text-center">
-<span class="text-label-md font-bold px-2 py-1 bg-surface-variant rounded-lg">28%</span>
-</td>
-<td class="px-6 py-4 text-right">
-<span class="inline-flex items-center gap-1 text-emerald-600 font-bold">
-<span class="material-symbols-outlined text-[16px]">arrow_upward</span> 8.2%
-                                        </span>
-</td>
-</tr>
-<tr class="hover:bg-surface-variant/30 transition-colors">
-<td class="px-6 py-4 font-body-md text-body-md font-bold">Đi chợ &amp; Nấu ăn</td>
-<td class="px-6 py-4 text-center font-body-md">332</td>
-<td class="px-6 py-4 font-body-md font-bold">44.2M đ</td>
-<td class="px-6 py-4 text-center">
-<span class="text-label-md font-bold px-2 py-1 bg-surface-variant rounded-lg">18%</span>
-</td>
-<td class="px-6 py-4 text-right">
-<span class="inline-flex items-center gap-1 text-error font-bold">
-<span class="material-symbols-outlined text-[16px]">arrow_downward</span> 2.1%
-                                        </span>
-</td>
-</tr>
-<tr class="bg-background/40 hover:bg-surface-variant/30 transition-colors">
-<td class="px-6 py-4 font-body-md text-body-md font-bold">Trông trẻ tại gia</td>
-<td class="px-6 py-4 text-center font-body-md">148</td>
-<td class="px-6 py-4 font-body-md font-bold">19.7M đ</td>
-<td class="px-6 py-4 text-center">
-<span class="text-label-md font-bold px-2 py-1 bg-surface-variant rounded-lg">8%</span>
-</td>
-<td class="px-6 py-4 text-right">
-<span class="inline-flex items-center gap-1 text-emerald-600 font-bold">
-<span class="material-symbols-outlined text-[16px]">arrow_upward</span> 12.7%
-                                        </span>
-</td>
-</tr>
-<tr class="hover:bg-surface-variant/30 transition-colors">
-<td class="px-6 py-4 font-body-md text-body-md font-bold">Dịch vụ khác</td>
-<td class="px-6 py-4 text-center font-body-md">107</td>
-<td class="px-6 py-4 font-body-md font-bold">9.8M đ</td>
-<td class="px-6 py-4 text-center">
-<span class="text-label-md font-bold px-2 py-1 bg-surface-variant rounded-lg">4%</span>
-</td>
-<td class="px-6 py-4 text-right">
-<span class="inline-flex items-center gap-1 text-emerald-600 font-bold">
-<span class="material-symbols-outlined text-[16px]">arrow_upward</span> 4.5%
-                                        </span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Top Taskers List -->
-<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-stack_md rounded-xl shadow-[0_4px_20px_rgba(88,66,56,0.04)] stat-card border border-surface-container flex flex-col">
-<h4 class="font-title-sm text-title-sm mb-6">Top Tasker doanh thu</h4>
-<div class="flex-grow space-y-6">
-<!-- Tasker 1 -->
-<div class="space-y-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Tasker 1" class="w-10 h-10 rounded-full border-2 border-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBntF4e6dlJtgb4O-pgpvEjU1Rujo8IcCnu9jkuWd3CwXUoA4RhCGB0hY_l8OUtT8wqVnh8aLlqVatwzM0h58Jsh9GrKMwkAlihTclA4_1CrWWC20Sa-Xv78IW0uTuRR9tN6LvhP2oyDcaLFxTzJkzQLrfFf_SG22ZMSIFadANPKmt_94YG4bCEIjcSbzXa14ScR72i1dBCnFt0u3PalvLSI8y4lF1Bms1OWd54j0pgcKXPlrf4OiEgLq4J4jraP-LwE6HSzcDe6g0"/>
-<div>
-<p class="font-label-md text-label-md font-bold">Nguyễn Thị Hồng</p>
-<p class="text-[10px] text-on-surface-variant">54 đơn - 12.8M đ</p>
-</div>
-</div>
-<span class="text-label-md font-bold text-primary">#1</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 95%"></div>
-</div>
-</div>
-<!-- Tasker 2 -->
-<div class="space-y-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Tasker 2" class="w-10 h-10 rounded-full border-2 border-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV1N_-GMLVF0zKvPRMSCBVnATEU3BKoSl0VPvlPWRvQ2o6ueqZmdr6dyuIEv5_xp6iE0oHqe0FEf_JtD07iUEB1nVdxZ2ZfWsO4ijZHRBxAZ9tPC8rQBfI_x9TcqSrvwKRD-UnU6yNQNM_SSP5Fo39CLMQaxwJaR2OQ1UUTUZKVi737U6zxV411M4a115Imw1pQAMASjrR5fzRAY9_EBqzoLF7IjE6GZi5lIQLbD4RmI4Ta8FNnNHa0mksv8qX6Z964YJnB1DQC8U"/>
-<div>
-<p class="font-label-md text-label-md font-bold">Lê Minh Châu</p>
-<p class="text-[10px] text-on-surface-variant">48 đơn - 11.2M đ</p>
-</div>
-</div>
-<span class="text-label-md font-bold text-primary">#2</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 82%"></div>
-</div>
-</div>
-<!-- Tasker 3 -->
-<div class="space-y-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Tasker 3" class="w-10 h-10 rounded-full border-2 border-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAANpkATRp5BtQE3Mw7zbG6XtsEKWoyitcy5j1oZeLYXbRWPcFPbFaJjopkaC0IFq5Y3bQKxUJhpnMbn5zDnwlc564OyBckzeCjAMjcGdbTKT84_9EfE7TPbyit-QhYQwzQVcLYpI5k5fJ-iWMtJL7nHk2Y-mj5yIy3rqfKSizLigrMHoBKOF4kpZvkE3TTHt-eAJFUVehE8L6hcKRJHck4njWwQ6riEVYwBu5M_RbJMwpnS6VJpbsHCgpNYxDwgkxW_DNr-GFyxnA"/>
-<div>
-<p class="font-label-md text-label-md font-bold">Trần Thu Hà</p>
-<p class="text-[10px] text-on-surface-variant">45 đơn - 10.5M đ</p>
-</div>
-</div>
-<span class="text-label-md font-bold text-primary">#3</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 78%"></div>
-</div>
-</div>
-<!-- Tasker 4 -->
-<div class="space-y-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Tasker 4" class="w-10 h-10 rounded-full border-2 border-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWGJhgviVrrpOZWu5th1I4s52pY_Yoss0ylWWOGRgSJMyldhLG6n0uNwJdH0w7hKwe7MYhbbxO62Y-a0-l9MNitiKxG1WiPAwXNTHWzskhnrZU7UopgZLNLbqd6XQmvAnfdro3C3v1MvCRL1S_VKvGXsvXBNJevB0oRuqmVlpMbBpmLpKioDdRz-iABJZcs7McFEr3YZSm5iPJdMYD6QdmI8lr596WL5BdZWgAAPB3jAjHbGKIgjlOGbYORjYh3o8t8inJtmxeh0Q"/>
-<div>
-<p class="font-label-md text-label-md font-bold">Vũ Thùy Linh</p>
-<p class="text-[10px] text-on-surface-variant">42 đơn - 9.1M đ</p>
-</div>
-</div>
-<span class="text-label-md font-bold text-primary">#4</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 65%"></div>
-</div>
-</div>
-<!-- Tasker 5 -->
-<div class="space-y-2">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Tasker 5" class="w-10 h-10 rounded-full border-2 border-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiLTFKf_lTL4HOwbJ4PZ3WkfOgM1R-fNiVh2ajD6cS2PxtQtSDUO0Jtb_CwHJ6UUl4lHU0JNoMe3OZI2veeATtce-UlGunWk1cupsNsMhgE89e6NWNM9HXxOnpauUbtRVuXshuvkXQzO6jof0bqrx_E4P-xOfrKOW7O12NSgFY41owF5UawLFJNWviqqxtnVN6zkFoIqBzx2JVwADOezEvbOBwEuSU0JmwqrJKyhTSv6QkETTnTE7JESgI3c2-skNIm09rwNCDIfg"/>
-<div>
-<p class="font-label-md text-label-md font-bold">Đặng Kim Anh</p>
-<p class="text-[10px] text-on-surface-variant">38 đơn - 8.4M đ</p>
-</div>
-</div>
-<span class="text-label-md font-bold text-primary">#5</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 58%"></div>
-</div>
-</div>
-</div>
-<button class="mt-8 w-full py-2 border-2 border-dashed border-outline-variant text-on-surface-variant font-label-md text-label-md rounded-xl hover:bg-surface-variant/30 transition-colors">
-                        Xem tất cả Tasker
-                    </button>
-</div>
-</div>
+<main class="ml-[240px] pt-16 min-h-screen bg-background">
+<div class="p-8 space-y-6">
+
+  <!-- Page Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h2 class="text-headline-md font-bold text-on-surface">Bao cao & Phan tich</h2>
+      <p class="text-body-sm text-on-surface-variant mt-1">Du lieu thuc theo thoi gian thuc tu he thong</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="flex bg-white rounded-xl border border-outline-variant/20 shadow-sm overflow-hidden">
+        <button data-period="7d" class="period-btn px-4 py-2 text-body-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all">7 ngay</button>
+        <button data-period="30d" class="period-btn px-4 py-2 text-body-sm font-semibold bg-primary text-white">30 ngay</button>
+        <button data-period="90d" class="period-btn px-4 py-2 text-body-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all">90 ngay</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-outline-variant/20 stat-card">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-green-600" style="font-variation-settings:'FILL' 1;font-size:20px">payments</span>
+        </div>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Tong doanh thu</p>
+      </div>
+      <p id="kpi-revenue" class="text-[22px] font-bold text-on-surface">--</p>
+      <p class="text-[11px] text-on-surface-variant mt-1">Phi nen tang: <span id="kpi-platform" class="text-primary font-semibold">--</span></p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-outline-variant/20 stat-card">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-blue-500" style="font-variation-settings:'FILL' 1;font-size:20px">receipt_long</span>
+        </div>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Tong don hang</p>
+      </div>
+      <p id="kpi-orders" class="text-[22px] font-bold text-on-surface">--</p>
+      <p class="text-[11px] text-on-surface-variant mt-1">Hoan thanh: <span id="kpi-completed" class="text-green-600 font-semibold">--</span> · Huy: <span id="kpi-cancelled" class="text-error font-semibold">--</span></p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-outline-variant/20 stat-card">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-purple-600" style="font-variation-settings:'FILL' 1;font-size:20px">groups</span>
+        </div>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Nguoi dung</p>
+      </div>
+      <p id="kpi-users" class="text-[22px] font-bold text-on-surface">--</p>
+      <p class="text-[11px] text-on-surface-variant mt-1">Moi ky nay: <span id="kpi-new-users" class="text-purple-600 font-semibold">--</span></p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-outline-variant/20 stat-card">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;font-size:20px">engineering</span>
+        </div>
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide">Ti le hoan thanh</p>
+      </div>
+      <p id="kpi-rate" class="text-[22px] font-bold text-green-600">-- %</p>
+      <p class="text-[11px] text-on-surface-variant mt-1">Tasker: <span id="kpi-taskers" class="text-primary font-semibold">--</span></p>
+    </div>
+  </div>
+
+  <!-- Chart + Top Services row -->
+  <div class="grid grid-cols-3 gap-5">
+
+    <!-- Revenue Chart (2/3) -->
+    <div class="col-span-2 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-title-sm text-on-surface">Doanh thu & Don hang theo ngay</h3>
+        <div class="flex items-center gap-3 text-[11px] text-on-surface-variant">
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1.5 rounded-full bg-primary inline-block"></span>Doanh thu</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1.5 rounded-full bg-blue-400 inline-block"></span>Don hang</span>
+        </div>
+      </div>
+      <div class="h-64 relative">
+        <canvas id="revenue-chart"></canvas>
+        <div id="chart-loading" class="absolute inset-0 flex items-center justify-center text-on-surface-variant text-body-sm">
+          <span class="material-symbols-outlined text-4xl opacity-20 block mb-2">bar_chart</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Status Donut (1/3) -->
+    <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-5">
+      <h3 class="font-title-sm text-on-surface mb-4">Trang thai don hang</h3>
+      <div class="h-44 relative">
+        <canvas id="status-chart"></canvas>
+      </div>
+      <div class="mt-3 space-y-2" id="status-legend"></div>
+    </div>
+
+  </div>
+
+  <!-- Top Services + Top Taskers row -->
+  <div class="grid grid-cols-2 gap-5">
+
+    <!-- Top Services -->
+    <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+      <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[20px]">star</span>
+        <h3 class="font-title-sm text-on-surface">Dich vu pho bien nhat</h3>
+      </div>
+      <div id="top-services" class="divide-y divide-outline-variant/10">
+        <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Dang tai...</div>
+      </div>
+    </div>
+
+    <!-- Top Taskers -->
+    <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+      <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[20px]">emoji_events</span>
+        <h3 class="font-title-sm text-on-surface">Tasker hieu qua nhat</h3>
+      </div>
+      <div id="top-taskers" class="divide-y divide-outline-variant/10">
+        <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Dang tai...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Recent Orders Table -->
+  <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary text-[20px]">history</span>
+      <h3 class="font-title-sm text-on-surface">Don hang gan nhat</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="bg-surface-container-low/60 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
+            <th class="px-5 py-3 border-b border-outline-variant/20">Ma don</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Dich vu</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Khach hang</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Gia tri</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Trang thai</th>
+            <th class="px-5 py-3 border-b border-outline-variant/20">Ngay</th>
+          </tr>
+        </thead>
+        <tbody id="recent-orders-tbody" class="divide-y divide-outline-variant/10 text-body-sm">
+          <tr><td colspan="6" class="text-center py-12 text-on-surface-variant">Dang tai...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 </main>
-<!-- Map and Imagery Prompts Placeholder (No <img> in body except placeholders used above) -->
-<div class="hidden">
-<img data-alt="A professional cleaning service professional in a bright, modern minimalist home. The person is wearing a clean branded uniform and holding eco-friendly cleaning supplies. The lighting is warm and natural, emphasizing a pristine and healthy living environment. The aesthetic is sophisticated and high-end, reflecting professional housekeeping excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAW1zac9_C1wJZ-l5HbL8Zr54QX6gVjnolfmE_lXkUlMWF09S4pPDu796NvE8LsMxNJhYonFFMuEZvE2UQeyvzjVMGoO3I_jVAyVSf7sZdf8_Ia7MPue4UN5jndNfFYrHoR4F7w4LtMW2DAdt15yYiS_XOPdxtdJ_oospbpNH-WzyfawxSSirI0H-XYPRkiF5zMoDd9shJlT7PpvKwMhH84MwY7HiMiYhBauohy34ISnhMDYKUS20tRrd0d5fFGsNi2kQ7pPBjvfGM"/>
-<img data-alt="A sleek, high-fidelity data visualization interface showing complex financial trends. The UI features glowing orange line charts against a soft cream background, with elegant glassmorphic card overlays. The lighting is high-key and professional, suitable for a premium business administration dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtQZvmkBZrj1-jAvgRiGPVOznASbldszmRzW6NE6P-wDUBYqTqckzLNrACS2rwgq7HqWfvz1gnpd1ZULfzEQ0rIrJ_a5wqr4YwzTfcy1Vd3PG481M7lopXrbTcxA_z4mW6WzQN75IKJ-aQFDFIhwwowoEEWvwbcJsOgOZ1xMXaV3lHDFcPdC9OjBfRXy-F5jTzvF4FFjT4jHoVhlLOKYwE4Y1bm3AlQxzPcxMPP58n5YP4cX-gJ7nt9Wd9KGBugPjaov4-_EfIvUo"/>
-</div>
-<!-- CHIOI-JS-INJECT -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script>
-(function() {
+(async function() {
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
-  // ---- 1. TABS ----
-  document.querySelectorAll('[data-tab-group]').forEach(function(tabGroup) {
-    var groupName = tabGroup.getAttribute('data-tab-group');
-    tabGroup.addEventListener('click', function(e) {
-      var btn = e.target.closest('[data-tab]');
-      if (!btn) return;
-      var tabId = btn.getAttribute('data-tab');
-      // Deactivate all tabs in group
-      document.querySelectorAll('[data-tab-group="' + groupName + '"] [data-tab]').forEach(function(t) {
-        t.classList.remove('text-primary', 'border-primary', 'border-b-2', 'font-semibold', 'bg-secondary-container/10');
-        t.classList.add('text-on-surface-variant');
-      });
-      // Activate clicked tab
-      btn.classList.add('text-primary', 'border-primary', 'border-b-2', 'font-semibold');
-      btn.classList.remove('text-on-surface-variant');
-      // Hide all panes
-      document.querySelectorAll('[data-tab-pane]').forEach(function(p) {
-        p.classList.add('hidden');
-      });
-      // Show target pane
-      var pane = document.querySelector('[data-tab-pane="' + tabId + '"]');
-      if (pane) pane.classList.remove('hidden');
-    });
-  });
+  var currentPeriod = '30d';
+  var revenueChartInstance = null;
+  var statusChartInstance = null;
 
-  // ---- 2. CLOSE ALL MODALS/PANELS ON LOAD ----
-  document.querySelectorAll('[data-modal], [data-panel]').forEach(function(el) {
-    el.classList.add('hidden');
-  });
-  // Also hide any element with class that suggests it's a modal overlay
-  document.querySelectorAll('.fixed.inset-0, [id*="modal"], [id*="overlay"], [id*="detail-panel"], [id*="slide-panel"]').forEach(function(el) {
-    // Only hide if it's a modal/overlay type (has backdrop-like styling or z-50+)
-    if (el.classList.contains('inset-0') || el.id.toLowerCase().includes('modal') || el.id.toLowerCase().includes('overlay') || el.id.toLowerCase().includes('panel')) {
-      el.classList.add('hidden');
-    }
-  });
+  var ORDER_STATUS = {
+    'COMPLETED': { label: 'Hoan thanh', color: '#16a34a' },
+    'PENDING':   { label: 'Cho xu ly',  color: '#f59e0b' },
+    'CONFIRMED': { label: 'Da xac nhan',color: '#3b82f6' },
+    'IN_PROGRESS':{ label: 'Dang lam',  color: '#8b5cf6' },
+    'CANCELLED': { label: 'Da huy',     color: '#ef4444' },
+  };
 
-  // ---- 3. TOGGLE PANELS/MODALS ----
-  // Open: data-open="target-id"
-  document.querySelectorAll('[data-open]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var target = document.getElementById(btn.getAttribute('data-open'));
-      if (target) {
-        target.classList.remove('hidden');
-        // animate slide-in
-        target.style.animation = 'slideIn 0.2s ease';
-      }
-    });
-  });
-
-  // Close: data-close="target-id" OR data-close-self
-  document.querySelectorAll('[data-close]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var target = document.getElementById(btn.getAttribute('data-close'));
-      if (target) target.classList.add('hidden');
-    });
-  });
-  document.querySelectorAll('[data-close-self]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var modal = btn.closest('[data-modal], [data-panel], .fixed.inset-0');
-      if (modal) modal.classList.add('hidden');
-    });
-  });
-
-  // Click backdrop to close
-  document.querySelectorAll('[data-modal]').forEach(function(modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) modal.classList.add('hidden');
-    });
-  });
-
-  // ---- 4. TABLE SEARCH FILTER ----
-  document.querySelectorAll('[data-search-table]').forEach(function(input) {
-    var tableId = input.getAttribute('data-search-table');
-    input.addEventListener('input', function() {
-      var q = input.value.toLowerCase().trim();
-      var table = document.getElementById(tableId);
-      if (!table) return;
-      var rows = table.querySelectorAll('tbody tr');
-      rows.forEach(function(row) {
-        var text = row.textContent.toLowerCase();
-        row.style.display = q === '' || text.includes(q) ? '' : 'none';
-      });
-    });
-  });
-
-  // ---- 5. CONFIRM ACTION BUTTONS ----
-  document.querySelectorAll('[data-confirm]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      var msg = btn.getAttribute('data-confirm') || 'Bạn có chắc chắn không?';
-      if (!confirm(msg)) e.preventDefault();
-    });
-  });
-
-  // ---- 6. STATUS BADGE TOGGLE ----
-  document.querySelectorAll('[data-approve]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var row = btn.closest('tr, [data-item]');
-      if (row) {
-        var badge = row.querySelector('[data-status]');
-        if (badge) {
-          badge.textContent = 'Đã duyệt';
-          badge.className = badge.className.replace(/bg-w+-d+/d+s*text-w+-d+/g, '') + ' bg-green-100 text-green-700';
-        }
-        btn.disabled = true;
-        btn.textContent = 'Đã duyệt';
-        btn.className = btn.className + ' opacity-50 cursor-not-allowed';
-        var rejectBtn = row.querySelector('[data-reject]');
-        if (rejectBtn) { rejectBtn.disabled = true; rejectBtn.className += ' opacity-50 cursor-not-allowed'; }
-      }
-    });
-  });
-
-  document.querySelectorAll('[data-reject]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      if (!confirm('Từ chối người dùng này?')) return;
-      var row = btn.closest('tr, [data-item]');
-      if (row) {
-        var badge = row.querySelector('[data-status]');
-        if (badge) {
-          badge.textContent = 'Đã từ chối';
-          badge.className = badge.className.replace(/bg-w+-d+/d+s*text-w+-d+/g, '') + ' bg-red-100 text-red-700';
-        }
-        btn.disabled = true;
-        btn.textContent = 'Đã từ chối';
-        btn.className += ' opacity-50 cursor-not-allowed';
-        var approveBtn = row.querySelector('[data-approve]');
-        if (approveBtn) { approveBtn.disabled = true; approveBtn.className += ' opacity-50 cursor-not-allowed'; }
-      }
-    });
-  });
-
-  // ---- 7. DROPDOWN FILTER (visual) ----
-  document.querySelectorAll('[data-filter-col]').forEach(function(sel) {
-    sel.addEventListener('change', function() {
-      var col = parseInt(sel.getAttribute('data-filter-col'));
-      var val = sel.value.toLowerCase();
-      var tableId = sel.getAttribute('data-filter-table');
-      var table = document.getElementById(tableId);
-      if (!table) return;
-      var rows = table.querySelectorAll('tbody tr');
-      rows.forEach(function(row) {
-        var cell = row.cells[col];
-        var text = cell ? cell.textContent.toLowerCase() : '';
-        row.style.display = val === '' || val === 'all' || text.includes(val) ? '' : 'none';
-      });
-    });
-  });
-
-  // ---- 8. INBOX: click conversation row to show chat ----
-  document.querySelectorAll('[data-conversation]').forEach(function(item) {
-    item.addEventListener('click', function() {
-      document.querySelectorAll('[data-conversation]').forEach(function(i) {
-        i.classList.remove('bg-primary-container/15', 'border-l-4', 'border-primary');
-      });
-      item.classList.add('bg-primary-container/15', 'border-l-4', 'border-primary');
-      // Remove unread bold
-      item.classList.remove('font-semibold');
-      var chatPanel = document.getElementById('chat-panel');
-      var emptyState = document.getElementById('chat-empty');
-      if (chatPanel) chatPanel.classList.remove('hidden');
-      if (emptyState) emptyState.classList.add('hidden');
-    });
-  });
-
-  // ---- 9. SEND MESSAGE (Inbox) ----
-  var sendBtn = document.getElementById('send-msg-btn');
-  var msgInput = document.getElementById('msg-input');
-  var chatMessages = document.getElementById('chat-messages');
-  if (sendBtn && msgInput && chatMessages) {
-    function sendMessage() {
-      var text = msgInput.value.trim();
-      if (!text) return;
-      var bubble = document.createElement('div');
-      bubble.className = 'flex justify-end';
-      bubble.innerHTML = '<div class="max-w-[70%] bg-primary-container text-on-primary-container rounded-2xl rounded-br-sm px-4 py-2 text-sm">' + text + '<div class="text-[10px] opacity-60 mt-1 text-right">Vừa xong</div></div>';
-      chatMessages.appendChild(bubble);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-      msgInput.value = '';
-    }
-    sendBtn.addEventListener('click', sendMessage);
-    msgInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-    });
+  function fmtVND(n) {
+    n = Math.abs(Number(n || 0));
+    if (n >= 1e9) return (n/1e9).toFixed(1) + ' Tyd';
+    if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+    return n.toLocaleString('vi-VN') + 'd';
+  }
+  function fmtDate(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('vi-VN');
   }
 
-  // ---- 10. SLIDE-IN ANIMATION ----
-  var style = document.createElement('style');
-  style.textContent = '@keyframes slideIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }';
-  document.head.appendChild(style);
+  async function loadReport(period) {
+    showLoading();
+    try {
+      var data = await apiFetch('/api/admin/report-stats?period=' + period);
+      hideLoading();
+      var s = data.summary;
 
+      /* KPIs */
+      document.getElementById('kpi-revenue').textContent   = fmtVND(s.totalRevenue);
+      document.getElementById('kpi-platform').textContent  = fmtVND(s.platformRevenue);
+      document.getElementById('kpi-orders').textContent    = s.totalOrders.toLocaleString();
+      document.getElementById('kpi-completed').textContent = s.completedOrders;
+      document.getElementById('kpi-cancelled').textContent = s.cancelledOrders;
+      document.getElementById('kpi-users').textContent     = s.totalUsers.toLocaleString();
+      document.getElementById('kpi-new-users').textContent = '+' + s.newUsersThisPeriod;
+      document.getElementById('kpi-rate').textContent      = s.completionRate + ' %';
+      document.getElementById('kpi-taskers').textContent   = s.totalTaskers + ' nguoi';
+
+      /* Revenue Chart */
+      document.getElementById('chart-loading').style.display = 'none';
+      var ctx = document.getElementById('revenue-chart').getContext('2d');
+      if (revenueChartInstance) revenueChartInstance.destroy();
+      var labels = data.chart.labels.map(function(l) { return new Date(l).toLocaleDateString('vi-VN', {day:'2-digit',month:'2-digit'}); });
+      revenueChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Doanh thu',
+              data: data.chart.revenue,
+              backgroundColor: 'rgba(160,65,0,0.15)',
+              borderColor: '#a04100',
+              borderWidth: 2,
+              borderRadius: 6,
+              yAxisID: 'y',
+            },
+            {
+              label: 'Don hang',
+              data: data.chart.orders,
+              type: 'line',
+              borderColor: '#60a5fa',
+              backgroundColor: 'rgba(96,165,250,0.1)',
+              borderWidth: 2,
+              tension: 0.4,
+              pointRadius: 3,
+              yAxisID: 'y1',
+            }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { display: false } },
+          scales: {
+            y:  { position: 'left',  grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: function(v) { return fmtVND(v); }, font: { size: 10 } } },
+            y1: { position: 'right', grid: { drawOnChartArea: false }, ticks: { font: { size: 10 } } },
+            x:  { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 0 } }
+          }
+        }
+      });
+
+      /* Status Donut */
+      var ctx2 = document.getElementById('status-chart').getContext('2d');
+      if (statusChartInstance) statusChartInstance.destroy();
+      var statusData = [
+        s.completedOrders,
+        s.pendingOrders,
+        s.cancelledOrders,
+        Math.max(0, s.totalOrders - s.completedOrders - s.pendingOrders - s.cancelledOrders),
+      ];
+      var statusLabels = ['Hoan thanh', 'Cho xu ly', 'Da huy', 'Khac'];
+      var statusColors = ['#16a34a', '#f59e0b', '#ef4444', '#94a3b8'];
+      statusChartInstance = new Chart(ctx2, {
+        type: 'doughnut',
+        data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: statusColors, borderWidth: 0, hoverOffset: 8 }] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          cutout: '70%',
+          plugins: { legend: { display: false } }
+        }
+      });
+      var legend = document.getElementById('status-legend');
+      if (legend) {
+        legend.innerHTML = statusLabels.map(function(l, i) {
+          return '<div class="flex items-center justify-between text-[12px]"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full inline-block" style="background:' + statusColors[i] + '"></span>' + l + '</span><span class="font-bold">' + (statusData[i] || 0) + '</span></div>';
+        }).join('');
+      }
+
+      /* Top Services */
+      var svcEl = document.getElementById('top-services');
+      if (svcEl) {
+        var maxSvc = Math.max.apply(null, data.topServices.map(function(s) { return s.count; }));
+        svcEl.innerHTML = data.topServices.length === 0 ? '<div class="px-5 py-4 text-body-sm text-center text-on-surface-variant">Chua co du lieu</div>' :
+          data.topServices.map(function(sv, i) {
+            var pct = maxSvc > 0 ? Math.round(sv.count / maxSvc * 100) : 0;
+            return '<div class="px-5 py-3">' +
+              '<div class="flex items-center justify-between mb-1.5">' +
+                '<span class="text-body-sm font-semibold text-on-surface">' + (i+1) + '. ' + sv.name + '</span>' +
+                '<span class="text-body-sm font-bold text-primary">' + sv.count + ' don</span>' +
+              '</div>' +
+              '<div class="h-1.5 bg-surface-container-low rounded-full overflow-hidden">' +
+                '<div class="h-full bg-primary rounded-full transition-all" style="width:' + pct + '%"></div>' +
+              '</div>' +
+              '<p class="text-[11px] text-on-surface-variant mt-1">' + fmtVND(sv.revenue) + '</p>' +
+            '</div>';
+          }).join('');
+      }
+
+      /* Top Taskers */
+      var tkEl = document.getElementById('top-taskers');
+      if (tkEl) {
+        var medals = ['emoji_events','military_tech','workspace_premium','grade','star'];
+        var medalColors = ['text-yellow-500','text-gray-400','text-amber-600','text-blue-400','text-green-500'];
+        tkEl.innerHTML = data.topTaskers.length === 0 ? '<div class="px-5 py-4 text-body-sm text-center text-on-surface-variant">Chua co du lieu</div>' :
+          data.topTaskers.map(function(tk, i) {
+            return '<div class="px-5 py-3 flex items-center justify-between">' +
+              '<div class="flex items-center gap-3">' +
+                '<span class="material-symbols-outlined ' + (medalColors[i] || 'text-on-surface-variant') + '" style="font-variation-settings:\'FILL\' 1;font-size:22px">' + (medals[i] || 'person') + '</span>' +
+                '<div><p class="font-semibold text-on-surface text-body-sm">' + tk.name + '</p><p class="text-[11px] text-on-surface-variant">' + tk.orders + ' don hoan thanh</p></div>' +
+              '</div>' +
+              '<p class="font-bold text-primary text-body-sm">' + fmtVND(tk.earnings) + '</p>' +
+            '</div>';
+          }).join('');
+      }
+
+      /* Recent Orders Table */
+      var tbody = document.getElementById('recent-orders-tbody');
+      if (tbody) {
+        tbody.innerHTML = data.recentOrders.length === 0 ? '<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Chua co don hang</td></tr>' :
+          data.recentOrders.map(function(o) {
+            var st = ORDER_STATUS[o.status] || { label: o.status, color: '#94a3b8' };
+            return '<tr class="hover:bg-primary/5 transition-colors">' +
+              '<td class="px-5 py-3 font-mono text-[12px] text-primary font-semibold">#' + o.code + '</td>' +
+              '<td class="px-5 py-3 text-body-sm">' + (o.service || '--') + '</td>' +
+              '<td class="px-5 py-3 text-body-sm">' + (o.customer || '--') + '</td>' +
+              '<td class="px-5 py-3 font-bold text-on-surface">' + fmtVND(o.amount) + '</td>' +
+              '<td class="px-5 py-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold text-white" style="background:' + st.color + '">' + st.label + '</span></td>' +
+              '<td class="px-5 py-3 text-[12px] text-on-surface-variant">' + fmtDate(o.date) + '</td>' +
+            '</tr>';
+          }).join('');
+      }
+
+    } catch(e) {
+      hideLoading();
+      showToastMsg('Loi tai bao cao: ' + e.message);
+      console.error(e);
+    }
+  }
+
+  /* Period buttons */
+  document.querySelectorAll('.period-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.period-btn').forEach(function(b) {
+        b.classList.remove('bg-primary', 'text-white');
+        b.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('bg-primary', 'text-white');
+      btn.classList.remove('text-on-surface-variant');
+      currentPeriod = btn.getAttribute('data-period');
+      loadReport(currentPeriod);
+    });
+  });
+
+  /* Logout */
+  var logoutBtn = document.querySelector('button[title="Dang xuat"]');
+  if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
+
+  loadReport(currentPeriod);
 })();
-</script><!-- END-CHIOI-JS-INJECT -->
+</script>
 </body></html>

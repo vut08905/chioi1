@@ -114,6 +114,13 @@ export class ApiController {
   }
 
   // --- Support APIs ---
+  @Get('support/tickets')
+  @Roles('CUSTOMER', 'TASKER')
+  @ApiOperation({ summary: 'Lấy danh sách ticket khiếu nại của user' })
+  async getUserTickets(@Request() req) {
+    return this.apiService.getUserTickets(req.user.userId);
+  }
+
   @Post('support/tickets')
   @Roles('CUSTOMER', 'TASKER')
   @ApiOperation({ summary: 'Tạo ticket hỗ trợ/khiếu nại' })
@@ -225,6 +232,13 @@ export class ApiController {
     return this.apiService.getAdminUsers();
   }
 
+  @Patch('admin/users/:id/status')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Khóa hoặc mở khóa tài khoản người dùng' })
+  async updateUserStatus(@Request() req, @Param('id', ParseIntPipe) id: number, @Body('status') status: string) {
+    return this.apiService.updateUserStatus(req.user.userId, id, status);
+  }
+
   @Get('admin/orders')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Lấy danh sách Orders' })
@@ -239,11 +253,49 @@ export class ApiController {
     return this.apiService.adminCancelOrder(req.user.userId, id);
   }
 
+  @Patch('admin/orders/:id/assign')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Admin can thiệp gán Tasker thủ công' })
+  async adminAssignTasker(@Request() req, @Param('id', ParseIntPipe) id: number, @Body('tasker_id', ParseIntPipe) taskerId: number) {
+    return this.apiService.adminAssignTasker(req.user.userId, id, taskerId);
+  }
+
+  @Patch('admin/orders/:id/resolve')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Admin đánh dấu đã xử lý can thiệp' })
+  async adminResolveOrder(@Request() req, @Param('id', ParseIntPipe) id: number, @Body('note') note: string) {
+    return this.apiService.adminResolveOrder(req.user.userId, id, note);
+  }
+
+  @Get('admin/tickets/stats')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Thống kê inbox (tổng, open, in_progress, resolved)' })
+  async getAdminInboxStats() {
+    return this.apiService.getAdminInboxStats();
+  }
+
   @Get('admin/tickets')
   @Roles('ADMIN')
-  @ApiOperation({ summary: 'Lấy danh sách khiếu nại/hỗ trợ (UC-AD-07)' })
-  async getAdminTickets() {
-    return this.apiService.getAdminTickets();
+  @ApiOperation({ summary: 'Danh sách ticket hỗ trợ (filter status/priority)' })
+  async getAdminTicketsList(@Query('status') status?: string, @Query('priority') priority?: string) {
+    return this.apiService.getAdminTickets(status, priority);
+  }
+
+  @Get('admin/tickets/:id')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Chi tiết ticket + tin nhắn liên quan' })
+  async getAdminTicketDetail(@Param('id', ParseIntPipe) id: number) {
+    return this.apiService.getAdminTicket(id);
+  }
+
+  @Patch('admin/tickets/:id')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Cập nhật trạng thái / ưu tiên ticket' })
+  async updateAdminTicket(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: { status?: string; priority?: string },
+  ) {
+    return this.apiService.updateAdminTicket(id, body);
   }
 
   @Get('admin/withdrawals')
@@ -251,5 +303,27 @@ export class ApiController {
   @ApiOperation({ summary: 'Lấy danh sách yêu cầu rút tiền (UC-AD-06)' })
   async getAdminWithdrawals() {
     return this.apiService.getAdminWithdrawals();
+  }
+
+  // ===== Admin stats endpoints =====
+  @Get('admin/transactions')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Lấy lịch sử giao dịch (có filter type, giới hạn 100)' })
+  async getAdminTransactions(@Query('type') type?: string) {
+    return this.apiService.getAdminTransactions(type);
+  }
+
+  @Get('admin/wallet-stats')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Thống kê tổng hợp ví' })
+  async getAdminWalletStats() {
+    return this.apiService.getAdminWalletStats();
+  }
+
+  @Get('admin/report-stats')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Báo cáo tổng hợp: doanh thu, đơn hàng, Tasker top, dịch vụ top, biểu đồ theo ngày' })
+  async getAdminReportStats(@Query('period') period?: string) {
+    return this.apiService.getAdminReportStats(period || '30d');
   }
 }

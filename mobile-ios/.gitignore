@@ -1,0 +1,31 @@
+# Capacitor / Node
+node_modules/
+.DS_Store
+
+# Build outputs
+ios/App/build/
+ios/App/Pods/
+ios/DerivedData/
+
+# IPA + dSYM
+*.ipa
+*.dSYM.zip
+
+# Xcode user files
+*.xcuserstate
+*.xcuserdatad/
+xcuserdata/
+
+# Fastlane (nếu sau này dùng)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/test_output
+
+# CocoaPods cache
+Pods/
+
+# Signing
+*.p12
+*.p8
+*.mobileprovision
+*.cer

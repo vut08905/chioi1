@@ -1,0 +1,24 @@
+{
+  "name": "chioi-mobile-ios",
+  "version": "1.0.0",
+  "description": "Chị Ơi! iOS wrapper (Capacitor) cho PWA app.chioi.vn",
+  "private": true,
+  "scripts": {
+    "build:web": "echo 'No web build — wrap remote PWA URL'",
+    "sync": "cap sync ios",
+    "open": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/app": "^6.0.1",
+    "@capacitor/browser": "^6.0.3",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/geolocation": "^6.0.1",
+    "@capacitor/ios": "^6.1.2",
+    "@capacitor/push-notifications": "^6.0.2",
+    "@capacitor/splash-screen": "^6.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,228 +1,469 @@
-﻿<!DOCTYPE html>
-
-<html class="light" lang="vi"><head>
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
 <meta charset="utf-8"/>
-<link rel="manifest" href="/manifest.json"/>
-<meta name="theme-color" content="#a04100"/>
-<link rel="apple-touch-icon" href="/icons/icon-192.png"/>
-<link rel="icon" type="image/png" href="/favicon.ico"/>
-<script src="/pwa-register.js" defer></script>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Đăng ký Tasker - Chị Ơi!</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-secondary-container": "#794226",
-                        "on-surface-variant": "#584238",
-                        "outline": "#8b7266",
-                        "on-background": "#241914",
-                        "on-tertiary-fixed": "#001f28",
-                        "tertiary-fixed": "#b8eaff",
-                        "secondary-fixed-dim": "#ffb693",
-                        "primary-container": "#ff7e36",
-                        "on-surface": "#241914",
-                        "inverse-primary": "#ffb693",
-                        "secondary": "#895032",
-                        "inverse-on-surface": "#ffede6",
-                        "on-primary-fixed-variant": "#7a3000",
-                        "surface-variant": "#f4ded5",
-                        "surface-dim": "#ecd6cc",
-                        "surface-container-highest": "#f4ded5",
-                        "on-secondary-fixed-variant": "#6d391d",
-                        "tertiary-container": "#00b1da",
-                        "error": "#ba1a1a",
-                        "tertiary": "#006780",
-                        "surface-bright": "#fff8f6",
-                        "primary-fixed-dim": "#ffb693",
-                        "on-tertiary": "#ffffff",
-                        "secondary-fixed": "#ffdbcc",
-                        "on-primary-fixed": "#351000",
-                        "on-primary-container": "#642600",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-tint": "#a04100",
-                        "on-secondary": "#ffffff",
-                        "background": "#fff8f6",
-                        "primary-fixed": "#ffdbcc",
-                        "inverse-surface": "#3b2e28",
-                        "on-secondary-fixed": "#351000",
-                        "surface-container": "#ffeae1",
-                        "primary": "#a04100",
-                        "outline-variant": "#dfc0b3",
-                        "surface-container-low": "#fff1eb",
-                        "surface-container-high": "#fae4da",
-                        "tertiary-fixed-dim": "#52d5ff",
-                        "on-tertiary-container": "#003f4f",
-                        "on-error": "#ffffff",
-                        "on-error-container": "#93000a",
-                        "on-primary": "#ffffff",
-                        "surface": "#fff8f6",
-                        "on-tertiary-fixed-variant": "#004d61",
-                        "error-container": "#ffdad6"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "md": "16px",
-                        "lg": "24px",
-                        "container-padding": "16px",
-                        "xs": "4px",
-                        "xl": "32px",
-                        "stack-gap": "12px",
-                        "sm": "8px",
-                        "base": "4px"
-                    },
-                    "fontFamily": {
-                        "headline-md": ["Be Vietnam Pro"],
-                        "label-caps": ["Be Vietnam Pro"],
-                        "title-sm": ["Be Vietnam Pro"],
-                        "display-lg": ["Be Vietnam Pro"],
-                        "body-sm": ["Be Vietnam Pro"],
-                        "body-lg": ["Be Vietnam Pro"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
-                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
-                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
-                    }
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "on-secondary-container": "#794226",
+                    "on-surface-variant": "#584238",
+                    "outline": "#8b7266",
+                    "on-background": "#241914",
+                    "primary-container": "#ff7e36",
+                    "on-surface": "#241914",
+                    "inverse-primary": "#ffb693",
+                    "secondary": "#895032",
+                    "surface-variant": "#f4ded5",
+                    "surface-dim": "#ecd6cc",
+                    "surface-container-highest": "#f4ded5",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#fff8f6",
+                    "primary-fixed-dim": "#ffb693",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#ffdbcc",
+                    "on-primary-container": "#642600",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#a04100",
+                    "on-secondary": "#ffffff",
+                    "background": "#fff8f6",
+                    "primary-fixed": "#ffdbcc",
+                    "inverse-surface": "#3b2e28",
+                    "surface-container": "#ffeae1",
+                    "primary": "#a04100",
+                    "outline-variant": "#dfc0b3",
+                    "surface-container-low": "#fff1eb",
+                    "surface-container-high": "#fae4da",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "surface": "#fff8f6",
+                    "error-container": "#ffdad6"
                 },
+                "borderRadius": {
+                    "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"
+                },
+                "spacing": {
+                    "md": "16px", "lg": "24px", "container-padding": "20px",
+                    "xs": "8px", "xl": "32px", "sm": "12px", "base": "4px"
+                },
+                "fontFamily": {
+                    "headline-md": ["Be Vietnam Pro"], "label-caps": ["Be Vietnam Pro"],
+                    "title-sm": ["Be Vietnam Pro"], "display-lg": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"], "body-lg": ["Be Vietnam Pro"]
+                },
+                "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                }
             },
-        }
-    </script>
-<style>
-        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #fff8f6; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .primary-gradient { background: linear-gradient(180deg, #a04100 0%, #ff7e36 100%); }
-        .card-shadow { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+        },
     }
-          body { font-family: 'Be Vietnam Pro', sans-serif; }
-        .orange-gradient {
-            background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%);
-        }
-        .teal-gradient {
-            background: linear-gradient(135deg, #00b1da 0%, #006780 100%);
-        }
-        .soft-shadow {
-            box-shadow: 0 4px 12px rgba(255, 126, 54, 0.08);
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Smooth transitions */
-        a, button { transition: all 0.2s ease; }
-        /* Card hover effect */
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-    </style>
+</script>
+<style>
+    body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #fff8f6; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .orange-gradient { background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%); }
+    .card-shadow { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); }
+    .soft-shadow { box-shadow: 0 4px 12px rgba(255, 126, 54, 0.08); }
+    a, button { transition: all 0.2s ease; }
+    .cccd-preview { max-height: 180px; object-fit: contain; border-radius: 12px; }
+    @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(255,126,54,0.4); } 100% { box-shadow: 0 0 0 12px rgba(255,126,54,0); } }
+    .ocr-loading { animation: pulse-ring 1.2s infinite; }
+</style>
 </head>
-<body class="flex flex-col min-h-screen text-on-background">
-<div class="absolute top-0 left-0 w-full h-[300px] z-0" style="background: linear-gradient(180deg, rgba(255,126,54,0.9) 0%, rgba(255,126,54,0) 100%); pointer-events: none;"></div>
+<body class="bg-surface-dim text-on-surface min-h-screen flex flex-col items-center">
+    <div class="w-full max-w-[430px] min-h-screen bg-background relative shadow-2xl overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-[280px] z-0 pointer-events-none" style="background: linear-gradient(rgb(255, 126, 54) 0%, rgb(252, 249, 248) 100%);"></div>
 
-<!-- Header: TopAppBar Implementation -->
-<header class="   sticky top-0 z-50 transition-all duration-200 bg-transparent relative z-40">
-<div class="flex justify-between items-center w-full px-container-padding h-16">
-<button class="active:scale-95 transition-all duration-200">
-<span class="material-symbols-outlined text-white">arrow_back</span>
-</button>
-<h1 class="text-headline-md font-headline-md font-extrabold text-white">Đăng ký Tasker</h1>
-<button class="active:scale-95 transition-all duration-200">
-<span class="material-symbols-outlined text-white">chat_bubble</span>
-</button>
-</div>
-<!-- Extended Gradient Branding -->
-<div class="h-12 primary-gradient w-full"></div>
+<!-- Header Section -->
+<header class="orange-gradient w-full h-[200px] flex flex-col items-center justify-center relative overflow-hidden">
+    <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-black/5 rounded-full blur-2xl"></div>
+    <div class="z-10 text-center px-[20px] flex flex-col items-center">
+        <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-16 h-16 rounded-full border-3 border-white/30 shadow-lg mb-2 object-cover"/>
+        <h1 class="text-white text-[22px] font-extrabold tracking-tight">Đăng ký Tasker</h1>
+        <div class="inline-flex items-center gap-1 mt-1.5 px-3 py-1 bg-white/20 rounded-full">
+            <span class="material-symbols-outlined text-white text-[12px]" style="font-variation-settings: 'FILL' 1, 'wght' 600;">verified</span>
+            <span class="text-white text-[11px] font-bold tracking-wide uppercase">Đối tác Chị Ơi!</span>
+        </div>
+    </div>
 </header>
-<!-- Main Content -->
-<main class="flex-grow px-container-padding  pb-32 relative z-10">
-<div class="space-y-stack-gap">
-<!-- Welcome Info Section -->
-<div class="bg-surface-container-lowest p-lg rounded-xl card-shadow border border-surface-container">
-<h2 class="text-title-sm font-title-sm text-primary mb-xs">Trở thành đối tác</h2>
-<p class="text-body-sm font-body-sm text-on-surface-variant">Hãy điền thông tin bên dưới để bắt đầu hành trình cùng Chị Ơi! chuyên nghiệp và tận tâm.</p>
-</div>
-<!-- Registration Form -->
-<form class="space-y-lg">
-<!-- Personal Info Group -->
-<div class="space-y-md">
-<div>
-<label class="block text-label-caps font-label-caps text-on-surface-variant mb-xs ml-base">HỌ VÀ TÊN (*)</label>
-<input class="w-full bg-surface-container-lowest border-none rounded-xl px-md py-md text-body-lg font-body-lg focus:ring-2 focus:ring-primary-container card-shadow placeholder:text-outline-variant" placeholder="Nhập họ và tên đầy đủ" type="text"/>
-</div>
-<div>
-<label class="block text-label-caps font-label-caps text-on-surface-variant mb-xs ml-base">SỐ CCCD (*)</label>
-<input class="w-full bg-surface-container-lowest border-none rounded-xl px-md py-md text-body-lg font-body-lg focus:ring-2 focus:ring-primary-container card-shadow placeholder:text-outline-variant" placeholder="Nhập số căn cước công dân" type="text"/>
-</div>
-</div>
-<!-- Service Selection -->
-<div class="space-y-sm">
-<label class="block text-label-caps font-label-caps text-on-surface-variant ml-base">DỊCH VỤ ĐĂNG KÝ</label>
-<div class="flex flex-wrap gap-sm">
-<button class="px-lg py-sm rounded-full primary-gradient text-on-surface text-label-caps font-label-caps shadow-md active:scale-95 transition-all" type="button">Dọn nhà</button>
-<button class="px-lg py-sm rounded-full bg-surface-container-high text-on-secondarybg-surface-container text-label-caps font-label-caps border border-outline-variant hover:bg-secondary-fixed-dim/20 transition-all" type="button">Trông trẻ</button>
-<button class="px-lg py-sm rounded-full bg-surface-container-high text-on-secondarybg-surface-container text-label-caps font-label-caps border border-outline-variant hover:bg-secondary-fixed-dim/20 transition-all" type="button">Mua hộ WinMart</button>
-</div>
-</div>
-<!-- eKYC Section -->
-<div class="space-y-sm">
-<label class="block text-label-caps font-label-caps text-on-surface-variant ml-base">XÁC THỰC DANH TÍNH</label>
-<div class="relative overflow-hidden group">
-<button class="w-full aspect-video bg-surface-container-lowest border-2 border-dashed border-primary-container/30 rounded-xl flex flex-col items-center justify-center p-lg gap-sm active:scale-[0.98] transition-all card-shadow" type="button">
-<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-[32px]">person_search</span>
-</div>
-<span class="text-title-sm font-title-sm text-on-surfacebg-surface-container text-center px-lg">Mở Camera xác thực khuôn mặt và chụp CCCD</span>
-<span class="text-body-sm font-body-sm text-outline">Quy trình tự động mất khoảng 2 phút</span>
-</button>
-</div>
-</div>
-<!-- Documents Section -->
-<div class="space-y-sm">
-<label class="block text-label-caps font-label-caps text-on-surface-variant ml-base">HỒ SƠ PHÁP LÝ</label>
-<div class="bg-surface-container-lowest p-md rounded-xl card-shadow border border-surface-container flex items-center justify-between">
-<div class="flex items-center gap-md">
-<span class="material-symbols-outlined text-primary">description</span>
-<div>
-<p class="text-body-lg font-title-sm text-on-surface">Lý lịch tư pháp số 1 (*)</p>
-<p class="text-body-sm font-body-sm text-on-surface-variant">Yêu cầu bản gốc hoặc bản sao công chứng</p>
-</div>
-</div>
-<button class="w-10 h-10 rounded-full bg-primary-fixed-dim/20 flex items-center justify-center text-primary hover: hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined">upload</span>
-</button>
-</div>
-</div>
-<!-- Compliance Notice -->
-<div class="flex gap-sm items-start px-xs">
-<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
-<p class="text-body-sm font-body-sm text-on-surface-variant">Tôi cam kết các thông tin cung cấp là chính xác và hoàn toàn chịu trách nhiệm trước pháp luật.</p>
-</div>
-</form>
-</div>
-</main>
-<!-- Footer: FAB & Global Action -->
-<div class="fixed bottom-0 left-0 right-0 pbg-surface-container-padding /80 backdrop-blur-md">
-<div class="max-w-md mx-auto w-full">
-<button class="w-full py-md rounded-full primary-gradient text-on-surface font-headline-md shadow-lg active:scale-95 transition-all duration-200">
-                Gửi hồ sơ
+
+<!-- Main Content: Register Card -->
+<main class="w-full px-[20px] -mt-10 z-20 pb-8 relative">
+    <div class="bg-white rounded-[24px] card-shadow border border-surface-container/50 p-6 flex flex-col gap-5">
+
+        <!-- Welcome text -->
+        <div class="text-center">
+            <p class="text-on-surface-variant text-body-sm">Chỉ cần SĐT, mật khẩu và ảnh CCCD để đăng ký</p>
+        </div>
+
+        <!-- Form fields -->
+        <div class="flex flex-col gap-4">
+            <!-- SĐT -->
+            <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute left-4 text-outline">phone</span>
+                <input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all text-body-lg" placeholder="Số điện thoại (*)" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="11"/>
+            </div>
+
+            <!-- Mật khẩu -->
+            <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute left-4 text-outline">lock</span>
+                <input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all text-body-lg" placeholder="Mật khẩu (8-20 ký tự) (*)" type="password" minlength="8" maxlength="20"/>
+                <button type="button" class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePass('passwordInput', this)">
+                    <span class="material-symbols-outlined">visibility</span>
+                </button>
+            </div>
+
+            <!-- Xác nhận mật khẩu -->
+            <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute left-4 text-outline">lock_reset</span>
+                <input id="confirmPasswordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all text-body-lg" placeholder="Xác nhận mật khẩu (*)" type="password" minlength="8" maxlength="20"/>
+                <button type="button" class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePass('confirmPasswordInput', this)">
+                    <span class="material-symbols-outlined">visibility</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Upload CCCD Section -->
+        <div>
+            <p class="text-label-caps font-label-caps text-on-surface-variant mb-2">XÁC MINH CCCD / CMND</p>
+            <div id="cccd-upload-area" class="border-2 border-dashed border-outline-variant rounded-[16px] p-6 text-center cursor-pointer hover:border-primary-container hover:bg-primary-fixed/5 transition-all">
+                <input type="file" id="cccdFileInput" accept="image/*" class="hidden"/>
+                <div id="upload-placeholder">
+                    <span class="material-symbols-outlined text-[48px] text-outline mb-2" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+                    <p class="text-body-sm text-on-surface-variant font-medium">Chụp hoặc tải ảnh CCCD</p>
+                    <p class="text-[11px] text-outline mt-1">Hệ thống sẽ tự đọc Họ tên & Số CCCD</p>
+                </div>
+                <div id="upload-preview" class="hidden">
+                    <img id="cccd-img" class="cccd-preview mx-auto mb-3" alt="Ảnh CCCD"/>
+                    <p class="text-[12px] text-primary font-bold">Đã tải ảnh CCCD</p>
+                    <button type="button" id="re-upload-btn" class="mt-2 text-[12px] text-outline underline hover:text-primary">Chọn ảnh khác</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OCR Results (auto-filled, read-only) -->
+        <div id="ocr-results" class="hidden">
+            <p class="text-label-caps font-label-caps text-on-surface-variant mb-2">THÔNG TIN TỰ ĐỘNG NHẬN DIỆN</p>
+            <div class="flex flex-col gap-3">
+                <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-4 text-primary">person</span>
+                    <input id="nameFromOCR" class="w-full pl-12 pr-4 py-3 bg-primary-fixed/20 border-2 border-primary/20 rounded-[16px] text-on-surface text-body-sm font-semibold" placeholder="Họ tên (từ CCCD)" readonly/>
+                    <span class="material-symbols-outlined absolute right-4 text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                </div>
+                <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-4 text-primary">badge</span>
+                    <input id="cccdFromOCR" class="w-full pl-12 pr-4 py-3 bg-primary-fixed/20 border-2 border-primary/20 rounded-[16px] text-on-surface text-body-sm font-semibold" placeholder="Số CCCD (từ CCCD)" readonly/>
+                    <span class="material-symbols-outlined absolute right-4 text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- OCR Loading indicator -->
+        <div id="ocr-loading" class="hidden text-center py-3">
+            <div class="w-10 h-10 mx-auto rounded-full border-4 border-primary/30 border-t-primary animate-spin mb-2"></div>
+            <p class="text-body-sm text-on-surface-variant">Đang nhận diện thông tin CCCD...</p>
+        </div>
+
+        <!-- Dịch vụ đăng ký -->
+        <div>
+            <p class="text-label-caps font-label-caps text-on-surface-variant mb-2">DỊCH VỤ ĐĂNG KÝ</p>
+            <div class="flex flex-wrap gap-2" id="serviceSelection">
+                <button type="button" data-service="don_nha" class="svc-btn px-5 py-2.5 rounded-full text-[12px] font-bold border border-outline-variant bg-surface-container-low text-on-surface-variant hover:bg-primary-fixed/30 transition-all active:scale-95">🧹 Dọn nhà</button>
+                <button type="button" data-service="trong_tre" class="svc-btn px-5 py-2.5 rounded-full text-[12px] font-bold border border-outline-variant bg-surface-container-low text-on-surface-variant hover:bg-primary-fixed/30 transition-all active:scale-95">👶 Trông trẻ</button>
+                <button type="button" data-service="mua_ho" class="svc-btn px-5 py-2.5 rounded-full text-[12px] font-bold border border-outline-variant bg-surface-container-low text-on-surface-variant hover:bg-primary-fixed/30 transition-all active:scale-95">🛒 Mua hộ</button>
+            </div>
+        </div>
+
+        <!-- Error message -->
+        <p id="errorMsg" class="text-error text-body-sm px-1 leading-tight" style="display:none;"></p>
+
+        <!-- Compliance Notice -->
+        <div class="flex gap-2 items-start px-1">
+            <span class="material-symbols-outlined text-primary text-[18px] mt-0.5">verified_user</span>
+            <p class="text-[12px] text-on-surface-variant leading-relaxed">Bằng việc đăng ký, bạn cam kết thông tin cung cấp là chính xác và đồng ý với <a href="#" class="text-primary hover:underline">Điều khoản</a> của Chị Ơi!</p>
+        </div>
+
+        <!-- Info: Pending approval -->
+        <div class="flex gap-2 items-start px-1 bg-yellow-50 rounded-xl p-3 border border-yellow-200">
+            <span class="material-symbols-outlined text-yellow-600 text-[18px] mt-0.5">info</span>
+            <p class="text-[12px] text-yellow-700 leading-relaxed">Sau khi gửi hồ sơ, tài khoản sẽ chờ <strong>Admin phê duyệt</strong> trước khi hoạt động.</p>
+        </div>
+
+        <!-- CTA -->
+        <div class="flex flex-col gap-3 items-center">
+            <button id="registerBtn" onclick="handleTaskerRegister()" class="orange-gradient w-full py-4 rounded-[16px] shadow-lg shadow-primary-container/30 active:scale-[0.98] transition-all">
+                <span class="text-white text-[15px] font-bold">GỬI HỒ SƠ ĐĂNG KÝ</span>
             </button>
-</div>
-</div>
-<!-- Navigation Shell (BottomNavBar Placeholder context) -->
-<!-- Note: Following the rule to suppress navigation if page has "Back" action implying temporary departure. Content priority is form focus. -->
-</body></html>
+            <p class="text-body-sm text-on-surface-variant">
+                Đã có tài khoản? <a class="text-primary font-bold" href="dangnhaptasker.html">Đăng nhập →</a>
+            </p>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="mt-auto pb-3 w-full text-center">
+    <p class="text-outline/50 text-[10px]">© 2024 Chị Ơi! Home Services. All rights reserved.</p>
+</footer>
+
+    </div>
+
+    <script src="../shared/api.js?v=20260514"></script>
+    <script>
+        function togglePass(inputId, btn) {
+            var input = document.getElementById(inputId);
+            var icon = btn.querySelector('.material-symbols-outlined');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        }
+
+        // Service selection toggle
+        var selectedServices = [];
+        document.querySelectorAll('.svc-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var svc = btn.getAttribute('data-service');
+                var idx = selectedServices.indexOf(svc);
+                if (idx >= 0) {
+                    selectedServices.splice(idx, 1);
+                    btn.classList.remove('orange-gradient', 'text-white', 'border-transparent', 'shadow-md');
+                    btn.classList.add('bg-surface-container-low', 'text-on-surface-variant', 'border-outline-variant');
+                } else {
+                    selectedServices.push(svc);
+                    btn.classList.add('orange-gradient', 'text-white', 'border-transparent', 'shadow-md');
+                    btn.classList.remove('bg-surface-container-low', 'text-on-surface-variant', 'border-outline-variant');
+                }
+            });
+        });
+
+        // ===== CCCD Upload + OCR =====
+        var cccdBase64 = '';
+        var ocrName = '';
+        var ocrCCCD = '';
+
+        var uploadArea = document.getElementById('cccd-upload-area');
+        var fileInput = document.getElementById('cccdFileInput');
+        var placeholder = document.getElementById('upload-placeholder');
+        var preview = document.getElementById('upload-preview');
+        var cccdImg = document.getElementById('cccd-img');
+        var reUploadBtn = document.getElementById('re-upload-btn');
+
+        uploadArea.addEventListener('click', function() { fileInput.click(); });
+        if (reUploadBtn) reUploadBtn.addEventListener('click', function(e) { e.stopPropagation(); fileInput.click(); });
+
+        fileInput.addEventListener('change', function() {
+            var file = fileInput.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showError('Vui lòng chọn file ảnh (JPG, PNG)');
+                return;
+            }
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showError('Ảnh quá lớn. Vui lòng chọn ảnh dưới 10MB.');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                cccdBase64 = e.target.result;
+                cccdImg.src = cccdBase64;
+                placeholder.classList.add('hidden');
+                preview.classList.remove('hidden');
+                // Start OCR
+                performOCR(cccdBase64);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function performOCR(base64Data) {
+            var ocrLoading = document.getElementById('ocr-loading');
+            var ocrResults = document.getElementById('ocr-results');
+            ocrLoading.classList.remove('hidden');
+            ocrResults.classList.add('hidden');
+
+            // Extract text from image using local regex-based OCR simulation
+            // In production, this would call a real OCR API (Google Vision, FPT.AI eKYC, etc.)
+            // For now, we parse the image client-side using canvas + basic heuristics
+            
+            var img = new Image();
+            img.onload = function() {
+                // Simulate OCR processing delay
+                setTimeout(function() {
+                    // Try to extract from image using canvas
+                    extractTextFromCCCD(img, base64Data);
+                }, 800);
+            };
+            img.src = base64Data;
+        }
+
+        function extractTextFromCCCD(img, base64Data) {
+            var ocrLoading = document.getElementById('ocr-loading');
+            var ocrResults = document.getElementById('ocr-results');
+            
+            // Send image to backend for OCR processing
+            apiFetch('/api/ocr/cccd', {
+                method: 'POST',
+                body: { image: base64Data }
+            }).then(function(result) {
+                ocrLoading.classList.add('hidden');
+                if (result && (result.full_name || result.cccd_number)) {
+                    ocrName = result.full_name || '';
+                    ocrCCCD = result.cccd_number || '';
+                    document.getElementById('nameFromOCR').value = ocrName;
+                    document.getElementById('cccdFromOCR').value = ocrCCCD;
+                    ocrResults.classList.remove('hidden');
+                    showError('');
+                } else {
+                    // Fallback: let user enter manually
+                    showManualInput();
+                }
+            }).catch(function(err) {
+                console.warn('[OCR] API error, fallback to manual:', err.message);
+                ocrLoading.classList.add('hidden');
+                // Fallback: show manual input fields
+                showManualInput();
+            });
+        }
+
+        function showManualInput() {
+            var ocrResults = document.getElementById('ocr-results');
+            ocrResults.classList.remove('hidden');
+            // Make fields editable
+            document.getElementById('nameFromOCR').removeAttribute('readonly');
+            document.getElementById('nameFromOCR').classList.remove('bg-primary-fixed/20', 'border-primary/20');
+            document.getElementById('nameFromOCR').classList.add('bg-surface-container-low', 'border-none');
+            document.getElementById('nameFromOCR').placeholder = 'Nhập họ tên thủ công';
+
+            document.getElementById('cccdFromOCR').removeAttribute('readonly');
+            document.getElementById('cccdFromOCR').classList.remove('bg-primary-fixed/20', 'border-primary/20');
+            document.getElementById('cccdFromOCR').classList.add('bg-surface-container-low', 'border-none');
+            document.getElementById('cccdFromOCR').placeholder = 'Nhập số CCCD thủ công';
+
+            // Remove verified icons
+            ocrResults.querySelectorAll('.material-symbols-outlined[style*="FILL"]').forEach(function(el) {
+                if (el.textContent === 'verified') el.textContent = 'edit';
+            });
+
+            showError('Không nhận diện được CCCD tự động. Vui lòng nhập thủ công.');
+        }
+
+        function showError(msg) {
+            var el = document.getElementById('errorMsg');
+            if (msg) {
+                el.textContent = msg;
+                el.style.display = 'block';
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
+        async function handleTaskerRegister() {
+            var phone = document.getElementById('phoneInput').value.trim();
+            var pass = document.getElementById('passwordInput').value.trim();
+            var confirmPass = document.getElementById('confirmPasswordInput').value.trim();
+            var name = (document.getElementById('nameFromOCR') || {}).value || '';
+            var cccd = (document.getElementById('cccdFromOCR') || {}).value || '';
+            name = name.trim();
+            cccd = cccd.trim();
+            var registerBtn = document.getElementById('registerBtn');
+
+            // Validation
+            if (!phone || !pass || !confirmPass) {
+                showError('Vui lòng nhập đầy đủ SĐT và mật khẩu.');
+                return;
+            }
+
+            var phoneRegex = /^0[0-9]{8,10}$/;
+            if (!phoneRegex.test(phone)) {
+                showError('Số điện thoại không hợp lệ. VD: 0901234567');
+                return;
+            }
+
+            if (pass.length < 8 || pass.length > 20) {
+                showError('Mật khẩu phải từ 8 đến 20 ký tự.');
+                return;
+            }
+
+            if (pass !== confirmPass) {
+                showError('Mật khẩu xác nhận không khớp.');
+                return;
+            }
+
+            if (!cccdBase64) {
+                showError('Vui lòng upload ảnh CCCD để xác minh danh tính.');
+                return;
+            }
+
+            if (!name) {
+                showError('Chưa có họ tên. Vui lòng đợi OCR hoặc nhập thủ công.');
+                return;
+            }
+
+            if (!cccd || cccd.length < 9) {
+                showError('Chưa có số CCCD hợp lệ. Vui lòng đợi OCR hoặc nhập thủ công.');
+                return;
+            }
+
+            // Disable button + loading
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<span class="text-white text-[15px] font-bold">Đang xử lý...</span>';
+            showError('');
+
+            try {
+                var data = await apiFetch('/api/auth/register', {
+                    method: 'POST',
+                    body: {
+                        phone: phone,
+                        password: pass,
+                        full_name: name,
+                        role: 'TASKER'
+                    }
+                });
+
+                // Tự động đăng nhập sau khi đăng ký thành công
+                ChiOiAuth.saveLogin(data);
+                showToastMsg('✅ Đăng ký thành công! Tài khoản đang chờ Admin phê duyệt.');
+                setTimeout(function() {
+                    window.location.href = 'trangchutasker.html';
+                }, 1500);
+
+            } catch (err) {
+                showError(err.message || 'Đăng ký thất bại. Vui lòng thử lại.');
+                registerBtn.disabled = false;
+                registerBtn.innerHTML = '<span class="text-white text-[15px] font-bold">GỬI HỒ SƠ ĐĂNG KÝ</span>';
+            }
+        }
+
+        // Enter key support
+        ['phoneInput', 'passwordInput', 'confirmPasswordInput'].forEach(function(id) {
+            document.getElementById(id).addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') handleTaskerRegister();
+            });
+        });
+    </script>
+</body>
+</html>

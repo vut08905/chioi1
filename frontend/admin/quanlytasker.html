@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -118,8 +120,13 @@
 <!-- Sidebar Navigation -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -199,39 +206,46 @@
 <div class="flex-1 min-w-0">
 <!-- Tabs Section -->
 <div class="flex items-center gap-8 mb-6 border-b border-outline-variant">
-<button class="pb-3 border-b-2 border-primary text-primary font-semibold text-body-md">Tất cả Tasker</button>
-<button class="pb-3 text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2">
-                        Chờ duyệt
-                        <span class="bg-error text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">12</span>
+<button id="tab-all" class="pb-3 border-b-2 border-primary text-primary font-semibold text-body-md">Tất cả Tasker</button>
+<button id="tab-pending" class="pb-3 text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2">
+    Chờ duyệt
+    <span id="badge-pending" class="bg-error text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">0</span>
 </button>
-<button class="pb-3 text-on-surface-variant hover:text-primary transition-colors">Đang hoạt động</button>
-<button class="pb-3 text-on-surface-variant hover:text-primary transition-colors">Bị tạm khóa</button>
+<button id="tab-active" class="pb-3 text-on-surface-variant hover:text-primary transition-colors">Đang hoạt động</button>
+<button id="tab-locked" class="pb-3 text-on-surface-variant hover:text-primary transition-colors">Bị tạm khóa</button>
 </div>
 <!-- Filters Section -->
-<div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-sm mb-6 flex flex-wrap gap-4 items-center">
-<div class="flex-1 min-w-[240px] relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
-<input class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-xl border-none focus:ring-2 focus:ring-primary/20 text-body-sm" placeholder="Tìm kiếm theo tên, email, SĐT..." type="text"/>
-</div>
-<select class="bg-surface-container rounded-xl border-none text-body-sm py-2 px-4 focus:ring-2 focus:ring-primary/20">
-<option>Loại dịch vụ</option>
-<option>Dọn dẹp</option>
-<option>Giặt ủi</option>
-<option>Sửa chữa</option>
-</select>
-<select class="bg-surface-container rounded-xl border-none text-body-sm py-2 px-4 focus:ring-2 focus:ring-primary/20">
-<option>Khu vực</option>
-<option>Quận 1</option>
-<option>Quận 3</option>
-<option>Bình Thạnh</option>
-</select>
-<select class="bg-surface-container rounded-xl border-none text-body-sm py-2 px-4 focus:ring-2 focus:ring-primary/20">
-<option>Trạng thái</option>
-<option>Hoạt động</option>
-<option>Chờ duyệt</option>
-<option>Tạm khóa</option>
-</select>
-<button class="bg-primary-container text-white px-6 py-2 rounded-xl font-semibold hover:bg-primary transition-colors shadow-sm">Lọc</button>
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm mb-6 flex flex-wrap gap-3 items-center">
+  <!-- Search -->
+  <div class="flex-1 min-w-[220px] relative">
+    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+    <input class="w-full pl-10 pr-4 py-2 bg-surface-container border border-outline-variant/20 rounded-xl text-body-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="Tìm kiếm theo tên, email, SĐT..." type="text"/>
+  </div>
+  <!-- Loại dịch vụ -->
+  <select id="tasker-svc-filter" class="min-w-[140px] bg-surface-container border border-outline-variant/20 rounded-xl text-body-sm py-2 px-3 focus:ring-2 focus:ring-primary/20 outline-none">
+    <option value="">Loại dịch vụ</option>
+    <option value="don dep">Dọn dẹp</option>
+    <option value="giat ui">Giặt ủi</option>
+    <option value="sua chua">Sửa chữa</option>
+  </select>
+  <!-- Khu vực -->
+  <select id="tasker-area-filter" class="min-w-[120px] bg-surface-container border border-outline-variant/20 rounded-xl text-body-sm py-2 px-3 focus:ring-2 focus:ring-primary/20 outline-none">
+    <option value="">Khu vực</option>
+    <option value="quan 1">Quận 1</option>
+    <option value="quan 3">Quận 3</option>
+    <option value="binh thanh">Bình Thạnh</option>
+  </select>
+  <!-- Trạng thái -->
+  <select id="tasker-status-filter" class="min-w-[130px] bg-surface-container border border-outline-variant/20 rounded-xl text-body-sm py-2 px-3 focus:ring-2 focus:ring-primary/20 outline-none">
+    <option value="">Trạng thái</option>
+    <option value="Hoat dong">Hoạt động</option>
+    <option value="Cho duyet">Chờ duyệt</option>
+    <option value="Tam khoa">Tạm khóa</option>
+  </select>
+  <!-- Lọc button -->
+  <button id="btn-tasker-filter" class="bg-primary text-white px-5 py-2 rounded-xl font-semibold hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-1.5 text-body-sm whitespace-nowrap">
+    <span class="material-symbols-outlined text-[16px]">filter_list</span>Lọc
+  </button>
 </div>
 <!-- Tasker Table -->
 <div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(36,25,20,0.04)] overflow-hidden">
@@ -248,8 +262,8 @@
 <th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider">Thao tác</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant/10">
-<!-- Row 1: Active -->
+<tbody id="tasker-tbody" class="divide-y divide-outline-variant/10">
+    <tr><td colspan="8" class="text-center py-8 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
 <tr class="hover:bg-background transition-colors">
 <td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
 <td class="p-4">
@@ -457,74 +471,20 @@
 </table>
 <!-- Pagination -->
 <div class="p-4 flex justify-between items-center bg-surface-container-low border-t border-outline-variant">
-<p class="text-body-sm text-on-surface-variant">Hiển thị 1-6 trong số 124 Tasker</p>
-<div class="flex items-center gap-2">
-<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors disabled:opacity-30" disabled="">
-<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
-</button>
-<button class="w-8 h-8 bg-primary text-white rounded-lg font-bold text-body-sm">1</button>
-<button class="w-8 h-8 hover:bg-surface-container rounded-lg text-body-sm">2</button>
-<button class="w-8 h-8 hover:bg-surface-container rounded-lg text-body-sm">3</button>
-<span class="px-2 text-on-surface-variant">...</span>
-<button class="w-8 h-8 hover:bg-surface-container rounded-lg text-body-sm">21</button>
-<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
-<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
-</button>
+<p id="tasker-pagination-info" class="text-body-sm text-on-surface-variant">Dang tai...</p>
 </div>
 </div>
 </div>
-</div>
+
 <!-- Right Column: Pending Panel (300px) -->
 <div class="w-[300px] flex-shrink-0">
 <div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(36,25,20,0.04)] overflow-hidden">
 <div class="p-4 bg-primary-container text-white flex justify-between items-center">
 <h3 class="font-title-sm">Tasker mới chờ duyệt</h3>
-<span class="bg-white/20 px-2 py-1 rounded-md text-[10px] font-bold">12</span>
+<span id="badge-pending-panel" class="bg-white/20 px-2 py-1 rounded-md text-[10px] font-bold">0</span>
 </div>
-<div class="p-4 space-y-4">
-<!-- Pending Item 1 -->
-<div class="p-3 border border-outline-variant/20 rounded-xl hover:border-primary/30 transition-all bg-surface-container-lowest">
-<div class="flex items-center gap-3 mb-3">
-<img alt="Tasker Profile" class="w-10 h-10 rounded-full" data-alt="Close-up profile of a cheerful woman applicant for a service job, displaying a friendly smile and warm eyes. She is wearing a simple, professional top in a light color. The photography is clean, brightly lit, and modern, fitting perfectly into a 'warm professionalism' aesthetic for an admin dashboard component." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsovhIuiVN75O73G6lticeMFse8mIyRo5QI-7wGPmYh5HSBPFtYgQ8DPLvO3dOr8yVHcpIoZz1959NRSLlIktn5fa759dIkE4JWJivG9zQdsDiGaQrDKFsAcv4VeXbBkC2Ty1mdt7SP_mpN0s6aIY522_HxTXeRW4Ti4OF4GYG4k8dB5lvytOaOe4SnSsw7zYZ4jwIDIKa59k94tDbbhsKVUBqZ9Ssm6QRA3fuyhH-cJBO93OmLXmPeADAvWkHXFNgTXn_UunSm-Y"/>
-<div class="min-w-0">
-<p class="font-semibold text-body-sm truncate">Đặng Thu Thảo</p>
-<p class="text-[11px] text-on-surface-variant">Dọn dẹp • 03/11/2023</p>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-1.5 rounded-lg text-[11px] font-bold transition-colors">Duyệt</button>
-<button class="flex-1 border border-error text-error hover:bg-error/10 py-1.5 rounded-lg text-[11px] font-bold transition-colors">Từ chối</button>
-</div>
-</div>
-<!-- Pending Item 2 -->
-<div class="p-3 border border-outline-variant/20 rounded-xl hover:border-primary/30 transition-all bg-surface-container-lowest">
-<div class="flex items-center gap-3 mb-3">
-<img alt="Tasker Profile" class="w-10 h-10 rounded-full" data-alt="A portrait of a hardworking-looking young man in his late 20s, with a sincere and professional expression. He is dressed in a smart-casual shirt, suitable for a domestic service professional. The background is a clean, bright workspace, echoing the high-end CMS design style with soft lighting and natural tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArK1ICAI101KhRpRm0YYcQhcFz7oTuM8Z-Vcr5QwwGJb2Xydx1OqE2gg_2U_tF8pOq2acXYxB4g_-fNJtFkAn42umfF-U07cjBLEGwbavg7fLnlqxz8DKGpd4oN0Kdyj3oN2P3205a2bCBv_gBYBL4S2qZ7mttT7zsxq8elh2KK4ZStueVleYA8Zib406pvxxIUFwgwUiH6u4LSpyv0uGFQ9vudLeT7iLL9eHMxAPHfBG_zSdoef5fKxmbTqxpQnvg2n3ncducxQc"/>
-<div class="min-w-0">
-<p class="font-semibold text-body-sm truncate">Trần Văn Tú</p>
-<p class="text-[11px] text-on-surface-variant">Sửa điện • 02/11/2023</p>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-1.5 rounded-lg text-[11px] font-bold transition-colors">Duyệt</button>
-<button class="flex-1 border border-error text-error hover:bg-error/10 py-1.5 rounded-lg text-[11px] font-bold transition-colors">Từ chối</button>
-</div>
-</div>
-<!-- Pending Item 3 -->
-<div class="p-3 border border-outline-variant/20 rounded-xl hover:border-primary/30 transition-all bg-surface-container-lowest">
-<div class="flex items-center gap-3 mb-3">
-<img alt="Tasker Profile" class="w-10 h-10 rounded-full" data-alt="A profile picture of a Vietnamese lady with a kind and approachable demeanor, looking ready to provide home services. She has a gentle smile and is wearing professional attire. The image uses soft, high-key lighting to emphasize a modern and trustworthy brand identity, set against a clean, off-white background that complements the UI's cream-grey palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUhtTqx8AAg-cp2iJx2EaC-qyr0p6XVak_JFfAjWC7i7z2nvG_le8mQ5onJ4UR115ZQcIe4VHyQuM9vx8er5FhugseoixTpQPrOcgswChWC4NptnkaVoAnk3gT6dRcrz8rbHGBmZ-0APgf2SyMtfBOCBBrtgHU0y9x0Yr8s7WAc-lJ-IpM_j93seJbR048lK6ivDSLZsmq4o7d6F_SfM47PBVmZVR2qttNFJvyUgVeNxDjpRG1ud6N5J74cChdPmtgCWkAyaV70g4"/>
-<div class="min-w-0">
-<p class="font-semibold text-body-sm truncate">Hoàng Mỹ Linh</p>
-<p class="text-[11px] text-on-surface-variant">Nấu ăn • 01/11/2023</p>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-1.5 rounded-lg text-[11px] font-bold transition-colors">Duyệt</button>
-<button class="flex-1 border border-error text-error hover:bg-error/10 py-1.5 rounded-lg text-[11px] font-bold transition-colors">Từ chối</button>
-</div>
-</div>
-<button class="w-full text-center py-2 text-primary font-bold text-body-sm hover:underline">Xem tất cả yêu cầu</button>
+<div id="pending-panel-list" class="p-4 space-y-4">
+    <p class="text-center text-body-sm text-on-surface-variant py-4">Đang tải...</p>
 </div>
 </div>
 <!-- Summary Info Card -->
@@ -533,11 +493,11 @@
 <div class="grid grid-cols-2 gap-3">
 <div class="bg-white p-3 rounded-lg shadow-sm">
 <p class="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Tổng Tasker</p>
-<p class="text-headline-md font-bold text-primary">1,248</p>
+<p id="stat-total" class="text-headline-md font-bold text-primary">...</p>
 </div>
 <div class="bg-white p-3 rounded-lg shadow-sm">
-<p class="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Mới tháng này</p>
-<p class="text-headline-md font-bold text-tertiary">+34</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Chờ duyệt</p>
+<p id="stat-pending" class="text-headline-md font-bold text-tertiary">...</p>
 </div>
 </div>
 </div>
@@ -767,110 +727,96 @@ document.querySelectorAll('button').forEach(function(btn) {
 })();
 </script><!-- END-CHIOI-JS-INJECT -->
 
-<script src="../shared/api.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script>
 (async function() {
-  if (!ChiOiAuth.requireAuth('../Khachhang/dangnhap.html')) return;
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
   var kycStatusMap = {
     'APPROVED': { label: 'Hoạt động', cls: 'bg-green-100 text-green-700' },
-    'PENDING': { label: 'Chờ duyệt', cls: 'bg-orange-100 text-orange-700' },
-    'REJECTED': { label: 'Tạm khóa', cls: 'bg-red-100 text-red-700' }
+    'ACTIVE':   { label: 'Hoạt động', cls: 'bg-green-100 text-green-700' },
+    'PENDING':  { label: 'Chờ duyệt', cls: 'bg-orange-100 text-orange-700' },
+    'PENDING_APPROVAL': { label: 'Chờ duyệt', cls: 'bg-orange-100 text-orange-700' },
+    'REJECTED': { label: 'Tạm khóa', cls: 'bg-red-100 text-red-700' },
+    'SUSPENDED':{ label: 'Tạm khóa', cls: 'bg-red-100 text-red-700' }
   };
 
-  showLoading();
-  try {
-    var users = await apiFetch('/api/admin/users');
-    hideLoading();
+  var allTaskers = [];
+  var currentFilter = 'all';
 
-    // Filter taskers only
-    var taskers = (users || []).filter(function(u) { return u.role === 'TASKER' && u.taskers; }).map(function(u) {
-      return {
-        user_id: u.user_id,
-        tasker_id: u.taskers.tasker_id,
-        full_name: u.full_name,
-        email: u.email,
-        phone: u.phone,
-        created_at: u.created_at,
-        kyc_status: u.taskers.kyc_status,
-        service_type: u.taskers.service_type,
-        area: u.taskers.area,
-        order_count: u.taskers.order_count,
-        avg_rating: u.taskers.average_rating
-      };
-    });
+  function getKycStatus(tasker) {
+    return tasker.kyc_status || tasker.status || 'PENDING';
+  }
 
-    var tbody = document.querySelector('table tbody');
-    if (tbody) tbody.innerHTML = '';
+  function formatDate(d) {
+    if (!d) return '—';
+    var dt = new Date(d);
+    return dt.toLocaleDateString('vi-VN');
+  }
+
+  function renderTable(taskers) {
+    var tbody = document.getElementById('tasker-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
 
     if (!taskers || taskers.length === 0) {
-      if (tbody) tbody.innerHTML = '<tr><td colspan="8" class="text-center py-8">Chưa có Tasker nào</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center py-10 text-on-surface-variant">Không có Tasker nào</td></tr>';
+      var pag = document.getElementById('tasker-pagination-info');
+      if (pag) pag.textContent = '0 Tasker';
       return;
     }
 
-    // ===== Update Stats =====
-    var totalEl = document.querySelector('.text-headline-md.text-primary');
-    if (totalEl) totalEl.textContent = taskers.length.toLocaleString();
-    var pendingTaskers = taskers.filter(function(t) { return t.kyc_status === 'PENDING_APPROVAL'; });
-    var newMonthEl = document.querySelector('.text-headline-md.text-tertiary');
-    if (newMonthEl) newMonthEl.textContent = '+' + pendingTaskers.length;
-
-    // Update pending badge
-    var pendingBadge = document.querySelector('.bg-error.text-white.text-\\[10px\\]');
-    if (pendingBadge) pendingBadge.textContent = pendingTaskers.length;
-    var pendingCount2 = document.querySelector('.bg-white\\/20');
-    if (pendingCount2) pendingCount2.textContent = pendingTaskers.length;
-
-    if (!tbody) return;
-
     taskers.forEach(function(tasker, idx) {
-      var s = kycStatusMap[tasker.kyc_status] || kycStatusMap['PENDING'];
+      var ks = getKycStatus(tasker);
+      var s = kycStatusMap[ks] || { label: ks, cls: 'bg-gray-100 text-gray-700' };
+      var isPending = ks === 'PENDING' || ks === 'PENDING_APPROVAL';
+
       var tr = document.createElement('tr');
       tr.className = (idx % 2 ? 'bg-background/40 ' : '') + 'hover:bg-background transition-colors';
       tr.innerHTML =
         '<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>' +
         '<td class="p-4"><div class="flex items-center gap-3">' +
-          '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>' +
+          '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-[20px]">person</span></div>' +
           '<div><p class="font-semibold text-body-md text-on-surface">' + (tasker.full_name || '—') + '</p>' +
           '<p class="text-body-sm text-on-surface-variant opacity-70">' + (tasker.phone || '—') + '</p></div></div></td>' +
-        '<td class="p-4 text-body-sm">' + (tasker.service_type || 'Dọn nhà') + '</td>' +
-        '<td class="p-4 text-body-sm">' + (tasker.area || 'Q. Bình Thạnh') + '</td>' +
+        '<td class="p-4 text-body-sm">' + (tasker.service_type || '—') + '</td>' +
+        '<td class="p-4 text-body-sm">' + (tasker.area || '—') + '</td>' +
         '<td class="p-4 text-body-sm"><div class="flex flex-col"><span>' + (tasker.order_count || 0) + ' đơn</span>' +
           '<div class="flex items-center text-yellow-500"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: \'FILL\' 1;">star</span>' +
-          '<span class="ml-1 font-bold">' + (tasker.avg_rating ? tasker.avg_rating.toFixed(1) : '--') + '</span></div></div></td>' +
+          '<span class="ml-1 font-bold">' + (tasker.avg_rating ? Number(tasker.avg_rating).toFixed(1) : '—') + '</span></div></div></td>' +
         '<td class="p-4"><span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-tight ' + s.cls + '">' + s.label + '</span></td>' +
         '<td class="p-4 text-body-sm text-on-surface-variant">' + formatDate(tasker.created_at) + '</td>' +
         '<td class="p-4"><div class="flex gap-2">' +
-          (tasker.kyc_status === 'PENDING_APPROVAL' ?
-            '<button class="approve-btn p-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-[11px] font-bold px-3" data-uid="' + tasker.tasker_id + '">Duyệt</button>' +
-            '<button class="reject-btn p-1.5 border border-error text-error hover:bg-error/10 rounded-lg text-[11px] font-bold px-3" data-uid="' + tasker.tasker_id + '">Từ chối</button>' :
+          (isPending ?
+            '<button class="approve-btn px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-[11px] font-bold transition-colors" data-uid="' + tasker.tasker_id + '">Duyệt</button>' +
+            '<button class="reject-btn px-3 py-1.5 border border-error text-error hover:bg-error/10 rounded-lg text-[11px] font-bold transition-colors" data-uid="' + tasker.tasker_id + '">Từ chối</button>' :
             '<button class="p-1.5 hover:bg-surface-container rounded-lg text-tertiary transition-colors"><span class="material-symbols-outlined">visibility</span></button>'
           ) +
         '</div></td>';
+
       tbody.appendChild(tr);
     });
 
-    // ===== Approve/Reject Actions =====
-    document.querySelectorAll('.approve-btn').forEach(function(btn) {
+    // Bind approve/reject buttons
+    tbody.querySelectorAll('.approve-btn').forEach(function(btn) {
       btn.addEventListener('click', async function() {
         var uid = btn.getAttribute('data-uid');
         showLoading();
         try {
-          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: { status: 'APPROVED' } });
+          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'APPROVED' }) });
           hideLoading();
           showToastMsg('✅ Đã duyệt Tasker #' + uid);
           setTimeout(function() { location.reload(); }, 1500);
         } catch (e) { hideLoading(); showToastMsg('❌ ' + e.message); }
       });
     });
-
-    document.querySelectorAll('.reject-btn').forEach(function(btn) {
+    tbody.querySelectorAll('.reject-btn').forEach(function(btn) {
       btn.addEventListener('click', async function() {
         if (!confirm('Từ chối Tasker này?')) return;
         var uid = btn.getAttribute('data-uid');
         showLoading();
         try {
-          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: { status: 'REJECTED' } });
+          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'REJECTED' }) });
           hideLoading();
           showToastMsg('✅ Đã từ chối Tasker #' + uid);
           setTimeout(function() { location.reload(); }, 1500);
@@ -878,29 +824,176 @@ document.querySelectorAll('button').forEach(function(btn) {
       });
     });
 
-    // ===== Render Pending Panel (right sidebar) =====
-    var pendingPanel = document.querySelector('.w-\\[300px\\] .p-4.space-y-4');
-    if (pendingPanel && pendingTaskers.length > 0) {
-      // Clear static items (keep only buttons from originals)
-      var items = pendingPanel.querySelectorAll('.p-3.border');
-      items.forEach(function(item, i) {
-        if (pendingTaskers[i]) {
-          var nameEl = item.querySelector('.font-semibold');
-          var subEl = item.querySelector('.text-\\[11px\\]');
-          if (nameEl) nameEl.textContent = pendingTaskers[i].full_name || '—';
-          if (subEl) subEl.textContent = (pendingTaskers[i].service_type || 'N/A') + ' • ' + formatDate(pendingTaskers[i].created_at);
-        }
-      });
+    var pag = document.getElementById('tasker-pagination-info');
+    if (pag) pag.textContent = 'Hiển thị ' + taskers.length + ' Tasker';
+  }
+
+  function renderPendingPanel(pendingTaskers) {
+    var panel = document.getElementById('pending-panel-list');
+    if (!panel) return;
+
+    var badge = document.getElementById('badge-pending');
+    var badge2 = document.getElementById('badge-pending-panel');
+    if (badge) badge.textContent = pendingTaskers.length;
+    if (badge2) badge2.textContent = pendingTaskers.length;
+
+    if (pendingTaskers.length === 0) {
+      panel.innerHTML = '<p class="text-center text-body-sm text-on-surface-variant py-4">Không có Tasker chờ duyệt</p>';
+      return;
     }
 
-    // ===== Pagination =====
-    var pagInfo = document.querySelector('.p-4.flex.justify-between p');
-    if (pagInfo) pagInfo.textContent = 'Hiển thị 1-' + Math.min(taskers.length, 10) + ' trong số ' + taskers.length + ' Tasker';
+    panel.innerHTML = '';
+    pendingTaskers.slice(0, 5).forEach(function(t) {
+      var div = document.createElement('div');
+      div.className = 'p-3 border border-outline-variant/20 rounded-xl hover:border-primary/30 transition-all bg-surface-container-lowest';
+      div.innerHTML =
+        '<div class="flex items-center gap-3 mb-3">' +
+          '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary">person</span></div>' +
+          '<div class="min-w-0"><p class="font-semibold text-body-sm truncate">' + (t.full_name || '—') + '</p>' +
+          '<p class="text-[11px] text-on-surface-variant">' + (t.service_type || 'N/A') + ' • ' + formatDate(t.created_at) + '</p></div>' +
+        '</div>' +
+        '<div class="flex gap-2">' +
+          '<button class="approve-panel-btn flex-1 bg-green-600 hover:bg-green-700 text-white py-1.5 rounded-lg text-[11px] font-bold transition-colors" data-uid="' + t.tasker_id + '">Duyệt</button>' +
+          '<button class="reject-panel-btn flex-1 border border-error text-error hover:bg-error/10 py-1.5 rounded-lg text-[11px] font-bold transition-colors" data-uid="' + t.tasker_id + '">Từ chối</button>' +
+        '</div>';
+
+      div.querySelector('.approve-panel-btn').addEventListener('click', async function() {
+        var uid = this.getAttribute('data-uid');
+        showLoading();
+        try {
+          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'APPROVED' }) });
+          hideLoading();
+          showToastMsg('✅ Đã duyệt Tasker');
+          setTimeout(function() { location.reload(); }, 1500);
+        } catch(e) { hideLoading(); showToastMsg('❌ ' + e.message); }
+      });
+      div.querySelector('.reject-panel-btn').addEventListener('click', async function() {
+        if (!confirm('Từ chối Tasker này?')) return;
+        var uid = this.getAttribute('data-uid');
+        showLoading();
+        try {
+          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'REJECTED' }) });
+          hideLoading();
+          showToastMsg('✅ Đã từ chối');
+          setTimeout(function() { location.reload(); }, 1500);
+        } catch(e) { hideLoading(); showToastMsg('❌ ' + e.message); }
+      });
+
+      panel.appendChild(div);
+    });
+  }
+
+  function filterAndRender(filter, searchQuery) {
+    var filtered = allTaskers.slice();
+    // Tab filter
+    if (filter === 'pending') {
+      filtered = filtered.filter(function(t) { return t.kyc_status === 'PENDING' || t.kyc_status === 'PENDING_APPROVAL'; });
+    } else if (filter === 'active') {
+      filtered = filtered.filter(function(t) { return t.kyc_status === 'APPROVED' || t.kyc_status === 'ACTIVE'; });
+    } else if (filter === 'locked') {
+      filtered = filtered.filter(function(t) { return t.kyc_status === 'REJECTED' || t.kyc_status === 'SUSPENDED'; });
+    }
+    // Dropdown filters
+    var svcSel = document.getElementById('tasker-svc-filter');
+    var areaSel = document.getElementById('tasker-area-filter');
+    var statusSel = document.getElementById('tasker-status-filter');
+    var svcVal = svcSel ? svcSel.value : '';
+    var areaVal = areaSel ? areaSel.value : '';
+    var statusVal = statusSel ? statusSel.value : '';
+    if (svcVal) {
+      filtered = filtered.filter(function(t) { return (t.service_type || '').toLowerCase().includes(svcVal.toLowerCase()); });
+    }
+    if (areaVal) {
+      filtered = filtered.filter(function(t) { return (t.area || '').toLowerCase().includes(areaVal.toLowerCase()); });
+    }
+    if (statusVal) {
+      var statusKeyMap = { 'Hoat dong': ['APPROVED','ACTIVE'], 'Cho duyet': ['PENDING','PENDING_APPROVAL'], 'Tam khoa': ['REJECTED','SUSPENDED'] };
+      var keys = statusKeyMap[statusVal] || [statusVal.toUpperCase()];
+      filtered = filtered.filter(function(t) { return keys.indexOf(t.kyc_status) >= 0; });
+    }
+    // Search
+    if (searchQuery) {
+      var q = searchQuery.toLowerCase();
+      filtered = filtered.filter(function(t) {
+        return (t.full_name && t.full_name.toLowerCase().includes(q)) ||
+               (t.phone && t.phone.toLowerCase().includes(q)) ||
+               (t.service_type && t.service_type.toLowerCase().includes(q));
+      });
+    }
+    renderTable(filtered);
+  }
+
+  // Tab switching
+  ['all','pending','active','locked'].forEach(function(id) {
+    var btn = document.getElementById('tab-' + id);
+    if (btn) btn.addEventListener('click', function() {
+      currentFilter = id;
+      ['all','pending','active','locked'].forEach(function(t) {
+        var b = document.getElementById('tab-' + t);
+        if (b) { b.classList.remove('border-b-2','border-primary','text-primary','font-semibold'); b.classList.add('text-on-surface-variant'); }
+      });
+      btn.classList.add('border-b-2','border-primary','text-primary','font-semibold');
+      btn.classList.remove('text-on-surface-variant');
+      filterAndRender(currentFilter, searchInput ? searchInput.value : '');
+    });
+  });
+
+  // Search input
+  var searchInput = document.querySelector('input[placeholder*="Tìm kiếm"]');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      filterAndRender(currentFilter, searchInput.value);
+    });
+  }
+
+  // Dropdown filter events
+  ['tasker-svc-filter', 'tasker-area-filter', 'tasker-status-filter'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('change', function() { filterAndRender(currentFilter, searchInput ? searchInput.value : ''); });
+  });
+
+  // Load data
+  showLoading();
+  try {
+    var users = await apiFetch('/api/admin/users');
+    hideLoading();
+
+    allTaskers = (users || []).filter(function(u) { return u.role === 'TASKER' && u.taskers; }).map(function(u) {
+      return {
+        user_id: u.user_id,
+        tasker_id: u.taskers.tasker_id,
+        full_name: u.full_name,
+        phone: u.phone,
+        created_at: u.created_at,
+        kyc_status: u.taskers.kyc_status || u.status,
+        service_type: u.taskers.service_type,
+        area: u.taskers.area,
+        order_count: u.taskers.order_count || 0,
+        avg_rating: u.taskers.average_rating
+      };
+    });
+
+    var pendingTaskers = allTaskers.filter(function(t) { return t.kyc_status === 'PENDING' || t.kyc_status === 'PENDING_APPROVAL'; });
+
+    // Update stats
+    var statTotal = document.getElementById('stat-total');
+    var statPending = document.getElementById('stat-pending');
+    if (statTotal) statTotal.textContent = allTaskers.length;
+    if (statPending) statPending.textContent = pendingTaskers.length;
+
+    renderTable(allTaskers);
+    renderPendingPanel(pendingTaskers);
+
+    // Logout
+    var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
 
   } catch (e) {
     hideLoading();
-    console.warn('[Admin Tasker] Lỗi:', e.message);
+    showToastMsg('❌ Lỗi tải dữ liệu Tasker: ' + e.message);
+    console.error('[Admin Tasker]', e);
   }
 })();
+
 </script>
 </body></html>

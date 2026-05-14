@@ -2,6 +2,8 @@
 
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chị Ơi - Bảng điều khiển quản trị viên</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -139,8 +141,13 @@
 <!-- SideNavBar -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 bg-secondary-container/10 text-primary border-l-4 border-primary transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -294,35 +301,8 @@
 <option>Tuần trước</option>
 </select>
 </div>
-<div class="h-[280px] flex items-end justify-between gap-4 px-4">
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-surface-variant rounded-t-lg" style="height: 60%"></div>
-<span class="text-[10px] text-on-surface-variant/60 font-bold uppercase">Thứ 2</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-surface-variant rounded-t-lg" style="height: 45%"></div>
-<span class="text-[10px] text-on-surface-variant/60 font-bold uppercase">Thứ 3</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-surface-variant rounded-t-lg" style="height: 85%"></div>
-<span class="text-[10px] text-on-surface-variant/60 font-bold uppercase">Thứ 4</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-primary-container rounded-t-lg" style="height: 100%"></div>
-<span class="text-[10px] text-primary font-bold uppercase">Thứ 5</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-surface-variant rounded-t-lg" style="height: 70%"></div>
-<span class="text-[10px] text-on-surface-variant/60 font-bold uppercase">Thứ 6</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-surface-variant rounded-t-lg" style="height: 40%"></div>
-<span class="text-[10px] text-on-surface-variant/60 font-bold uppercase">Thứ 7</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-surface-variant rounded-t-lg" style="height: 30%"></div>
-<span class="text-[10px] text-on-surface-variant/60 font-bold uppercase">CN</span>
-</div>
+<div id="chart-container" class="h-[280px] flex items-end justify-between gap-4 px-4">
+<p class="text-[12px] text-on-surface-variant/60 italic text-center w-full self-center">Đang tải biểu đồ...</p>
 </div>
 </div>
 <!-- Critical Orders Table -->
@@ -634,16 +614,16 @@ document.querySelectorAll('[data-view-order], button, a').forEach(function(btn) 
 </script><!-- END-CHIOI-JS-INJECT -->
 
 <!-- Admin API Integration -->
-<script src="../shared/api.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script>
 (async function() {
   // ===== 1. Kiểm tra đăng nhập Admin =====
-  if (!ChiOiAuth.requireAuth('../Khachhang/dangnhap.html')) return;
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
   var user = ChiOiAuth.getUser();
   if (user && user.role !== 'ADMIN') {
     showToastMsg('Bạn không có quyền truy cập trang Admin.');
-    ChiOiAuth.logout('../Khachhang/dangnhap.html');
+    ChiOiAuth.logout('../khachhang/dangnhap.html');
     return;
   }
 
@@ -671,10 +651,28 @@ document.querySelectorAll('[data-view-order], button, a').forEach(function(btn) 
   try {
     var orders = await apiFetch('/api/admin/orders');
     if (orders && orders.length > 0) {
-      // Cập nhật số đơn đang chờ xử lý
+      // Cập nhật số đơn đang chờ xử lý và cần can thiệp (> 8 phút)
+      var now = new Date().getTime();
       var pendingOrders = orders.filter(function(o) { return o.status === 'PENDING' || o.status === 'SEARCHING'; });
+      var longWaitCount = pendingOrders.filter(function(o) {
+        return (now - new Date(o.created_at).getTime()) > 8 * 60 * 1000;
+      }).length;
+
       var pendingStatCard = document.querySelectorAll('.stat-card h3');
-      if (pendingStatCard[1]) pendingStatCard[1].textContent = pendingOrders.length;
+      if (pendingStatCard[1]) {
+        pendingStatCard[1].textContent = pendingOrders.length;
+        var labelEl = pendingStatCard[1].parentElement.parentElement.querySelector('p');
+        var badgeEl = pendingStatCard[1].parentElement.querySelector('span');
+        if (labelEl) {
+          if (longWaitCount > 0) {
+            labelEl.innerHTML = 'Đang xử lý <br><span class="text-error font-bold text-[10px]">(' + longWaitCount + ' cần chú ý)</span>';
+            if (badgeEl) { badgeEl.className = 'px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded-full cursor-pointer'; badgeEl.textContent = 'XỬ LÝ'; badgeEl.onclick = function() { window.location.href = 'canthiepdonhang.html'; }; }
+          } else {
+            labelEl.textContent = 'Đang xử lý';
+            if (badgeEl) { badgeEl.className = 'px-2 py-0.5 bg-secondary-container/20 text-on-secondary-container text-[10px] font-bold rounded-full'; badgeEl.textContent = 'GẤP'; }
+          }
+        }
+      }
 
       // Cập nhật đơn cần xử lý gấp (panel bên phải)
       var criticalSection = document.querySelector('.lg\\:col-span-2 .space-y-4');
@@ -783,11 +781,47 @@ document.querySelectorAll('[data-view-order], button, a').forEach(function(btn) 
     console.warn('[Admin] Không thể load tickets:', e.message);
   }
 
-  // ===== 7. Nút Đăng xuất =====
+  // ===== 7. Load Report Stats (biểu đồ + doanh thu thật) =====
+  try {
+    var report = await apiFetch('/api/admin/report-stats?period=7d');
+    if (report) {
+      // Cập nhật doanh thu hôm nay (stat card 4)
+      var statCards = document.querySelectorAll('.stat-card h3');
+      if (statCards[3]) statCards[3].innerHTML = formatVND(report.summary.totalRevenue || 0);
+      // Cập nhật tổng đơn (stat card 1)
+      if (statCards[0]) statCards[0].textContent = report.summary.totalOrders || 0;
+
+      // Render biểu đồ
+      var chartContainer = document.getElementById('chart-container');
+      if (chartContainer && report.chart && report.chart.labels.length > 0) {
+        var maxVal = Math.max.apply(null, report.chart.orders) || 1;
+        chartContainer.innerHTML = '';
+        report.chart.labels.forEach(function(label, i) {
+          var val = report.chart.orders[i] || 0;
+          var pct = Math.max((val / maxVal) * 100, 5);
+          var isToday = (i === report.chart.labels.length - 1);
+          var bar = document.createElement('div');
+          bar.className = 'flex-1 flex flex-col items-center gap-2';
+          bar.innerHTML = '<div class="text-[10px] font-bold text-on-surface-variant mb-1">' + val + '</div>' +
+            '<div class="w-full rounded-t-lg transition-all duration-500 ' + (isToday ? 'bg-primary-container' : 'bg-surface-variant') + '" style="height: ' + pct + '%"></div>' +
+            '<span class="text-[10px] ' + (isToday ? 'text-primary font-bold' : 'text-on-surface-variant/60 font-bold') + ' uppercase">' + label.slice(5) + '</span>';
+          chartContainer.appendChild(bar);
+        });
+      } else if (chartContainer) {
+        chartContainer.innerHTML = '<p class="text-[12px] text-on-surface-variant/60 italic text-center w-full self-center">Chưa có dữ liệu biểu đồ</p>';
+      }
+    }
+  } catch (e) {
+    console.warn('[Admin] Không thể load report-stats:', e.message);
+    var cc = document.getElementById('chart-container');
+    if (cc) cc.innerHTML = '<p class="text-[12px] text-error/60 italic text-center w-full self-center">Lỗi tải biểu đồ</p>';
+  }
+
+  // ===== 8. Nút Đăng xuất =====
   var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
-      ChiOiAuth.logout('../Khachhang/dangnhap.html');
+      ChiOiAuth.logout('../khachhang/dangnhap.html');
     });
   }
 

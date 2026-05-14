@@ -1,12 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8"/>
-<link rel="manifest" href="/manifest.json"/>
-<meta name="theme-color" content="#a04100"/>
-<link rel="apple-touch-icon" href="/icons/icon-192.png"/>
-<link rel="icon" type="image/png" href="/favicon.ico"/>
-<script src="/pwa-register.js" defer></script>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Trang chủ Tasker</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -280,7 +277,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-<script src="../shared/api.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script>
 (function() {
   // ===== 1. Kiểm tra đăng nhập =====
@@ -383,55 +380,6 @@
   });
   var taskerMarker = L.marker([defaultLat, defaultLng], { icon: taskerIcon }).addTo(map);
   // Không bindPopup — Bug 5: bỏ popup "Vị trí của bạn"
-
-  // Bug 12.1 FIX (report12): Route drawing tasker → khách hàng dùng OSRM
-  var customerMarker = null;
-  var routePolyline = null;
-  var customerIcon = L.divIcon({
-    className: '',
-    html: '<div style="width:32px;height:32px;background:#ff7e36;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;">📍</div>',
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-  });
-
-  async function drawRouteToCustomer(customerLat, customerLng) {
-    if (!customerLat || !customerLng) return;
-    var taskerPos = taskerMarker.getLatLng();
-
-    // Xóa marker + polyline cũ
-    if (customerMarker) { map.removeLayer(customerMarker); customerMarker = null; }
-    if (routePolyline) { map.removeLayer(routePolyline); routePolyline = null; }
-
-    customerMarker = L.marker([customerLat, customerLng], { icon: customerIcon }).addTo(map);
-
-    try {
-      var url = 'https://router.project-osrm.org/route/v1/driving/' +
-        taskerPos.lng + ',' + taskerPos.lat + ';' + customerLng + ',' + customerLat +
-        '?overview=full&geometries=geojson';
-      var resp = await fetch(url);
-      var data = await resp.json();
-      if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
-        var coords = data.routes[0].geometry.coordinates.map(function(c) { return [c[1], c[0]]; });
-        routePolyline = L.polyline(coords, { color: '#ff7e36', weight: 5, opacity: 0.8 }).addTo(map);
-        map.fitBounds(routePolyline.getBounds(), { padding: [40, 40] });
-      } else {
-        // Fallback: vẽ đường thẳng nếu OSRM không trả route
-        routePolyline = L.polyline([[taskerPos.lat, taskerPos.lng], [customerLat, customerLng]], { color: '#ff7e36', weight: 4, dashArray: '6, 8', opacity: 0.7 }).addTo(map);
-        map.fitBounds(routePolyline.getBounds(), { padding: [40, 40] });
-      }
-    } catch (e) {
-      console.warn('[Map] OSRM route fail, dùng đường thẳng:', e.message);
-      routePolyline = L.polyline([[taskerPos.lat, taskerPos.lng], [customerLat, customerLng]], { color: '#ff7e36', weight: 4, dashArray: '6, 8', opacity: 0.7 }).addTo(map);
-      map.fitBounds(routePolyline.getBounds(), { padding: [40, 40] });
-    }
-  }
-
-  function clearRoute() {
-    if (customerMarker) { map.removeLayer(customerMarker); customerMarker = null; }
-    if (routePolyline) { map.removeLayer(routePolyline); routePolyline = null; }
-    var taskerPos = taskerMarker.getLatLng();
-    map.setView(taskerPos, 16);
-  }
 
   // ===== 6. Kết nối Socket Realtime =====
   var socket = connectSocket();
@@ -589,11 +537,6 @@
       modal.style.display = 'block';
       modal.style.opacity = '1';
       modal.style.transform = 'scale(1)';
-
-      // Bug 12.1 FIX: vẽ route từ tasker → khách hàng nếu order có lat/lng
-      if (order.latitude != null && order.longitude != null) {
-        drawRouteToCustomer(Number(order.latitude), Number(order.longitude));
-      }
     }
   }
 
@@ -612,7 +555,6 @@
         isHandlingOrder = false;
         hideModal();
         showIdleState();
-        clearRoute(); // Bug 12.1: xóa route khi xong đơn
       } else {
         // Render lại card với trạng thái mới
         showActiveOrderCard(result);

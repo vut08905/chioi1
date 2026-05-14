@@ -15,13 +15,13 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
-  @Throttle({ auth: { limit: 5, ttl: 60_000 } })
-  @ApiOperation({ summary: 'Đăng nhập vào hệ thống (Customer, Tasker, Admin) — rate limit 5 lần/phút/IP' })
+  @Throttle({ auth: { limit: 10, ttl: 60_000 } })
+  @ApiOperation({ summary: 'Đăng nhập vào hệ thống (Customer, Tasker, Admin) — rate limit 10 lần/phút/IP' })
   @ApiBody({ type: LoginDto })
   async login(@Body() body: LoginDto) {
     const user = await this.authService.validateUser(body.phone, body.password);
     if (!user) {
-      throw new UnauthorizedException('Invalid phone or password');
+      throw new UnauthorizedException('Sai số điện thoại hoặc mật khẩu.');
     }
     return this.authService.login(user);
   }
@@ -58,5 +58,29 @@ export class AuthController {
   @ApiBody({ type: ChangePasswordDto })
   async changePassword(@Request() req, @Body() body: ChangePasswordDto) {
     return this.authService.changePassword(req.user.userId, body.current_password, body.new_password);
+  }
+}
+
+@ApiTags('OCR')
+@Controller('api/ocr')
+export class OcrController {
+  @Post('cccd')
+  @ApiOperation({ summary: 'OCR nhận diện CCCD từ ảnh base64' })
+  @ApiBody({ schema: { example: { image: 'data:image/jpeg;base64,...' } } })
+  async ocrCCCD(@Body() body: any) {
+    // Extract base64 data
+    const imageData = body.image || '';
+    if (!imageData) {
+      return { full_name: '', cccd_number: '', error: 'No image provided' };
+    }
+
+    // In production, call Google Vision / FPT.AI eKYC API here
+    // For now, return empty to trigger manual input fallback
+    // The frontend handles this gracefully
+    return {
+      full_name: '',
+      cccd_number: '',
+      message: 'OCR service chưa tích hợp. Vui lòng nhập thủ công.'
+    };
   }
 }

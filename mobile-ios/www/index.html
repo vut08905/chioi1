@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chị Ơi!</title>
+<style>
+body { margin:0; background:linear-gradient(135deg,#ff7e36,#a04100); height:100vh; display:flex; align-items:center; justify-content:center; font-family:-apple-system,sans-serif; color:#fff; }
+.box { text-align:center; }
+.spinner { width:48px; height:48px; border:4px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="box">
+<div class="spinner"></div>
+<h2>Chị Ơi!</h2>
+<p>Đang tải...</p>
+</div>
+<script>
+// Capacitor sẽ load remote URL từ capacitor.config.ts
+// File này chỉ là fallback nếu remote URL không reachable
+setTimeout(function(){ window.location.replace('https://app.chioi.vn'); }, 1500);
+</script>
+</body>
+</html>

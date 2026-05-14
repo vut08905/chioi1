@@ -2,6 +2,8 @@
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chị Ơi CMS - Quản lý đơn hàng</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -136,8 +138,13 @@
 <!-- SideNavBar -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -225,7 +232,7 @@
 </div>
 <div>
 <p class="text-on-surface-variant font-label-md text-label-md">Tổng đơn hàng</p>
-<h3 class="text-primary font-display-lg text-headline-md leading-tight">142</h3>
+<h3 id="stat-total-orders" class="text-primary font-display-lg text-headline-md leading-tight">...</h3>
 </div>
 </div>
 <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10 flex items-center gap-4 transition-transform hover:scale-[1.02]">
@@ -234,7 +241,7 @@
 </div>
 <div>
 <p class="text-on-surface-variant font-label-md text-label-md">Hôm nay</p>
-<h3 class="text-tertiary font-display-lg text-headline-md leading-tight">23</h3>
+<h3 id="stat-today-orders" class="text-tertiary font-display-lg text-headline-md leading-tight">...</h3>
 </div>
 </div>
 <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10 flex items-center gap-4 transition-transform hover:scale-[1.02]">
@@ -243,57 +250,61 @@
 </div>
 <div>
 <p class="text-on-surface-variant font-label-md text-label-md">Doanh thu</p>
-<h3 class="text-on-surface font-display-lg text-headline-md leading-tight">15.4M đ</h3>
+<h3 id="stat-revenue" class="text-on-surface font-display-lg text-headline-md leading-tight">...</h3>
 </div>
 </div>
 </div>
 <!-- Filters Section -->
 <section class="bg-surface-container-lowest p-stack_lg rounded-xl shadow-sm flex flex-col gap-6">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-<div class="flex flex-col gap-1.5">
-<label class="text-label-md font-label-bold px-1">Tìm kiếm</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" data-icon="search">search</span>
-<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all" placeholder="Mã đơn, tên khách..." type="text"/>
-</div>
-</div>
-<div class="flex flex-col gap-1.5">
-<label class="text-label-md font-label-bold px-1">Loại dịch vụ</label>
-<select class="w-full px-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary-container outline-none">
-<option>Tất cả</option>
-<option>Dọn dẹp</option>
-<option>Giặt ủi</option>
-<option>Nấu ăn</option>
-<option>Trông trẻ</option>
-<option>Chăm sóc người già</option>
-</select>
-</div>
-<div class="flex flex-col gap-1.5">
-<label class="text-label-md font-label-bold px-1">Trạng thái</label>
-<select class="w-full px-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary-container outline-none">
-<option>Tất cả</option>
-<option>Chờ xác nhận</option>
-<option>Đang thực hiện</option>
-<option>Hoàn thành</option>
-<option>Đã hủy</option>
-</select>
-</div>
-<div class="flex flex-col gap-1.5 lg:col-span-1 xl:col-span-1">
-<label class="text-label-md font-label-bold px-1">Thời gian</label>
-<div class="flex items-center gap-2">
-<input class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary-container outline-none" type="date"/>
-</div>
-</div>
-<div class="flex items-end gap-2 lg:col-span-4 xl:col-span-1">
-<button class="flex-1 px-6 py-2 bg-primary text-on-primary font-label-bold rounded-lg hover:bg-primary/90 transition-all active:scale-95 flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
-                            Lọc
-                        </button>
-<button class="px-3 py-2 border border-primary text-primary font-label-bold rounded-lg hover:bg-primary/5 transition-all flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
-                            Xuất Excel
-                        </button>
-</div>
+<div class="flex flex-wrap items-end gap-3">
+  <!-- Tìm kiếm -->
+  <div class="flex flex-col gap-1 min-w-[180px] flex-1">
+    <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide px-0.5">Tìm kiếm</label>
+    <div class="relative">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+      <input id="order-search" class="w-full pl-9 pr-3 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all" placeholder="Mã đơn, tên khách..." type="text"/>
+    </div>
+  </div>
+  <!-- Loại dịch vụ -->
+  <div class="flex flex-col gap-1 w-[150px]">
+    <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide px-0.5">Loại dịch vụ</label>
+    <select id="order-service-filter" class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
+      <option value="">Tất cả</option>
+    </select>
+  </div>
+  <!-- Trạng thái -->
+  <div class="flex flex-col gap-1 w-[150px]">
+    <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide px-0.5">Trạng thái</label>
+    <select id="order-status-filter" class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
+      <option value="">Tất cả</option>
+      <option value="PENDING">Chờ xác nhận</option>
+      <option value="ACCEPTED">Đã nhận</option>
+      <option value="IN_PROGRESS">Đang thực hiện</option>
+      <option value="COMPLETED">Hoàn thành</option>
+      <option value="CANCELLED">Đã hủy</option>
+    </select>
+  </div>
+  <!-- Thời gian: Từ ngày -->
+  <div class="flex flex-col gap-1 w-[135px]">
+    <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide px-0.5">Từ ngày</label>
+    <input id="order-date-from" class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" type="date"/>
+  </div>
+  <!-- Thời gian: Đến ngày -->
+  <div class="flex flex-col gap-1 w-[135px]">
+    <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wide px-0.5">Đến ngày</label>
+    <input id="order-date-to" class="w-full px-3 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" type="date"/>
+  </div>
+  <!-- Actions -->
+  <div class="flex items-center gap-2 pb-0">
+    <button id="btn-clear-filters" title="Xóa bộ lọc" class="h-[38px] px-3 border border-outline-variant/30 text-on-surface-variant rounded-lg hover:bg-error/10 hover:text-error hover:border-error/30 transition-all flex items-center gap-1.5 text-body-sm">
+      <span class="material-symbols-outlined text-[16px]">filter_alt_off</span>
+      <span class="hidden sm:inline text-[12px] font-semibold">Xóa lọc</span>
+    </button>
+    <button class="h-[38px] px-4 border border-primary text-primary font-label-bold rounded-lg hover:bg-primary/5 transition-all flex items-center gap-1.5 text-body-sm">
+      <span class="material-symbols-outlined text-[16px]">download</span>
+      <span class="text-[12px]">Xuất Excel</span>
+    </button>
+  </div>
 </div>
 </section>
 <!-- Data Table Section -->
@@ -313,153 +324,13 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-outline-variant/10">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-001</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Nguyễn Thị Lan</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Dọn dẹp</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Tasker Minh</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">20/05 14:00</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">350.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-label-md text-[11px]">Đang thực hiện</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="bg-[#F8F5F3]/30 hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-002</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Trần Văn Hùng</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Giặt ủi</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Tasker Hoa</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">20/05 15:30</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">210.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[11px]">Hoàn thành</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-003</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Lê Thu Hà</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Nấu ăn</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">-</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">21/05 09:00</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">500.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-label-md text-[11px]">Chờ xác nhận</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="bg-[#F8F5F3]/30 hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-004</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Phạm Minh Đức</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Dọn dẹp</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Tasker Tuấn</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">21/05 10:30</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">350.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-red-100 text-red-700 font-label-md text-[11px]">Đã hủy</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
-<!-- Row 5 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-005</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Ngô Mỹ Tâm</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Trông trẻ</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Tasker Phượng</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">21/05 16:00</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">450.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-label-md text-[11px]">Đang thực hiện</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
-<!-- Row 6 -->
-<tr class="bg-[#F8F5F3]/30 hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-006</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Hoàng Gia Bảo</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Chăm người già</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Tasker Hải</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">22/05 08:00</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">600.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[11px]">Hoàn thành</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
-<!-- Row 7 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-007</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Đỗ Thùy Linh</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Dọn dẹp</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Tasker Oanh</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">22/05 13:00</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">350.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-label-md text-[11px]">Chờ xác nhận</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
-<!-- Row 8 -->
-<tr class="bg-[#F8F5F3]/30 hover:bg-surface-container-low/50 transition-colors group">
-<td class="px-6 py-4 font-label-bold text-primary">#DH-2024-008</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Vũ Anh Khoa</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">Giặt ủi</td>
-<td class="px-6 py-4 font-body-sm text-on-surface">Tasker Bình</td>
-<td class="px-6 py-4 font-body-sm text-on-surface-variant">22/05 14:30</td>
-<td class="px-6 py-4 font-label-bold text-on-surface">210.000đ</td>
-<td class="px-6 py-4">
-<span class="mx-auto block w-max px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-label-md text-[11px]">Đang thực hiện</span>
-</td>
-<td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="visibility">visibility</button>
-<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined" data-icon="edit">edit</button>
-</td>
-</tr>
+<tr><td colspan="8" class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
 </tbody>
 </table>
 </div>
 <!-- Pagination -->
 <div class="px-6 py-4 flex items-center justify-between bg-surface-container-low border-t border-outline-variant">
-<p class="text-body-sm text-on-surface-variant">Showing <span class="font-bold">1-10</span> of <span class="font-bold">142</span> results</p>
-<div class="flex items-center gap-1">
-<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-highest transition-colors">
-<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
-</button>
-<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-primary text-on-primary font-label-bold text-label-md">1</button>
-<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors font-label-md text-label-md">2</button>
-<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors font-label-md text-label-md">3</button>
-<span class="px-2 text-on-surface-variant">...</span>
-<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors font-label-md text-label-md">15</button>
-<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-highest transition-colors">
-<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
-</button>
-</div>
+<p id="order-pag-info" class="text-body-sm text-on-surface-variant">Đang tải...</p>
 </div>
 </section>
 </div>
@@ -707,103 +578,199 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
 
 })();
 </script><!-- END-CHIOI-JS-INJECT -->
-
-<script src="../shared/api.js"></script>
+<script src="../shared/api.js?v=20260514"></script>
 <script>
 (async function() {
-  if (!ChiOiAuth.requireAuth('../Khachhang/dangnhap.html')) return;
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
-  var statusMap = {
-    'PENDING': { label: 'Chờ xác nhận', cls: 'bg-yellow-100 text-yellow-700' },
-    'ACCEPTED': { label: 'Đã nhận', cls: 'bg-blue-100 text-blue-700' },
-    'TASKER_ARRIVED': { label: 'Đã tới nơi', cls: 'bg-blue-100 text-blue-700' },
-    'IN_PROGRESS': { label: 'Đang thực hiện', cls: 'bg-blue-100 text-blue-700' },
-    'COMPLETED': { label: 'Hoàn thành', cls: 'bg-green-100 text-green-700' },
-    'CANCELLED': { label: 'Đã hủy', cls: 'bg-red-100 text-red-700' }
+  var STATUS_MAP = {
+    'PENDING':       { label: 'Cho xac nhan', cls: 'bg-yellow-100 text-yellow-700', val: 'Cho xac nhan' },
+    'ACCEPTED':      { label: 'Da nhan',       cls: 'bg-blue-100 text-blue-700',    val: 'Dang thuc hien' },
+    'TASKER_ARRIVED':{ label: 'Da toi noi',    cls: 'bg-blue-100 text-blue-700',    val: 'Dang thuc hien' },
+    'IN_PROGRESS':   { label: 'Dang thuc hien',cls: 'bg-blue-100 text-blue-700',    val: 'Dang thuc hien' },
+    'COMPLETED':     { label: 'Hoan thanh',    cls: 'bg-green-100 text-green-700',  val: 'Hoan thanh' },
+    'CANCELLED':     { label: 'Da huy',        cls: 'bg-red-100 text-red-700',      val: 'Da huy' },
   };
 
-  showLoading();
-  try {
-    var orders = await apiFetch('/api/admin/orders');
-    hideLoading();
+  var allOrders = [];
 
+  function applyFilters() {
+    var q         = (document.getElementById('order-search') || {}).value || '';
+    var svc       = (document.getElementById('order-service-filter') || {}).value || '';
+    var status    = (document.getElementById('order-status-filter') || {}).value || '';
+    var dateFrom  = (document.getElementById('order-date-from') || {}).value || '';
+    var dateTo    = (document.getElementById('order-date-to') || {}).value || '';
+
+    q = q.toLowerCase();
+    svc = svc.toLowerCase();
+
+    // Parse date boundaries (include full day for dateTo)
+    var fromMs = dateFrom ? new Date(dateFrom).getTime() : null;
+    var toMs   = dateTo   ? new Date(dateTo + 'T23:59:59').getTime() : null;
+
+    var filtered = allOrders.filter(function(o) {
+      var customerName = (o.customers && o.customers.users && o.customers.users.full_name) || '';
+      var serviceName  = (o.services && o.services.name) || '';
+      var orderCode    = '#DH-' + String(o.order_id).padStart(4, '0');
+
+      // Text search
+      var matchQ = !q || customerName.toLowerCase().includes(q) || serviceName.toLowerCase().includes(q) || orderCode.toLowerCase().includes(q);
+      // Service filter
+      var matchSvc = !svc || serviceName.toLowerCase().includes(svc);
+      // Status filter
+      var matchStatus = !status || o.status === status;
+      // Date range filter (dựa trên scheduled_time hoặc created_at)
+      var orderDate = new Date(o.scheduled_time || o.created_at).getTime();
+      var matchDate = (!fromMs || orderDate >= fromMs) && (!toMs || orderDate <= toMs);
+
+      return matchQ && matchSvc && matchStatus && matchDate;
+    });
+
+    renderTable(filtered);
+  }
+
+  function renderTable(orders) {
     var tbody = document.querySelector('table tbody');
-    if (tbody) tbody.innerHTML = '';
+    if (!tbody) return;
+    tbody.innerHTML = '';
 
     if (!orders || orders.length === 0) {
-      if (tbody) tbody.innerHTML = '<tr><td colspan="8" class="text-center py-8">Chưa có đơn hàng nào</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center py-10 text-on-surface-variant"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">search_off</span>Khong tim thay don hang nao</td></tr>';
+      updatePaginationInfo(0, 0);
       return;
     }
 
-    // ===== Update Stats Cards =====
-    var statCards = document.querySelectorAll('.grid.grid-cols-1 h3');
-    if (statCards[0]) statCards[0].textContent = orders.length;
-    var todayCount = orders.filter(function(o) {
-      return new Date(o.created_at).toDateString() === new Date().toDateString();
-    }).length;
-    if (statCards[1]) statCards[1].textContent = todayCount;
-    var revenue = orders.filter(function(o) { return o.status === 'COMPLETED'; }).reduce(function(sum, o) { return sum + Number(o.total_price || 0); }, 0);
-    if (statCards[2]) statCards[2].textContent = formatVND(revenue);
-
-    if (!tbody) return;
-
     orders.forEach(function(order, idx) {
-      var s = statusMap[order.status] || statusMap['PENDING'];
-      var customerName = (order.users && order.users.full_name) || '—';
-      var taskerName = (order.taskers && order.taskers.users && order.taskers.users.full_name) || '—';
-      var serviceName = (order.services && order.services.name) || '—';
+      var s = STATUS_MAP[order.status] || { label: order.status, cls: 'bg-gray-100 text-gray-500' };
+      var customerName = (order.customers && order.customers.users && order.customers.users.full_name) || 'Khong xac dinh';
+      var taskerName   = (order.taskers  && order.taskers.users  && order.taskers.users.full_name)   || '—';
+      var serviceName  = (order.services && order.services.name) || '—';
+      var orderCode    = '#DH-' + String(order.order_id).padStart(4, '0');
 
       var tr = document.createElement('tr');
-      tr.className = (idx % 2 ? 'bg-[#F8F5F3]/30 ' : '') + 'hover:bg-surface-container-low/50 transition-colors group';
-      tr.style.cursor = 'pointer';
+      tr.className = (idx % 2 ? 'bg-[#F8F5F3]/30 ' : '') + 'hover:bg-surface-container-low/50 transition-colors cursor-pointer';
       tr.innerHTML =
-        '<td class="px-6 py-4 font-label-bold text-primary">#DH-' + String(order.order_id).padStart(4, '0') + '</td>' +
-        '<td class="px-6 py-4 font-body-sm text-on-surface">' + customerName + '</td>' +
-        '<td class="px-6 py-4 font-body-sm text-on-surface-variant">' + serviceName + '</td>' +
-        '<td class="px-6 py-4 font-body-sm text-on-surface">' + taskerName + '</td>' +
-        '<td class="px-6 py-4 font-body-sm text-on-surface-variant">' + formatDateTime(order.scheduled_time || order.created_at) + '</td>' +
+        '<td class="px-6 py-4 font-label-bold text-primary">' + orderCode + '</td>' +
+        '<td class="px-6 py-4 text-body-sm text-on-surface">' + customerName + '</td>' +
+        '<td class="px-6 py-4 text-body-sm text-on-surface-variant">' + serviceName + '</td>' +
+        '<td class="px-6 py-4 text-body-sm text-on-surface">' + taskerName + '</td>' +
+        '<td class="px-6 py-4 text-body-sm text-on-surface-variant">' + formatDateTime(order.scheduled_time || order.created_at) + '</td>' +
         '<td class="px-6 py-4 font-label-bold text-on-surface">' + formatVND(order.total_price) + '</td>' +
-        '<td class="px-6 py-4"><span class="mx-auto block w-max px-3 py-1 rounded-full font-label-md text-[11px] ' + s.cls + '">' + s.label + '</span></td>' +
-        '<td class="px-6 py-4 text-right flex items-center justify-end gap-2">' +
-        '<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined view-btn">visibility</button></td>';
+        '<td class="px-6 py-4"><span class="mx-auto block w-max px-3 py-1 rounded-full text-[11px] font-bold ' + s.cls + '">' + s.label + '</span></td>' +
+        '<td class="px-6 py-4 text-right"><button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined view-btn">visibility</button></td>';
 
-      // Click row to open detail panel
       tr.addEventListener('click', function(e) {
         if (e.target.closest('button')) return;
-        document.getElementById('od-code').textContent = '#DH-' + String(order.order_id).padStart(4, '0');
-        document.getElementById('od-customer').textContent = customerName;
-        document.getElementById('od-service').textContent = serviceName;
-        document.getElementById('od-tasker').textContent = taskerName;
-        var odStatus = document.getElementById('od-status');
+        var panel = document.getElementById('order-detail-panel');
+        var el = function(id) { return document.getElementById(id); };
+        if (el('od-code'))     el('od-code').textContent     = orderCode;
+        if (el('od-customer')) el('od-customer').textContent = customerName;
+        if (el('od-service'))  el('od-service').textContent  = serviceName;
+        if (el('od-tasker'))   el('od-tasker').textContent   = taskerName;
+        var odStatus = el('od-status');
         if (odStatus) { odStatus.textContent = s.label; odStatus.className = 'px-3 py-1 rounded-full text-xs font-bold ' + s.cls; }
-        document.getElementById('order-detail-panel').classList.remove('hidden');
+        var odPrice = el('od-price');
+        if (odPrice) odPrice.textContent = formatVND(order.total_price);
+        var odDate = el('od-date');
+        if (odDate) odDate.textContent = formatDateTime(order.scheduled_time || order.created_at);
+        if (panel) panel.classList.remove('hidden');
       });
 
       tbody.appendChild(tr);
     });
+    updatePaginationInfo(orders.length, allOrders.length);
+  }
 
-    // ===== Pagination Info =====
-    var paginationInfo = document.querySelector('.px-6.py-4 p');
-    if (paginationInfo) {
-      var showing = Math.min(orders.length, 10);
-      paginationInfo.innerHTML = 'Showing <span class="font-bold">1-' + showing + '</span> of <span class="font-bold">' + orders.length + '</span> results';
-    }
+  function updatePaginationInfo(shown, total) {
+    var pag = document.getElementById('order-pag-info');
+    if (pag) pag.innerHTML = 'Hiển thị <span class="font-bold">' + shown + '</span> / <span class="font-bold">' + total + '</span> đơn hàng';
+  }
 
-    // ===== Detail Panel: "Can thiệp" button =====
-    var interventionBtn = document.getElementById('btn-can-thiep');
-    if (interventionBtn) {
-      interventionBtn.addEventListener('click', function() {
-        var codeEl = document.getElementById('od-code');
-        var code = codeEl ? codeEl.textContent.trim() : '';
-        var orderId = parseInt(code.replace(/\D/g, ''));
-        if (!orderId) { showToastMsg('Không xác định được đơn hàng'); return; }
-        window.location.href = 'canthiepdonhang.html?id=' + orderId;
+  function updateStats(orders) {
+    var elTotal = document.getElementById('stat-total-orders');
+    if (elTotal) elTotal.textContent = orders.length;
+    var todayCount = orders.filter(function(o) {
+      return new Date(o.created_at).toDateString() === new Date().toDateString();
+    }).length;
+    var elToday = document.getElementById('stat-today-orders');
+    if (elToday) elToday.textContent = todayCount;
+    var revenue = orders.filter(function(o) { return o.status === 'COMPLETED'; })
+      .reduce(function(sum, o) { return sum + Number(o.total_price || 0); }, 0);
+    var elRevenue = document.getElementById('stat-revenue');
+    if (elRevenue) elRevenue.textContent = formatVND(revenue);
+  }
+
+  /* Attach filter events */
+  ['order-search', 'order-service-filter', 'order-status-filter', 'order-date-from', 'order-date-to'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', applyFilters);
+    if (el) el.addEventListener('change', applyFilters);
+  });
+
+  /* Clear all filters button */
+  var clearBtn = document.getElementById('btn-clear-filters');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      var ids = ['order-search','order-date-from','order-date-to'];
+      ids.forEach(function(id) { var el = document.getElementById(id); if (el) el.value = ''; });
+      var selIds = ['order-service-filter','order-status-filter'];
+      selIds.forEach(function(id) { var el = document.getElementById(id); if (el) el.selectedIndex = 0; });
+      applyFilters();
+    });
+  }
+
+  /* Filter button */
+  var filterBtn = document.querySelector('button.bg-primary[class*="Loc"], button[class*="Loc kết quả"]');
+  /* find by text */
+  document.querySelectorAll('button').forEach(function(btn) {
+    if (btn.textContent.trim() === 'Lọc') btn.addEventListener('click', applyFilters);
+  });
+
+  /* Detail panel can thiep */
+  var interventionBtn = document.getElementById('btn-can-thiep');
+  if (interventionBtn) {
+    interventionBtn.addEventListener('click', function() {
+      var codeEl = document.getElementById('od-code');
+      var code = codeEl ? codeEl.textContent.trim() : '';
+      var orderId = parseInt(code.replace(/\D/g, ''));
+      if (!orderId) { showToastMsg('Khong xac dinh duoc don hang'); return; }
+      window.location.href = 'canthiepdonhang.html?id=' + orderId;
+    });
+  }
+
+  /* Load services from API to populate dropdown */
+  async function loadServices() {
+    try {
+      var services = await apiFetch('/api/services');
+      var sel = document.getElementById('order-service-filter');
+      if (!sel || !services) return;
+      sel.innerHTML = '<option value="">Tất cả</option>';
+      services.forEach(function(svc) {
+        var opt = document.createElement('option');
+        opt.value = svc.name;
+        opt.textContent = svc.name;
+        sel.appendChild(opt);
       });
-    }
+    } catch(e) { console.warn('Could not load services:', e.message); }
+  }
+
+  /* Load data */
+  loadServices();
+  showLoading();
+  try {
+    allOrders = await apiFetch('/api/admin/orders');
+    hideLoading();
+    updateStats(allOrders);
+    renderTable(allOrders);
   } catch (e) {
     hideLoading();
-    console.warn('[Admin Orders] Lỗi:', e.message);
+    showToastMsg('Loi tai du lieu: ' + e.message);
+    console.error(e);
   }
+
+  /* Logout */
+  var logoutBtn = document.querySelector('button[title="Dang xuat"]');
+  if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
 })();
 </script>
 </body></html>

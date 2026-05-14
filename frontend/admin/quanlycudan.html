@@ -2,6 +2,8 @@
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -141,8 +143,13 @@
 <!-- Sidebar Component -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -225,57 +232,98 @@
 <!-- Stats Row -->
 <div class="grid grid-cols-3 gap-gutter">
 <div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-sm flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
-<span class="material-symbols-outlined" data-icon="group">group</span>
-</div>
-<div>
-<p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Tổng cư dân</p>
-<h3 class="text-on-surface font-title-sm text-title-sm">1,248</h3>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-sm flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
-<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
-</div>
-<div>
-<p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Hoạt động</p>
-<h3 class="text-on-surface font-title-sm text-title-sm">1,102</h3>
-</div>
+  <div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+    <span class="material-symbols-outlined">group</span>
+  </div>
+  <div>
+    <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Tổng cư dân</p>
+    <h3 id="stat-total" class="text-on-surface font-title-sm text-title-sm">...</h3>
+  </div>
 </div>
 <div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-sm flex items-center gap-4">
-<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary">
-<span class="material-symbols-outlined" data-icon="add_reaction">add_reaction</span>
+  <div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+    <span class="material-symbols-outlined">check_circle</span>
+  </div>
+  <div>
+    <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Hoạt động</p>
+    <h3 id="stat-active" class="text-on-surface font-title-sm text-title-sm">...</h3>
+  </div>
 </div>
-<div>
-<p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Mới tháng này</p>
-<h3 class="text-on-surface font-title-sm text-title-sm">43</h3>
-</div>
+<div class="bg-surface-container-lowest p-stack_md rounded-xl shadow-sm flex items-center gap-4">
+  <div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">add_reaction</span>
+  </div>
+  <div>
+    <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">Mới tháng này</p>
+    <h3 id="stat-new" class="text-on-surface font-title-sm text-title-sm">...</h3>
+  </div>
 </div>
 </div>
 <!-- Toolbar -->
-<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center justify-between gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-3">
 <div class="flex items-center gap-3 flex-1">
-<select class="bg-surface-container-low border-outline-variant text-body-sm rounded-xl px-4 py-2 focus:ring-primary focus:border-primary">
-<option>Tất cả Khu vực/Toà nhà</option>
-<option>Quận 1</option>
-<option>Quận 7</option>
-<option>Bình Thạnh</option>
-</select>
-<select class="bg-surface-container-low border-outline-variant text-body-sm rounded-xl px-4 py-2 focus:ring-primary focus:border-primary">
-<option>Trạng thái tài khoản</option>
-<option>Hoạt động</option>
-<option>Đã khóa</option>
-</select>
-<button class="flex items-center gap-2 text-primary font-label-bold px-4 py-2 hover:bg-surface-container-low rounded-xl transition-colors">
-<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
-                            Lọc
-                        </button>
+<div class="relative flex-1 min-w-[200px]"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+  <input id="cudan-search" class="w-full pl-9 pr-4 py-2 bg-white border border-outline-variant/30 rounded-xl text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none shadow-sm transition-all" placeholder="Tim ten, SDT..."/>
 </div>
-<button class="bg-primary-container text-white px-6 py-2 rounded-xl font-label-bold flex items-center gap-2 hover:opacity-90 transition-opacity">
+<select id="filter-status" class="min-w-[160px] bg-white border border-outline-variant/30 text-body-sm rounded-xl px-4 py-2 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none shadow-sm">
+<option value="">Tất cả trạng thái</option>
+<option value="ACTIVE">Hoạt động</option>
+<option value="BANNED">Đã khóa</option>
+</select>
+</div>
+<button id="btn-add-resident" class="bg-primary text-white px-5 py-2 rounded-xl font-label-bold flex items-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap flex-shrink-0">
 <span class="material-symbols-outlined" data-icon="add">add</span>
-                        Thêm cư dân mới
-                    </button>
+Thêm cư dân mới
+</button>
 </div>
+
+<!-- Modal Thêm cư dân mới -->
+<div id="modal-add-resident" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="modal-add-overlay"></div>
+  <div class="relative bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-md p-8 z-10 animate-fadeIn">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="font-title-sm text-title-sm text-on-surface">Thêm cư dân mới</h3>
+      <button id="btn-close-add-modal" class="text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <form id="form-add-resident" class="space-y-4">
+      <div>
+        <label class="block text-body-sm text-on-surface-variant mb-1">Họ và tên <span class="text-error">*</span></label>
+        <input id="add-fullname" type="text" placeholder="Nguyễn Văn A"
+          class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2 text-body-sm focus:ring-primary focus:border-primary outline-none" required/>
+      </div>
+      <div>
+        <label class="block text-body-sm text-on-surface-variant mb-1">Số điện thoại <span class="text-error">*</span></label>
+        <input id="add-phone" type="tel" placeholder="0901234567"
+          class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2 text-body-sm focus:ring-primary focus:border-primary outline-none" required/>
+      </div>
+      <div>
+        <label class="block text-body-sm text-on-surface-variant mb-1">Mật khẩu <span class="text-error">*</span></label>
+        <input id="add-password" type="password" placeholder="Tối thiểu 6 ký tự"
+          class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2 text-body-sm focus:ring-primary focus:border-primary outline-none" required/>
+      </div>
+      <div>
+        <label class="block text-body-sm text-on-surface-variant mb-1">Email</label>
+        <input id="add-email" type="email" placeholder="example@email.com"
+          class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-2 text-body-sm focus:ring-primary focus:border-primary outline-none"/>
+      </div>
+      <div id="add-error" class="hidden text-error text-body-sm bg-error-container rounded-xl px-4 py-2"></div>
+      <div class="flex gap-3 pt-2">
+        <button type="button" id="btn-cancel-add"
+          class="flex-1 py-3 bg-surface-container-low text-on-surface-variant rounded-xl font-label-bold hover:bg-surface-container transition">
+          Hủy
+        </button>
+        <button type="submit" id="btn-submit-add"
+          class="flex-1 py-3 bg-primary text-white rounded-xl font-label-bold hover:opacity-90 transition flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm">person_add</span>
+          Tạo tài khoản
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Data Table -->
 <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
 <table class="w-full text-left border-collapse">
@@ -291,314 +339,74 @@
 <th class="p-4 font-label-bold text-on-surface-variant">THAO TÁC</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-surface-container-low">
-<!-- Row 1 -->
-<tr class="hover:bg-background transition-colors group">
-<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
-<td class="p-4">
-<div class="flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-primary-fixed-dim" data-alt="A portrait of a young professional Vietnamese woman in her 30s with a warm, friendly smile, dressed in business casual attire. The photography is soft-focus with natural lighting against a minimalist, bright interior background, reflecting the warm professionalism of the Chị Ơi brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1Gc4LmMtpmIZrDrNJ8QOxrE87dkhMOxnIX0QblL316FdrjCl9D6Ec_hkLRRSHW5VxXnueMVspMvk5xAY3haWAAKoqMfjii1VW-EvEw3dhO5-GKNhTznQoMuhOrAIpHdlBsijN3B25O9C8fGOv9Z4gKxvwcDoIWKt4IqOoHBg2bIyzI07ba0v0JWT4i5pUC28QA4kJyY4Jp65O-mOzXfjQmkcNr3Vc5FuNwGWc5zinKEaGCph-4ZQxNeBD366usUoUiN23rGOqOO8"/>
-<div>
-<p class="font-label-bold text-on-surface">Nguyễn An</p>
-<p class="text-body-sm text-on-surface-variant">an.nguyen@email.com</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-body-sm">0901 234 567</td>
-<td class="p-4 text-body-sm">Vinhomes Central Park, Bình Thạnh</td>
-<td class="p-4 text-body-sm text-center">12</td>
-<td class="p-4 text-body-sm text-right font-medium">4,250,000đ</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>
-</td>
-<td class="p-4">
-<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ"><span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span></button>
-<button class="text-error hover:bg-error-container p-1 rounded-lg" title="Khóa tài khoản"><span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="bg-background hover:bg-surface-container-low transition-colors group">
-<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
-<td class="p-4">
-<div class="flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-secondary-fixed" data-alt="A professional studio portrait of a middle-aged Vietnamese man wearing a light grey shirt, expressing confidence and trust. High-quality lighting highlights clean facial features against a neutral warm-toned background, maintaining the cohesive UI aesthetic of natural tones and professional clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCUX_q5nwpmyZWC8zB1xxbFR9NSqVo7yo_jq5a9ZJnqUQy_GE8a8jAoGsQw7Lhc3mY1rvXFco-6fAUdMO-MGM2bfa1PWzU2uqX9V_3c-UQxxUCx1vB_8BANVo7wYVwBlHHSxreF9C8JGnSGKYiGZ927p1kLFOd19wamdVx05aqhB2dJ9XQAobzB17KMNtioHoIT-AigNt7F3SJaBpMCnwptPVke0TnvkF7weVvkKljNKqZaO9GvTaOBL4POArG5Y_qUWDxWOGqbgo"/>
-<div>
-<p class="font-label-bold text-on-surface">Trần Hùng</p>
-<p class="text-body-sm text-on-surface-variant">hung.tran@email.com</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-body-sm">0912 345 678</td>
-<td class="p-4 text-body-sm">Masteri Thảo Điền, Quận 2</td>
-<td class="p-4 text-body-sm text-center">28</td>
-<td class="p-4 text-body-sm text-right font-medium">12,800,000đ</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>
-</td>
-<td class="p-4">
-<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ"><span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span></button>
-<button class="text-error hover:bg-error-container p-1 rounded-lg" title="Khóa tài khoản"><span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 3 (Locked) -->
-<tr class="hover:bg-background transition-colors group">
-<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
-<td class="p-4">
-<div class="flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-tertiary-fixed" data-alt="A cinematic portrait of a young Vietnamese woman in a modern urban apartment setting. Soft morning light flows through a window, illuminating her face as she looks thoughtfully. The palette is dominated by warm earth tones and soft whites, aligning with the tactile softness and ambient depth of the CMS brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQsBvcjRAUGSCl0LAKIlCPrq81V-MhJLMqUhde50QsuEg9kty218aUHmPNqxGeRtYLG_bqDebZT2tOHpKnBrpNUN00dQFvYo7NTKhOa_-GUyizo1wDiU3aWzXCdOa2QN5N7Mn-mJdStbWruYIImaXv6d-rHc6ZuxH7YV4ADuCa-cjA4pn_tyHDonF67Om0TLBAo9KEJVcaQ2gyX053LRpBqXV_N-qPIA6VsQ8IvgrVeZ60NEsImVht759t5cI3320eOcPT0xRm744"/>
-<div>
-<p class="font-label-bold text-on-surface">Lê Minh</p>
-<p class="text-body-sm text-on-surface-variant">minh.le@email.com</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-body-sm">0988 777 999</td>
-<td class="p-4 text-body-sm">Phú Mỹ Hưng, Quận 7</td>
-<td class="p-4 text-body-sm text-center">5</td>
-<td class="p-4 text-body-sm text-right font-medium">1,150,000đ</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-error-container text-error font-label-md text-[10px]">ĐÃ KHÓA</span>
-</td>
-<td class="p-4">
-<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ"><span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span></button>
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Mở khóa tài khoản"><span class="material-symbols-outlined text-[20px]" data-icon="lock_open">lock_open</span></button>
-</div>
-</td>
-</tr>
-<!-- Sample Row 4 -->
-<tr class="bg-background hover:bg-surface-container-low transition-colors group">
-<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
-<td class="p-4">
-<div class="flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-primary-fixed" data-alt="Close-up portrait of a cheerful elderly Vietnamese man with silver hair, radiating kindness and wisdom. The style is professional lifestyle photography with a shallow depth of field, using the light cream grey and orange accent colors from the design system to ensure visual harmony within the dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq_IDApNubKy8mpyszf96ET0A9EsxMXP0-2wVtEBxPytBS3AJENrQBzvox6jGZlzSBAj_ituCs7EBYNbuctk5Gg0xyAYp-5NghoQNmUbnL1MDjgrMWkzc2toA31Q_LujvnxHBihwSU_rxACc7og00F9tpc61_OFUf0RqJ6QtlClIAgr-a99bvFIvKHtt1b_Uc5jlhHtxXjSRFB9ElTPzA679SaXbaz8kkd1GyChbQowzSxHDKR5lvDarX-laSJxhmeg6pp2cn1lbU"/>
-<div>
-<p class="font-label-bold text-on-surface">Phạm Văn</p>
-<p class="text-body-sm text-on-surface-variant">van.pham@email.com</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-body-sm">0933 222 111</td>
-<td class="p-4 text-body-sm">Sun Avenue, Quận 2</td>
-<td class="p-4 text-body-sm text-center">15</td>
-<td class="p-4 text-body-sm text-right font-medium">6,300,000đ</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>
-</td>
-<td class="p-4">
-<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ"><span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span></button>
-<button class="text-error hover:bg-error-container p-1 rounded-lg" title="Khóa tài khoản"><span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span></button>
-</div>
-</td>
-</tr>
-<!-- Sample Row 5 -->
-<tr class="hover:bg-background transition-colors group">
-<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
-<td class="p-4">
-<div class="flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-secondary-container" data-alt="A portrait of a trendy young Vietnamese male artist in a light-filled studio. He has a creative and approachable aura. The lighting is diffused and ambient, minimizing harsh shadows, which complements the XL corner radii and soft aesthetic of the CMS interface design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfbnUj28WSAdrVDDF-CuwtN6MrmZ16SMSGzJfSk7Vr8BxQlXOGoqvqKpdNnBJqQC0Ifbalta_6HwnXAkldUSMK_nK-WcFo15-_yLksR5O50JalfeDVBSAEwp4qr_T3bpxzcl8jo-EGGA00ytUWmYN0TL4NGTvUs4_gZDPcKqEp3yt2Um4hdzDrUDuOTIr29CJiC4izy9bAESGen81h_EW4zC2cVwmluBlKUCW9zq66VCCEOk41bElDDpIzz_Tjpz7g_ssRT_Tooj8"/>
-<div>
-<p class="font-label-bold text-on-surface">Hoàng Linh</p>
-<p class="text-body-sm text-on-surface-variant">linh.hoang@email.com</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-body-sm">0944 555 666</td>
-<td class="p-4 text-body-sm">Sài Gòn Pearl, Bình Thạnh</td>
-<td class="p-4 text-body-sm text-center">9</td>
-<td class="p-4 text-body-sm text-right font-medium">2,750,000đ</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>
-</td>
-<td class="p-4">
-<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ"><span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span></button>
-<button class="text-error hover:bg-error-container p-1 rounded-lg" title="Khóa tài khoản"><span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span></button>
-</div>
-</td>
-</tr>
-<!-- Sample Row 6 -->
-<tr class="bg-background hover:bg-surface-container-low transition-colors group">
-<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
-<td class="p-4">
-<div class="flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-outline-variant" data-alt="Professional profile photo of a Vietnamese female executive in a sleek, modern office. Her expression is welcoming yet authoritative. The image uses a palette of soft terracottas and whites, perfectly matching the warm professionalism and earth-toned branding of the Chị Ơi content management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr5S0D5LqXqgHe496mR7ezvi7akBqlCHrRaj1zA73S4k3A7GwRu52jNxMEIsye5Od5JJG_F5ELSI38mIRuXqg1919mKkPH8Xx2Zyj_TLQtqbT0XidnJMaTuqhapNyeOrh8o6CAPecudNnNDlf4OFoM9z3GHb0--Qr5qhjUlKtvUNy4IogiMWTuokXkpBHPgtm9mSqCA5AALkPFiPqB5JKZLfhBYX942POdDiays9X5RHYVzzgsqHX1ZTTAfrI8Ax1Z__Cvm7pK9Dg"/>
-<div>
-<p class="font-label-bold text-on-surface">Trịnh Nam</p>
-<p class="text-body-sm text-on-surface-variant">nam.trinh@email.com</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-body-sm">0909 111 222</td>
-<td class="p-4 text-body-sm">Diamond Island, Quận 2</td>
-<td class="p-4 text-body-sm text-center">42</td>
-<td class="p-4 text-body-sm text-right font-medium">21,400,000đ</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>
-</td>
-<td class="p-4">
-<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ"><span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span></button>
-<button class="text-error hover:bg-error-container p-1 rounded-lg" title="Khóa tài khoản"><span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span></button>
-</div>
-</td>
-</tr>
-<!-- Sample Row 7 -->
-<tr class="hover:bg-background transition-colors group">
-<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
-<td class="p-4">
-<div class="flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-tertiary-container" data-alt="Natural sunlight illuminates a young Vietnamese man working on a laptop in a cozy, plant-filled cafe. The photo has a high-efficiency yet soothing feel, utilizing soft shadows and tactile textures. The image background is clean and uncluttered, adhering to the modern corporate structure of the design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj68sJl9wfrxCfEozEcRgVketKsBhKGMyuUUr3qST0_CZupU0QwxY3XfE8TQIFKJm6RLn473l9s0_qkiUoAgSFwQR4WGeUSstaYfB38Ad4qliC6xsNtL8WL8Vu1xWraxY4hJdV0nDS5qWcJGM72kDWZNxPnYyfHkZAF9KuNu_kTcfTaTaPcqRGakFM-kw-YgQzlnWjAfmLkUUoLhpSPTSGm-n1xCD2hP8pfg-WUrxp5u_m3rgvqUFeKIosPY5OkVL3ifPGQTgVY2I"/>
-<div>
-<p class="font-label-bold text-on-surface">Đặng Quang</p>
-<p class="text-body-sm text-on-surface-variant">quang.dang@email.com</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-body-sm">0966 888 777</td>
-<td class="p-4 text-body-sm">Bitexco Resident, Quận 1</td>
-<td class="p-4 text-body-sm text-center">18</td>
-<td class="p-4 text-body-sm text-right font-medium">5,900,000đ</td>
-<td class="p-4">
-<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>
-</td>
-<td class="p-4">
-<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ"><span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span></button>
-<button class="text-error hover:bg-error-container p-1 rounded-lg" title="Khóa tài khoản"><span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span></button>
-</div>
-</td>
-</tr>
+<tbody id="cudan-tbody" class="divide-y divide-surface-container-low">
+  <tr><td colspan="8" class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
 </tbody>
+
 </table>
 <!-- Pagination -->
 <div class="p-4 flex items-center justify-between border-t border-outline-variant bg-surface-container-lowest">
-<p class="text-body-sm text-on-surface-variant">Hiển thị 1-7 trong số 1,248 cư dân</p>
-<div class="flex items-center gap-1">
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-low text-on-surface-variant transition-colors">
-<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
-</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white font-label-bold">1</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-low transition-colors font-label-md">2</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-low transition-colors font-label-md">3</button>
-<span class="px-2 text-on-surface-variant">...</span>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-low transition-colors font-label-md">179</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-low text-on-surface-variant transition-colors">
-<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
-</button>
-</div>
+<p id="cudan-pag-info" class="text-body-sm text-on-surface-variant">Đang tải...</p>
 </div>
 </div>
 </div>
 <!-- Resident Detail Panel (Right Drawer style) -->
-<aside class="w-[340px] bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col border-l border-outline-variant/10">
+<aside id="cudan-detail-panel" class="w-[340px] bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col border-l border-outline-variant/10 hidden">
 <div class="p-6 border-b border-outline-variant/10 flex items-center justify-between">
-<h3 class="font-title-sm text-title-sm text-on-surface">Chi tiết cư dân</h3>
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined" data-icon="close">close</span>
-</button>
+  <h3 class="font-title-sm text-title-sm text-on-surface">Chi tiết cư dân</h3>
+  <button id="btn-close-detail" class="text-on-surface-variant hover:text-primary transition-colors">
+    <span class="material-symbols-outlined">close</span>
+  </button>
 </div>
 <div class="p-6 flex flex-col items-center text-center">
-<div class="relative mb-4">
-<img class="w-24 h-24 rounded-full border-4 border-surface-container-low shadow-sm" data-alt="A detailed, high-resolution portrait of a friendly Vietnamese woman in her late 20s, styled for a professional corporate directory. She has soft, natural makeup and a professional smile. The lighting is bright and airy, reflecting a modern light-mode interface with subtle warm grey tones and soft orange accents in the background blurred elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-RBaXiQaPgxuj62mGrYsjxW-pMU_jCOzWhy7XHS4Wn4_NLMx9zwN-AfC-0H0dgNv6Ci2xqhTKUv6Wx5dlnsedQqazLoGJTCg3XiG7ehri-nMTQdayZTZmNmoThJtNgS6NclI0xXfQTZfLTjRnbYXi36jjg_fPp4xp5gus6jhwyaSggmGTlwE7hjURwvf-W1DeC6zl34L1pwlrJHCBZgI5tye_WnGtmCGiF9NdZVk7AQ4EsyL6yZqNU-gY_bF6o5A_I3cxNowFbdc"/>
-<span class="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-4 border-surface-container-lowest rounded-full"></span>
-</div>
-<h4 class="font-title-sm text-title-sm text-on-surface">Nguyễn An</h4>
-<p class="text-body-sm text-on-surface-variant">Cư dân từ tháng 01, 2023</p>
-<div class="w-full mt-6 space-y-4 text-left">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-sm" data-icon="mail">mail</span>
-<span class="text-body-sm text-on-surface">an.nguyen@email.com</span>
-</div>
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-sm" data-icon="call">call</span>
-<span class="text-body-sm text-on-surface">0901 234 567</span>
-</div>
-<div class="flex items-start gap-3">
-<span class="material-symbols-outlined text-primary text-sm mt-0.5" data-icon="location_on">location_on</span>
-<span class="text-body-sm text-on-surface">Căn hộ A-12.04, Tòa Park 1, Vinhomes Central Park, Bình Thạnh, TP.HCM</span>
-</div>
-</div>
+  <div class="relative mb-4">
+    <div class="w-24 h-24 rounded-full border-4 border-surface-container-low shadow-sm bg-primary/10 flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary text-[48px]">person</span>
+    </div>
+    <span id="detail-status-dot" class="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-4 border-surface-container-lowest rounded-full hidden"></span>
+  </div>
+  <h4 id="detail-name" class="font-title-sm text-title-sm text-on-surface">---</h4>
+  <p id="detail-since" class="text-body-sm text-on-surface-variant">Cư dân từ ---</p>
+  <div class="w-full mt-6 space-y-4 text-left">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-sm">call</span>
+      <span id="detail-phone" class="text-body-sm text-on-surface">---</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+      <span id="detail-address" class="text-body-sm text-on-surface">---</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-sm">badge</span>
+      <span id="detail-status-label" class="text-body-sm text-on-surface">---</span>
+    </div>
+  </div>
 </div>
 <div class="px-6 py-4 bg-surface-container-low flex justify-between">
-<div>
-<p class="text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Tổng chi tiêu</p>
-<p class="font-title-sm text-title-sm text-primary">4,250,000đ</p>
-</div>
-<div class="text-right">
-<p class="text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Đơn hàng</p>
-<p class="font-title-sm text-title-sm text-on-surface">12</p>
-</div>
+  <div>
+    <p class="text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Tổng đơn hàng</p>
+    <p id="detail-orders" class="font-title-sm text-title-sm text-primary">0</p>
+  </div>
+  <div class="text-right">
+    <p class="text-label-md text-on-surface-variant uppercase tracking-wider mb-1">Chi tiêu</p>
+    <p id="detail-spent" class="font-title-sm text-title-sm text-on-surface">—</p>
+  </div>
 </div>
 <div class="flex-1 p-6 overflow-y-auto">
-<h5 class="font-label-bold text-on-surface-variant uppercase tracking-widest text-[10px] mb-4">LỊCH SỬ DỊCH VỤ GẦN ĐÂY</h5>
-<div class="space-y-4">
-<!-- History Item 1 -->
-<div class="flex gap-3">
-<div class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-primary flex-shrink-0">
-<span class="material-symbols-outlined text-[20px]" data-icon="cleaning_services">cleaning_services</span>
-</div>
-<div class="flex-1 min-w-0">
-<p class="text-body-sm font-medium text-on-surface truncate">Dọn dẹp nhà cửa (3h)</p>
-<p class="text-[11px] text-on-surface-variant">12/10/2023 • Hoàn thành</p>
-</div>
-<p class="text-body-sm font-medium text-on-surface">450k</p>
-</div>
-<!-- History Item 2 -->
-<div class="flex gap-3">
-<div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-tertiary flex-shrink-0">
-<span class="material-symbols-outlined text-[20px]" data-icon="local_laundry_service">local_laundry_service</span>
-</div>
-<div class="flex-1 min-w-0">
-<p class="text-body-sm font-medium text-on-surface truncate">Giặt ủi cao cấp</p>
-<p class="text-[11px] text-on-surface-variant">08/10/2023 • Hoàn thành</p>
-</div>
-<p class="text-body-sm font-medium text-on-surface">220k</p>
-</div>
-<!-- History Item 3 -->
-<div class="flex gap-3">
-<div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
-<span class="material-symbols-outlined text-[20px]" data-icon="shopping_basket">shopping_basket</span>
-</div>
-<div class="flex-1 min-w-0">
-<p class="text-body-sm font-medium text-on-surface truncate">Đi chợ hộ (Thực phẩm)</p>
-<p class="text-[11px] text-on-surface-variant">05/10/2023 • Hoàn thành</p>
-</div>
-<p class="text-body-sm font-medium text-on-surface">850k</p>
-</div>
-</div>
-<button class="w-full mt-6 py-2 border border-outline-variant text-on-surface-variant font-label-bold rounded-xl hover:bg-surface-container-low transition-colors">
-                        Xem tất cả giao dịch
-                    </button>
+  <h5 class="font-label-bold text-on-surface-variant uppercase tracking-widest text-[10px] mb-4">LỊCH SỬ ĐƠN HÀNG GẦN ĐÂY</h5>
+  <div id="detail-orders-list" class="space-y-3">
+    <p class="text-body-sm text-on-surface-variant text-center">Chọn một cư dân để xem lịch sử</p>
+  </div>
 </div>
 <div class="p-6 border-t border-outline-variant/10 flex gap-3">
-<button class="flex-1 py-3 bg-primary-container text-white rounded-xl font-label-bold flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
-                        Sửa thông tin
-                    </button>
-<button class="w-12 h-12 flex items-center justify-center border border-error text-error rounded-xl hover:bg-error-container transition-colors">
-<span class="material-symbols-outlined" data-icon="lock">lock</span>
-</button>
+  <button id="detail-btn-lock" class="flex-1 py-3 bg-error-container text-error rounded-xl font-label-bold flex items-center justify-center gap-2 hover:opacity-90 transition">
+    <span class="material-symbols-outlined text-sm">lock</span>
+    Khóa tài khoản
+  </button>
 </div>
 </aside>
 </div>
 </main>
-
-<script>
-document.querySelectorAll('table tbody tr').forEach(function(row) {
-  row.style.cursor = 'pointer';
-  row.addEventListener('click', function(e) {
-    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
-    var panel = document.querySelector('[data-panel], [id*="detail"]');
-    if (panel) panel.classList.remove('hidden');
-  });
-});
-</script>
 <!-- CHIOI-JS-INJECT -->
 <script>
 (function() {
@@ -799,4 +607,325 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
 
 })();
 </script><!-- END-CHIOI-JS-INJECT -->
+
+<script src="../shared/api.js?v=20260514"></script>
+<script>
+(async function() {
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
+
+  var allCustomers = [];
+  var allOrders = [];
+  var currentUserId = null;
+
+  // ---- MODAL THÊM CƯ DÂN ----
+  var modal = document.getElementById('modal-add-resident');
+  var btnAdd = document.getElementById('btn-add-resident');
+  var btnCloseModal = document.getElementById('btn-close-add-modal');
+  var btnCancelAdd = document.getElementById('btn-cancel-add');
+  var overlay = document.getElementById('modal-add-overlay');
+  var formAdd = document.getElementById('form-add-resident');
+  var addError = document.getElementById('add-error');
+
+  function openAddModal() {
+    if (modal) { modal.classList.remove('hidden'); formAdd && formAdd.reset(); if (addError) addError.classList.add('hidden'); }
+  }
+  function closeAddModal() { if (modal) modal.classList.add('hidden'); }
+
+  if (btnAdd) btnAdd.addEventListener('click', openAddModal);
+  if (btnCloseModal) btnCloseModal.addEventListener('click', closeAddModal);
+  if (btnCancelAdd) btnCancelAdd.addEventListener('click', closeAddModal);
+  if (overlay) overlay.addEventListener('click', closeAddModal);
+
+  if (formAdd) {
+    formAdd.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (addError) addError.classList.add('hidden');
+      var fullName = document.getElementById('add-fullname').value.trim();
+      var phone = document.getElementById('add-phone').value.trim();
+      var password = document.getElementById('add-password').value;
+      var email = document.getElementById('add-email').value.trim();
+
+      if (!fullName || !phone || !password) {
+        if (addError) { addError.textContent = 'Vui lòng điền đầy đủ các trường bắt buộc.'; addError.classList.remove('hidden'); }
+        return;
+      }
+      if (password.length < 6) {
+        if (addError) { addError.textContent = 'Mật khẩu phải có ít nhất 6 ký tự.'; addError.classList.remove('hidden'); }
+        return;
+      }
+
+      var submitBtn = document.getElementById('btn-submit-add');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Đang tạo...'; }
+
+      try {
+        var body = { full_name: fullName, phone: phone, password: password, role: 'CUSTOMER' };
+        if (email) body.email = email;
+        await apiFetch('/api/auth/register', { method: 'POST', body: JSON.stringify(body) });
+        closeAddModal();
+        showToastMsg('✅ Đã tạo tài khoản cư dân: ' + fullName);
+        // Reload danh sách
+        var newUsers = await apiFetch('/api/admin/users');
+        allCustomers = (newUsers || []).filter(function(u) { return u.role === 'CUSTOMER'; });
+        filterAndRender();
+        // Cập nhật stat-total
+        var statTotal = document.getElementById('stat-total');
+        if (statTotal) statTotal.textContent = allCustomers.length;
+        var statActive = document.getElementById('stat-active');
+        if (statActive) statActive.textContent = allCustomers.filter(function(u) { return u.status === 'ACTIVE'; }).length;
+      } catch(err) {
+        if (addError) { addError.textContent = '❌ ' + (err.message || 'Lỗi tạo tài khoản'); addError.classList.remove('hidden'); }
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<span class="material-symbols-outlined text-sm">person_add</span> Tạo tài khoản'; }
+      }
+    });
+  }
+  // ---- END MODAL ----
+
+  function fmtDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('vi-VN');
+
+  }
+
+  function renderTable(customers) {
+    var tbody = document.getElementById('cudan-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    if (!customers || customers.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center py-10 text-on-surface-variant">Không có cư dân nào</td></tr>';
+      var pag = document.getElementById('cudan-pag-info');
+      if (pag) pag.textContent = '0 cư dân';
+      return;
+    }
+
+    customers.forEach(function(u, idx) {
+      var isActive = u.status === 'ACTIVE';
+      var statusHtml = isActive
+        ? '<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>'
+        : '<span class="px-3 py-1 rounded-full bg-error-container text-error font-label-md text-[10px]">ĐÃ KHÓA</span>';
+      var orders = allOrders.filter(function(o) { return o.customer_id === u.user_id; });
+      var spent = orders
+        .filter(function(o) { return o.status === 'COMPLETED'; })
+        .reduce(function(sum, o) { return sum + Number(o.total_price || 0); }, 0);
+      var spentStr = spent > 0 ? spent.toLocaleString('vi-VN') + 'đ' : '—';
+
+      var tr = document.createElement('tr');
+      tr.className = (idx % 2 ? 'bg-background ' : '') + 'hover:bg-surface-container-low transition-colors group cursor-pointer';
+      var addr = (u.customers && u.customers.default_address) ? u.customers.default_address : '—';
+      tr.innerHTML =
+        '<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>' +
+        '<td class="p-4"><div class="flex items-center gap-3">' +
+          '<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-[18px]">person</span></div>' +
+          '<div><p class="font-label-bold text-on-surface">' + (u.full_name || '—') + '</p>' +
+          '<p class="text-body-sm text-on-surface-variant">' + (u.phone || '—') + '</p></div></div></td>' +
+        '<td class="p-4 text-body-sm">' + (u.phone || '—') + '</td>' +
+        '<td class="p-4 text-body-sm">' + addr + '</td>' +
+        '<td class="p-4 text-body-sm text-center font-medium">' + orders.length + '</td>' +
+        '<td class="p-4 text-body-sm text-right font-medium text-primary">' + spentStr + '</td>' +
+        '<td class="p-4">' + statusHtml + '</td>' +
+        '<td class="p-4"><div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">' +
+          '<button class="view-btn text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Xem hồ sơ" data-uid="' + u.user_id + '"><span class="material-symbols-outlined text-[20px]">visibility</span></button>' +
+          (isActive
+            ? '<button class="lock-btn text-error hover:bg-error-container p-1 rounded-lg" title="Kh\u00f3a" data-uid="' + u.user_id + '"><span class="material-symbols-outlined text-[20px]">lock</span></button>'
+            : '<button class="unlock-btn text-primary hover:bg-primary-fixed p-1 rounded-lg" title="Mở khóa" data-uid="' + u.user_id + '"><span class="material-symbols-outlined text-[20px]">lock_open</span></button>') +
+        '</div></td>';
+
+      tr.addEventListener('click', function(e) {
+        if (e.target.closest('button') || e.target.tagName === 'INPUT') return;
+        openDetail(u);
+      });
+      tbody.appendChild(tr);
+    });
+
+    // bind action buttons
+    tbody.querySelectorAll('.view-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var u = customers.find(function(c) { return c.user_id == btn.getAttribute('data-uid'); });
+        if (u) openDetail(u);
+      });
+    });
+
+    // bind lock/unlock buttons in table rows
+    tbody.querySelectorAll('.lock-btn, .unlock-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var uid = parseInt(btn.getAttribute('data-uid'));
+        var u = allCustomers.find(function(c) { return c.user_id === uid; });
+        if (!u) return;
+        var newStatus = u.status === 'ACTIVE' ? 'BANNED' : 'ACTIVE';
+        var action = newStatus === 'BANNED' ? 'Khóa' : 'Mở khóa';
+        if (!confirm(action + ' tài khoản "' + (u.full_name || u.phone) + '"?')) return;
+        showLoading();
+        apiFetch('/api/admin/users/' + uid + '/status', {
+          method: 'PATCH',
+          body: JSON.stringify({ status: newStatus })
+        }).then(function() {
+          hideLoading();
+          showToastMsg('✅ Đã ' + action.toLowerCase() + ' tài khoản!');
+          // Update local data, re-render without reload
+          u.status = newStatus;
+          filterAndRender();
+          if (currentUserId === uid) openDetail(u);
+        }).catch(function(err) {
+          hideLoading();
+          showToastMsg('❌ Lỗi: ' + err.message);
+        });
+      });
+    });
+
+    var pagEl = document.getElementById('cudan-pag-info');
+    if (pagEl) pagEl.textContent = 'Hiển thị ' + customers.length + ' cư dân';
+  }
+
+  function openDetail(u) {
+    currentUserId = u.user_id;
+    var panel = document.getElementById('cudan-detail-panel');
+    if (!panel) return;
+    panel.classList.remove('hidden');
+
+    document.getElementById('detail-name').textContent = u.full_name || '—';
+    document.getElementById('detail-since').textContent = 'Cư dân từ ' + fmtDate(u.created_at);
+    document.getElementById('detail-phone').textContent = u.phone || '—';
+    document.getElementById('detail-address').textContent = (u.customers && u.customers.default_address) ? u.customers.default_address : '—';
+    document.getElementById('detail-status-label').textContent = u.status === 'ACTIVE' ? 'Đang hoạt động' : 'Đã khóa';
+
+    var dot = document.getElementById('detail-status-dot');
+    if (dot) {
+      dot.classList.remove('hidden', 'bg-green-500', 'bg-error');
+      dot.classList.add(u.status === 'ACTIVE' ? 'bg-green-500' : 'bg-error');
+    }
+
+    var orders = allOrders.filter(function(o) { return o.customer_id === u.user_id; });
+    var spent = orders
+      .filter(function(o) { return o.status === 'COMPLETED'; })
+      .reduce(function(sum, o) { return sum + Number(o.total_price || 0); }, 0);
+    document.getElementById('detail-orders').textContent = orders.length + ' đơn';
+
+    var detailSpent = document.getElementById('detail-spent');
+    if (detailSpent) detailSpent.textContent = spent > 0 ? spent.toLocaleString('vi-VN') + 'đ' : '—';
+
+    var listEl = document.getElementById('detail-orders-list');
+    if (listEl) {
+      listEl.innerHTML = '';
+      if (orders.length === 0) {
+        listEl.innerHTML = '<p class="text-body-sm text-on-surface-variant text-center">Chưa có đơn hàng nào</p>';
+      } else {
+        orders.slice(0, 5).forEach(function(o) {
+          var svcName = (o.services && o.services.name) ? o.services.name : 'Dịch vụ';
+          var statusText = {'COMPLETED':'Hoàn thành','CANCELLED':'Đã hủy','IN_PROGRESS':'Đang làm','ACCEPTED':'Đã nhận','PENDING':'Chờ'}[o.status] || o.status;
+          var item = document.createElement('div');
+          item.className = 'flex gap-3 items-start';
+          item.innerHTML =
+            '<div class="w-9 h-9 rounded-lg bg-orange-100 flex items-center justify-center text-primary flex-shrink-0"><span class="material-symbols-outlined text-[18px]">receipt_long</span></div>' +
+            '<div class="flex-1 min-w-0"><p class="text-body-sm font-medium text-on-surface truncate">' + svcName + '</p>' +
+            '<p class="text-[11px] text-on-surface-variant">' + fmtDate(o.created_at) + ' • ' + statusText + '</p></div>';
+          listEl.appendChild(item);
+        });
+      }
+    }
+
+    var lockBtn = document.getElementById('detail-btn-lock');
+    if (lockBtn) {
+      lockBtn.innerHTML = u.status === 'ACTIVE'
+        ? '<span class="material-symbols-outlined text-sm">lock</span> Khóa tài khoản'
+        : '<span class="material-symbols-outlined text-sm">lock_open</span> Mở khóa tài khoản';
+      lockBtn.className = u.status === 'ACTIVE'
+        ? 'flex-1 py-3 bg-error-container text-error rounded-xl font-label-bold flex items-center justify-center gap-2 hover:opacity-90 transition'
+        : 'flex-1 py-3 bg-green-100 text-green-700 rounded-xl font-label-bold flex items-center justify-center gap-2 hover:opacity-90 transition';
+    }
+  }
+
+  // Close panel
+  var closeBtn = document.getElementById('btn-close-detail');
+  if (closeBtn) closeBtn.addEventListener('click', function() {
+    var panel = document.getElementById('cudan-detail-panel');
+    if (panel) panel.classList.add('hidden');
+  });
+
+  // Lock button in detail panel
+  var detailLockBtn = document.getElementById('detail-btn-lock');
+  if (detailLockBtn) {
+    detailLockBtn.addEventListener('click', function() {
+      if (!currentUserId) return;
+      var u = allCustomers.find(function(c) { return c.user_id === currentUserId; });
+      if (!u) return;
+      var newStatus = u.status === 'ACTIVE' ? 'BANNED' : 'ACTIVE';
+      var action = newStatus === 'BANNED' ? 'Khóa' : 'Mở khóa';
+      if (!confirm(action + ' tài khoản "' + (u.full_name || u.phone) + '"?')) return;
+      showLoading();
+      apiFetch('/api/admin/users/' + currentUserId + '/status', {
+        method: 'PATCH',
+        body: JSON.stringify({ status: newStatus })
+      }).then(function() {
+        hideLoading();
+        showToastMsg('✅ Đã ' + action.toLowerCase() + ' tài khoản!');
+        u.status = newStatus;
+        openDetail(u);
+        filterAndRender();
+      }).catch(function(err) {
+        hideLoading();
+        showToastMsg('❌ Lỗi: ' + err.message);
+      });
+    });
+  }
+
+  // Filter & Search
+  var searchInput = document.querySelector('input[placeholder*="Tìm"]');
+  var filterStatus = document.getElementById('filter-status');
+
+  function filterAndRender() {
+    var q = searchInput ? searchInput.value.toLowerCase() : '';
+    var st = filterStatus ? filterStatus.value : '';
+    var filtered = allCustomers.filter(function(u) {
+      var matchQ = !q || (u.full_name && u.full_name.toLowerCase().includes(q)) || (u.phone && u.phone.includes(q));
+      var matchSt = !st || u.status === st;
+      return matchQ && matchSt;
+    });
+    renderTable(filtered);
+  }
+
+  if (searchInput) searchInput.addEventListener('input', filterAndRender);
+  if (filterStatus) filterStatus.addEventListener('change', filterAndRender);
+
+  // Load data
+  showLoading();
+  try {
+    var results = await Promise.all([
+      apiFetch('/api/admin/users'),
+      apiFetch('/api/admin/orders')
+    ]);
+    hideLoading();
+    var users = results[0] || [];
+    allOrders = results[1] || [];
+
+    allCustomers = users.filter(function(u) { return u.role === 'CUSTOMER'; });
+
+    var now = new Date();
+    var activeCount = allCustomers.filter(function(u) { return u.status === 'ACTIVE'; }).length;
+    var newThisMonth = allCustomers.filter(function(u) {
+      var d = new Date(u.created_at);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    }).length;
+
+    var statTotal = document.getElementById('stat-total');
+    var statActive = document.getElementById('stat-active');
+    var statNew = document.getElementById('stat-new');
+    if (statTotal) statTotal.textContent = allCustomers.length;
+    if (statActive) statActive.textContent = activeCount;
+    if (statNew) statNew.textContent = '+' + newThisMonth;
+
+    renderTable(allCustomers);
+
+    // Logout
+    var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
+
+  } catch (e) {
+    hideLoading();
+    showToastMsg('❌ Lỗi tải dữ liệu: ' + e.message);
+    console.error('[CưDân]', e);
+  }
+})();
+</script>
 </body></html>

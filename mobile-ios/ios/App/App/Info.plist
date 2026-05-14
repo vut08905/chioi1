@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+        <string>Chị Ơi!</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+
+	<!-- ==================== PERMISSIONS (App Store usage descriptions) ==================== -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Chị Ơi! cần vị trí của bạn để tìm Tasker gần nhất và theo dõi đơn hàng trên bản đồ.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Chị Ơi! cần vị trí để cập nhật trạng thái đơn hàng và đường đi của Tasker.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Chị Ơi! cần camera để chụp ảnh KYC (đối với Tasker) và đính kèm trong chat.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Chị Ơi! cần thư viện ảnh để bạn chọn ảnh avatar và đính kèm trong chat.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Chị Ơi! cần microphone cho tính năng cuộc gọi voice giữa khách hàng và Tasker.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Chị Ơi! cần truy cập danh bạ để bạn dễ dàng giới thiệu ứng dụng cho bạn bè (tùy chọn).</string>
+
+	<!-- ==================== ATS (App Transport Security) ==================== -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>chioi.vn</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+			</dict>
+		</dict>
+	</dict>
+
+	<!-- ==================== Deep linking (Universal Links via assetlinks tương đương) ==================== -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>chioi</string>
+			</array>
+		</dict>
+	</array>
+	<key>WKAppBoundDomains</key>
+	<array>
+		<string>app.chioi.vn</string>
+		<string>chioi.vn</string>
+		<string>api.chioi.vn</string>
+	</array>
+
+	<!-- ==================== Background modes (push notification) ==================== -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+
+	<!-- ==================== Apple ID / encryption export compliance ==================== -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+</dict>
+</plist>

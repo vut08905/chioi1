@@ -1,7 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Hộp thư | Chị Ơi CMS</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -141,8 +143,13 @@
 <!-- Sidebar Left -->
 <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container-lowest dark:bg-surface-dim shadow-md flex flex-col py-stack_lg z-50">
 <div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-primary/20"/>
+<div>
 <h1 class="font-display-lg text-display-lg text-primary">Chị Ơi</h1>
 <p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin CMS</p>
+</div>
+</div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all duration-200 ease-in-out" href="bangdieukhien.html">
@@ -217,420 +224,333 @@
 </header>
 <!-- Main Content Canvas -->
 <main class="ml-[240px] pt-16 h-screen flex overflow-hidden">
-<!-- Column 1: Inbox Navigation (220px) -->
-<div class="w-[220px] bg-surface flex flex-col border-r border-outline-variant/20 py-6">
-<div class="space-y-1 px-4">
-<a class="flex items-center gap-3 px-3 py-2.5 bg-primary-container/10 text-primary font-label-bold rounded-xl" href="#">
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">inbox</span>
-<span>Tất cả tin nhắn</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-all" href="#">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-[20px]">warning</span>
-<span class="font-label-md">Khiếu nại</span>
-</div>
-<span class="bg-error/10 text-error text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined text-[20px]">assignment</span>
-<span class="font-label-md">Phản hồi đơn hàng</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined text-[20px]">support_agent</span>
-<span class="font-label-md">Hỗ trợ kỹ thuật</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined text-[20px] text-green-600">check_circle</span>
-<span class="font-label-md">Đã giải quyết</span>
-</a>
-<div class="py-4 px-2">
-<div class="h-px bg-outline-variant/30"></div>
-</div>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined text-[20px]">send</span>
-<span class="font-label-md">Đã gửi</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-all" href="#">
-<span class="material-symbols-outlined text-[20px]">archive</span>
-<span class="font-label-md">Lưu trữ</span>
-</a>
-</div>
-</div>
-<!-- Column 2: Conversation List (350px) -->
-<div class="w-[350px] bg-surface flex flex-col border-r border-outline-variant/20 overflow-y-auto">
-<div class="p-4 border-b border-outline-variant/10 flex justify-between items-center">
-<span class="font-label-bold text-on-surface-variant uppercase tracking-wider">Hội thoại mới nhất</span>
-<span class="material-symbols-outlined text-on-surface-variant text-[20px] cursor-pointer">filter_list</span>
-</div>
-<!-- List Items -->
-<div class="flex-1">
-<!-- Active Item -->
-<div class="p-4 bg-surface-container-low border-l-4 border-primary cursor-pointer">
-<div class="flex gap-3">
-<img alt="Phạm Thị Hoa" class="w-11 h-11 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbuZPbUBlFhaBgCcKEdJJ3lqTxIixkUpVV19tZSDTQxqm_ZpfJSIHc0xWuBfyuPSBHF1lMuXktUE_05vg84Y3D2-zWNeLDd5w5GI-pBabEa-te6Je04gwUAGkYZ1Dl05Jd0I_kPlaALCqcRdAs5zqxQgcfXqzk5UKl6Bz6xVDDraZFuYSb-hGVwB5xc6_OIrNkBwpqSooK4hZcJmaVV_VG3UE_Ta2N7tIzSwOgRvUx79SvwsoyZPfRhovKON6eHms3F8aW0PyX6KQ"/>
-<div class="flex-1 min-w-0">
-<div class="flex justify-between items-start mb-0.5">
-<h4 class="font-title-sm text-on-surface truncate">Phạm Thị Hoa</h4>
-<span class="text-[10px] text-on-surface-variant">2 phút</span>
-</div>
-<p class="text-body-sm text-on-surface font-semibold truncate mb-2">Đơn dọn dẹp chưa sạch ở góc bếp...</p>
-<span class="bg-error/10 text-error text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Khiếu nại</span>
-</div>
-</div>
-</div>
-<!-- Unread Item -->
-<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container/30 transition-all cursor-pointer">
-<div class="flex gap-3">
-<img alt="Nguyễn Văn" class="w-11 h-11 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyhlAWmtUg8hz3AilKoJ42yUkBfFDmJDMnS8O9Ex_ikSN3UI3DsfBbl9-mDbUIW_eiipYgm9u15WL3YylHwT_J1ZyB77BBKNU0GU_e_RO7Lql81VXMVtiZEJjTWD45AUG5Y_Flqxw6jIAvAmg0T0t_YXAIaLYjRP4WJ5rd3bU_yGVY7IUneVzYzfdF_auE0K5Wd_8G7hNWxF6x7-E9l68Sbmra6E5Iea0trUKSt9lYHXAM8mzcrW0gPEmN_1JM4afvQb0ju0VqvxU"/>
-<div class="flex-1 min-w-0">
-<div class="flex justify-between items-start mb-0.5">
-<h4 class="font-title-sm text-on-surface truncate">Nguyễn Văn A</h4>
-<span class="text-[10px] text-on-surface-variant font-bold text-primary">15:30</span>
-</div>
-<p class="text-body-sm text-on-surface font-semibold truncate mb-2">Tôi muốn đổi lịch dọn dẹp sang...</p>
-<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Phản hồi</span>
-</div>
-</div>
-</div>
-<!-- Read Item -->
-<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container/30 transition-all cursor-pointer opacity-70">
-<div class="flex gap-3">
-<img alt="Trần Hùng" class="w-11 h-11 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAql3M43Ck9MS57a8mXyaf6SUY1Vcah7hu_SP4TQBLZXSFUFkvfiNxP1ZJvLvZn236PdGOvg0twTTKWmuBVT6H5PQWIP-8p3gqlPcb1H6I0YsofzlQagcF89opRgCCMrIRwJNIDPErnL3idMRxPDYVdraWtFmHrel0hVmTGMGwaf5Zwxi3QjI07XrBmK0Fx2T_efrbfY3m3WB_Um8NdEkAgygvtW3tFbB22Gzopyss8VgktJmauB53KkVzLXsozTkTwKIv8uJjGbJ4"/>
-<div class="flex-1 min-w-0">
-<div class="flex justify-between items-start mb-0.5">
-<h4 class="text-body-md text-on-surface truncate">Trần Hùng</h4>
-<span class="text-[10px] text-on-surface-variant">Sáng nay</span>
-</div>
-<p class="text-body-sm text-on-surface-variant truncate mb-2">App của tôi không hiện nút thanh toán...</p>
-<span class="bg-tertiary/10 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Hỗ trợ</span>
-</div>
-</div>
-</div>
-<!-- More items -->
-<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container/30 transition-all cursor-pointer opacity-70">
-<div class="flex gap-3">
-<img alt="Lê Mai" class="w-11 h-11 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-MZIE0J45YZSrKjnVX1XulfILush5T8OGa1B2rO34uaV_C5jy45oIuk72GpqjErh0BO2TdwOwe1Q5pBU2tgckx9moo58wjARvmCFUQqZ2kYJD_7M_3ncnRpsnCCzznPffobIZo5Bz_hBBO5OYsQLUv-n6jVU4HJ49f4l9QRs6kOuEw_DRdbuBmOdbaDLrfIiN8csRyfRNp7PkDHs_fazaxcPjYp9sLw0wJlUpTL0NY643Eb1rbf4Houryhg2w6JOv2OfFJVXNBw8"/>
-<div class="flex-1 min-w-0">
-<div class="flex justify-between items-start mb-0.5">
-<h4 class="text-body-md text-on-surface truncate">Lê Thị Mai</h4>
-<span class="text-[10px] text-on-surface-variant">Hôm qua</span>
-</div>
-<p class="text-body-sm text-on-surface-variant truncate mb-2">Đã nhận được hoàn tiền, cảm ơn...</p>
-<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Giải quyết</span>
-</div>
-</div>
-</div>
-<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container/30 transition-all cursor-pointer opacity-70">
-<div class="flex gap-3">
-<img alt="Khánh Huyền" class="w-11 h-11 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4A74tGf0tEKjBDeS76VV_6thkllontsdvIPcz3vEy9yja6tM5hQNIOWKF8cQmT3vHWIjHafWt-qX3cLYZ2r1mDImEtO5fcyJzW1WtXxZvhKoTuF_PjozVF-A55NqyDteHHF4JE08N1qeGg3S3Pq26__Ml2eNJFKhpD50MOzSrbItHJqoyL1R5TLAskdZDQN8w8DCE4kaAGanK6QtdNe9nnVVgEUvSX4IR7EYAthaj0KFy1CAkPmO4VmAkrKo857IBa5S1kyvwAow"/>
-<div class="flex-1 min-w-0">
-<div class="flex justify-between items-start mb-0.5">
-<h4 class="text-body-md text-on-surface truncate">Khánh Huyền</h4>
-<span class="text-[10px] text-on-surface-variant">Hôm qua</span>
-</div>
-<p class="text-body-sm text-on-surface-variant truncate mb-2">Tôi cần hóa đơn VAT cho đơn hàng...</p>
-<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Phản hồi</span>
-</div>
-</div>
-</div>
-<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container/30 transition-all cursor-pointer opacity-70">
-<div class="flex gap-3">
-<img alt="Bình" class="w-11 h-11 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXjKDXRX9WhZrVpczmskINBWAMiDHotAQFsyQZoQHrAml1iQ3IOkqukTWRKUmKeesBFWP8Chg_un8Ac0LAGf6WH21FLYMuJ-sjDysfuR34jRvblzpfQDbAZ19TjE387JtGqUJ8IYojFT20Ye6uVXovti8U4Y4EambH5-vHcn-KICh-Gov3lWvSgzFyLwpiY5x_OwDtjFMtpxQ7GrJUNBn0JRetWc72sShBi96inuP4V4NztJCpyUGLtm38-1vy-bzQK7RmuToXE9A"/>
-<div class="flex-1 min-w-0">
-<div class="flex justify-between items-start mb-0.5">
-<h4 class="text-body-md text-on-surface truncate">Trương Quốc Bình</h4>
-<span class="text-[10px] text-on-surface-variant">2 ngày trước</span>
-</div>
-<p class="text-body-sm text-on-surface-variant truncate mb-2">Dịch vụ quá tệ, tôi yêu cầu hoàn...</p>
-<span class="bg-error/10 text-error text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Khiếu nại</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Column 3: Chat Content (Flexible) -->
-<div class="flex-1 bg-surface-container-lowest flex flex-col relative">
-<!-- Chat Header -->
-<div class="h-16 px-6 border-b border-outline-variant/10 flex items-center justify-between bg-surface-bright shadow-sm">
-<div class="flex items-center gap-3">
-<img alt="Phạm Thị Hoa" class="w-10 h-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT_xFgimTuptCSYe-eTsWEF-Y4wSlXlCb04K0Wh3hI_PimMfle_Xm6WXYXPAkoS3cinkVYkZ2P0vkiwPwFDLjH0xuLXkrIKuUqRyugIyVYB0SNrT0fvCbyaHQA4xbus3l2i0z8m27CqBPh2T2ak7rDelFXFL_0FjXL-u4hN-Eq8FMjSxWOJ9MJsxar5Bye9FQU8IelWG3KyYnQmUL3RS1d-pgSBsSShzJFflP7LAYu90D-LTqXy7Q-EbanrMMmVuLUKM7hGolIcLE"/>
-<div>
-<h3 class="font-title-sm text-on-surface">Phạm Thị Hoa</h3>
-<span class="text-[10px] bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded-full font-bold">ĐANG CHỜ XỬ LÝ</span>
-</div>
-</div>
-<button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-body-sm font-semibold flex items-center gap-2 transition-all shadow-md active:scale-95">
-<span class="material-symbols-outlined text-[18px]">check_circle</span>
-                    Đánh dấu đã giải quyết
-                </button>
-</div>
-<!-- Chat History -->
-<div class="flex-1 overflow-y-auto p-6 space-y-6 flex flex-col">
-<div class="text-center">
-<span class="text-[11px] font-label-bold text-on-surface-variant/40 bg-surface-container p-1.5 rounded-lg px-3">HÔM NAY, 14:02</span>
-</div>
-<!-- Incoming Message -->
-<div class="flex items-start gap-3 max-w-[80%]">
-<img alt="User" class="w-8 h-8 rounded-full mt-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLGD5HpzzbVwr77sTDwN6yZ_PomFar4fxSdGUqyPCDv0fp7ixRDgQITgHfhSGpRw_0ac4xS2vrg-1NDFULNI8qqkklp7XVp8fGdChfDvaG1KlyQ4FHZmZacmWfw2ZFYHVHIRXGTKvJh5Ch0Lh8Wq2CPECPWZY1Qb4n8x1dfNhf6dd3D_48EoPRsLLLB-z58vG9KvmKuay5-lLdlPYFJZvYWCJPNxVQFaJ6YAglAq_I02q3QqgDr4eure4Q1nonBzP9H8uTqzUCPvY"/>
-<div class="bg-white border border-outline-variant/20 p-4 rounded-2xl rounded-tl-none shadow-sm text-body-md text-on-surface">
-                        Chào Chị Ơi, đơn hàng dọn dẹp mã #CH-8821 sáng nay làm không được sạch lắm. Ở các góc bếp vẫn còn nhiều bụi bẩn chưa được lau kỹ.
-                    </div>
-</div>
-<!-- Admin Message -->
-<div class="flex items-start gap-3 max-w-[80%] self-end flex-row-reverse">
-<div class="bg-primary-container text-on-primary p-4 rounded-2xl rounded-tr-none shadow-md text-body-md">
-                        Dạ em chào chị Hoa ạ! Em rất xin lỗi về trải nghiệm không tốt này. Chị có thể chụp cho em xin vài tấm hình ở các góc bếp đó không ạ? Em sẽ làm việc lại với Tasker và có phương án xử lý ngay cho mình.
-                    </div>
-</div>
-<!-- Incoming Message with Image -->
-<div class="flex items-start gap-3 max-w-[80%]">
-<img alt="User" class="w-8 h-8 rounded-full mt-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtNK1-xp1NJV6TpqoARwNTYfDYEok5JzFya8zjgxC7d_Q_19_3WNLc_ZMjnh2m8CPc1lk0ol3i6EJKMe2q75BsXOY4oOoLjN9Hdn7CvUWTW2hhv-pnph04bsbNYT-lJZseJZtXkLIutN5WHKeaXaiV3mdNQ3AIvkfoZLRbYTHn3KuGc1jhoXKz5COjiCgAMkYRNHc2Qyjf7vD3n57qkCT8l4MsB-lZpticUzFoQjC272hqsc8nZ8YxEePa2ojaZxS8MblcrmpkiPc"/>
-<div class="space-y-2">
-<div class="bg-white border border-outline-variant/20 p-4 rounded-2xl rounded-tl-none shadow-sm text-body-md text-on-surface">
-                            Đây em nhé, vẫn còn vết bẩn rõ rệt luôn này. Chị trả phí Premium mà làm thế này chị không hài lòng đâu.
-                        </div>
-<div class="grid grid-cols-2 gap-2">
-<img alt="Bếp bụi 1" class="rounded-xl w-full h-32 object-cover border border-outline-variant/20" data-alt="A detailed close-up of a kitchen countertop corner showing visible dust and grime on a light-colored granite surface. The lighting is natural but shadows hide some areas, highlighting the lack of cleanliness. The scene is part of a modern, warm-toned residential kitchen interior with a focus on professional administrative service management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYSuk_hPGb5m0TZm8IbD5Q_Xq34iP1KozaDKvtsRl-T5v8VZgIbFWpIa8SAe-LHiiwZvX8ycpbRZQbag2loGzpJm2Ly131l3AnHivPhTk1AMvtVHtmzxsQScn1gUrTQKCQgzJ1fyaDpQ-Gref87m98zQupR6xLXcKwVgVNeA8xcPNgxd7uc4nbh4cdBDIw8d0AyfmJIJnJ8pkG6OQXHnQLVUA7qGZ8QZ3xTJ0tdaRrQbRepQXaUEuK4VdVnI_JzLeXTREdAvdeIXI"/>
-<img alt="Bếp bụi 2" class="rounded-xl w-full h-32 object-cover border border-outline-variant/20" data-alt="Another close-up shot of a kitchen cabinet corner with noticeable white dust particles accumulated. The shot is clear and sharp, emphasizing a service failure in a clean, professional household context. The visual style follows the warm professionalism of the Chị Ơi brand with soft ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHShZMVMFGpem_2rPVBd1XDU2sSHL38RCKNo3RomcADhmckpxBmaqSA7mA2jFyPIRM8b67pgRb7z3OcMg3yiMqjgB5qbI0pCzMRejak-q1wMNYvXd5et3EhHlbmNu4j0EDlpHWH-miAt21njQvHPDzbp89wVhZjm1Vqq2eA3XG6hMmqOyB-xm5B9Z4sQQ5mCmtdIUJ6SkdnAlRmrJT_af6bJD3cyHn30NTZweSPreJGoLyMIayTbPnfMa-9yoGeQPEoZE5cyL4JyI"/>
-</div>
-</div>
-</div>
-</div>
-<!-- Chat Bottom Input -->
-<div class="p-6 bg-surface-bright border-t border-outline-variant/10">
-<div class="bg-white border-2 border-outline-variant/20 focus-within:border-primary/50 transition-all rounded-2xl p-2 shadow-sm">
-<textarea class="w-full border-none focus:ring-0 text-body-md resize-none h-20 p-2 text-on-surface" placeholder="Nhập tin nhắn phản hồi..."></textarea>
-<div class="flex justify-between items-center px-2 py-1">
-<div class="flex items-center gap-1">
-<button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all">
-<span class="material-symbols-outlined">attach_file</span>
-</button>
-<button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all">
-<span class="material-symbols-outlined">image</span>
-</button>
-<button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all">
-<span class="material-symbols-outlined">sentiment_satisfied</span>
-</button>
-</div>
-<button class="bg-primary text-on-primary px-6 py-2 rounded-xl font-title-sm flex items-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-all">
-<span>Gửi</span>
-<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">send</span>
-</button>
-</div>
-</div>
-</div>
-</div>
+
+  <!-- Col 1: Nav filters (200px) -->
+  <div class="w-[200px] bg-surface-container-lowest border-r border-outline-variant/20 flex flex-col py-5 flex-shrink-0">
+    <div class="px-4 mb-4">
+      <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-3">Trạng thái</p>
+      <div class="space-y-1">
+        <button data-filter-status="" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm bg-primary text-white font-semibold">
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">all_inbox</span>Tất cả</span>
+          <span id="stat-total" class="text-[10px] font-bold bg-white/20 px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+        <button data-filter-status="OPEN" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm text-on-surface-variant hover:bg-surface-container-low transition-all">
+          <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Mới</span>
+          <span id="stat-open" class="text-[10px] font-bold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+        <button data-filter-status="IN_PROGRESS" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm text-on-surface-variant hover:bg-surface-container-low transition-all">
+          <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-500 flex-shrink-0"></span>Đang xử lý</span>
+          <span id="stat-progress" class="text-[10px] font-bold bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+        <button data-filter-status="RESOLVED" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm text-on-surface-variant hover:bg-surface-container-low transition-all">
+          <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>Đã giải quyết</span>
+          <span id="stat-resolved" class="text-[10px] font-bold bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Col 2: Ticket list (320px) -->
+  <div class="w-[320px] bg-surface flex flex-col border-r border-outline-variant/20 flex-shrink-0">
+    <div class="p-3 border-b border-outline-variant/10">
+      <div class="flex items-center gap-2 bg-surface-container-low rounded-xl px-3 py-2">
+        <span class="material-symbols-outlined text-sm text-on-surface-variant">search</span>
+        <input id="inbox-search" class="flex-1 bg-transparent border-none text-body-sm focus:ring-0 outline-none placeholder-on-surface-variant/50" placeholder="Tìm ticket, người dùng..."/>
+      </div>
+    </div>
+    <div class="flex-1 overflow-y-auto" id="ticket-list">
+      <div class="p-8 text-center text-on-surface-variant text-body-sm">
+        <span class="material-symbols-outlined text-4xl block mb-2 opacity-20">hourglass_empty</span>
+        Đang tải...
+      </div>
+    </div>
+  </div>
+
+  <!-- Col 3: Chat detail -->
+  <div class="flex-1 flex flex-col bg-surface-container-lowest overflow-hidden">
+
+    <!-- Empty state -->
+    <div id="chat-empty" class="flex-1 flex flex-col items-center justify-center text-on-surface-variant">
+      <span class="material-symbols-outlined text-6xl opacity-20 mb-4">forum</span>
+      <p class="text-body-md font-semibold opacity-50">Chọn một ticket để xem chi tiết</p>
+    </div>
+
+    <!-- Chat detail (hidden by default) -->
+    <div id="chat-detail" class="hidden flex-1 flex flex-col overflow-hidden">
+
+      <!-- Chat header -->
+      <div class="h-16 px-5 border-b border-outline-variant/10 flex items-center justify-between bg-surface-bright shadow-sm flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary" style="font-size:18px">person</span>
+          </div>
+          <div>
+            <h3 id="chat-header-name" class="font-title-sm text-on-surface text-[14px]">—</h3>
+            <div class="flex items-center gap-2">
+              <p id="chat-header-sub" class="text-[11px] text-on-surface-variant">—</p>
+              <span id="chat-header-status" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">—</span>
+            </div>
+          </div>
+        </div>
+        <button id="resolve-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-body-sm font-semibold flex items-center gap-2 transition-all shadow-md active:scale-95">
+          <span class="material-symbols-outlined text-[16px]">check_circle</span>
+          Đánh dấu đã giải quyết
+        </button>
+      </div>
+
+      <!-- Ticket info strip -->
+      <div class="bg-surface-container-low/60 border-b border-outline-variant/10 px-5 py-3 flex gap-6 text-body-sm flex-shrink-0">
+        <div><span class="text-on-surface-variant text-[11px]">Chủ đề:</span><br><span id="info-subject" class="font-semibold text-on-surface text-[13px]">—</span></div>
+        <div><span class="text-on-surface-variant text-[11px]">Đơn hàng:</span><br><span id="info-order" class="font-semibold text-on-surface text-[13px]">—</span></div>
+        <div class="flex-1"><span class="text-on-surface-variant text-[11px]">Mô tả:</span><br><span id="info-desc" class="text-on-surface text-[12px] line-clamp-1">—</span></div>
+        <div><span class="text-on-surface-variant text-[11px]">Ngày tạo:</span><br><span id="info-created" class="text-on-surface text-[12px]">—</span></div>
+      </div>
+
+      <!-- Messages -->
+      <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 flex flex-col"></div>
+
+      <!-- Reply input -->
+      <div class="p-4 bg-surface-bright border-t border-outline-variant/10 flex-shrink-0">
+        <div class="bg-white border-2 border-outline-variant/20 focus-within:border-primary/50 transition-all rounded-2xl p-2 shadow-sm">
+          <textarea id="msg-input" class="w-full border-none focus:ring-0 text-body-sm resize-none h-16 p-2 text-on-surface" placeholder="Nhập phản hồi..."></textarea>
+          <div class="flex justify-between items-center px-2 pt-1">
+            <div class="flex items-center gap-1">
+              <button class="p-1.5 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined text-[18px]">attach_file</span></button>
+              <button class="p-1.5 hover:bg-surface-container rounded-lg text-on-surface-variant transition-all"><span class="material-symbols-outlined text-[18px]">sentiment_satisfied</span></button>
+            </div>
+            <button id="send-msg-btn" class="bg-primary text-white px-5 py-1.5 rounded-xl font-label-bold flex items-center gap-2 text-body-sm hover:opacity-90 active:scale-95 transition-all">
+              Gửi <span class="material-symbols-outlined text-[16px]" style="font-variation-settings:'FILL' 1">send</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
+
 <script>
-// Show empty state on load instead of any open chat
-var chatPanel = document.getElementById('chat-panel');
-var panels = document.querySelectorAll('[id*="chat"], [id*="message-view"], [class*="chat-detail"]');
-panels.forEach(function(p) { if(!p.id.includes('empty')) p.classList.add('hidden'); });
-// Mark first conversation as clickable example
-var firstConv = document.querySelector('[data-conversation]');
-if (firstConv) {
-  firstConv.click(); // simulate click so something shows
-}
-</script>
-<!-- CHIOI-JS-INJECT -->
-<script>
-(function() {
+(async function() {
+  if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
-  // ---- 1. TABS ----
-  document.querySelectorAll('[data-tab-group]').forEach(function(tabGroup) {
-    var groupName = tabGroup.getAttribute('data-tab-group');
-    tabGroup.addEventListener('click', function(e) {
-      var btn = e.target.closest('[data-tab]');
-      if (!btn) return;
-      var tabId = btn.getAttribute('data-tab');
-      // Deactivate all tabs in group
-      document.querySelectorAll('[data-tab-group="' + groupName + '"] [data-tab]').forEach(function(t) {
-        t.classList.remove('text-primary', 'border-primary', 'border-b-2', 'font-semibold', 'bg-secondary-container/10');
-        t.classList.add('text-on-surface-variant');
-      });
-      // Activate clicked tab
-      btn.classList.add('text-primary', 'border-primary', 'border-b-2', 'font-semibold');
-      btn.classList.remove('text-on-surface-variant');
-      // Hide all panes
-      document.querySelectorAll('[data-tab-pane]').forEach(function(p) {
-        p.classList.add('hidden');
-      });
-      // Show target pane
-      var pane = document.querySelector('[data-tab-pane="' + tabId + '"]');
-      if (pane) pane.classList.remove('hidden');
-    });
-  });
+  var STATUS_MAP = {
+    'OPEN':        { label: 'Moi',       cls: 'bg-blue-100 text-blue-700',   dot: 'bg-blue-500' },
+    'IN_PROGRESS': { label: 'Dang xu ly',cls: 'bg-orange-100 text-orange-700', dot: 'bg-orange-500' },
+    'RESOLVED':    { label: 'Da giai quyet', cls: 'bg-green-100 text-green-700', dot: 'bg-green-500' },
+    'CLOSED':      { label: 'Da dong',   cls: 'bg-gray-100 text-gray-500',   dot: 'bg-gray-400' },
+  };
+  var PRIORITY_MAP = {
+    'HIGH':   { label: 'Cap thiet', cls: 'bg-red-100 text-red-700' },
+    'MEDIUM': { label: 'Trung binh', cls: 'bg-yellow-100 text-yellow-700' },
+    'LOW':    { label: 'Thap', cls: 'bg-gray-100 text-gray-500' },
+  };
 
-  // ---- 2. CLOSE ALL MODALS/PANELS ON LOAD ----
-  document.querySelectorAll('[data-modal], [data-panel]').forEach(function(el) {
-    el.classList.add('hidden');
-  });
-  // Also hide any element with class that suggests it's a modal overlay
-  document.querySelectorAll('.fixed.inset-0, [id*="modal"], [id*="overlay"], [id*="detail-panel"], [id*="slide-panel"]').forEach(function(el) {
-    // Only hide if it's a modal/overlay type (has backdrop-like styling or z-50+)
-    if (el.classList.contains('inset-0') || el.id.toLowerCase().includes('modal') || el.id.toLowerCase().includes('overlay') || el.id.toLowerCase().includes('panel')) {
-      el.classList.add('hidden');
+  var allTickets = [];
+  var currentTicket = null;
+  var filterStatus = '';
+
+  function fmtDT(d) {
+    if (!d) return '';
+    var dt = new Date(d);
+    var now = new Date();
+    var diff = Math.floor((now - dt) / 60000);
+    if (diff < 1) return 'Vua xong';
+    if (diff < 60) return diff + ' phut truoc';
+    if (diff < 1440) return Math.floor(diff/60) + ' gio truoc';
+    return dt.toLocaleDateString('vi-VN');
+  }
+
+  function renderList(tickets) {
+    var listEl = document.getElementById('ticket-list');
+    if (!listEl) return;
+    listEl.innerHTML = '';
+    if (!tickets || tickets.length === 0) {
+      listEl.innerHTML = '<div class="p-8 text-center text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">inbox</span>Khong co tin nhan nao</div>';
+      return;
     }
-  });
-
-  // ---- 3. TOGGLE PANELS/MODALS ----
-  // Open: data-open="target-id"
-  document.querySelectorAll('[data-open]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var target = document.getElementById(btn.getAttribute('data-open'));
-      if (target) {
-        target.classList.remove('hidden');
-        // animate slide-in
-        target.style.animation = 'slideIn 0.2s ease';
-      }
-    });
-  });
-
-  // Close: data-close="target-id" OR data-close-self
-  document.querySelectorAll('[data-close]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var target = document.getElementById(btn.getAttribute('data-close'));
-      if (target) target.classList.add('hidden');
-    });
-  });
-  document.querySelectorAll('[data-close-self]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var modal = btn.closest('[data-modal], [data-panel], .fixed.inset-0');
-      if (modal) modal.classList.add('hidden');
-    });
-  });
-
-  // Click backdrop to close
-  document.querySelectorAll('[data-modal]').forEach(function(modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) modal.classList.add('hidden');
-    });
-  });
-
-  // ---- 4. TABLE SEARCH FILTER ----
-  document.querySelectorAll('[data-search-table]').forEach(function(input) {
-    var tableId = input.getAttribute('data-search-table');
-    input.addEventListener('input', function() {
-      var q = input.value.toLowerCase().trim();
-      var table = document.getElementById(tableId);
-      if (!table) return;
-      var rows = table.querySelectorAll('tbody tr');
-      rows.forEach(function(row) {
-        var text = row.textContent.toLowerCase();
-        row.style.display = q === '' || text.includes(q) ? '' : 'none';
+    tickets.forEach(function(t) {
+      var st = STATUS_MAP[t.status] || { label: t.status, cls: 'bg-gray-100 text-gray-500' };
+      var pr = PRIORITY_MAP[t.priority] || { label: t.priority, cls: 'bg-gray-100 text-gray-500' };
+      var userName = t.users ? t.users.full_name : 'Nguoi dung #' + t.user_id;
+      var isUnread = t.status === 'OPEN';
+      var item = document.createElement('div');
+      item.className = 'ticket-item p-4 border-b border-outline-variant/10 hover:bg-surface-container/40 transition-all cursor-pointer' + (isUnread ? ' bg-primary/5' : '');
+      item.setAttribute('data-tid', t.ticket_id);
+      item.innerHTML =
+        '<div class="flex gap-3">' +
+          '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">' +
+            '<span class="material-symbols-outlined text-primary" style="font-size:18px">person</span>' +
+          '</div>' +
+          '<div class="flex-1 min-w-0">' +
+            '<div class="flex justify-between items-start mb-0.5">' +
+              '<h4 class="text-body-sm font-semibold text-on-surface truncate">' + userName + '</h4>' +
+              '<span class="text-[10px] text-on-surface-variant flex-shrink-0 ml-2">' + fmtDT(t.created_at) + '</span>' +
+            '</div>' +
+            '<p class="text-[12px] text-on-surface-variant truncate mb-1.5">' + (t.subject || '') + '</p>' +
+            '<div class="flex gap-1.5">' +
+              '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + st.cls + '">' + st.label + '</span>' +
+              '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + pr.cls + '">' + pr.label + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.ticket-item').forEach(function(i) {
+          i.classList.remove('bg-primary/10', 'border-l-4', 'border-primary');
+        });
+        item.classList.add('bg-primary/10', 'border-l-4', 'border-primary');
+        openTicket(t.ticket_id);
       });
-    });
-  });
-
-  // ---- 5. CONFIRM ACTION BUTTONS ----
-  document.querySelectorAll('[data-confirm]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      var msg = btn.getAttribute('data-confirm') || 'Bạn có chắc chắn không?';
-      if (!confirm(msg)) e.preventDefault();
-    });
-  });
-
-  // ---- 6. STATUS BADGE TOGGLE ----
-  document.querySelectorAll('[data-approve]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var row = btn.closest('tr, [data-item]');
-      if (row) {
-        var badge = row.querySelector('[data-status]');
-        if (badge) {
-          badge.textContent = 'Đã duyệt';
-          badge.className = badge.className.replace(/bg-w+-d+/d+s*text-w+-d+/g, '') + ' bg-green-100 text-green-700';
-        }
-        btn.disabled = true;
-        btn.textContent = 'Đã duyệt';
-        btn.className = btn.className + ' opacity-50 cursor-not-allowed';
-        var rejectBtn = row.querySelector('[data-reject]');
-        if (rejectBtn) { rejectBtn.disabled = true; rejectBtn.className += ' opacity-50 cursor-not-allowed'; }
-      }
-    });
-  });
-
-  document.querySelectorAll('[data-reject]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      if (!confirm('Từ chối người dùng này?')) return;
-      var row = btn.closest('tr, [data-item]');
-      if (row) {
-        var badge = row.querySelector('[data-status]');
-        if (badge) {
-          badge.textContent = 'Đã từ chối';
-          badge.className = badge.className.replace(/bg-w+-d+/d+s*text-w+-d+/g, '') + ' bg-red-100 text-red-700';
-        }
-        btn.disabled = true;
-        btn.textContent = 'Đã từ chối';
-        btn.className += ' opacity-50 cursor-not-allowed';
-        var approveBtn = row.querySelector('[data-approve]');
-        if (approveBtn) { approveBtn.disabled = true; approveBtn.className += ' opacity-50 cursor-not-allowed'; }
-      }
-    });
-  });
-
-  // ---- 7. DROPDOWN FILTER (visual) ----
-  document.querySelectorAll('[data-filter-col]').forEach(function(sel) {
-    sel.addEventListener('change', function() {
-      var col = parseInt(sel.getAttribute('data-filter-col'));
-      var val = sel.value.toLowerCase();
-      var tableId = sel.getAttribute('data-filter-table');
-      var table = document.getElementById(tableId);
-      if (!table) return;
-      var rows = table.querySelectorAll('tbody tr');
-      rows.forEach(function(row) {
-        var cell = row.cells[col];
-        var text = cell ? cell.textContent.toLowerCase() : '';
-        row.style.display = val === '' || val === 'all' || text.includes(val) ? '' : 'none';
-      });
-    });
-  });
-
-  // ---- 8. INBOX: click conversation row to show chat ----
-  document.querySelectorAll('[data-conversation]').forEach(function(item) {
-    item.addEventListener('click', function() {
-      document.querySelectorAll('[data-conversation]').forEach(function(i) {
-        i.classList.remove('bg-primary-container/15', 'border-l-4', 'border-primary');
-      });
-      item.classList.add('bg-primary-container/15', 'border-l-4', 'border-primary');
-      // Remove unread bold
-      item.classList.remove('font-semibold');
-      var chatPanel = document.getElementById('chat-panel');
-      var emptyState = document.getElementById('chat-empty');
-      if (chatPanel) chatPanel.classList.remove('hidden');
-      if (emptyState) emptyState.classList.add('hidden');
-    });
-  });
-
-  // ---- 9. SEND MESSAGE (Inbox) ----
-  var sendBtn = document.getElementById('send-msg-btn');
-  var msgInput = document.getElementById('msg-input');
-  var chatMessages = document.getElementById('chat-messages');
-  if (sendBtn && msgInput && chatMessages) {
-    function sendMessage() {
-      var text = msgInput.value.trim();
-      if (!text) return;
-      var bubble = document.createElement('div');
-      bubble.className = 'flex justify-end';
-      bubble.innerHTML = '<div class="max-w-[70%] bg-primary-container text-on-primary-container rounded-2xl rounded-br-sm px-4 py-2 text-sm">' + text + '<div class="text-[10px] opacity-60 mt-1 text-right">Vừa xong</div></div>';
-      chatMessages.appendChild(bubble);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-      msgInput.value = '';
-    }
-    sendBtn.addEventListener('click', sendMessage);
-    msgInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+      listEl.appendChild(item);
     });
   }
 
-  // ---- 10. SLIDE-IN ANIMATION ----
-  var style = document.createElement('style');
-  style.textContent = '@keyframes slideIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }';
-  document.head.appendChild(style);
+  async function openTicket(id) {
+    currentTicket = id;
+    var detail = document.getElementById('chat-detail');
+    var empty = document.getElementById('chat-empty');
+    if (detail) detail.classList.remove('hidden');
+    if (empty) empty.classList.add('hidden');
 
+    var loadingEl = document.getElementById('chat-messages');
+    if (loadingEl) loadingEl.innerHTML = '<div class="text-center py-8 text-on-surface-variant text-body-sm">Dang tai...</div>';
+
+    try {
+      var data = await apiFetch('/api/admin/tickets/' + id);
+      var t = data.ticket;
+      var msgs = data.messages || [];
+      if (!t) return;
+
+      var st = STATUS_MAP[t.status] || { label: t.status, dot: 'bg-gray-400' };
+      var userName = t.users ? t.users.full_name : 'Nguoi dung #' + t.user_id;
+      var userPhone = t.users ? t.users.phone : '';
+
+      // Header
+      var hdr = document.getElementById('chat-header-name');
+      var hdrSub = document.getElementById('chat-header-sub');
+      var hdrStatus = document.getElementById('chat-header-status');
+      if (hdr) hdr.textContent = userName;
+      if (hdrSub) hdrSub.textContent = (userPhone ? userPhone + ' · ' : '') + '#' + (t.ticket_code || t.ticket_id);
+      if (hdrStatus) {
+        hdrStatus.textContent = st.label;
+        hdrStatus.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' + (STATUS_MAP[t.status] ? STATUS_MAP[t.status].cls : 'bg-gray-100 text-gray-500');
+      }
+
+      // Ticket info panel
+      var infoSubject = document.getElementById('info-subject');
+      var infoDesc = document.getElementById('info-desc');
+      var infoOrder = document.getElementById('info-order');
+      var infoCreated = document.getElementById('info-created');
+      if (infoSubject) infoSubject.textContent = t.subject || '—';
+      if (infoDesc) infoDesc.textContent = t.description || '—';
+      if (infoOrder) infoOrder.textContent = t.orders ? '#' + t.orders.order_code : '—';
+      if (infoCreated) infoCreated.textContent = new Date(t.created_at).toLocaleString('vi-VN');
+
+      // Resolve button
+      var resolveBtn = document.getElementById('resolve-btn');
+      if (resolveBtn) {
+        resolveBtn.onclick = async function() {
+          if (!confirm('Danh dau da giai quyet?')) return;
+          await apiFetch('/api/admin/tickets/' + id, { method: 'PATCH', body: JSON.stringify({ status: 'RESOLVED' }) });
+          hdrStatus.textContent = 'Da giai quyet';
+          hdrStatus.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-green-100 text-green-700';
+          resolveBtn.disabled = true;
+          resolveBtn.classList.add('opacity-50');
+          loadTickets();
+        };
+        resolveBtn.disabled = (t.status === 'RESOLVED' || t.status === 'CLOSED');
+        resolveBtn.classList.toggle('opacity-50', resolveBtn.disabled);
+      }
+
+      // Messages
+      if (loadingEl) {
+        loadingEl.innerHTML = '';
+        if (msgs.length === 0) {
+          // Show description as first "message"
+          loadingEl.innerHTML = '<div class="text-center py-6 text-on-surface-variant text-body-sm opacity-60">Khong co tin nhan truc tiep cho ticket nay.<br>Noi dung: <em>' + (t.description || '') + '</em></div>';
+        } else {
+          msgs.forEach(function(m) {
+            var sender = m.users_messages_sender_idTousers;
+            var isAdmin = sender && (sender.role === 'ADMIN' || sender.role === 'admin');
+            var name = sender ? sender.full_name : 'Nguoi dung';
+            var bubble = document.createElement('div');
+            bubble.className = 'flex items-start gap-2.5 ' + (isAdmin ? 'flex-row-reverse self-end max-w-[75%] ml-auto' : 'max-w-[75%]');
+            bubble.innerHTML =
+              '<div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">' +
+                '<span class="material-symbols-outlined text-primary" style="font-size:14px">person</span>' +
+              '</div>' +
+              '<div>' +
+                '<div class="' + (isAdmin ? 'bg-primary-container text-white' : 'bg-white border border-outline-variant/20 text-on-surface') + ' px-4 py-2.5 rounded-2xl ' + (isAdmin ? 'rounded-tr-sm' : 'rounded-tl-sm') + ' text-body-sm shadow-sm">' +
+                  m.content +
+                '</div>' +
+                '<p class="text-[10px] text-on-surface-variant mt-0.5 ' + (isAdmin ? 'text-right' : '') + '">' + name + ' · ' + fmtDT(m.created_at) + '</p>' +
+              '</div>';
+            loadingEl.appendChild(bubble);
+          });
+          loadingEl.scrollTop = loadingEl.scrollHeight;
+        }
+      }
+    } catch(e) {
+      if (loadingEl) loadingEl.innerHTML = '<div class="text-center py-8 text-red-500 text-body-sm">Loi tai du lieu: ' + e.message + '</div>';
+    }
+  }
+
+  async function loadTickets() {
+    var url = '/api/admin/tickets' + (filterStatus ? '?status=' + filterStatus : '');
+    try {
+      allTickets = await apiFetch(url);
+      renderList(allTickets);
+    } catch(e) { console.error(e); }
+  }
+
+  // Stats
+  try {
+    var stats = await apiFetch('/api/admin/tickets/stats');
+    var el = function(id) { return document.getElementById(id); };
+    if (el('stat-total'))   el('stat-total').textContent   = stats.total || 0;
+    if (el('stat-open'))    el('stat-open').textContent    = stats.open || 0;
+    if (el('stat-progress'))el('stat-progress').textContent= stats.inProgress || 0;
+    if (el('stat-resolved'))el('stat-resolved').textContent= stats.resolved || 0;
+  } catch(e) { console.error(e); }
+
+  // Filter tabs
+  document.querySelectorAll('[data-filter-status]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-filter-status]').forEach(function(b) {
+        b.classList.remove('bg-primary', 'text-white');
+        b.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('bg-primary', 'text-white');
+      btn.classList.remove('text-on-surface-variant');
+      filterStatus = btn.getAttribute('data-filter-status');
+      var filtered = filterStatus ? allTickets.filter(function(t) { return t.status === filterStatus; }) : allTickets;
+      renderList(filtered);
+    });
+  });
+
+  // Search
+  var searchInput = document.getElementById('inbox-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      var q = searchInput.value.toLowerCase();
+      var filtered = allTickets.filter(function(t) {
+        return !q ||
+          (t.subject && t.subject.toLowerCase().includes(q)) ||
+          (t.users && t.users.full_name && t.users.full_name.toLowerCase().includes(q)) ||
+          (t.users && t.users.phone && t.users.phone.includes(q)) ||
+          (t.ticket_code && t.ticket_code.toLowerCase().includes(q));
+      });
+      if (filterStatus) filtered = filtered.filter(function(t) { return t.status === filterStatus; });
+      renderList(filtered);
+    });
+  }
+
+  // Logout
+  var logoutBtn = document.querySelector('button[title="Dang xuat"]');
+  if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
+
+  await loadTickets();
 })();
-</script><!-- END-CHIOI-JS-INJECT -->
+</script>
+
 </body></html>
