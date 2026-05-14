@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
@@ -231,6 +231,11 @@
 <span class="text-body-sm text-on-surface-variant">Thời gian</span>
 <span class="text-body-sm font-semibold text-on-background">20/10/2026 - 10:00</span>
 </div>
+<!-- TC-KH07-008: Hiển thị ghi chú -->
+<div id="note-row" class="flex justify-between items-start" style="display:none;">
+<span class="text-body-sm text-on-surface-variant">Ghi chú</span>
+<span id="order-note" class="text-body-sm font-semibold text-on-background text-right max-w-[60%]"></span>
+</div>
 <div class="pt-sm mt-sm border-t border-outline-variant flex justify-between items-center">
 <span class="text-body-lg font-bold text-on-background">Tổng tiền</span>
 <span class="text-headline-md font-bold text-primary">450.000 đ</span>
@@ -359,6 +364,16 @@
 
     // Bug 2 FIX: Render stepper based on actual status
     renderStepper(order.status || 'PENDING');
+
+    // TC-KH07-008: Hiển thị ghi chú nếu có
+    if (order.note) {
+      var noteRow = document.getElementById('note-row');
+      var noteSpan = document.getElementById('order-note');
+      if (noteRow && noteSpan) {
+        noteSpan.textContent = order.note;
+        noteRow.style.display = 'flex';
+      }
+    }
 
     // Update chat buttons with proper orderId and receiverId
     var chatBtns = document.querySelectorAll('[onclick*="chatvoitasker"]');

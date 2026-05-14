@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="vi"><head>
 <meta charset="utf-8"/>
@@ -200,6 +200,15 @@
 <h2 class="text-title-sm font-title-sm">Ghi chú</h2>
 <textarea id="noteInput" class="w-full h-24 p-4 rounded-2xl border-none ring-1 ring-outline-variant focus:ring-2 focus:ring-primary-container bg-white text-body-lg resize-none" placeholder="VD: Mang theo dụng cụ..."></textarea>
 </section>
+<!-- TC-KH07-001,002: Trường địa chỉ -->
+<section class="space-y-sm">
+<h2 class="text-title-sm font-title-sm">Địa chỉ</h2>
+<div class="relative">
+<input id="addressInput" class="w-full h-12 px-4 pr-12 rounded-2xl border-none ring-1 ring-outline-variant focus:ring-2 focus:ring-primary-container bg-white text-body-lg" type="text" placeholder="Nhập địa chỉ của bạn..." />
+<span class="material-symbols-outlined absolute right-4 top-3 text-on-surface-variant pointer-events-none">location_on</span>
+</div>
+<p id="addressError" class="text-error text-[12px] px-1 leading-tight" style="display:none;"></p>
+</section>
 <!-- Lỗi 3 FIX: Cảnh báo trùng đơn - chỉ hiện khi có đơn trùng trong DB -->
 <div id="duplicate-warning" class="bg-[#FFFBEB] border-l-4 border-yellow-500 p-4 rounded-2xl space-y-3" style="display:none;">
 <div class="flex items-start gap-3">
@@ -308,21 +317,41 @@
     }
   } catch (e) { console.warn('[Đặt DV] Không load được services:', e.message); }
 
-  // ===== Date Input =====
+  // ===== TC-KH07-001,002: Pre-fill address from user profile =====
+  try {
+    var profile = await apiFetch('/api/users/profile');
+    var addressInput = document.getElementById('addressInput');
+    if (profile && profile.address && addressInput) {
+      addressInput.value = profile.address;
+    }
+  } catch (e) { console.warn('[Đặt DV] Không lấy được profile:', e.message); }
+
+  // ===== Date Input - TC-KH07-005 FIX: Set min to today =====
   var dateInput = document.getElementById('dateInput');
+  var today = new Date().toISOString().split('T')[0];
   if (dateInput) {
-    dateInput.value = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+    dateInput.setAttribute('min', today); // Chặn chọn ngày quá khứ
     state.date = dateInput.value;
-    dateInput.addEventListener('change', function() { 
+    dateInput.addEventListener('change', function() {
+      // Double-check: nếu user bypass min attribute
+      if (this.value < today) {
+        showToastMsg('Không thể chọn ngày trong quá khứ');
+        this.value = today;
+      }
       state.date = this.value; 
       updateSummary(); 
       checkDuplicateOrders();
     });
   }
 
-  // ===== Time Input (Lỗi 1 FIX) =====
+  // ===== Time Input - TC-KH07-015 FIX: Set to current time =====
   var timeInput = document.getElementById('timeInput');
   if (timeInput) {
+    var now = new Date();
+    var hh = ('0' + now.getHours()).slice(-2);
+    var mm = ('0' + now.getMinutes()).slice(-2);
+    timeInput.value = hh + ':' + mm;
     state.time = timeInput.value;
     timeInput.addEventListener('change', function() { 
       state.time = this.value; 
@@ -431,28 +460,56 @@
       if (!state.date) { showToastMsg('Vui lòng chọn ngày'); return; }
       if (!state.serviceId) { showToastMsg('Không tìm thấy dịch vụ'); return; }
 
+      // TC-KH07-005: Validate ngày không được quá khứ
+      var todayStr = new Date().toISOString().split('T')[0];
+      if (state.date < todayStr) {
+        showToastMsg('Không thể chọn ngày trong quá khứ');
+        return;
+      }
+
       var textarea = document.getElementById('noteInput');
       state.note = textarea ? textarea.value.trim() : '';
 
+      // TC-KH07-001,002: Lấy địa chỉ từ input
+      var addressEl = document.getElementById('addressInput');
+      var addressErrEl = document.getElementById('addressError');
+      var userAddress = addressEl ? addressEl.value.trim() : '';
+      if (!userAddress) {
+        if (addressErrEl) {
+          addressErrEl.textContent = 'Vui lòng nhập địa chỉ.';
+          addressErrEl.style.display = 'block';
+        }
+        showToastMsg('Vui lòng nhập địa chỉ');
+        return;
+      }
+      if (addressErrEl) addressErrEl.style.display = 'none';
+
       var scheduledTime = state.date + 'T' + state.time + ':00';
       var totalPrice = state.hours * state.pricePerHour;
+
+      // TC-KH07-013: Kiểm tra số dư ví trước khi đặt
+      try {
+        var wallet = await apiFetch('/api/wallets/me');
+        if (wallet && typeof wallet.balance === 'number' && wallet.balance < totalPrice) {
+          // Hiển thị thông báo không đủ số dư + nút nạp tiền
+          var insufficientMsg = 'Số dư ví không đủ (' + formatVND(wallet.balance) + '). Cần ' + formatVND(totalPrice) + ' để đặt dịch vụ.';
+          showToastMsg(insufficientMsg, 5000);
+          // Tạo popup hỏi user có muốn nạp tiền không
+          if (confirm(insufficientMsg + '\n\nBạn có muốn nạp tiền không?')) {
+            window.location.href = 'naptienqr.html';
+          }
+          return;
+        }
+      } catch (walletErr) {
+        console.warn('[Ví] Không kiểm tra được số dư:', walletErr.message);
+        // Cho phép tiếp tục nếu không check được ví
+      }
 
       // Khóa nút ngay lập tức
       isSubmitting = true;
       submitBtn.disabled = true;
       submitBtn.classList.add('opacity-50');
       submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span> <span>Đang đặt đơn...</span>';
-
-      // Bug 4 FIX (report13): Lấy địa chỉ từ profile user thay vì hardcode
-      var userAddress = 'Chưa cập nhật địa chỉ';
-      try {
-        var profile = await apiFetch('/api/users/profile');
-        if (profile && profile.address) {
-          userAddress = profile.address;
-        }
-      } catch (e) {
-        console.warn('[Đặt DV] Không lấy được profile:', e.message);
-      }
 
       showLoading();
       try {
