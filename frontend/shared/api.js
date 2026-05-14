@@ -103,15 +103,27 @@ async function apiFetch(endpoint, options = {}) {
     config.body = JSON.stringify(config.body);
   }
 
-  const response = await fetch(url, config);
-
-  // Nếu 401 Unauthorized → token hết hạn → logout
-  if (response.status === 401) {
-    ChiOiAuth.logout();
-    throw new Error('Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.');
+  let response;
+  try {
+    response = await fetch(url, config);
+  } catch (networkErr) {
+    // Lỗi 7 FIX: Catch network error (mất mạng, DNS fail, etc.)
+    throw new Error('Không có kết nối mạng. Vui lòng kiểm tra Internet và thử lại.');
   }
 
   const data = await response.json().catch(() => null);
+
+  // Lỗi 4,10 FIX: Phân biệt 401 khi login vs 401 token expired
+  if (response.status === 401) {
+    // Nếu đang gọi endpoint login → KHÔNG logout, chỉ throw message từ backend
+    if (endpoint.includes('/auth/login')) {
+      const errorMsg = (data && data.message) || 'Sai số điện thoại hoặc mật khẩu.';
+      throw new Error(errorMsg);
+    }
+    // Các endpoint khác → token hết hạn → logout
+    ChiOiAuth.logout();
+    throw new Error('Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.');
+  }
 
   if (!response.ok) {
     const errorMsg = (data && data.message) || 'Lỗi hệ thống. Vui lòng thử lại.';
@@ -222,4 +234,55 @@ function showLoading() {
 function hideLoading() {
   var overlay = document.getElementById('api-loading');
   if (overlay) overlay.style.display = 'none';
+}
+
+// ==============================================================
+// 6. HELPER FUNCTIONS
+// ==============================================================
+
+/** Hiển thị toast message tạm thời */
+function showToastMsg(message, duration) {
+  duration = duration || 3000;
+  var existing = document.getElementById('chioi-toast');
+  if (existing) existing.remove();
+
+  var toast = document.createElement('div');
+  toast.id = 'chioi-toast';
+  toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:10000;background:#241914;color:white;padding:12px 24px;border-radius:12px;font-size:14px;font-family:"Be Vietnam Pro",sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.15);max-width:90%;text-align:center;animation:toastIn 0.3s ease-out;';
+  toast.textContent = message;
+
+  // Add animation keyframes
+  if (!document.getElementById('toast-style')) {
+    var style = document.createElement('style');
+    style.id = 'toast-style';
+    style.textContent = '@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}@keyframes toastOut{from{opacity:1}to{opacity:0}}';
+    document.head.appendChild(style);
+  }
+
+  document.body.appendChild(toast);
+  setTimeout(function() {
+    toast.style.animation = 'toastOut 0.3s ease-in forwards';
+    setTimeout(function() { toast.remove(); }, 300);
+  }, duration);
+}
+
+/** Format datetime sang dạng tiếng Việt */
+function formatDateTime(dateStr) {
+  if (!dateStr) return '';
+  var d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  var day = ('0' + d.getDate()).slice(-2);
+  var month = ('0' + (d.getMonth() + 1)).slice(-2);
+  var year = d.getFullYear();
+  var hours = ('0' + d.getHours()).slice(-2);
+  var mins = ('0' + d.getMinutes()).slice(-2);
+  return day + '/' + month + '/' + year + ' ' + hours + ':' + mins;
+}
+
+/** Format số tiền VNĐ */
+function formatVND(amount) {
+  if (!amount && amount !== 0) return '0đ';
+  var num = Number(amount);
+  if (isNaN(num)) return '0đ';
+  return num.toLocaleString('vi-VN') + 'đ';
 }

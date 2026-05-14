@@ -1,0 +1,40 @@
+lỗi 1: trang inbox admin 
+var chatPanel = document.getElementById('chat-panel');
+var panels = document.querySelectorAll('[id*="chat"], [id*="message-view"], [class*="chat-detail"]');
+panels.forEach(function(p) { if(!p.id.includes('empty')) p.classList.add('hidden'); });
+// Mark first conversation as clickable example
+var firstConv = document.querySelector('[data-conversation]');
+if (firstConv) {
+  firstConv.click(); // simulate click so something shows
+}
+
+
+
+bị thừa ra ngoài màn hình 
+lỗi 2: trang inbox admin chưa liên kết với lại khách hàng và tasker tao cần khách hàng và tasker có thể inbox được cho admin để khiếu nại
+lỗi 3: khiếu nại chưa có trong hệ thống tao chưa thấy 2 trang khách hàng và tasker có phần khiếu nại làm phần khiếu nại và cho nó thông tới admin này 
+lỗi 4: TC_T01_002	Kiểm tra đăng nhập khi sai mật khẩu	"1. Mở màn hình login 
+ 2. Chọn tab Tasker 
+ 3. Nhập SĐT đúng 
+ 4. Nhập mật khẩu sai 
+ 5. Nhấn “Đăng nhập”"	Hiển thị lỗi “Sai số điện thoại hoặc mật khẩu”	High	Hệ thống hiển thị lỗi "Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại"	Fail 
+lỗi 5: TC_T01_007	Kiểm tra định dạng số điện thoại không hợp lệ	"1. Nhập SĐT sai format 
+ 2. Nhập password 
+ 3. Nhấn “Đăng nhập”"	Hệ thống tự chặn khi nhập sai định dạng và Hiển thị “Số điện thoại không hợp lệ”	Medium	Hệ thống hiển thị thông báo " Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại" 	Fail 
+lỗi 6: TC_T01_009	Kiểm tra password phân biệt hoa thường	"1. Nhập đúng SĐT 
+ 2. Nhập password sai chữ hoa/thường 
+ 3. Login"	Đăng nhập thất bại	High		Not Run
+lỗi 7: TC_T01_014	Kiểm tra login khi mất kết nối mạng	"1. Tắt Internet 
+ 2. Nhập thông tin hợp lệ 
+ 3. Nhấn login"	Hiển thị “Không có kết nối mạng”	High	Hệ thống hiển thị thông báo " failed to fetch"	Fail
+lỗi 8: TC_T01_016	Kiểm tra lưu session đăng nhập	"1. Login thành công 
+ 2. Tắt app 
+ 3. Mở lại app"	Người dùng vẫn đăng nhập	High		Not Run
+lỗi 9:TC_T01_018	Kiểm tra giới hạn ký tự mật khẩu	1. Nhập password vượt giới hạn	Không cho nhập vượt max length " Nhập tối đa từ 8-20 Ký tự"	Low	Hệ thống không giới hạn các ký tự 	Fail
+lỗi 10: TC_T01_021	Kiểm tra tài khoản không tồn tại	"1. Nhập SĐT chưa đăng ký 
+ 2. Nhập password bất kỳ 
+ 3. Login"	Hiển thị lỗi tài khoản không tồn tại	High	Hệ thống hiện thị thôg báo "Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại"	Fail
+lỗi 11:TC_T01_026	Kiểm tra đăng nhập nhiều thiết bị	"1. Login trên thiết bị A 
+ 2. Login trên thiết bị B"	Hệ thống xử lý đúng theo business	Medium		Not Run
+lỗi 12:TC_T01_028	Kiểm tra keyboard mobile hiển thị đúng	1. Focus field SĐT	Hiển thị bàn phím số	Low		Not Run
+lỗi 13: tao chưa đăng ký tasker được và trang tasker đăng ký trông nó cực kỳ phèn tao cần mày lại trang đăng ký tasker vừa cho hết phèn vừa đăng ký được

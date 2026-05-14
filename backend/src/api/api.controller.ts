@@ -108,6 +108,13 @@ export class ApiController {
   }
 
   // --- Support APIs ---
+  @Get('support/tickets')
+  @Roles('CUSTOMER', 'TASKER')
+  @ApiOperation({ summary: 'Lấy danh sách ticket khiếu nại của user' })
+  async getUserTickets(@Request() req) {
+    return this.apiService.getUserTickets(req.user.userId);
+  }
+
   @Post('support/tickets')
   @Roles('CUSTOMER', 'TASKER')
   @ApiOperation({ summary: 'Tạo ticket hỗ trợ/khiếu nại' })

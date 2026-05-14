@@ -205,6 +205,14 @@ export class ApiService {
   }
 
   // --- Support APIs ---
+  async getUserTickets(userId: number) {
+    return this.prisma.support_tickets.findMany({
+      where: { user_id: userId },
+      orderBy: { created_at: 'desc' },
+      take: 50,
+    });
+  }
+
   async createTicket(userId: number, subject: string, description: string) {
     return this.prisma.support_tickets.create({
       data: {

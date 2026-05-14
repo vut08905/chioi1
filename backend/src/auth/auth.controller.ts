@@ -14,7 +14,7 @@ export class AuthController {
   async login(@Body() body: any) {
     const user = await this.authService.validateUser(body.phone, body.password);
     if (!user) {
-      throw new UnauthorizedException('Invalid phone or password');
+      throw new UnauthorizedException('Sai số điện thoại hoặc mật khẩu.');
     }
     return this.authService.login(user);
   }

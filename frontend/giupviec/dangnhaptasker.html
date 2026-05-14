@@ -1,7 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Đăng nhập Tasker | Chị Ơi!</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
@@ -121,7 +123,8 @@
 <!-- Abstract decorative shapes for modern tactile feel -->
 <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
 <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-black/5 rounded-full blur-2xl"></div>
-<div class="z-10 text-center px-container-padding">
+<div class="z-10 text-center px-container-padding flex flex-col items-center">
+<img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-24 h-24 rounded-full border-4 border-white/30 shadow-lg mb-3 object-cover"/>
 <h1 class="text-white font-display-lg text-display-lg font-extrabold tracking-tight">Chị Ơi!</h1>
 <p class="text-white/90 font-body-sm text-body-sm mt-xs opacity-90">Dịch vụ tiện ích tại gia</p>
 <!-- Bug 2 FIX (report14): Badge Tasker -->
@@ -146,14 +149,14 @@
 <div class="flex flex-col gap-xs">
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="phone">phone</span>
-<input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Số điện thoại" type="tel"/>
+<input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Số điện thoại" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="11"/>
 </div>
 </div>
 <!-- Password Input -->
 <div class="flex flex-col gap-xs">
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="lock">lock</span>
-<input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Mật khẩu" type="password"/>
+<input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Mật khẩu (8-20 ký tự)" type="password" minlength="8" maxlength="20"/>
 <button id="togglePassword" class="absolute right-4 text-outline hover:text-on-surface-variant">
 <span class="material-symbols-outlined" data-icon="visibility" id="eyeIcon">visibility</span>
 </button>
@@ -208,6 +211,23 @@ async function handleTaskerLogin() {
 
   if (!phone || !pass) {
     errorEl.textContent = 'Vui lòng nhập số điện thoại và mật khẩu.';
+    errorEl.style.display = 'block';
+    infoEl.style.display = 'none';
+    return;
+  }
+
+  // Lỗi 5 FIX: Validate định dạng SĐT trước khi gọi API
+  var phoneRegex = /^0[0-9]{8,10}$/;
+  if (!phoneRegex.test(phone)) {
+    errorEl.textContent = 'Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng (VD: 0901234567).';
+    errorEl.style.display = 'block';
+    infoEl.style.display = 'none';
+    return;
+  }
+
+  // Lỗi 9 FIX: Validate độ dài mật khẩu
+  if (pass.length < 8 || pass.length > 20) {
+    errorEl.textContent = 'Mật khẩu phải từ 8 đến 20 ký tự.';
     errorEl.style.display = 'block';
     infoEl.style.display = 'none';
     return;

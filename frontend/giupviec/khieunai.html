@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Khiếu nại - Chị Ơi! Tasker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "primary": "#a04100", "primary-container": "#ff7e36",
+                    "on-primary": "#ffffff", "on-primary-container": "#642600",
+                    "primary-fixed": "#ffdbcc", "primary-fixed-dim": "#ffb693",
+                    "surface": "#fff8f6", "surface-dim": "#ecd6cc",
+                    "surface-container": "#ffeae1", "surface-container-low": "#fff1eb",
+                    "surface-container-lowest": "#ffffff", "surface-container-high": "#fae4da",
+                    "on-surface": "#241914", "on-surface-variant": "#584238",
+                    "on-background": "#241914", "background": "#fff8f6",
+                    "outline": "#8b7266", "outline-variant": "#dfc0b3",
+                    "error": "#ba1a1a", "error-container": "#ffdad6",
+                    "on-error": "#ffffff", "on-error-container": "#93000a",
+                    "surface-variant": "#f4ded5", "surface-bright": "#fff8f6"
+                },
+                "spacing": { "md": "16px", "lg": "24px", "container-padding": "20px", "xs": "8px", "sm": "12px", "xl": "32px" },
+                "fontFamily": { "body-sm": ["Be Vietnam Pro"], "body-lg": ["Be Vietnam Pro"], "title-sm": ["Be Vietnam Pro"], "headline-md": ["Be Vietnam Pro"], "label-sm": ["Be Vietnam Pro"] },
+                "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #fff8f6; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .orange-gradient { background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%); }
+    .soft-shadow { box-shadow: 0 4px 12px rgba(255, 126, 54, 0.08); }
+</style>
+</head>
+<body class="bg-surface-dim text-on-surface min-h-screen flex flex-col items-center">
+    <div class="w-full max-w-[430px] min-h-screen bg-background relative shadow-2xl">
+        <div class="absolute top-0 left-0 w-full h-[200px] z-0 pointer-events-none" style="background: linear-gradient(rgb(255, 126, 54) 0%, rgb(252, 249, 248) 100%);"></div>
+
+<!-- Header -->
+<header class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-40 pt-12 px-container-padding">
+    <div class="flex items-center gap-3">
+        <a href="hosocanhan.html" class="text-white active:scale-90 transition-all">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <h1 class="text-headline-md font-headline-md text-white flex-1">Khiếu nại</h1>
+        <div class="inline-flex items-center gap-1 px-2.5 py-1 bg-white/20 rounded-full">
+            <span class="material-symbols-outlined text-white text-[12px]" style="font-variation-settings: 'FILL' 1, 'wght' 600;">verified</span>
+            <span class="text-white text-[10px] font-bold">TASKER</span>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="relative z-10 pt-28 pb-8 px-container-padding space-y-4">
+
+    <!-- Ticket Form -->
+    <section class="bg-white rounded-2xl p-5 soft-shadow border border-surface-container space-y-4">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-12 h-12 rounded-full orange-gradient flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-[24px]">report_problem</span>
+            </div>
+            <div>
+                <h2 class="text-title-sm font-bold text-on-surface">Gửi khiếu nại</h2>
+                <p class="text-body-sm text-on-surface-variant">Phản hồi sẽ được Admin xử lý qua Inbox</p>
+            </div>
+        </div>
+
+        <!-- Subject -->
+        <div>
+            <label class="text-label-sm text-on-surface-variant block mb-1 ml-1">Chủ đề (*)</label>
+            <select id="ticket-subject" class="w-full p-3.5 rounded-xl border border-outline-variant bg-surface-container-low text-body-lg focus:ring-2 focus:ring-primary-container">
+                <option value="">— Chọn chủ đề —</option>
+                <option value="Khiếu nại đơn hàng">Khiếu nại đơn hàng</option>
+                <option value="Vấn đề thanh toán / Rút tiền">Vấn đề thanh toán / Rút tiền</option>
+                <option value="Phản hồi khách hàng">Phản hồi khách hàng</option>
+                <option value="Vấn đề tài khoản / KYC">Vấn đề tài khoản / KYC</option>
+                <option value="Góp ý hệ thống">Góp ý hệ thống</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label class="text-label-sm text-on-surface-variant block mb-1 ml-1">Mô tả chi tiết (*)</label>
+            <textarea id="ticket-desc" rows="5" class="w-full p-3.5 rounded-xl border border-outline-variant bg-surface-container-low text-body-sm focus:ring-2 focus:ring-primary-container resize-none" placeholder="Mô tả vấn đề bạn gặp phải (tối thiểu 20 ký tự)..."></textarea>
+            <p id="char-count" class="text-[11px] text-on-surface-variant text-right mt-1">0/500</p>
+        </div>
+
+        <!-- Error -->
+        <p id="errorMsg" class="text-error text-body-sm px-1" style="display:none;"></p>
+
+        <!-- Submit -->
+        <button id="submitBtn" onclick="submitTicket()" class="orange-gradient w-full py-4 rounded-2xl shadow-lg shadow-primary-container/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-white text-[20px]">send</span>
+            <span class="text-white text-[15px] font-bold">Gửi khiếu nại</span>
+        </button>
+    </section>
+
+    <!-- Ticket History -->
+    <section class="bg-white rounded-2xl p-5 soft-shadow border border-surface-container">
+        <h3 class="text-title-sm font-bold text-on-surface mb-3">Lịch sử khiếu nại</h3>
+        <div id="ticket-history" class="space-y-3">
+            <div class="text-center py-6 text-on-surface-variant">
+                <span class="material-symbols-outlined text-[40px] opacity-20 block mb-2">inbox</span>
+                <p class="text-body-sm">Đang tải...</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+    </div>
+
+    <script src="../shared/api.js?v=20260514"></script>
+    <script>
+    (async function() {
+        if (!ChiOiAuth.requireAuth('dangnhaptasker.html')) return;
+
+        // Char counter
+        var desc = document.getElementById('ticket-desc');
+        var counter = document.getElementById('char-count');
+        desc.addEventListener('input', function() {
+            counter.textContent = desc.value.length + '/500';
+        });
+        desc.maxLength = 500;
+
+        // Load ticket history
+        try {
+            var tickets = await apiFetch('/api/support/tickets');
+            var historyEl = document.getElementById('ticket-history');
+            if (Array.isArray(tickets) && tickets.length > 0) {
+                historyEl.innerHTML = '';
+                tickets.forEach(function(t) {
+                    var statusColors = {
+                        'OPEN': 'bg-blue-100 text-blue-700',
+                        'IN_PROGRESS': 'bg-orange-100 text-orange-700',
+                        'RESOLVED': 'bg-green-100 text-green-700',
+                        'CLOSED': 'bg-gray-100 text-gray-500'
+                    };
+                    var statusLabels = {
+                        'OPEN': 'Mới',
+                        'IN_PROGRESS': 'Đang xử lý',
+                        'RESOLVED': 'Đã giải quyết',
+                        'CLOSED': 'Đã đóng'
+                    };
+                    var cls = statusColors[t.status] || 'bg-gray-100 text-gray-500';
+                    var label = statusLabels[t.status] || t.status;
+                    var item = document.createElement('div');
+                    item.className = 'p-3 bg-surface-container-low rounded-xl border border-outline-variant/30';
+                    item.innerHTML =
+                        '<div class="flex justify-between items-start mb-1">' +
+                            '<h4 class="text-body-lg font-bold text-on-surface flex-1">' + (t.subject || 'Khiếu nại') + '</h4>' +
+                            '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + cls + '">' + label + '</span>' +
+                        '</div>' +
+                        '<p class="text-body-sm text-on-surface-variant line-clamp-2 mb-1">' + (t.description || '') + '</p>' +
+                        '<p class="text-[11px] text-outline">' + formatDateTime(t.created_at) + '</p>';
+                    historyEl.appendChild(item);
+                });
+            } else {
+                historyEl.innerHTML = '<div class="text-center py-6 text-on-surface-variant"><span class="material-symbols-outlined text-[40px] opacity-20 block mb-2">inbox</span><p class="text-body-sm">Chưa có khiếu nại nào</p></div>';
+            }
+        } catch (e) {
+            console.warn('Cannot load tickets:', e);
+            document.getElementById('ticket-history').innerHTML = '<p class="text-body-sm text-on-surface-variant text-center py-4">Chưa có khiếu nại nào</p>';
+        }
+    })();
+
+    async function submitTicket() {
+        var subject = document.getElementById('ticket-subject').value;
+        var desc = document.getElementById('ticket-desc').value.trim();
+        var errorEl = document.getElementById('errorMsg');
+        var btn = document.getElementById('submitBtn');
+
+        if (!subject) {
+            errorEl.textContent = 'Vui lòng chọn chủ đề.';
+            errorEl.style.display = 'block';
+            return;
+        }
+        if (desc.length < 20) {
+            errorEl.textContent = 'Mô tả phải ít nhất 20 ký tự.';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="text-white text-[15px] font-bold">Đang gửi...</span>';
+        errorEl.style.display = 'none';
+
+        try {
+            await apiFetch('/api/support/tickets', {
+                method: 'POST',
+                body: { subject: subject, description: desc }
+            });
+            showToastMsg('✅ Khiếu nại đã được gửi. Admin sẽ phản hồi qua Inbox.');
+            document.getElementById('ticket-subject').value = '';
+            document.getElementById('ticket-desc').value = '';
+            document.getElementById('char-count').textContent = '0/500';
+            setTimeout(function() { window.location.reload(); }, 1500);
+        } catch (err) {
+            errorEl.textContent = err.message || 'Gửi thất bại. Vui lòng thử lại.';
+            errorEl.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined text-white text-[20px]">send</span><span class="text-white text-[15px] font-bold">Gửi khiếu nại</span>';
+        }
+    }
+    </script>
+</body>
+</html>
