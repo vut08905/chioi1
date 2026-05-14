@@ -139,35 +139,39 @@
                     <div class="flex flex-col gap-xs">
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="person">person</span>
-                            <input id="nameInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Họ và tên" type="text"/>
+                            <input id="nameInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Họ và tên" type="text" maxlength="255"/>
                         </div>
+                        <p id="nameError" class="text-error text-[12px] px-1 leading-tight" style="display:none;"></p>
                     </div>
 
                     <!-- Phone Input -->
                     <div class="flex flex-col gap-xs">
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="phone">phone</span>
-                            <input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Số điện thoại" type="tel"/>
+                            <input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Số điện thoại" type="tel" maxlength="10" inputmode="numeric"/>
                         </div>
+                        <p id="phoneError" class="text-error text-[12px] px-1 leading-tight" style="display:none;"></p>
                     </div>
 
                     <!-- Password Input -->
                     <div class="flex flex-col gap-xs">
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="lock">lock</span>
-                            <input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Mật khẩu" type="password"/>
-                            <button class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePassword('passwordInput')">
+                            <input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Mật khẩu (8-20 ký tự)" type="password" maxlength="20"/>
+                            <button type="button" class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePassword('passwordInput')">
                                 <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
                             </button>
                         </div>
+                        <p id="passwordHint" class="text-outline text-[11px] px-1 leading-tight">Gồm chữ hoa, chữ thường và số. Từ 8-20 ký tự.</p>
+                        <p id="passwordError" class="text-error text-[12px] px-1 leading-tight" style="display:none;"></p>
                     </div>
 
                     <!-- Confirm Password Input -->
                     <div class="flex flex-col gap-xs">
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="lock_reset">lock_reset</span>
-                            <input id="confirmPasswordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Xác nhận mật khẩu" type="password"/>
-                            <button class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePassword('confirmPasswordInput')">
+                            <input id="confirmPasswordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Xác nhận mật khẩu" type="password" maxlength="20"/>
+                            <button type="button" class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePassword('confirmPasswordInput')">
                                 <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
                             </button>
                         </div>
@@ -180,7 +184,7 @@
                 <!-- CTA & Terms Section -->
                 <div class="flex flex-col gap-md items-center">
                     <p class="text-on-surface-variant font-body-sm text-[12px] text-center px-2">
-                        Bằng việc đăng ký, bạn đồng ý với <a href="#" class="text-primary hover:underline">Điều khoản</a> và <a href="#" class="text-primary hover:underline">Chính sách bảo mật</a> của chúng tôi.
+                        Bằng việc đăng ký, bạn đồng ý với <a href="../terms.html" class="text-primary hover:underline">Điều khoản</a> và <a href="../privacy.html" class="text-primary hover:underline">Chính sách bảo mật</a> của chúng tôi.
                     </p>
 
                     <!-- Register Button -->
@@ -204,34 +208,145 @@
 
     <script src="../shared/api.js?v=20260514"></script>
     <script>
+        // ============================================================
+        // VALIDATION HELPERS
+        // ============================================================
+
+        // UC-REG-15,16,35: Regex chỉ cho phép chữ cái (Unicode), dấu cách
+        // Chặn số, ký tự đặc biệt, emoji
+        var NAME_REGEX = /^[\p{L}\s]+$/u;
+        // Regex phát hiện emoji
+        var EMOJI_REGEX = /[\u{1F600}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{FE00}-\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/u;
+        // UC-REG-19-23: SĐT chỉ số, 10 ký tự, bắt đầu bằng 0
+        var PHONE_REGEX = /^0\d{9}$/;
+
+        function showFieldError(id, msg) {
+            var el = document.getElementById(id);
+            if (el) { el.textContent = msg; el.style.display = 'block'; }
+        }
+        function hideFieldError(id) {
+            var el = document.getElementById(id);
+            if (el) { el.textContent = ''; el.style.display = 'none'; }
+        }
+        function clearAllErrors() {
+            ['nameError', 'phoneError', 'passwordError', 'errorMsg'].forEach(hideFieldError);
+        }
+
+        // ============================================================
+        // REAL-TIME INPUT FILTERING
+        // ============================================================
+
+        // UC-REG-15,16,35: Lọc realtime trường Họ tên — chỉ cho nhập chữ + dấu cách
+        document.getElementById('nameInput').addEventListener('input', function(e) {
+            var val = this.value;
+            // Loại bỏ số, ký tự đặc biệt, emoji ngay khi gõ
+            var cleaned = val.replace(/[\d]/g, ''); // bỏ số
+            cleaned = cleaned.replace(/[^\p{L}\s]/gu, ''); // bỏ tất cả trừ chữ và dấu cách
+            if (cleaned !== val) {
+                this.value = cleaned;
+            }
+            hideFieldError('nameError');
+        });
+
+        // UC-REG-21,22,23: Lọc realtime trường SĐT — chỉ cho nhập số, không khoảng trắng
+        document.getElementById('phoneInput').addEventListener('input', function(e) {
+            var val = this.value;
+            var cleaned = val.replace(/[^\d]/g, ''); // chỉ giữ số
+            if (cleaned.length > 10) cleaned = cleaned.substring(0, 10);
+            if (cleaned !== val) {
+                this.value = cleaned;
+            }
+            hideFieldError('phoneError');
+        });
+
+        // Chặn paste ký tự không hợp lệ vào SĐT
+        document.getElementById('phoneInput').addEventListener('paste', function(e) {
+            var self = this;
+            setTimeout(function() {
+                self.value = self.value.replace(/[^\d]/g, '').substring(0, 10);
+            }, 0);
+        });
+
+        // Chặn paste ký tự không hợp lệ vào Họ tên
+        document.getElementById('nameInput').addEventListener('paste', function(e) {
+            var self = this;
+            setTimeout(function() {
+                var cleaned = self.value.replace(/[\d]/g, '').replace(/[^\p{L}\s]/gu, '');
+                if (cleaned.length > 255) cleaned = cleaned.substring(0, 255);
+                self.value = cleaned;
+            }, 0);
+        });
+
+        // ============================================================
+        // TOGGLE PASSWORD VISIBILITY
+        // ============================================================
         function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            var input = document.getElementById(inputId);
+            var type = input.getAttribute('type') === 'password' ? 'text' : 'password';
             input.setAttribute('type', type);
         }
 
+        // ============================================================
+        // VALIDATION FUNCTIONS
+        // ============================================================
+        function validateName(name) {
+            if (!name) return 'Vui lòng nhập họ và tên.';
+            if (name.length < 2) return 'Họ tên phải có ít nhất 2 ký tự.'; // UC-REG-17
+            if (name.length > 255) return 'Họ tên không được vượt quá 255 ký tự.'; // UC-REG-18
+            if (EMOJI_REGEX.test(name)) return 'Họ tên không được chứa emoji.'; // UC-REG-35
+            if (!NAME_REGEX.test(name)) return 'Họ tên chỉ được chứa chữ cái và dấu cách.'; // UC-REG-15,16
+            return null;
+        }
+
+        function validatePhone(phone) {
+            if (!phone) return 'Vui lòng nhập số điện thoại.';
+            if (/\s/.test(phone)) return 'Số điện thoại không được chứa khoảng trắng.'; // UC-REG-23
+            if (/[a-zA-Z\p{L}]/u.test(phone.replace(/\d/g, ''))) return 'Số điện thoại không được chứa chữ cái.'; // UC-REG-21
+            if (/[^\d]/.test(phone)) return 'Số điện thoại không được chứa ký tự đặc biệt.'; // UC-REG-22
+            if (phone.length < 10) return 'Số điện thoại phải có 10 chữ số.'; // UC-REG-19
+            if (phone.length > 10) return 'Số điện thoại không được vượt quá 10 chữ số.'; // UC-REG-20
+            if (!PHONE_REGEX.test(phone)) return 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.';
+            return null;
+        }
+
+        function validatePassword(pass) {
+            if (!pass) return 'Vui lòng nhập mật khẩu.';
+            if (pass.length < 8) return 'Mật khẩu phải có ít nhất 8 ký tự.'; // UC-REG-25
+            if (pass.length > 20) return 'Mật khẩu không được vượt quá 20 ký tự.'; // UC-REG-28
+            if (!/[A-Z]/.test(pass)) return 'Mật khẩu phải chứa ít nhất 1 chữ cái viết hoa.'; // UC-REG-26
+            if (!/[a-z]/.test(pass)) return 'Mật khẩu phải chứa ít nhất 1 chữ cái viết thường.'; // UC-REG-26
+            if (!/[0-9]/.test(pass)) return 'Mật khẩu phải chứa ít nhất 1 chữ số.'; // UC-REG-26
+            return null;
+        }
+
+        // ============================================================
+        // REGISTRATION HANDLER
+        // ============================================================
         async function handleRegister() {
             var name = document.getElementById('nameInput').value.trim();
             var phone = document.getElementById('phoneInput').value.trim();
-            var pass = document.getElementById('passwordInput').value.trim();
-            var confirmPass = document.getElementById('confirmPasswordInput').value.trim();
+            var pass = document.getElementById('passwordInput').value;
+            var confirmPass = document.getElementById('confirmPasswordInput').value;
             var errorEl = document.getElementById('errorMsg');
             var registerBtn = document.getElementById('registerBtn');
 
-            if (!name || !phone || !pass || !confirmPass) {
-                errorEl.textContent = 'Vui lòng nhập đầy đủ thông tin.';
-                errorEl.style.display = 'block';
-                return;
-            }
+            clearAllErrors();
 
+            // Validate tên
+            var nameErr = validateName(name);
+            if (nameErr) { showFieldError('nameError', nameErr); return; }
+
+            // Validate SĐT
+            var phoneErr = validatePhone(phone);
+            if (phoneErr) { showFieldError('phoneError', phoneErr); return; }
+
+            // Validate mật khẩu
+            var passErr = validatePassword(pass);
+            if (passErr) { showFieldError('passwordError', passErr); return; }
+
+            // Validate xác nhận mật khẩu
             if (pass !== confirmPass) {
                 errorEl.textContent = 'Mật khẩu xác nhận không khớp.';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (pass.length < 6) {
-                errorEl.textContent = 'Mật khẩu phải dài ít nhất 6 ký tự.';
                 errorEl.style.display = 'block';
                 return;
             }
@@ -262,13 +377,19 @@
                 window.location.href = 'trangchu.html';
                 
             } catch (err) {
-                errorEl.textContent = err.message || 'Đăng ký thất bại. Vui lòng thử lại sau.';
+                // UC-REG-24: Hiển thị thông báo tiếng Việt cho SĐT đã tồn tại
+                var msg = err.message || 'Đăng ký thất bại. Vui lòng thử lại sau.';
+                if (msg.toLowerCase().includes('already exists') || msg.toLowerCase().includes('đã tồn tại')) {
+                    msg = 'Số điện thoại này đã được đăng ký. Vui lòng dùng số khác hoặc đăng nhập.';
+                }
+                errorEl.textContent = msg;
                 errorEl.style.display = 'block';
                 registerBtn.disabled = false;
                 registerBtn.innerHTML = '<span class="text-white font-title-sm text-title-sm font-bold">ĐĂNG KÝ TÀI KHOẢN</span>';
             }
         }
 
+        // Enter key support
         ['nameInput', 'phoneInput', 'passwordInput', 'confirmPasswordInput'].forEach(function(id) {
             document.getElementById(id).addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') handleRegister();
