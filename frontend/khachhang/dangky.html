@@ -106,14 +106,21 @@
         .orange-gradient {
             background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%);
         }
+        /* Premium card shadow — layered for depth */
         .card-premium {
-            box-shadow: 0 8px 32px rgba(255, 126, 54, 0.12), 0 1px 2px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 12px 32px rgba(255,126,54,0.10);
         }
-        @keyframes formEntrance {
-            from { opacity: 0; transform: translateY(12px); }
+        /* Page entrance animation */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(24px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .anim-form { animation: formEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes logoReveal {
+            from { opacity: 0; transform: scale(0.8) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .anim-logo { animation: logoReveal 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+        .anim-form { animation: fadeSlideUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .header-gradient {
@@ -131,10 +138,10 @@
             <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-black/5 rounded-full blur-2xl"></div>
             
-            <div class="z-10 text-center px-container-padding flex flex-col items-center">
-                <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-20 h-20 rounded-full border-4 border-white/30 shadow-lg mb-3 object-cover"/>
-                <h1 class="text-white font-display-lg text-display-lg font-extrabold tracking-tight">Tạo tài khoản</h1>
-                <p class="text-white/90 font-body-sm text-body-sm mt-xs opacity-90">Trở thành khách hàng của Chị Ơi!</p>
+            <div class="z-10 text-center px-container-padding flex flex-col items-center anim-logo">
+                <img src="../assets/images/logo.jpg" alt="Chị Ơi! Logo" class="w-[72px] h-[72px] rounded-full border-[3px] border-white/30 shadow-xl mb-2 object-cover"/>
+                <h1 class="text-white text-[26px] font-extrabold tracking-tight leading-tight">Tạo tài khoản</h1>
+                <p class="text-white/80 text-[13px] mt-0.5">Trở thành khách hàng của Chị Ơi!</p>
             </div>
         </header>
 
