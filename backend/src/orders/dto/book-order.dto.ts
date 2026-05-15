@@ -1,4 +1,4 @@
-import { IsInt, IsString, IsNotEmpty, IsDateString, IsNumber, Min, Max, MinLength, MaxLength, IsOptional } from 'class-validator';
+import { IsInt, IsString, IsNotEmpty, IsDateString, IsNumber, Min, Max, MinLength, MaxLength, IsOptional, IsIn } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class BookOrderDto {
@@ -41,4 +41,10 @@ export class BookOrderDto {
   @IsString()
   @MaxLength(1000)
   notes?: string;
+
+  @ApiProperty({ example: 'WALLET', required: false, description: 'Phương thức thanh toán: CASH hoặc WALLET' })
+  @IsOptional()
+  @IsString()
+  @IsIn(['CASH', 'WALLET'], { message: 'payment_method phải là CASH hoặc WALLET' })
+  payment_method?: string;
 }

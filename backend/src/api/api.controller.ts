@@ -144,6 +144,21 @@ export class ApiController {
     return this.apiService.createTicket(req.user.userId, body.subject, body.description);
   }
 
+  // ===== Chat User - Admin =====
+  @Get('support/messages')
+  @Roles('CUSTOMER', 'TASKER')
+  @ApiOperation({ summary: 'Lấy lịch sử tin nhắn CSKH của user' })
+  async getUserMessages(@Request() req) {
+    return this.apiService.getUserChatHistory(req.user.userId);
+  }
+
+  @Post('support/messages')
+  @Roles('CUSTOMER', 'TASKER')
+  @ApiOperation({ summary: 'Gửi tin nhắn cho Admin' })
+  async sendUserMessage(@Request() req, @Body('content') content: string) {
+    return this.apiService.sendUserMessage(req.user.userId, content);
+  }
+
   // --- Admin APIs ---
   @Patch('admin/taskers/:id/approve')
   @Roles('ADMIN')
@@ -340,5 +355,31 @@ export class ApiController {
   @ApiOperation({ summary: 'Báo cáo tổng hợp: doanh thu, đơn hàng, Tasker top, dịch vụ top, biểu đồ theo ngày' })
   async getAdminReportStats(@Query('period') period?: string) {
     return this.apiService.getAdminReportStats(period || '30d');
+  }
+
+  // ===== Chat Admin - User =====
+  @Get('admin/chat')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Danh sách các cuộc hội thoại CSKH (nhắn với admin)' })
+  async getAdminChatThreads(@Request() req) {
+    return this.apiService.getAdminChatThreads();
+  }
+
+  @Get('admin/chat/:userId')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Lịch sử tin nhắn với 1 user cụ thể' })
+  async getAdminChatHistory(@Param('userId', ParseIntPipe) userId: number) {
+    return this.apiService.getAdminChatHistory(userId);
+  }
+
+  @Post('admin/chat/:userId')
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Gửi tin nhắn từ Admin tới User' })
+  async sendAdminMessage(
+    @Request() req,
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body('content') content: string
+  ) {
+    return this.apiService.sendAdminMessage(req.user.userId, userId, content);
   }
 }

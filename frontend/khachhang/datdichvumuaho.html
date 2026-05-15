@@ -114,6 +114,7 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body class="bg-surface-bright font-body-lg text-on-surface antialiased relative min-h-screen pb-32">
@@ -207,12 +208,28 @@
 <span id="summary-total" class="text-headline-md font-bold text-primary">550.000 đ</span>
 </div>
 </div>
-<div class="flex justify-between items-center bg-surface-container-low p-sm rounded-lg">
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-secondary">account_balance_wallet</span>
-<span class="text-body-sm font-bold">Ví Chị Ơi</span>
+<!-- Phương thức thanh toán -->
+<div class="space-y-3">
+<h4 class="font-title-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">payments</span>
+Phương thức thanh toán
+</h4>
+<div class="grid grid-cols-2 gap-3">
+<button id="pay-wallet" class="payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-primary-container bg-orange-50 transition-all active:scale-95">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<div class="text-left">
+<p class="font-bold text-primary-container text-[13px]">Ví Chị Ơi</p>
+<p id="wallet-balance-text" class="text-[11px] text-on-surface-variant">Đang tải...</p>
 </div>
-<button class="text-primary font-bold text-body-sm">Thay đổi</button>
+</button>
+<button id="pay-cash" class="payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-transparent bg-white transition-all active:scale-95 hover:border-orange-100">
+<span class="material-symbols-outlined text-on-surface-variant">payments</span>
+<div class="text-left">
+<p class="font-medium text-on-surface-variant text-[13px]">Tiền mặt</p>
+<p class="text-[11px] text-on-surface-variant">Trả trực tiếp</p>
+</div>
+</button>
+</div>
 </div>
 <button id="submit-btn" class="orange-gradient w-full py-4 rounded-full text-white font-bold text-title-sm shadow-lg active:scale-95 transition-all">
                 Đặt mua hộ — 550.000 đ
@@ -247,7 +264,8 @@
   var state = {
     selectedStore: 'WinMart Vinhomes A',
     products: [],
-    budget: 500000
+    budget: 500000,
+    paymentMethod: 'WALLET'
   };
 
   var stores = [
@@ -388,6 +406,47 @@
     } catch (e) { console.warn('[Mua hộ] Không lấy được profile:', e.message); }
   })();
 
+  // ===== Load wallet balance =====
+  (async function loadWalletBalance() {
+    try {
+      var wallet = await apiFetch('/api/wallets/balance');
+      var bal = wallet ? Number(wallet.balance || 0) : 0;
+      var balEl = document.getElementById('wallet-balance-text');
+      if (balEl) balEl.textContent = 'Số dư: ' + formatVND(bal);
+    } catch (e) {
+      var balEl = document.getElementById('wallet-balance-text');
+      if (balEl) balEl.textContent = 'Không tải được';
+    }
+  })();
+
+  // ===== Payment Method Toggle =====
+  function setPaymentMethod(method) {
+    state.paymentMethod = method;
+    var walletBtn = document.getElementById('pay-wallet');
+    var cashBtn = document.getElementById('pay-cash');
+    if (method === 'WALLET') {
+      walletBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-primary-container bg-orange-50 transition-all active:scale-95';
+      walletBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-primary-container';
+      walletBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+      walletBtn.querySelector('p:first-child').className = 'font-bold text-primary-container text-[13px]';
+      cashBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-transparent bg-white transition-all active:scale-95 hover:border-orange-100';
+      cashBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-on-surface-variant';
+      cashBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+      cashBtn.querySelector('div p:first-child').className = 'font-medium text-on-surface-variant text-[13px]';
+    } else {
+      cashBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-primary-container bg-orange-50 transition-all active:scale-95';
+      cashBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-primary-container';
+      cashBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+      cashBtn.querySelector('div p:first-child').className = 'font-bold text-primary-container text-[13px]';
+      walletBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-transparent bg-white transition-all active:scale-95 hover:border-orange-100';
+      walletBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-on-surface-variant';
+      walletBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+      walletBtn.querySelector('p:first-child').className = 'font-medium text-on-surface-variant text-[13px]';
+    }
+  }
+  document.getElementById('pay-wallet').addEventListener('click', function() { setPaymentMethod('WALLET'); });
+  document.getElementById('pay-cash').addEventListener('click', function() { setPaymentMethod('CASH'); });
+
   // ===== Submit — Bug 2 FIX (report13): Chống bấm nhiều lần =====
   var isSubmitting = false;
   document.getElementById('submit-btn').addEventListener('click', async function() {
@@ -439,21 +498,19 @@
     }
     if (addressErrEl) addressErrEl.style.display = 'none';
 
-    // TC-KH09-008,009 FIX: Kiểm tra số dư ví trước khi đặt
+    // TC-KH09-008,009 FIX: Kiểm tra số dư ví trước khi đặt (chỉ khi thanh toán VÍ)
     var totalPrice = state.budget + FEE;
-    try {
-      var wallet = await apiFetch('/api/wallets/balance');
-      if (wallet && typeof wallet.balance === 'number' && wallet.balance < totalPrice) {
-        var insufficientMsg = 'Số dư ví không đủ (' + formatVND(wallet.balance) + '). Cần ' + formatVND(totalPrice) + ' để đặt dịch vụ.';
-        showToastMsg(insufficientMsg, 5000);
-        if (confirm(insufficientMsg + '\n\nBạn có muốn nạp tiền không?')) {
-          window.location.href = 'naptienqr.html';
+    if (state.paymentMethod === 'WALLET') {
+      try {
+        var wallet = await apiFetch('/api/wallets/balance');
+        if (wallet && typeof wallet.balance === 'number' && wallet.balance < totalPrice) {
+          showInsufficientPopup(wallet.balance, totalPrice);
+          isSubmitting = false; btn.disabled = false; btn.classList.remove('opacity-50'); updateSummary();
+          return;
         }
-        isSubmitting = false; btn.disabled = false; btn.classList.remove('opacity-50'); updateSummary();
-        return;
+      } catch (walletErr) {
+        console.warn('[Ví] Không kiểm tra được số dư:', walletErr.message);
       }
-    } catch (walletErr) {
-      console.warn('[Ví] Không kiểm tra được số dư:', walletErr.message);
     }
     var productList = state.products.map(function(p) { return p.name + ' x' + p.qty; }).join(', ');
     var note = 'Mua hộ tại ' + state.selectedStore + '. Sản phẩm: ' + productList + '. Ngân sách: ' + formatVND(state.budget);
@@ -469,7 +526,8 @@
           total_price: totalPrice,
           longitude: 106.6297,
           latitude: 10.8231,
-          notes: note
+          notes: note,
+          payment_method: state.paymentMethod
         }
       });
       hideLoading();
@@ -485,6 +543,31 @@
       updateSummary();
     }
   });
+
+  // ===== Popup số dư không đủ =====
+  function showInsufficientPopup(balance, needed) {
+    var shortage = Math.abs(needed - balance);
+    var existing = document.getElementById('insufficient-modal');
+    if (existing) existing.remove();
+    var overlay = document.createElement('div');
+    overlay.id = 'insufficient-modal';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;';
+    overlay.innerHTML = '<div style="background:#fff;border-radius:24px;width:90%;max-width:380px;padding:24px;animation:scaleIn 0.25s ease-out;">' +
+      '<div style="text-align:center;margin-bottom:16px;"><span class="material-symbols-outlined" style="font-size:48px;color:#EAB308;font-variation-settings:\'FILL\' 1;">account_balance_wallet</span></div>' +
+      '<h3 style="font-weight:700;text-align:center;margin-bottom:8px;font-size:16px;">Số dư ví không đủ</h3>' +
+      '<p style="text-align:center;font-size:13px;color:#666;margin-bottom:4px;">Số dư hiện tại: <span style="font-weight:700;color:#1b1c1c;">' + formatVND(balance) + '</span></p>' +
+      '<p style="text-align:center;font-size:13px;color:#666;margin-bottom:4px;">Cần thanh toán: <span style="font-weight:700;color:#1b1c1c;">' + formatVND(needed) + '</span></p>' +
+      '<p style="text-align:center;font-size:13px;color:#666;margin-bottom:16px;">Cần nạp thêm: <span style="font-weight:700;color:#ba1a1a;">' + formatVND(shortage) + '</span></p>' +
+      '<p style="text-align:center;font-size:13px;margin-bottom:16px;">Bạn có muốn nạp tiền vào ví không?</p>' +
+      '<div style="display:flex;gap:12px;">' +
+      '<button id="insuf-cancel" style="flex:1;padding:12px;border-radius:12px;border:2px solid #dfc0b3;font-weight:700;color:#584238;background:white;cursor:pointer;">Không</button>' +
+      '<button id="insuf-topup" style="flex:1;padding:12px;border-radius:12px;background:linear-gradient(135deg,#ff7e36,#a04100);color:white;font-weight:700;border:none;cursor:pointer;">Nạp tiền</button>' +
+      '</div></div>';
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+    document.getElementById('insuf-cancel').addEventListener('click', function() { overlay.remove(); });
+    document.getElementById('insuf-topup').addEventListener('click', function() { overlay.remove(); window.location.href = 'naptienqr.html'; });
+  }
 
   renderStores();
   renderProducts();

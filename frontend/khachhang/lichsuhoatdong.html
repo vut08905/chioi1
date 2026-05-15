@@ -42,18 +42,20 @@
     </style>
 </head>
 <body class="text-on-surface antialiased min-h-screen">
-<div class="absolute top-0 left-0 w-full h-[300px] z-0 pointer-events-none" style="background: linear-gradient(rgb(255, 126, 54) 0%, rgb(252, 249, 248) 100%);"></div>
-<!-- Header Section -->
-<header class="relative w-full z-40 bg-transparent flex flex-col pt-12 pb-6 px-container-padding text-white">
-<div class="flex justify-between items-center w-full h-16">
-<h1 class="text-headline-md font-headline-md font-bold">Hoạt động</h1>
-</div>
-<div class="mt-4 opacity-90">
-<p class="font-body-lg text-body-lg">Quản lý lịch sử dịch vụ và đơn hàng của bạn</p>
-</div>
+
+<!-- Header -->
+<header class="flex items-center justify-between px-md h-14 w-full sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20">
+  <div class="flex items-center gap-sm">
+    <span class="material-symbols-outlined text-primary text-[24px]">assignment</span>
+    <h1 class="font-title-sm text-title-sm text-on-surface">Hoạt động</h1>
+  </div>
+  <button class="p-2 rounded-full hover:bg-surface-container-high active:scale-95 transition-all" title="Làm mới" onclick="location.reload()">
+    <span class="material-symbols-outlined text-on-surface-variant text-[22px]">refresh</span>
+  </button>
 </header>
+
 <!-- Main Content -->
-<main class="relative z-10 bg-background/80 backdrop-blur-sm rounded-t-[32px] min-h-screen pb-40">
+<main class="relative z-10 min-h-screen pb-40">
 <div class="px-container-padding pt-6 space-y-6">
 <!-- Lỗi 7 FIX: Filters & Date Range - hoạt động đúng -->
 <div class="space-y-4">

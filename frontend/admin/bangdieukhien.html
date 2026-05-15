@@ -796,17 +796,41 @@ document.querySelectorAll('[data-view-order], button, a').forEach(function(btn) 
       if (chartContainer && report.chart && report.chart.labels.length > 0) {
         var maxVal = Math.max.apply(null, report.chart.orders) || 1;
         chartContainer.innerHTML = '';
+        // Bug 3 Report19: Biểu đồ trực quan hơn với gradient, grid, tooltip
+        chartContainer.style.cssText = 'position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding:0 8px 0;';
+        // Grid lines
+        var gridHtml = '<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;padding:10px 0 30px;">';
+        for (var g = 0; g < 5; g++) {
+          var gVal = Math.round(maxVal - (maxVal * g / 4));
+          gridHtml += '<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:9px;color:#8b7266;width:28px;text-align:right;">' + gVal + '</span><div style="flex:1;height:1px;background:rgba(223,192,179,0.4);"></div></div>';
+        }
+        gridHtml += '</div>';
+        chartContainer.insertAdjacentHTML('beforeend', gridHtml);
+
         report.chart.labels.forEach(function(label, i) {
           var val = report.chart.orders[i] || 0;
           var pct = Math.max((val / maxVal) * 100, 5);
           var isToday = (i === report.chart.labels.length - 1);
           var bar = document.createElement('div');
-          bar.className = 'flex-1 flex flex-col items-center gap-2';
-          bar.innerHTML = '<div class="text-[10px] font-bold text-on-surface-variant mb-1">' + val + '</div>' +
-            '<div class="w-full rounded-t-lg transition-all duration-500 ' + (isToday ? 'bg-primary-container' : 'bg-surface-variant') + '" style="height: ' + pct + '%"></div>' +
-            '<span class="text-[10px] ' + (isToday ? 'text-primary font-bold' : 'text-on-surface-variant/60 font-bold') + ' uppercase">' + label.slice(5) + '</span>';
+          bar.className = 'flex-1 flex flex-col items-center gap-1';
+          bar.style.cssText = 'position:relative;z-index:2;min-width:0;cursor:pointer;';
+          var barColor = isToday 
+            ? 'background:linear-gradient(180deg,#ff7e36 0%,#a04100 100%);border-radius:8px 8px 4px 4px;box-shadow:0 4px 12px rgba(255,126,54,0.3);' 
+            : 'background:linear-gradient(180deg,#ffb693 0%,#dfc0b3 100%);border-radius:8px 8px 4px 4px;';
+          bar.innerHTML = '<div style="font-size:11px;font-weight:700;color:' + (isToday ? '#a04100' : '#584238') + ';margin-bottom:4px;">' + val + '</div>' +
+            '<div style="width:100%;' + barColor + 'height:0;transition:height 0.8s cubic-bezier(0.34,1.56,0.64,1);" data-height="' + pct + '"></div>' +
+            '<span style="font-size:10px;margin-top:6px;font-weight:' + (isToday ? '700' : '600') + ';color:' + (isToday ? '#a04100' : 'rgba(88,66,56,0.5)') + ';' + (isToday ? 'background:rgba(255,126,54,0.1);padding:2px 8px;border-radius:8px;' : '') + '">' + label.slice(5) + '</span>';
+          // Tooltip on hover
+          bar.title = label + ': ' + val + ' đơn hàng';
           chartContainer.appendChild(bar);
         });
+
+        // Animate bars in
+        setTimeout(function() {
+          chartContainer.querySelectorAll('[data-height]').forEach(function(el) {
+            el.style.height = el.getAttribute('data-height') + '%';
+          });
+        }, 100);
       } else if (chartContainer) {
         chartContainer.innerHTML = '<p class="text-[12px] text-on-surface-variant/60 italic text-center w-full self-center">Chưa có dữ liệu biểu đồ</p>';
       }

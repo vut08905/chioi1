@@ -230,30 +230,7 @@
 <!-- Main Content Canvas -->
 <main class="ml-[240px] pt-16 h-screen flex overflow-hidden">
 
-  <!-- Col 1: Nav filters (200px) -->
-  <div class="w-[200px] bg-surface-container-lowest border-r border-outline-variant/20 flex flex-col py-5 flex-shrink-0">
-    <div class="px-4 mb-4">
-      <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-3">Trạng thái</p>
-      <div class="space-y-1">
-        <button data-filter-status="" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm bg-primary text-white font-semibold">
-          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">all_inbox</span>Tất cả</span>
-          <span id="stat-total" class="text-[10px] font-bold bg-white/20 px-1.5 py-0.5 rounded-full">0</span>
-        </button>
-        <button data-filter-status="OPEN" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm text-on-surface-variant hover:bg-surface-container-low transition-all">
-          <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Mới</span>
-          <span id="stat-open" class="text-[10px] font-bold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">0</span>
-        </button>
-        <button data-filter-status="IN_PROGRESS" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm text-on-surface-variant hover:bg-surface-container-low transition-all">
-          <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-500 flex-shrink-0"></span>Đang xử lý</span>
-          <span id="stat-progress" class="text-[10px] font-bold bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full">0</span>
-        </button>
-        <button data-filter-status="RESOLVED" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-xl text-body-sm text-on-surface-variant hover:bg-surface-container-low transition-all">
-          <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>Đã giải quyết</span>
-          <span id="stat-resolved" class="text-[10px] font-bold bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">0</span>
-        </button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Col 2: Ticket list (320px) -->
   <div class="w-[320px] bg-surface flex flex-col border-r border-outline-variant/20 flex-shrink-0">
@@ -293,22 +270,9 @@
             <h3 id="chat-header-name" class="font-title-sm text-on-surface text-[14px]">—</h3>
             <div class="flex items-center gap-2">
               <p id="chat-header-sub" class="text-[11px] text-on-surface-variant">—</p>
-              <span id="chat-header-status" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">—</span>
             </div>
           </div>
         </div>
-        <button id="resolve-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-body-sm font-semibold flex items-center gap-2 transition-all shadow-md active:scale-95">
-          <span class="material-symbols-outlined text-[16px]">check_circle</span>
-          Đánh dấu đã giải quyết
-        </button>
-      </div>
-
-      <!-- Ticket info strip -->
-      <div class="bg-surface-container-low/60 border-b border-outline-variant/10 px-5 py-3 flex gap-6 text-body-sm flex-shrink-0">
-        <div><span class="text-on-surface-variant text-[11px]">Chủ đề:</span><br><span id="info-subject" class="font-semibold text-on-surface text-[13px]">—</span></div>
-        <div><span class="text-on-surface-variant text-[11px]">Đơn hàng:</span><br><span id="info-order" class="font-semibold text-on-surface text-[13px]">—</span></div>
-        <div class="flex-1"><span class="text-on-surface-variant text-[11px]">Mô tả:</span><br><span id="info-desc" class="text-on-surface text-[12px] line-clamp-1">—</span></div>
-        <div><span class="text-on-surface-variant text-[11px]">Ngày tạo:</span><br><span id="info-created" class="text-on-surface text-[12px]">—</span></div>
       </div>
 
       <!-- Messages -->
@@ -335,25 +299,14 @@
 </main>
 
 
+<script src="../shared/api.js?v=20260514"></script>
 <script>
 (async function() {
   if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
-  var STATUS_MAP = {
-    'OPEN':        { label: 'Mới',       cls: 'bg-blue-100 text-blue-700',   dot: 'bg-blue-500' },
-    'IN_PROGRESS': { label: 'Đang xử lý',cls: 'bg-orange-100 text-orange-700', dot: 'bg-orange-500' },
-    'RESOLVED':    { label: 'Đã giải quyết', cls: 'bg-green-100 text-green-700', dot: 'bg-green-500' },
-    'CLOSED':      { label: 'Đã đóng',   cls: 'bg-gray-100 text-gray-500',   dot: 'bg-gray-400' },
-  };
-  var PRIORITY_MAP = {
-    'HIGH':   { label: 'Cấp thiết', cls: 'bg-red-100 text-red-700' },
-    'MEDIUM': { label: 'Trung bình', cls: 'bg-yellow-100 text-yellow-700' },
-    'LOW':    { label: 'Thấp', cls: 'bg-gray-100 text-gray-500' },
-  };
-
-  var allTickets = [];
-  var currentTicket = null;
-  var filterStatus = '';
+  var allThreads = [];
+  var currentUserChat = null;
+  var lastMessageId = 0;
 
   function fmtDT(d) {
     if (!d) return '';
@@ -366,36 +319,35 @@
     return dt.toLocaleDateString('vi-VN');
   }
 
-  function renderList(tickets) {
+  function renderList(threads) {
     var listEl = document.getElementById('ticket-list');
     if (!listEl) return;
     listEl.innerHTML = '';
-    if (!tickets || tickets.length === 0) {
+    if (!threads || threads.length === 0) {
       listEl.innerHTML = '<div class="p-8 text-center text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">inbox</span>Không có tin nhắn nào</div>';
       return;
     }
-    tickets.forEach(function(t) {
-      var st = STATUS_MAP[t.status] || { label: t.status, cls: 'bg-gray-100 text-gray-500' };
-      var pr = PRIORITY_MAP[t.priority] || { label: t.priority, cls: 'bg-gray-100 text-gray-500' };
-      var userName = t.users ? t.users.full_name : 'Người dùng #' + t.user_id;
-      var isUnread = t.status === 'OPEN';
+    threads.forEach(function(t) {
+      var user = t.user;
+      var userName = user ? user.full_name : 'Người dùng';
+      var isUnread = t.unread_count > 0;
       var item = document.createElement('div');
       item.className = 'ticket-item p-4 border-b border-outline-variant/10 hover:bg-surface-container/40 transition-all cursor-pointer' + (isUnread ? ' bg-primary/5' : '');
-      item.setAttribute('data-tid', t.ticket_id);
+      item.setAttribute('data-uid', user.user_id);
       item.innerHTML =
         '<div class="flex gap-3">' +
           '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">' +
-            '<span class="material-symbols-outlined text-primary" style="font-size:18px">person</span>' +
+            (user.avatar_url ? '<img src="'+user.avatar_url+'" class="w-10 h-10 rounded-full object-cover">' : '<span class="material-symbols-outlined text-primary" style="font-size:18px">person</span>') +
           '</div>' +
           '<div class="flex-1 min-w-0">' +
             '<div class="flex justify-between items-start mb-0.5">' +
-              '<h4 class="text-body-sm font-semibold text-on-surface truncate">' + userName + '</h4>' +
-              '<span class="text-[10px] text-on-surface-variant flex-shrink-0 ml-2">' + fmtDT(t.created_at) + '</span>' +
+              '<h4 class="text-body-sm font-semibold text-on-surface truncate ' + (isUnread ? 'font-bold text-primary' : '') + '">' + userName + '</h4>' +
+              '<span class="text-[10px] text-on-surface-variant flex-shrink-0 ml-2">' + fmtDT(t.last_time) + '</span>' +
             '</div>' +
-            '<p class="text-[12px] text-on-surface-variant truncate mb-1.5">' + (t.subject || '') + '</p>' +
+            '<p class="text-[12px] text-on-surface-variant truncate mb-1.5">' + (t.last_message || '') + '</p>' +
             '<div class="flex gap-1.5">' +
-              '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + st.cls + '">' + st.label + '</span>' +
-              '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + pr.cls + '">' + pr.label + '</span>' +
+              '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">' + (user.role === 'TASKER' ? 'Giúp việc' : 'Khách hàng') + '</span>' +
+              (isUnread ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500 text-white">' + t.unread_count + ' mới</span>' : '') +
             '</div>' +
           '</div>' +
         '</div>';
@@ -404,14 +356,17 @@
           i.classList.remove('bg-primary/10', 'border-l-4', 'border-primary');
         });
         item.classList.add('bg-primary/10', 'border-l-4', 'border-primary');
-        openTicket(t.ticket_id);
+        item.classList.remove('bg-primary/5');
+        var unreadBadge = item.querySelector('.bg-red-500');
+        if (unreadBadge) unreadBadge.remove();
+        openChat(user.user_id, user);
       });
       listEl.appendChild(item);
     });
   }
 
-  async function openTicket(id) {
-    currentTicket = id;
+  async function openChat(userId, user) {
+    currentUserChat = userId;
     var detail = document.getElementById('chat-detail');
     var empty = document.getElementById('chat-empty');
     if (detail) detail.classList.remove('hidden');
@@ -420,79 +375,24 @@
     var loadingEl = document.getElementById('chat-messages');
     if (loadingEl) loadingEl.innerHTML = '<div class="text-center py-8 text-on-surface-variant text-body-sm">Đang tải...</div>';
 
+    // Header
+    var hdr = document.getElementById('chat-header-name');
+    var hdrSub = document.getElementById('chat-header-sub');
+    if (hdr) hdr.textContent = user.full_name || 'Người dùng';
+    if (hdrSub) hdrSub.textContent = user.phone || 'SĐT không xác định';
+
     try {
-      var data = await apiFetch('/api/admin/tickets/' + id);
-      var t = data.ticket;
-      var msgs = data.messages || [];
-      if (!t) return;
-
-      var st = STATUS_MAP[t.status] || { label: t.status, dot: 'bg-gray-400' };
-      var userName = t.users ? t.users.full_name : 'Người dùng #' + t.user_id;
-      var userPhone = t.users ? t.users.phone : '';
-
-      // Header
-      var hdr = document.getElementById('chat-header-name');
-      var hdrSub = document.getElementById('chat-header-sub');
-      var hdrStatus = document.getElementById('chat-header-status');
-      if (hdr) hdr.textContent = userName;
-      if (hdrSub) hdrSub.textContent = (userPhone ? userPhone + ' · ' : '') + '#' + (t.ticket_code || t.ticket_id);
-      if (hdrStatus) {
-        hdrStatus.textContent = st.label;
-        hdrStatus.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full ' + (STATUS_MAP[t.status] ? STATUS_MAP[t.status].cls : 'bg-gray-100 text-gray-500');
-      }
-
-      // Ticket info panel
-      var infoSubject = document.getElementById('info-subject');
-      var infoDesc = document.getElementById('info-desc');
-      var infoOrder = document.getElementById('info-order');
-      var infoCreated = document.getElementById('info-created');
-      if (infoSubject) infoSubject.textContent = t.subject || '—';
-      if (infoDesc) infoDesc.textContent = t.description || '—';
-      if (infoOrder) infoOrder.textContent = t.orders ? '#' + t.orders.order_code : '—';
-      if (infoCreated) infoCreated.textContent = new Date(t.created_at).toLocaleString('vi-VN');
-
-      // Resolve button
-      var resolveBtn = document.getElementById('resolve-btn');
-      if (resolveBtn) {
-        resolveBtn.onclick = async function() {
-          if (!confirm('Đánh dấu đã giải quyết?')) return;
-          await apiFetch('/api/admin/tickets/' + id, { method: 'PATCH', body: JSON.stringify({ status: 'RESOLVED' }) });
-          hdrStatus.textContent = 'Đã giải quyết';
-          hdrStatus.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-green-100 text-green-700';
-          resolveBtn.disabled = true;
-          resolveBtn.classList.add('opacity-50');
-          loadTickets();
-        };
-        resolveBtn.disabled = (t.status === 'RESOLVED' || t.status === 'CLOSED');
-        resolveBtn.classList.toggle('opacity-50', resolveBtn.disabled);
-      }
-
-      // Messages
+      var msgs = await apiFetch('/api/admin/chat/' + userId);
+      
       if (loadingEl) {
         loadingEl.innerHTML = '';
         if (msgs.length === 0) {
-          // Show description as first "message"
-          loadingEl.innerHTML = '<div class="text-center py-6 text-on-surface-variant text-body-sm opacity-60">Không có tin nhắn trực tiếp cho ticket này.<br>Nội dung: <em>' + (t.description || '') + '</em></div>';
+          loadingEl.innerHTML = '<div class="text-center py-6 text-on-surface-variant text-body-sm opacity-60">Bắt đầu trò chuyện.</div>';
         } else {
           msgs.forEach(function(m) {
-            var sender = m.users_messages_sender_idTousers;
-            var isAdmin = sender && (sender.role === 'ADMIN' || sender.role === 'admin');
-            var name = sender ? sender.full_name : 'Người dùng';
-            var bubble = document.createElement('div');
-            bubble.className = 'flex items-start gap-2.5 ' + (isAdmin ? 'flex-row-reverse self-end max-w-[75%] ml-auto' : 'max-w-[75%]');
-            bubble.innerHTML =
-              '<div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">' +
-                '<span class="material-symbols-outlined text-primary" style="font-size:14px">person</span>' +
-              '</div>' +
-              '<div>' +
-                '<div class="' + (isAdmin ? 'bg-primary-container text-white' : 'bg-white border border-outline-variant/20 text-on-surface') + ' px-4 py-2.5 rounded-2xl ' + (isAdmin ? 'rounded-tr-sm' : 'rounded-tl-sm') + ' text-body-sm shadow-sm">' +
-                  m.content +
-                '</div>' +
-                '<p class="text-[10px] text-on-surface-variant mt-0.5 ' + (isAdmin ? 'text-right' : '') + '">' + name + ' · ' + fmtDT(m.created_at) + '</p>' +
-              '</div>';
-            loadingEl.appendChild(bubble);
+            renderMessage(m);
+            if (m.message_id > lastMessageId) lastMessageId = m.message_id;
           });
-          loadingEl.scrollTop = loadingEl.scrollHeight;
         }
       }
     } catch(e) {
@@ -500,53 +400,87 @@
     }
   }
 
-  async function loadTickets() {
-    var url = '/api/admin/tickets' + (filterStatus ? '?status=' + filterStatus : '');
-    try {
-      allTickets = await apiFetch(url);
-      renderList(allTickets);
-    } catch(e) { console.error(e); }
+  function renderMessage(m) {
+    var loadingEl = document.getElementById('chat-messages');
+    var sender = m.users_messages_sender_idTousers;
+    var isAdmin = sender && sender.role === 'ADMIN';
+    var name = sender ? sender.full_name : 'Người dùng';
+    var bubble = document.createElement('div');
+    bubble.className = 'flex items-start gap-2.5 ' + (isAdmin ? 'flex-row-reverse self-end max-w-[75%] ml-auto' : 'max-w-[75%]');
+    bubble.innerHTML =
+      '<div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">' +
+        '<span class="material-symbols-outlined text-primary" style="font-size:14px">person</span>' +
+      '</div>' +
+      '<div>' +
+        '<div class="' + (isAdmin ? 'bg-primary-container text-white' : 'bg-white border border-outline-variant/20 text-on-surface') + ' px-4 py-2.5 rounded-2xl ' + (isAdmin ? 'rounded-tr-sm' : 'rounded-tl-sm') + ' text-body-sm shadow-sm">' +
+          m.content +
+        '</div>' +
+        '<p class="text-[10px] text-on-surface-variant mt-0.5 ' + (isAdmin ? 'text-right' : '') + '">' + name + ' · ' + fmtDT(m.created_at) + '</p>' +
+      '</div>';
+    loadingEl.appendChild(bubble);
+    loadingEl.scrollTop = loadingEl.scrollHeight;
   }
 
-  // Stats
-  try {
-    var stats = await apiFetch('/api/admin/tickets/stats');
-    var el = function(id) { return document.getElementById(id); };
-    if (el('stat-total'))   el('stat-total').textContent   = stats.total || 0;
-    if (el('stat-open'))    el('stat-open').textContent    = stats.open || 0;
-    if (el('stat-progress'))el('stat-progress').textContent= stats.inProgress || 0;
-    if (el('stat-resolved'))el('stat-resolved').textContent= stats.resolved || 0;
-  } catch(e) { console.error(e); }
-
-  // Filter tabs
-  document.querySelectorAll('[data-filter-status]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('[data-filter-status]').forEach(function(b) {
-        b.classList.remove('bg-primary', 'text-white');
-        b.classList.add('text-on-surface-variant');
-      });
-      btn.classList.add('bg-primary', 'text-white');
-      btn.classList.remove('text-on-surface-variant');
-      filterStatus = btn.getAttribute('data-filter-status');
-      var filtered = filterStatus ? allTickets.filter(function(t) { return t.status === filterStatus; }) : allTickets;
-      renderList(filtered);
-    });
-  });
+  async function loadThreads() {
+    try {
+      allThreads = await apiFetch('/api/admin/chat') || [];
+      renderList(allThreads);
+    } catch(e) { console.error(e); }
+  }
 
   // Search
   var searchInput = document.getElementById('inbox-search');
   if (searchInput) {
     searchInput.addEventListener('input', function() {
       var q = searchInput.value.toLowerCase();
-      var filtered = allTickets.filter(function(t) {
+      var filtered = allThreads.filter(function(t) {
         return !q ||
-          (t.subject && t.subject.toLowerCase().includes(q)) ||
-          (t.users && t.users.full_name && t.users.full_name.toLowerCase().includes(q)) ||
-          (t.users && t.users.phone && t.users.phone.includes(q)) ||
-          (t.ticket_code && t.ticket_code.toLowerCase().includes(q));
+          (t.user && t.user.full_name && t.user.full_name.toLowerCase().includes(q)) ||
+          (t.user && t.user.phone && t.user.phone.includes(q)) ||
+          (t.last_message && t.last_message.toLowerCase().includes(q));
       });
-      if (filterStatus) filtered = filtered.filter(function(t) { return t.status === filterStatus; });
       renderList(filtered);
+    });
+  }
+
+  // Send message
+  var msgInput = document.getElementById('msg-input');
+  var sendBtn = document.getElementById('send-msg-btn');
+  
+  async function sendMessage() {
+    var text = msgInput.value.trim();
+    if (!text || !currentUserChat) return;
+    
+    msgInput.value = '';
+    sendBtn.disabled = true;
+    
+    // Optimistic UI
+    var optimMsg = {
+      content: text,
+      created_at: new Date().toISOString(),
+      users_messages_sender_idTousers: { full_name: 'Admin', role: 'ADMIN' }
+    };
+    renderMessage(optimMsg);
+
+    try {
+      var result = await apiFetch('/api/admin/chat/' + currentUserChat, {
+        method: 'POST',
+        body: { content: text }
+      });
+      if (result && result.message_id > lastMessageId) lastMessageId = result.message_id;
+    } catch(e) {
+      alert('Không thể gửi tin nhắn: ' + e.message);
+    }
+    sendBtn.disabled = false;
+  }
+
+  if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+  if (msgInput) {
+    msgInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
     });
   }
 
@@ -554,7 +488,31 @@
   var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
   if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
 
-  await loadTickets();
+  await loadThreads();
+
+  // Polling for new threads and messages
+  setInterval(async function() {
+    if (!searchInput.value) {
+      try {
+        allThreads = await apiFetch('/api/admin/chat') || [];
+        renderList(allThreads);
+      } catch(e) {}
+    }
+    
+    if (currentUserChat) {
+      try {
+        var msgs = await apiFetch('/api/admin/chat/' + currentUserChat);
+        var newMsgs = msgs.filter(function(m) { return m.message_id > lastMessageId; });
+        if (newMsgs.length > 0) {
+          newMsgs.forEach(function(m) {
+            renderMessage(m);
+            if (m.message_id > lastMessageId) lastMessageId = m.message_id;
+          });
+        }
+      } catch(e) {}
+    }
+  }, 5000);
+
 })();
 </script>
 

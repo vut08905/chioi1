@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta name="theme-color" content="#ff7e36"/>
+<title>Chat với CSKH - Chị Ơi!</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/responsive.css"/>
+<style>
+    body { font-family: 'Be Vietnam Pro', sans-serif; background: #fff8f6; margin: 0; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .orange-gradient { background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%); }
+    .msg-user { background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%); color: white; border-radius: 18px 18px 4px 18px; }
+    .msg-admin { background: white; color: #241914; border: 1px solid #dfc0b3; border-radius: 18px 18px 18px 4px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="text-gray-900 h-screen flex flex-col">
+
+<!-- Header -->
+<header class="orange-gradient text-white px-4 h-14 flex items-center gap-3 flex-shrink-0 shadow-lg z-10">
+    <button id="btn-back" class="p-1 hover:bg-white/20 rounded-full transition-all active:scale-90">
+        <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+    </div>
+    <div class="flex-1 min-w-0">
+        <h1 class="font-bold text-[15px] leading-tight">Hỗ trợ CSKH</h1>
+        <p class="text-[11px] text-white/80">Chị Ơi! • Trả lời trong vài phút</p>
+    </div>
+    <div id="status-indicator" class="flex items-center gap-1 bg-white/20 px-2 py-1 rounded-full">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        <span class="text-[10px] font-medium">Online</span>
+    </div>
+</header>
+
+<!-- Messages Container -->
+<div id="messages-container" class="flex-1 overflow-y-auto px-4 py-4 space-y-3 no-scrollbar" style="background: linear-gradient(180deg, #fff1eb 0%, #fff8f6 100%);">
+    <!-- Welcome message -->
+    <div id="welcome-msg" class="text-center py-6 fade-in">
+        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#ff7e36] to-[#a04100] flex items-center justify-center shadow-lg">
+            <span class="material-symbols-outlined text-white text-[32px]" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+        </div>
+        <h2 class="font-bold text-lg text-gray-800 mb-1">Chào bạn! 👋</h2>
+        <p class="text-sm text-gray-500 max-w-[280px] mx-auto">Chúng tôi luôn sẵn sàng hỗ trợ. Hãy gửi tin nhắn và chúng tôi sẽ phản hồi sớm nhất.</p>
+    </div>
+
+    <!-- Quick actions -->
+    <div id="quick-actions" class="flex flex-wrap gap-2 justify-center mt-2 fade-in">
+        <button class="quick-topic px-3 py-2 bg-white border border-[#dfc0b3] rounded-full text-xs font-medium text-[#a04100] hover:bg-[#ffdbcc] transition-all active:scale-95" data-topic="Tôi cần hỗ trợ về đơn hàng của tôi">📦 Hỗ trợ đơn hàng</button>
+        <button class="quick-topic px-3 py-2 bg-white border border-[#dfc0b3] rounded-full text-xs font-medium text-[#a04100] hover:bg-[#ffdbcc] transition-all active:scale-95" data-topic="Tôi cần hỗ trợ về thanh toán và ví điện tử">💰 Thanh toán</button>
+        <button class="quick-topic px-3 py-2 bg-white border border-[#dfc0b3] rounded-full text-xs font-medium text-[#a04100] hover:bg-[#ffdbcc] transition-all active:scale-95" data-topic="Tôi cần tư vấn về dịch vụ giúp việc">🏠 Tư vấn dịch vụ</button>
+        <button class="quick-topic px-3 py-2 bg-white border border-[#dfc0b3] rounded-full text-xs font-medium text-[#a04100] hover:bg-[#ffdbcc] transition-all active:scale-95" data-topic="Tôi có câu hỏi cần được giải đáp">❓ Câu hỏi khác</button>
+    </div>
+</div>
+
+<!-- Input Area -->
+<div class="flex-shrink-0 bg-white border-t border-gray-200 px-3 py-2 pb-safe">
+    <div class="flex items-end gap-2">
+        <div class="flex-1 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2 focus-within:border-[#ff7e36] focus-within:ring-1 focus-within:ring-[#ff7e36]/30 transition-all">
+            <textarea id="msg-input" class="w-full bg-transparent border-none focus:ring-0 text-sm resize-none outline-none placeholder-gray-400 max-h-24" rows="1" placeholder="Nhập tin nhắn..."></textarea>
+        </div>
+        <button id="btn-send" class="w-10 h-10 rounded-full orange-gradient text-white flex items-center justify-center active:scale-90 transition-all shadow-md" disabled>
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">send</span>
+        </button>
+    </div>
+</div>
+
+<script src="../shared/api.js?v=20260514"></script>
+<script>
+(async function() {
+    // Detect if tasker or customer
+    var isTasker = window.location.pathname.includes('/giupviec/') || document.referrer.includes('/giupviec/');
+    var loginPage = isTasker ? '../giupviec/dangnhaptasker.html' : '../khachhang/dangnhap.html';
+    
+    if (!ChiOiAuth.requireAuth(loginPage)) return;
+    var user = ChiOiAuth.getUser();
+    var messagesContainer = document.getElementById('messages-container');
+
+    // Back button
+    document.getElementById('btn-back').addEventListener('click', function() {
+        if (window.history.length > 1) window.history.back();
+        else window.location.href = isTasker ? '../giupviec/hosocanhan.html' : '../khachhang/taikhoan.html';
+    });
+
+    // Load chat history
+    var lastMessageId = 0;
+    try {
+        var msgs = await apiFetch('/api/support/messages');
+        if (msgs && msgs.length > 0) {
+            document.getElementById('welcome-msg').style.display = 'none';
+            document.getElementById('quick-actions').style.display = 'none';
+            
+            msgs.forEach(function(m) {
+                var isMe = (m.sender_id === user.user_id);
+                appendMessage(m.content, isMe, m.created_at);
+                if (m.message_id > lastMessageId) lastMessageId = m.message_id;
+            });
+        }
+    } catch(e) {
+        console.warn('[ChatAdmin] Không tải được lịch sử tin nhắn:', e.message);
+    }
+
+    // Quick topic buttons
+    document.querySelectorAll('.quick-topic').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var topic = btn.getAttribute('data-topic');
+            document.getElementById('msg-input').value = topic;
+            document.getElementById('btn-send').disabled = false;
+            document.getElementById('msg-input').focus();
+        });
+    });
+
+    // Input handling
+    var msgInput = document.getElementById('msg-input');
+    var sendBtn = document.getElementById('btn-send');
+
+    msgInput.addEventListener('input', function() {
+        sendBtn.disabled = !msgInput.value.trim();
+        msgInput.style.height = 'auto';
+        msgInput.style.height = Math.min(msgInput.scrollHeight, 96) + 'px';
+    });
+
+    msgInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            if (msgInput.value.trim()) sendMessage();
+        }
+    });
+
+    sendBtn.addEventListener('click', sendMessage);
+
+    async function sendMessage() {
+        var text = msgInput.value.trim();
+        if (!text) return;
+        
+        if (text.length < 10) {
+            appendSystemMessage('⚠️ Tin nhắn phải có ít nhất 10 ký tự.');
+            return;
+        }
+
+        msgInput.value = '';
+        msgInput.style.height = 'auto';
+        sendBtn.disabled = true;
+
+        // Hide welcome/quick actions
+        var welcome = document.getElementById('welcome-msg');
+        var quickActs = document.getElementById('quick-actions');
+        if (welcome) welcome.style.display = 'none';
+        if (quickActs) quickActs.style.display = 'none';
+
+        // Show message immediately (optimistic UI)
+        appendMessage(text, true, new Date().toISOString());
+
+        try {
+            var result = await apiFetch('/api/support/messages', {
+                method: 'POST',
+                body: { content: text }
+            });
+            if (result && result.message_id > lastMessageId) lastMessageId = result.message_id;
+        } catch(e) {
+            appendSystemMessage('❌ Không gửi được: ' + (e.message || 'Lỗi hệ thống'));
+        }
+    }
+
+    function appendMessage(text, isMe, timestamp) {
+        var div = document.createElement('div');
+        div.className = 'flex ' + (isMe ? 'justify-end' : 'justify-start') + ' fade-in';
+        var time = timestamp ? formatTime(timestamp) : '';
+        var safeText = escapeHtml(text).replace(/\n/g, '<br>');
+        div.innerHTML = (isMe ? '' : '<div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff7e36] to-[#a04100] flex items-center justify-center flex-shrink-0 mr-2 mt-auto"><span class="material-symbols-outlined text-white text-[14px]" style="font-variation-settings: \'FILL\' 1;">support_agent</span></div>') +
+            '<div class="max-w-[75%]">' +
+            '<div class="' + (isMe ? 'msg-user' : 'msg-admin') + ' px-4 py-2.5 text-sm shadow-sm">' + safeText + '</div>' +
+            '<p class="text-[10px] text-gray-400 mt-1 ' + (isMe ? 'text-right' : '') + '">' + time + '</p>' +
+            '</div>';
+        messagesContainer.appendChild(div);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function appendSystemMessage(text) {
+        var div = document.createElement('div');
+        div.className = 'text-center text-xs text-gray-400 py-2 fade-in';
+        div.textContent = text;
+        messagesContainer.appendChild(div);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function escapeHtml(str) {
+        var temp = document.createElement('div');
+        temp.textContent = str;
+        return temp.innerHTML;
+    }
+
+    function formatTime(ts) {
+        var d = new Date(ts);
+        return d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' +
+               d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+    }
+
+    // Poll for new messages every 5 seconds
+    setInterval(async function() {
+        try {
+            var msgs = await apiFetch('/api/support/messages');
+            if (!msgs) return;
+            var newMsgs = msgs.filter(function(m) { return m.message_id > lastMessageId; });
+            if (newMsgs.length > 0) {
+                newMsgs.forEach(function(m) {
+                    var isMe = (m.sender_id === user.user_id);
+                    appendMessage(m.content, isMe, m.created_at);
+                    if (m.message_id > lastMessageId) lastMessageId = m.message_id;
+                });
+            }
+        } catch(e) {}
+    }, 5000);
+})();
+</script>
+</body></html>

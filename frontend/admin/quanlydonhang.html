@@ -360,7 +360,11 @@
     </div>
     <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20">
       <h3 class="text-xs uppercase tracking-wider font-bold text-on-surface-variant mb-3">Ghi chú</h3>
-      <p class="text-sm text-on-surface" id="od-notes">Vệ sinh toàn bộ căn hộ 2 phòng ngủ, chú ý nhà bếp và phòng tắm.</p>
+      <p class="text-sm text-on-surface" id="od-notes">Đang tải...</p>
+    </div>
+    <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20">
+      <h3 class="text-xs uppercase tracking-wider font-bold text-on-surface-variant mb-3">Thanh toán</h3>
+      <p class="text-sm text-on-surface font-medium" id="od-payment">—</p>
     </div>
   </div>
   <div class="p-4 border-t border-outline-variant/20 flex gap-3">
@@ -691,6 +695,12 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
         if (odPrice) odPrice.textContent = formatVND(order.total_price);
         var odDate = el('od-date');
         if (odDate) odDate.textContent = formatDateTime(order.scheduled_time || order.created_at);
+        // Bug 4 Report19: Hi\u1ec3n th\u1ecb ghi ch\u00fa t\u1eeb d\u1eef li\u1ec7u API thay v\u00ec hardcode
+        var odNotes = el('od-notes');
+        if (odNotes) odNotes.textContent = order.notes || order.address || 'Kh\u00f4ng c\u00f3 ghi ch\u00fa';
+        // Hi\u1ec3n th\u1ecb th\u00eam ph\u01b0\u01a1ng th\u1ee9c thanh to\u00e1n
+        var odPayment = el('od-payment');
+        if (odPayment) odPayment.textContent = order.payment_method === 'CASH' ? 'Ti\u1ec1n m\u1eb7t' : 'V\u00ed \u0111i\u1ec7n t\u1eed';
         if (panel) panel.classList.remove('hidden');
       });
 

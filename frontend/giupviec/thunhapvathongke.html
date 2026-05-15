@@ -190,9 +190,29 @@ tailwind.config = {
   <div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant/40 flex justify-between items-center">
     <div class="flex items-center gap-sm">
       <span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
-      <span class="text-body-sm text-on-surface-variant">Phí nền tảng Chị Ơi (15%)</span>
+      <span class="text-body-sm text-on-surface-variant">Phí nền tảng Chị Ơi (20%)</span>
     </div>
     <span id="kpi-platform-fee" class="font-title-sm text-[15px] text-secondary">0 đ</span>
+  </div>
+
+  <!-- Thu nhập theo phương thức thanh toán -->
+  <div class="grid grid-cols-2 gap-md">
+    <div class="bg-green-50 p-md rounded-xl border border-green-200">
+      <div class="flex items-center gap-xs mb-1">
+        <span class="material-symbols-outlined text-green-600 text-[18px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+        <span class="font-label-caps text-[10px] text-green-700 uppercase">Ví / Thẻ</span>
+      </div>
+      <p id="kpi-wallet-income" class="font-title-sm text-[16px] text-green-700">+0 đ</p>
+      <p class="text-[10px] text-green-600 mt-0.5">Cộng vào ví</p>
+    </div>
+    <div class="bg-red-50 p-md rounded-xl border border-red-200">
+      <div class="flex items-center gap-xs mb-1">
+        <span class="material-symbols-outlined text-red-500 text-[18px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+        <span class="font-label-caps text-[10px] text-red-600 uppercase">Tiền mặt</span>
+      </div>
+      <p id="kpi-cash-fee" class="font-title-sm text-[16px] text-red-600">-0 đ</p>
+      <p class="text-[10px] text-red-500 mt-0.5">Trừ phí nền tảng</p>
+    </div>
   </div>
 
   <!-- TC-T12-004,005: Bar Chart -->
@@ -414,8 +434,12 @@ tailwind.config = {
       document.getElementById('kpi-rating').textContent = rating > 0 ? rating.toFixed(1) : 'N/A';
       document.getElementById('kpi-review-count').textContent = '(' + (stats.review_count || 0) + ')';
 
-      // TC-T12-009: Platform fee 15%
+      // TC-T12-009: Platform fee 20%
       document.getElementById('kpi-platform-fee').textContent = '-' + fmtVND(stats.platform_fee);
+
+      // Wallet income vs Cash fee
+      document.getElementById('kpi-wallet-income').textContent = '+' + fmtVND(stats.wallet_income || 0);
+      document.getElementById('kpi-cash-fee').textContent = '-' + fmtVND(stats.cash_fee || 0);
 
       // TC-T12-004,005: Render chart
       renderChart(stats.daily_income || [0,0,0,0,0,0,0]);
@@ -469,7 +493,7 @@ tailwind.config = {
     });
   }
 
-  // === Income History ===
+  // === Income History (phân biệt WALLET vs CASH) ===
   function renderHistory(history) {
     var section = document.getElementById('income-history-section');
     var noMsg = document.getElementById('no-history-msg');
@@ -484,18 +508,36 @@ tailwind.config = {
     noMsg.classList.add('hidden');
 
     history.forEach(function(item) {
+      var isWallet = (item.payment_method || 'WALLET') !== 'CASH';
       var div = document.createElement('div');
-      div.className = 'history-item bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)] flex justify-between items-center fade-in';
-      div.innerHTML =
-        '<div class="flex items-center gap-md">' +
-          '<div class="w-10 h-10 rounded-lg bg-primary-fixed/60 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[20px]">cleaning_services</span></div>' +
-          '<div>' +
-            '<p class="text-body-sm font-medium text-on-surface">Thu nhập đơn #' + item.order_id + '</p>' +
-            '<p class="text-[11px] text-on-surface-variant">' + fmtDate(item.date) + '</p>' +
-            '<p class="text-[11px] text-secondary italic">Phí 15%: -' + fmtVND(item.fee) + '</p>' +
+      div.className = 'history-item bg-surface-container-lowest p-md rounded-xl border shadow-[0_4px_15px_rgba(0,0,0,0.04)] flex justify-between items-center fade-in ' +
+        (isWallet ? 'border-green-200' : 'border-red-200');
+
+      if (isWallet) {
+        // Đơn thanh toán VÍ → Cộng thu nhập vào ví Tasker
+        div.innerHTML =
+          '<div class="flex items-center gap-md">' +
+            '<div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center"><span class="material-symbols-outlined text-green-600 text-[20px]" style="font-variation-settings:\'FILL\' 1;">account_balance_wallet</span></div>' +
+            '<div>' +
+              '<p class="text-body-sm font-medium text-on-surface">Thu nhập đơn #' + item.order_id + '</p>' +
+              '<p class="text-[11px] text-on-surface-variant">' + fmtDate(item.date) + '</p>' +
+              '<p class="text-[11px] text-green-600">Thanh toán ví · Tổng ' + fmtVND(item.total_price || 0) + ' · Phí 20%: -' + fmtVND(item.fee) + '</p>' +
+            '</div>' +
           '</div>' +
-        '</div>' +
-        '<p class="font-title-sm text-[15px] text-primary">+' + fmtVND(item.amount) + '</p>';
+          '<p class="font-title-sm text-[15px] text-green-600 whitespace-nowrap">+' + fmtVND(item.amount) + '</p>';
+      } else {
+        // Đơn thanh toán TIỀN MẶT → Trừ phí nền tảng từ ví Tasker
+        div.innerHTML =
+          '<div class="flex items-center gap-md">' +
+            '<div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center"><span class="material-symbols-outlined text-red-500 text-[20px]" style="font-variation-settings:\'FILL\' 1;">payments</span></div>' +
+            '<div>' +
+              '<p class="text-body-sm font-medium text-on-surface">Phí nền tảng đơn #' + item.order_id + '</p>' +
+              '<p class="text-[11px] text-on-surface-variant">' + fmtDate(item.date) + '</p>' +
+              '<p class="text-[11px] text-red-500">Tiền mặt · KH trả ' + fmtVND(item.total_price || 0) + ' · Thu phí 20%</p>' +
+            '</div>' +
+          '</div>' +
+          '<p class="font-title-sm text-[15px] text-red-500 whitespace-nowrap">-' + fmtVND(item.fee) + '</p>';
+      }
       section.appendChild(div);
     });
   }

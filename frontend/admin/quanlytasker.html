@@ -261,7 +261,6 @@
 <thead class="bg-surface-container-low border-b border-outline-variant">
 <tr>
 <th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider w-[50px] text-center">STT</th>
-<th class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></th>
 <th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider">Họ và Tên</th>
 <th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider">Dịch vụ</th>
 <th class="p-4 font-label-bold text-on-surface-variant uppercase tracking-wider">Khu vực</th>
@@ -782,12 +781,12 @@ document.querySelectorAll('button').forEach(function(btn) {
       var ks = getKycStatus(tasker);
       var s = kycStatusMap[ks] || { label: ks, cls: 'bg-gray-100 text-gray-700' };
       var isPending = ks === 'PENDING' || ks === 'PENDING_APPROVAL';
+      var isLocked = ks === 'REJECTED' || ks === 'SUSPENDED';
 
       var tr = document.createElement('tr');
       tr.className = (idx % 2 ? 'bg-background/40 ' : '') + 'hover:bg-background transition-colors';
       tr.innerHTML =
         '<td class="p-4 text-body-sm text-on-surface-variant text-center">' + (idx + 1) + '</td>' +
-        '<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>' +
         '<td class="p-4"><div class="flex items-center gap-3">' +
           '<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-[20px]">person</span></div>' +
           '<div><p class="font-semibold text-body-md text-on-surface">' + (tasker.full_name || '—') + '</p>' +
@@ -803,7 +802,10 @@ document.querySelectorAll('button').forEach(function(btn) {
           (isPending ?
             '<button class="approve-btn px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-[11px] font-bold transition-colors" data-uid="' + tasker.tasker_id + '">Duyệt</button>' +
             '<button class="reject-btn px-3 py-1.5 border border-error text-error hover:bg-error/10 rounded-lg text-[11px] font-bold transition-colors" data-uid="' + tasker.tasker_id + '">Từ chối</button>' :
-            '<button class="p-1.5 hover:bg-surface-container rounded-lg text-tertiary transition-colors"><span class="material-symbols-outlined">visibility</span></button>'
+            (isLocked ?
+              '<button class="unlock-btn px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-[11px] font-bold transition-colors" data-uid="' + tasker.tasker_id + '"><span class="material-symbols-outlined text-[14px] align-middle mr-1">lock_open</span>Mở khóa</button>' :
+              '<button class="lock-btn px-3 py-1.5 border border-error text-error hover:bg-error/10 rounded-lg text-[11px] font-bold transition-colors" data-uid="' + tasker.tasker_id + '"><span class="material-symbols-outlined text-[14px] align-middle mr-1">lock</span>Tạm khóa</button>'
+            )
           ) +
         '</div></td>';
 
@@ -832,6 +834,35 @@ document.querySelectorAll('button').forEach(function(btn) {
           await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'REJECTED' }) });
           hideLoading();
           showToastMsg('✅ Đã từ chối Tasker #' + uid);
+          setTimeout(function() { location.reload(); }, 1500);
+        } catch (e) { hideLoading(); showToastMsg('❌ ' + e.message); }
+      });
+    });
+
+    // Bug 5 Report19: Nút tạm khóa Tasker
+    tbody.querySelectorAll('.lock-btn').forEach(function(btn) {
+      btn.addEventListener('click', async function() {
+        if (!confirm('Tạm khóa tài khoản Tasker này?')) return;
+        var uid = btn.getAttribute('data-uid');
+        showLoading();
+        try {
+          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'SUSPENDED' }) });
+          hideLoading();
+          showToastMsg('🔒 Đã tạm khóa Tasker #' + uid);
+          setTimeout(function() { location.reload(); }, 1500);
+        } catch (e) { hideLoading(); showToastMsg('❌ ' + e.message); }
+      });
+    });
+
+    // Bug 5 Report19: Nút mở khóa Tasker
+    tbody.querySelectorAll('.unlock-btn').forEach(function(btn) {
+      btn.addEventListener('click', async function() {
+        var uid = btn.getAttribute('data-uid');
+        showLoading();
+        try {
+          await apiFetch('/api/admin/taskers/' + uid + '/approve', { method: 'PATCH', body: JSON.stringify({ status: 'APPROVED' }) });
+          hideLoading();
+          showToastMsg('🔓 Đã mở khóa Tasker #' + uid);
           setTimeout(function() { location.reload(); }, 1500);
         } catch (e) { hideLoading(); showToastMsg('❌ ' + e.message); }
       });

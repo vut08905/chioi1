@@ -11,6 +11,23 @@ export class OrdersService {
 
   async bookOrder(customerId: number, data: any) {
     const orderCode = 'ORD' + Date.now().toString().slice(-6);
+    const paymentMethod = data.payment_method || 'WALLET';
+
+    // Nếu thanh toán ví → kiểm tra số dư trước
+    if (paymentMethod === 'WALLET') {
+      try {
+        const wallet = await this.prisma.wallets.findUnique({ where: { user_id: customerId } });
+        const balance = wallet ? Number(wallet.balance) : 0;
+        if (balance < Number(data.total_price)) {
+          throw new BadRequestException(
+            `Số dư ví không đủ. Cần ${data.total_price} nhưng chỉ có ${balance}`
+          );
+        }
+      } catch (e) {
+        if (e instanceof BadRequestException) throw e;
+        console.warn('[BookOrder] Không kiểm tra được ví:', e.message);
+      }
+    }
 
     // Insert order with PostGIS geometry using raw SQL
     // Bug 12.1 FIX: RETURNING thêm lat/lng để FE Tasker vẽ route map
@@ -21,7 +38,7 @@ export class OrdersService {
       ) VALUES (
         ${orderCode}, ${customerId}, ${data.service_id}, 'PENDING', ${new Date(data.scheduled_time)},
         ${data.address}, ${data.total_price}, ${data.total_price * 0.8}, ${data.total_price * 0.2},
-        'CASH', ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326), ${data.notes ?? null},
+        ${paymentMethod}, ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326), ${data.notes ?? null},
         NOW(), NOW()
       ) RETURNING order_id, order_code;
     `;
@@ -32,6 +49,7 @@ export class OrdersService {
       latitude: Number(data.latitude),
       longitude: Number(data.longitude),
       total_price: data.total_price,
+      payment_method: paymentMethod,
     };
   }
 
@@ -127,35 +145,49 @@ export class OrdersService {
     });
 
     if (status === 'COMPLETED') {
-      // Bug 3 FIX: Trừ tiền ví khách hàng khi đơn hoàn thành
-      try {
-        await this.walletsService.addTransaction(
-          order.customer_id,
-          -Number(order.total_price),
-          'PAYMENT',
-          order.order_id,
-          'Thanh toán dịch vụ đơn hàng #' + order.order_id
-        );
-      } catch (e) {
-        console.warn('[Order] Không trừ được tiền ví KH:', e.message);
-      }
+      // Xử lý ví dựa trên payment_method
+      const paymentMethod = order.payment_method || 'WALLET';
 
-      if (order.payment_method === 'CASH') {
-        await this.walletsService.addTransaction(
-          order.tasker_id!,
-          -Number(order.platform_fee),
-          'FEE',
-          order.order_id,
-          'Thu phí nền tảng cho đơn hàng trả tiền mặt'
-        );
-      } else {
-        await this.walletsService.addTransaction(
-          order.tasker_id!,
-          Number(order.tasker_earnings),
-          'EARNING',
-          order.order_id,
-          'Thanh toán thu nhập đơn hàng'
-        );
+      if (paymentMethod === 'WALLET') {
+        // Thanh toán ví: Trừ tiền KH + Cộng thu nhập Tasker (85%)
+        try {
+          await this.walletsService.addTransaction(
+            order.customer_id,
+            -Number(order.total_price),
+            'PAYMENT',
+            order.order_id,
+            'Thanh toán dịch vụ đơn hàng #' + order.order_id
+          );
+        } catch (e) {
+          console.warn('[Order] Không trừ được tiền ví KH:', e.message);
+        }
+
+        // Cộng thu nhập cho Tasker (sau khi trừ phí nền tảng 20%)
+        try {
+          await this.walletsService.addTransaction(
+            order.tasker_id!,
+            Number(order.tasker_earnings),
+            'EARNING',
+            order.order_id,
+            'Thu nhập đơn hàng #' + order.order_id + ' (thanh toán ví)'
+          );
+        } catch (e) {
+          console.warn('[Order] Không cộng thu nhập Tasker:', e.message);
+        }
+      } else if (paymentMethod === 'CASH') {
+        // Thanh toán tiền mặt: Tasker giữ tiền mặt → Platform trừ phí nền tảng từ ví Tasker
+        // KHÔNG trừ ví khách hàng (KH đã trả mặt)
+        try {
+          await this.walletsService.addTransaction(
+            order.tasker_id!,
+            -Number(order.platform_fee),
+            'FEE',
+            order.order_id,
+            'Thu phí nền tảng đơn hàng #' + order.order_id + ' (tiền mặt)'
+          );
+        } catch (e) {
+          console.warn('[Order] Không trừ phí nền tảng Tasker:', e.message);
+        }
       }
     }
 

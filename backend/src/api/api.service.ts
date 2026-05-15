@@ -575,7 +575,14 @@ export class ApiService {
 
   async getAdminWithdrawals() {
     return this.prisma.transactions.findMany({
-      where: { type: 'WITHDRAWAL' },
+      where: { type: 'WITHDRAW' },
+      include: {
+        wallets: {
+          include: {
+            users: { select: { user_id: true, full_name: true, phone: true, role: true } }
+          }
+        }
+      },
       orderBy: { created_at: 'desc' }
     });
   }
@@ -607,7 +614,7 @@ export class ApiService {
       this.prisma.wallets.aggregate({ _sum: { balance: true } }),
       this.prisma.transactions.count({ where: { created_at: { gte: startOfDay } } }),
       this.prisma.transactions.aggregate({
-        where: { type: 'WITHDRAWAL', status: 'PENDING' },
+        where: { type: 'WITHDRAW', status: 'PENDING' },
         _sum: { amount: true }
       }),
       this.prisma.transactions.aggregate({
@@ -892,6 +899,7 @@ export class ApiService {
         total_price: true,
         platform_fee: true,
         tasker_earnings: true,
+        payment_method: true,
         created_at: true,
       },
     });
@@ -917,6 +925,12 @@ export class ApiService {
     const platformFee = completed.reduce((sum, o) => sum + Number(o.platform_fee || 0), 0);
     const completedCount = completed.length;
 
+    // Tách thu nhập theo payment_method
+    const walletOrders = completed.filter(o => (o.payment_method || 'WALLET') === 'WALLET');
+    const cashOrders = completed.filter(o => o.payment_method === 'CASH');
+    const walletIncome = walletOrders.reduce((sum, o) => sum + Number(o.tasker_earnings || 0), 0); // Cộng ví
+    const cashFee = cashOrders.reduce((sum, o) => sum + Number(o.platform_fee || 0), 0); // Trừ ví
+
     const prevIncome = prevOrders.reduce((sum, o) => sum + Number(o.tasker_earnings || 0), 0);
     const weekComparisonPct = prevIncome > 0
       ? Math.round(((totalIncome - prevIncome) / prevIncome) * 100)
@@ -938,7 +952,7 @@ export class ApiService {
       ? Number((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1))
       : 0;
 
-    // Daily income for chart (7 days: Mon-Sun)
+    // Daily income for chart (7 days: Mon-Sun) — chỉ tính EARNING (ví)
     const dailyIncome: number[] = [0, 0, 0, 0, 0, 0, 0]; // index 0=Mon ... 6=Sun
     completed.forEach(o => {
       const day = new Date(o.created_at!).getDay(); // 0=Sun
@@ -946,16 +960,20 @@ export class ApiService {
       dailyIncome[idx] += Number(o.tasker_earnings || 0);
     });
 
-    // Recent income history (completed orders in current period)
+    // Recent income history — bao gồm payment_method
     const incomeHistory = completed.map(o => ({
       order_id: o.order_id,
       amount: Number(o.tasker_earnings || 0),
       fee: Number(o.platform_fee || 0),
+      total_price: Number(o.total_price || 0),
+      payment_method: o.payment_method || 'WALLET',
       date: o.created_at,
     }));
 
     return {
       total_income: totalIncome,
+      wallet_income: walletIncome,
+      cash_fee: cashFee,
       platform_fee: platformFee,
       completed_orders: completedCount,
       total_orders_period: currentOrders.length,
@@ -967,5 +985,127 @@ export class ApiService {
       income_history: incomeHistory,
       period,
     };
+  }
+
+  // ===== Chat Admin - User =====
+  async getAdminChatThreads() {
+    const messages = await this.prisma.messages.findMany({
+      where: { order_id: null },
+      orderBy: { created_at: 'desc' },
+      include: {
+        users_messages_sender_idTousers: { select: { user_id: true, full_name: true, phone: true, role: true, avatar_url: true } },
+        users_messages_receiver_idTousers: { select: { user_id: true, full_name: true, phone: true, role: true, avatar_url: true } },
+      }
+    });
+
+    const threads = new Map<number, any>();
+    for (const msg of messages) {
+      const isSenderAdmin = msg.users_messages_sender_idTousers.role === 'ADMIN';
+      const user = isSenderAdmin ? msg.users_messages_receiver_idTousers : msg.users_messages_sender_idTousers;
+      
+      if (!threads.has(user.user_id)) {
+        threads.set(user.user_id, {
+          user,
+          last_message: msg.content,
+          last_time: msg.created_at,
+          unread_count: (!isSenderAdmin && !msg.is_read) ? 1 : 0
+        });
+      } else {
+        if (!isSenderAdmin && !msg.is_read) {
+          threads.get(user.user_id).unread_count++;
+        }
+      }
+    }
+    return Array.from(threads.values());
+  }
+
+  async getAdminChatHistory(userId: number) {
+    const messages = await this.prisma.messages.findMany({
+      where: {
+        order_id: null,
+        OR: [
+          { sender_id: userId },
+          { receiver_id: userId }
+        ]
+      },
+      orderBy: { created_at: 'asc' },
+      include: {
+        users_messages_sender_idTousers: { select: { user_id: true, full_name: true, role: true } },
+        users_messages_receiver_idTousers: { select: { user_id: true, full_name: true, role: true } },
+      }
+    });
+
+    // Mark as read
+    await this.prisma.messages.updateMany({
+      where: { order_id: null, sender_id: userId, is_read: false },
+      data: { is_read: true }
+    });
+
+    return messages;
+  }
+
+  async sendAdminMessage(adminId: number, userId: number, content: string) {
+    const message = await this.prisma.messages.create({
+      data: {
+        sender_id: adminId,
+        receiver_id: userId,
+        content,
+        is_read: false,
+      },
+      include: {
+        users_messages_sender_idTousers: { select: { user_id: true, full_name: true, role: true } },
+      }
+    });
+    return message;
+  }
+
+  async getUserChatHistory(userId: number) {
+    const messages = await this.prisma.messages.findMany({
+      where: {
+        order_id: null,
+        OR: [
+          { sender_id: userId },
+          { receiver_id: userId }
+        ]
+      },
+      orderBy: { created_at: 'asc' },
+      include: {
+        users_messages_sender_idTousers: { select: { user_id: true, full_name: true, role: true } },
+        users_messages_receiver_idTousers: { select: { user_id: true, full_name: true, role: true } },
+      }
+    });
+
+    // Mark admin messages as read
+    await this.prisma.messages.updateMany({
+      where: { order_id: null, receiver_id: userId, is_read: false },
+      data: { is_read: true }
+    });
+
+    return messages;
+  }
+
+  async sendUserMessage(userId: number, content: string) {
+    // Find the first ADMIN user to set as receiver
+    const admin = await this.prisma.users.findFirst({
+      where: { role: 'ADMIN' },
+      select: { user_id: true }
+    });
+
+    if (!admin) {
+      throw new BadRequestException('Hệ thống chưa có Admin nào để nhận tin nhắn');
+    }
+
+    const message = await this.prisma.messages.create({
+      data: {
+        sender_id: userId,
+        receiver_id: admin.user_id,
+        content,
+        is_read: false,
+      },
+      include: {
+        users_messages_sender_idTousers: { select: { user_id: true, full_name: true, role: true } },
+      }
+    });
+    return message;
   }
 }

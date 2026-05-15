@@ -247,18 +247,28 @@
 </div>
 </div>
 </section>
-<!-- Thanh toán -->
-<section class="flex items-center justify-between p-4 bg-white rounded-2xl soft-shadow border border-[#FFF1EB]">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">account_balance_wallet</span>
+<!-- Phương thức thanh toán -->
+<section class="bg-white p-4 rounded-2xl soft-shadow border border-[#FFF1EB] space-y-3">
+<h3 class="text-title-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">payments</span>
+Phương thức thanh toán
+</h3>
+<div class="grid grid-cols-2 gap-3">
+<button id="pay-wallet" class="payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-primary-container bg-orange-50 transition-all active:scale-95">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<div class="text-left">
+<p class="font-bold text-primary-container text-[13px]">Ví Chị Ơi</p>
+<p id="wallet-balance-text" class="text-[11px] text-on-surface-variant">Đang tải...</p>
 </div>
-<div>
-<p class="text-body-sm text-on-surface-variant">Thanh toán</p>
-<p class="font-bold">Ví Chị Ơi</p>
+</button>
+<button id="pay-cash" class="payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-transparent bg-white transition-all active:scale-95 hover:border-orange-100">
+<span class="material-symbols-outlined text-on-surface-variant">payments</span>
+<div class="text-left">
+<p class="font-medium text-on-surface-variant text-[13px]">Tiền mặt</p>
+<p class="text-[11px] text-on-surface-variant">Trả trực tiếp</p>
 </div>
+</button>
 </div>
-<button class="text-primary-container font-bold text-body-sm px-3 py-1 rounded-full hover:bg-primary-container/10">Thay đổi</button>
 </section>
 <!-- Lỗi 6 FIX: Nút đặt dịch vụ nằm ngay dưới phần thanh toán, không gắn cứng -->
 <button id="main-submit-btn" class="orange-gradient w-full py-4 rounded-2xl text-white font-bold text-body-lg shadow-lg shadow-orange-500/30 active:scale-[0.98] transition-all flex justify-center items-center gap-2">
@@ -303,7 +313,8 @@
     time: '10:00',
     hours: 3,
     pricePerHour: 150000,
-    note: ''
+    note: '',
+    paymentMethod: 'WALLET'
   };
 
   // ===== Load service_id from URL or services API =====
@@ -327,6 +338,48 @@
       addressInput.value = profile.address;
     }
   } catch (e) { console.warn('[Đặt DV] Không lấy được profile:', e.message); }
+
+  // ===== Load wallet balance =====
+  var walletBalanceAmount = 0;
+  (async function loadWalletBalance() {
+    try {
+      var wallet = await apiFetch('/api/wallets/balance');
+      walletBalanceAmount = wallet ? Number(wallet.balance || 0) : 0;
+      var balEl = document.getElementById('wallet-balance-text');
+      if (balEl) balEl.textContent = 'Số dư: ' + formatVND(walletBalanceAmount);
+    } catch (e) {
+      var balEl = document.getElementById('wallet-balance-text');
+      if (balEl) balEl.textContent = 'Không tải được';
+    }
+  })();
+
+  // ===== Payment Method Toggle =====
+  function setPaymentMethod(method) {
+    state.paymentMethod = method;
+    var walletBtn = document.getElementById('pay-wallet');
+    var cashBtn = document.getElementById('pay-cash');
+    if (method === 'WALLET') {
+      walletBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-primary-container bg-orange-50 transition-all active:scale-95';
+      walletBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-primary-container';
+      walletBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+      walletBtn.querySelector('p:first-child').className = 'font-bold text-primary-container text-[13px]';
+      cashBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-transparent bg-white transition-all active:scale-95 hover:border-orange-100';
+      cashBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-on-surface-variant';
+      cashBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+      cashBtn.querySelector('div p:first-child').className = 'font-medium text-on-surface-variant text-[13px]';
+    } else {
+      cashBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-primary-container bg-orange-50 transition-all active:scale-95';
+      cashBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-primary-container';
+      cashBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+      cashBtn.querySelector('div p:first-child').className = 'font-bold text-primary-container text-[13px]';
+      walletBtn.className = 'payment-method-btn flex items-center gap-2 p-3 rounded-xl border-2 border-transparent bg-white transition-all active:scale-95 hover:border-orange-100';
+      walletBtn.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-on-surface-variant';
+      walletBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+      walletBtn.querySelector('p:first-child').className = 'font-medium text-on-surface-variant text-[13px]';
+    }
+  }
+  document.getElementById('pay-wallet').addEventListener('click', function() { setPaymentMethod('WALLET'); });
+  document.getElementById('pay-cash').addEventListener('click', function() { setPaymentMethod('CASH'); });
 
   // ===== Date Input - TC-KH07-005 FIX: Set min to today =====
   var dateInput = document.getElementById('dateInput');
@@ -500,22 +553,19 @@
       var scheduledTime = state.date + 'T' + state.time + ':00';
       var totalPrice = state.hours * state.pricePerHour;
 
-      // TC-KH07-013: Kiểm tra số dư ví trước khi đặt
-      try {
-        var wallet = await apiFetch('/api/wallets/balance');
-        if (wallet && typeof wallet.balance === 'number' && wallet.balance < totalPrice) {
-          // Hiển thị thông báo không đủ số dư + nút nạp tiền
-          var insufficientMsg = 'Số dư ví không đủ (' + formatVND(wallet.balance) + '). Cần ' + formatVND(totalPrice) + ' để đặt dịch vụ.';
-          showToastMsg(insufficientMsg, 5000);
-          // Tạo popup hỏi user có muốn nạp tiền không
-          if (confirm(insufficientMsg + '\n\nBạn có muốn nạp tiền không?')) {
-            window.location.href = 'naptienqr.html';
+      // TC-KH07-013: Kiểm tra số dư ví trước khi đặt (chỉ khi thanh toán VÍ)
+      if (state.paymentMethod === 'WALLET') {
+        try {
+          var wallet = await apiFetch('/api/wallets/balance');
+          if (wallet && typeof wallet.balance === 'number' && wallet.balance < totalPrice) {
+            // Hiển thị popup không đủ số dư
+            showInsufficientPopup(wallet.balance, totalPrice);
+            return;
           }
-          return;
+        } catch (walletErr) {
+          console.warn('[Ví] Không kiểm tra được số dư:', walletErr.message);
+          // Cho phép tiếp tục nếu không check được ví
         }
-      } catch (walletErr) {
-        console.warn('[Ví] Không kiểm tra được số dư:', walletErr.message);
-        // Cho phép tiếp tục nếu không check được ví
       }
 
       // Khóa nút ngay lập tức
@@ -535,7 +585,8 @@
             total_price: totalPrice,
             longitude: 106.6297,
             latitude: 10.8231,
-            notes: state.note
+            notes: state.note,
+            payment_method: state.paymentMethod
           }
         });
         hideLoading();
@@ -559,6 +610,31 @@
     btnContinue.addEventListener('click', function() {
       document.getElementById('duplicate-warning').style.display = 'none';
     });
+  }
+
+  // ===== Popup số dư không đủ =====
+  function showInsufficientPopup(balance, needed) {
+    var shortage = Math.abs(needed - balance);
+    var existing = document.getElementById('insufficient-modal');
+    if (existing) existing.remove();
+    var overlay = document.createElement('div');
+    overlay.id = 'insufficient-modal';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;';
+    overlay.innerHTML = '<div style="background:#fff;border-radius:24px;width:90%;max-width:380px;padding:24px;animation:scaleIn 0.25s ease-out;">' +
+      '<div style="text-align:center;margin-bottom:16px;"><span class="material-symbols-outlined" style="font-size:48px;color:#EAB308;font-variation-settings:\'FILL\' 1;">account_balance_wallet</span></div>' +
+      '<h3 style="font-weight:700;text-align:center;margin-bottom:8px;font-size:16px;">Số dư ví không đủ</h3>' +
+      '<p style="text-align:center;font-size:13px;color:#666;margin-bottom:4px;">Số dư hiện tại: <span style="font-weight:700;color:#1b1c1c;">' + formatVND(balance) + '</span></p>' +
+      '<p style="text-align:center;font-size:13px;color:#666;margin-bottom:4px;">Cần thanh toán: <span style="font-weight:700;color:#1b1c1c;">' + formatVND(needed) + '</span></p>' +
+      '<p style="text-align:center;font-size:13px;color:#666;margin-bottom:16px;">Cần nạp thêm: <span style="font-weight:700;color:#ba1a1a;">' + formatVND(shortage) + '</span></p>' +
+      '<p style="text-align:center;font-size:13px;margin-bottom:16px;">Bạn có muốn nạp tiền vào ví không?</p>' +
+      '<div style="display:flex;gap:12px;">' +
+      '<button id="insuf-cancel" style="flex:1;padding:12px;border-radius:12px;border:2px solid #dfc0b3;font-weight:700;color:#584238;background:white;cursor:pointer;">Không</button>' +
+      '<button id="insuf-topup" style="flex:1;padding:12px;border-radius:12px;background:linear-gradient(135deg,#ff7e36,#a04100);color:white;font-weight:700;border:none;cursor:pointer;">Nạp tiền</button>' +
+      '</div></div>';
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+    document.getElementById('insuf-cancel').addEventListener('click', function() { overlay.remove(); });
+    document.getElementById('insuf-topup').addEventListener('click', function() { overlay.remove(); window.location.href = 'naptienqr.html'; });
   }
 
   updateSummary();

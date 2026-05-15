@@ -256,7 +256,7 @@
       </div>
       <span id="tx-count" class="text-body-sm text-on-surface-variant"></span>
     </div>
-    <button class="bg-primary text-white px-5 py-2.5 rounded-xl font-label-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all text-body-sm">
+    <button id="btn-export" class="bg-primary text-white px-5 py-2.5 rounded-xl font-label-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all text-body-sm">
       <span class="material-symbols-outlined text-sm">download</span>
       Xuất báo cáo
     </button>
@@ -764,6 +764,39 @@
           });
         });
       }
+    }
+
+    // Bug 7 Report19: Xuất báo cáo CSV
+    var exportBtn = document.getElementById('btn-export');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function() {
+        if (!allTransactions || allTransactions.length === 0) {
+          showToastMsg('Không có giao dịch nào để xuất.');
+          return;
+        }
+        var header = ['Mã GD', 'Người dùng', 'SĐT', 'Loại', 'Số tiền', 'Trạng thái', 'Thời gian'];
+        var rows = allTransactions.map(function(tx) {
+          var user = tx.wallets && tx.wallets.users ? tx.wallets.users : null;
+          var typeInfo = TYPE_MAP[tx.type] || { label: tx.type };
+          var statusInfo = STATUS_MAP[tx.status] || { label: tx.status };
+          return [
+            tx.transaction_code || '#TX' + tx.transaction_id,
+            user ? user.full_name : 'N/A',
+            user ? user.phone : '',
+            typeInfo.label,
+            tx.amount,
+            statusInfo.label,
+            tx.created_at ? new Date(tx.created_at).toLocaleString('vi-VN') : ''
+          ].map(function(v) { return '"' + String(v || '').replace(/"/g, '""') + '"'; }).join(',');
+        });
+        var csv = '\uFEFF' + header.join(',') + '\n' + rows.join('\n');
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'giao_dich_chioi_' + new Date().toISOString().slice(0,10) + '.csv';
+        link.click();
+        showToastMsg('📥 Đã xuất báo cáo thành công!');
+      });
     }
 
     // Logout

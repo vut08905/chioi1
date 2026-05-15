@@ -136,16 +136,14 @@
 <div class="absolute top-0 left-0 w-full h-[300px] z-0" style="background: transparent; pointer-events: none;"></div>
 
 <!-- TopAppBar -->
-<header class="sticky top-0 z-50  dark:-dim shadow-sm flex justify-between items-center w-full px-md h-16 bg-transparent relative z-40">
-<div class="flex items-center gap-sm">
-<button class="transition-colors duration-200 active:scale-95 text-primary dark:text-primary-fixed-dim">
-<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
-</button>
-<h1 class="font-headline-md text-headline-md text-white">Cá nhân</h1>
-</div>
-<button id="btnSave" class="transition-colors duration-200 active:scale-95 text-white font-bold px-4 py-2 bg-white/20 rounded-xl hover:bg-white/30">
-            Lưu
-        </button>
+<header class="flex items-center justify-between px-md h-14 w-full sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20">
+  <div class="flex items-center gap-sm">
+    <span class="material-symbols-outlined text-primary text-[24px]">person</span>
+    <h1 class="font-title-sm text-title-sm text-on-surface">Cá nhân</h1>
+  </div>
+  <button id="btnSave" class="px-4 py-1.5 rounded-full bg-primary text-white text-sm font-bold hover:brightness-110 active:scale-95 transition-all">
+    Lưu
+  </button>
 </header>
 <main class="pb-24 px-container-padding space-y-lg pt-md relative z-10">
 <!-- Basic Info Section -->
@@ -253,6 +251,14 @@
 <p class="font-body-lg text-body-lg font-semibold">Lý lịch tư pháp: <span class="text-on-secondarybg-surface-container">Hợp lệ</span></p>
 </div>
 </div>
+</section>
+
+<!-- Bug 10 Report19: Chat với CSKH (Admin) -->
+<section>
+<button onclick="window.location.href='../shared/chatadmin.html'" class="w-full level-1-card rounded-xl py-3 flex items-center justify-center gap-sm transition-transform active:scale-95 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+<span class="font-title-sm">Chat với CSKH</span>
+</button>
 </section>
 
 <!-- Complaint Section -->

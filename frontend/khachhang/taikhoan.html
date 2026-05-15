@@ -121,14 +121,18 @@
     </style>
 </head>
 <body class="text-on-surface">
-<div class="absolute top-0 left-0 w-full h-[300px] z-0 pointer-events-none" style="background: linear-gradient(rgb(255, 126, 54) 0%, rgb(252, 249, 248) 100%);"></div>
-<!-- Header Section -->
-<header class="relative z-40 bg-transparent pt-12 pb-4 px-container-padding">
-<div class="flex justify-between items-center">
-<h1 class="text-headline-md font-headline-md text-on-primary">Tài khoản</h1>
-<a href="chatvoitasker.html"><span class="material-symbols-outlined text-on-primary">chat_bubble</span></a>
-</div>
+
+<!-- Header -->
+<header class="flex items-center justify-between px-md h-14 w-full sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20">
+  <div class="flex items-center gap-sm">
+    <span class="material-symbols-outlined text-primary text-[24px]">person</span>
+    <h1 class="font-title-sm text-title-sm text-on-surface">Tài khoản</h1>
+  </div>
+  <a href="../shared/chatadmin.html" class="p-2 rounded-full hover:bg-surface-container-high active:scale-95 transition-all">
+    <span class="material-symbols-outlined text-on-surface-variant text-[22px]">chat_bubble</span>
+  </a>
 </header>
+
 <!-- Scrollable Body Content -->
 <main class="relative z-10 pb-32 px-container-padding space-y-4 overflow-y-auto">
 <!-- Lỗi 11 FIX: User Profile Card - hiển thị đúng thông tin từ DB -->
@@ -379,7 +383,7 @@
       '<p class="text-body-lg font-bold">Hỗ trợ khách hàng 24/7</p>' +
       '<p class="text-body-sm text-on-surface-variant">Hotline: <a href="tel:19001234" class="text-primary font-bold">1900 1234</a></p>' +
       '<p class="text-body-sm text-on-surface-variant">Email: <a href="mailto:support@chioi.vn" class="text-primary font-bold">support@chioi.vn</a></p>' +
-      '<button onclick="window.location.href=\'chatvoitasker.html\'" class="orange-gradient w-full py-3 rounded-xl text-white font-bold active:scale-95 transition-all mt-2">Chat với CSKH</button></div>'
+      '<button onclick="window.location.href=\'../shared/chatadmin.html\'" class="orange-gradient w-full py-3 rounded-xl text-white font-bold active:scale-95 transition-all mt-2">Chat với CSKH</button></div>'
     );
   });
 
