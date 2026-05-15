@@ -106,9 +106,14 @@
         .orange-gradient {
             background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%);
         }
-        .soft-shadow {
-            box-shadow: 0 4px 12px rgba(255, 126, 54, 0.08);
+        .card-premium {
+            box-shadow: 0 8px 32px rgba(255, 126, 54, 0.12), 0 1px 2px rgba(0,0,0,0.02);
         }
+        @keyframes formEntrance {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .anim-form { animation: formEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .header-gradient {
@@ -134,35 +139,35 @@
         </header>
 
         <!-- Main Content: Register Card -->
-        <main class="w-full max-w-md px-container-padding -mt-16 z-20 pb-xl">
-            <div class="bg-surface-container-lowest rounded-[24px] card-shadow border border-surface-container border-opacity-50 p-lg flex flex-col gap-lg">
+        <main class="w-full max-w-md px-container-padding -mt-8 z-20 pb-xl">
+            <div class="bg-white rounded-[24px] card-premium border border-surface-container/40 px-6 py-5 flex flex-col gap-4 anim-form">
                 <!-- Register Form -->
-                <div class="flex flex-col gap-md">
+                <div class="flex flex-col gap-3">
                     <!-- Full Name Input -->
-                    <div class="flex flex-col gap-xs">
+                    <div class="flex flex-col gap-1">
                         <div class="relative flex items-center">
-                            <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="person">person</span>
-                            <input id="nameInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Họ và tên" type="text" maxlength="255"/>
+                            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px]" data-icon="person">person</span>
+                            <input id="nameInput" class="w-full pl-11 pr-4 py-3 bg-surface-container-low border-none rounded-2xl text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary-container transition-all text-[15px]" placeholder="Họ và tên" type="text" maxlength="255"/>
                         </div>
                         <p id="nameError" class="text-error text-[12px] px-1 leading-tight" style="display:none;"></p>
                     </div>
 
                     <!-- Phone Input -->
-                    <div class="flex flex-col gap-xs">
+                    <div class="flex flex-col gap-1">
                         <div class="relative flex items-center">
-                            <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="phone">phone</span>
-                            <input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Số điện thoại" type="tel" maxlength="10" inputmode="numeric"/>
+                            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px]" data-icon="phone">phone</span>
+                            <input id="phoneInput" class="w-full pl-11 pr-4 py-3 bg-surface-container-low border-none rounded-2xl text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary-container transition-all text-[15px]" placeholder="Số điện thoại" type="tel" maxlength="10" inputmode="numeric"/>
                         </div>
                         <p id="phoneError" class="text-error text-[12px] px-1 leading-tight" style="display:none;"></p>
                     </div>
 
                     <!-- Password Input -->
-                    <div class="flex flex-col gap-xs">
+                    <div class="flex flex-col gap-1">
                         <div class="relative flex items-center">
-                            <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="lock">lock</span>
-                            <input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Mật khẩu (8-20 ký tự)" type="password" maxlength="20"/>
-                            <button type="button" class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePassword('passwordInput')">
-                                <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px]" data-icon="lock">lock</span>
+                            <input id="passwordInput" class="w-full pl-11 pr-12 py-3 bg-surface-container-low border-none rounded-2xl text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary-container transition-all text-[15px]" placeholder="Mật khẩu (8-20 ký tự)" type="password" maxlength="20"/>
+                            <button type="button" class="absolute right-3.5 text-outline hover:text-on-surface-variant transition-colors" onclick="var i=document.getElementById('passwordInput');var b=this.querySelector('span');if(i.type==='password'){i.type='text';b.textContent='visibility_off';}else{i.type='password';b.textContent='visibility';}">
+                                <span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
                             </button>
                         </div>
                         <p id="passwordHint" class="text-outline text-[11px] px-1 leading-tight">Gồm chữ hoa, chữ thường và số. Từ 8-20 ký tự.</p>
@@ -170,34 +175,34 @@
                     </div>
 
                     <!-- Confirm Password Input -->
-                    <div class="flex flex-col gap-xs">
+                    <div class="flex flex-col gap-1">
                         <div class="relative flex items-center">
-                            <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="lock_reset">lock_reset</span>
-                            <input id="confirmPasswordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Xác nhận mật khẩu" type="password" maxlength="20"/>
-                            <button type="button" class="absolute right-4 text-outline hover:text-on-surface-variant" onclick="togglePassword('confirmPasswordInput')">
-                                <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px]" data-icon="lock_reset">lock_reset</span>
+                            <input id="confirmPasswordInput" class="w-full pl-11 pr-12 py-3 bg-surface-container-low border-none rounded-2xl text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary-container transition-all text-[15px]" placeholder="Xác nhận mật khẩu" type="password" maxlength="20"/>
+                            <button type="button" class="absolute right-3.5 text-outline hover:text-on-surface-variant transition-colors" onclick="var i=document.getElementById('confirmPasswordInput');var b=this.querySelector('span');if(i.type==='password'){i.type='text';b.textContent='visibility_off';}else{i.type='password';b.textContent='visibility';}">
+                                <span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Error Text -->
-                    <p id="errorMsg" class="text-error font-body-sm text-body-sm px-1 leading-tight" style="display:none;"></p>
+                    <p id="errorMsg" class="text-error text-[12px] px-1 leading-tight" style="display:none;"></p>
                 </div>
 
                 <!-- CTA & Terms Section -->
-                <div class="flex flex-col gap-md items-center">
-                    <p class="text-on-surface-variant font-body-sm text-[12px] text-center px-2">
-                        Bằng việc đăng ký, bạn đồng ý với <a href="../terms.html" class="text-primary hover:underline">Điều khoản</a> và <a href="../privacy.html" class="text-primary hover:underline">Chính sách bảo mật</a> của chúng tôi.
+                <div class="flex flex-col gap-3 items-center mt-2">
+                    <p class="text-on-surface-variant text-[12px] text-center px-2 leading-snug">
+                        Bằng việc đăng ký, bạn đồng ý với <a href="../terms.html" class="text-primary hover:underline font-medium">Điều khoản</a> và <a href="../privacy.html" class="text-primary hover:underline font-medium">Chính sách bảo mật</a>.
                     </p>
 
                     <!-- Register Button -->
-                    <button id="registerBtn" onclick="handleRegister()" class="orange-gradient w-full py-4 rounded-[16px] shadow-lg shadow-primary-container/30 active:scale-[0.98] transition-all">
-                        <span class="text-white font-title-sm text-title-sm font-bold">ĐĂNG KÝ TÀI KHOẢN</span>
+                    <button id="registerBtn" onclick="handleRegister()" class="orange-gradient w-full py-3.5 rounded-2xl shadow-lg shadow-primary-container/25 flex items-center justify-center gap-2 transition-all">
+                        <span class="text-white text-[15px] font-bold tracking-wide">ĐĂNG KÝ TÀI KHOẢN</span>
                     </button>
 
                     <!-- Login Link -->
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
-                        Đã có tài khoản? <a class="text-primary font-bold" href="dangnhap.html">Đăng nhập</a>
+                    <p class="text-[13px] text-on-surface-variant mt-1">
+                        Đã có tài khoản? <a class="text-primary font-bold hover:underline" href="dangnhap.html">Đăng nhập ngay</a>
                     </p>
                 </div>
             </div>
