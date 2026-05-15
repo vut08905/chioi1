@@ -4,6 +4,17 @@
 
 ---
 
+## [1.3.1] — 2026-05-15
+
+### 🔒 Tiêu chuẩn hóa chính sách bảo mật mật khẩu
+
+#### Changed
+- **Backend:** Cập nhật DTOs (`register.dto.ts`, `change-password.dto.ts`, `reset-password.dto.ts`) yêu cầu mật khẩu tối thiểu 8 ký tự, bao gồm ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt.
+- **Frontend:** Đồng bộ xác thực Regex mật khẩu trên toàn bộ các form đăng ký, đặt lại mật khẩu và đổi mật khẩu cho cả Khách hàng, Tasker và Admin (`dangky.html`, `dangkytasker.html`, `quenmatkhau.html`, `taikhoan.html`, `quanlycudan.html`).
+- **UI:** Cập nhật đồng bộ các thông báo lỗi và placeholder input để phản ánh chính xác yêu cầu bảo mật mới.
+
+---
+
 ## [1.3.0] — 2026-05-13
 
 ### 🚨 Phase 5 — Recovery + bug fixes mới
