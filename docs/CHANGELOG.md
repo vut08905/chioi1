@@ -15,6 +15,34 @@
 
 ---
 
+## [1.4.0] — 2026-05-15
+
+### 📊 UC_12 — Thu nhập & Thống kê Tasker
+
+#### Added
+- **Backend:** Endpoint `GET /api/taskers/stats?period=today|week|month` — trả về tổng thu nhập, phí 15%, đánh giá TB, tỷ lệ nhận đơn, % so sánh kỳ trước, biểu đồ theo ngày.
+- **Frontend:** Rewrite toàn bộ `thunhapvathongke.html` — 25 test cases UC_12.
+
+#### Fixed (25 Test Cases)
+- **TC-T12-001:** Mở màn hình Thu nhập thành công
+- **TC-T12-002:** Tổng thu nhập tính đúng từ `tasker_earnings`
+- **TC-T12-003:** % so sánh kỳ trước (▲/▼)
+- **TC-T12-004/005:** Biểu đồ thu nhập theo ngày (T2–CN) từ API
+- **TC-T12-006:** Số đơn hoàn thành chính xác
+- **TC-T12-007:** Đánh giá TB từ `reviews` table
+- **TC-T12-008:** Tỷ lệ nhận đơn = COMPLETED/(COMPLETED+CANCELLED)
+- **TC-T12-009:** Phí nền tảng 15% hiển thị riêng
+- **TC-T12-010/011/012/013:** Filter chips Hôm nay/Tuần này/Tháng + chuyển đổi liên tục
+- **TC-T12-014/015:** Empty state + hiển thị 0 khi chưa có dữ liệu
+- **TC-T12-016:** Nút Refresh làm mới dữ liệu
+- **TC-T12-017/018:** Loading skeleton + Error state khi mất mạng/timeout
+- **TC-T12-019:** Auth guard redirect login
+- **TC-T12-021:** Format tiền tệ VND
+- **TC-T12-022:** Loading skeleton animation
+- **TC-T12-024/025:** Nút rút tiền + disable khi số dư = 0
+
+---
+
 ## [1.3.0] — 2026-05-13
 
 ### 🚨 Phase 5 — Recovery + bug fixes mới
