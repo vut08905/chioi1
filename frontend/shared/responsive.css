@@ -242,8 +242,6 @@ header {
   header {
     max-width: 430px !important;
     width: 100% !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
   }
   /* Vẫn giữ background toàn trang cho body */
   body::before {
