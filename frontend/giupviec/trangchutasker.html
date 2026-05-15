@@ -418,14 +418,16 @@
   if (socket) {
     // Nhận đơn hàng mới
     socket.on('new_order', function(data) {
-      // Bug 4 FIX (report14): Nếu đang offline → không hiện đơn mới
+      // Nếu đang offline → không hiện đơn mới
       var toggleInput = document.querySelector('header input[type="checkbox"]');
       if (toggleInput && !toggleInput.checked) return;
-      // Bug 3 FIX (report14): Nếu đơn đã bỏ qua → bỏ qua luôn
+      // Nếu đơn đã bỏ qua → bỏ qua luôn
       if (skippedOrders.indexOf(data.order.order_id) > -1) return;
-      // Bug 8: Nếu đang có đơn → không hiện đơn mới
+      // Nếu đang có đơn → không hiện đơn mới
       if (isHandlingOrder) return;
       currentOrder = data.order;
+      // TC_T05_013 FIX: Phát âm thanh thông báo đơn mới
+      playNotificationSound();
       showNewOrderModal(data.order);
     });
 
@@ -489,7 +491,7 @@
     }
   })();
 
-  // Bug 8 FIX: Hiển thị card đơn đang thực hiện (khóa nhận đơn mới)
+  // Hiển thị card đơn đang thực hiện (khóa nhận đơn mới)
   function showActiveOrderCard(order) {
     var modal = document.getElementById('modal-don-moi');
     var idle = document.getElementById('idle-state');
@@ -498,6 +500,11 @@
     var serviceName = (order.services && order.services.name) ? order.services.name : 'Dịch vụ';
     var customerName = (order.customers && order.customers.users && order.customers.users.full_name) ? order.customers.users.full_name : 'Khách hàng';
     var statusLabel = { 'ACCEPTED': 'Đã nhận đơn', 'TASKER_ARRIVED': 'Đã đến nơi', 'IN_PROGRESS': 'Đang thực hiện' };
+
+    // TC-T08-005 FIX: Tính thời gian bắt đầu làm việc
+    var scheduledTime = order.scheduled_time ? formatDateTime(order.scheduled_time) : 'Chưa xác định';
+    var durationHours = order.duration_hours || order.estimated_hours || '';
+    var durationText = durationHours ? (durationHours + ' giờ') : '';
 
     if (modal) {
       modal.innerHTML = '<div class="bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100">' +
@@ -511,6 +518,8 @@
         '<p class="text-sm text-gray-600">' + (order.address || 'Chưa cập nhật') + '</p></div>' +
         '<div class="flex gap-3"><span class="material-symbols-outlined text-[#ff7e36]" style="font-variation-settings: \'FILL\' 1;">cleaning_services</span>' +
         '<p class="font-bold text-gray-800">' + serviceName + '</p></div>' +
+        '<div class="flex gap-3"><span class="material-symbols-outlined text-[#ff7e36]" style="font-variation-settings: \'FILL\' 1;">schedule</span>' +
+        '<p class="text-sm text-gray-600">' + scheduledTime + (durationText ? ' (' + durationText + ')' : '') + '</p></div>' +
         '<div class="mt-2 flex items-center justify-between border-t border-gray-100 pt-3">' +
         '<span class="text-xs font-bold text-gray-400 uppercase">Trạng thái</span>' +
         '<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold">' + (statusLabel[order.status] || order.status) + '</span></div>' +
@@ -564,7 +573,7 @@
     }
   };
 
-  // ===== 6. Hiển thị Modal đơn mới từ Socket =====
+  // TC_T05_004/007/008 FIX: Hiển thị đầy đủ thông tin đơn mới
   function showNewOrderModal(order) {
     var modal = document.getElementById('modal-don-moi');
     var idle = document.getElementById('idle-state');
@@ -573,18 +582,30 @@
       idle.classList.add('translate-y-10', 'opacity-0');
     }
 
+    // TC_T05_004/008: Lấy thông tin dịch vụ, địa chỉ, giờ
+    var serviceName = (order.services && order.services.name) ? order.services.name : 'Dịch vụ';
+    var address = order.address || 'Địa chỉ đơn hàng';
+    var durationHours = order.duration_hours || order.estimated_hours || '';
+    var scheduledTime = order.scheduled_time ? formatDateTime(order.scheduled_time) : '';
+    var timeText = scheduledTime;
+    if (durationHours) timeText += ' (' + durationHours + ' giờ)';
+
     // Cập nhật nội dung modal
     var addressEl = modal.querySelector('.font-bold.text-gray-800');
-    if (addressEl) addressEl.textContent = order.address || 'Địa chỉ đơn hàng';
+    if (addressEl) addressEl.textContent = address;
 
     var priceEl = modal.querySelector('.text-3xl.font-bold');
     if (priceEl) priceEl.textContent = formatVND(order.total_price);
 
+    // TC_T05_007: Hiển thị thời gian thực hiện + số giờ
     var timeEl = modal.querySelectorAll('.font-bold.text-gray-800');
     if (timeEl[1]) {
-      var date = new Date(order.scheduled_time);
-      timeEl[1].textContent = formatDateTime(order.scheduled_time);
+      timeEl[1].textContent = timeText || formatDateTime(order.scheduled_time);
     }
+
+    // Cập nhật title modal theo dịch vụ
+    var modalTitle = modal.querySelector('h2');
+    if (modalTitle) modalTitle.textContent = 'ĐƠN ' + serviceName.toUpperCase() + ' MỚI';
 
     // Hiện modal
     modal.style.display = 'block';
@@ -647,18 +668,18 @@
     }
   };
 
-  // ===== 9. Bỏ qua đơn — Bug 3 FIX (report14): lưu lại để không hiện lại =====
+  // ===== 9. Bỏ qua đơn =====
   window.boQuaDon = function() {
     clearInterval(countdownTimer);
-    // Bug 3 FIX: Lưu đơn đã bỏ qua vào localStorage
+    // Lưu đơn đã bỏ qua vào localStorage
     if (currentOrder && currentOrder.order_id) {
       skippedOrders.push(currentOrder.order_id);
-      // Giữ tối đa 100 đơn gần nhất để tránh localStorage quá lớn
       if (skippedOrders.length > 100) skippedOrders = skippedOrders.slice(-100);
       localStorage.setItem('chioi_skipped_orders', JSON.stringify(skippedOrders));
     }
     hideModal();
-    showToast('Đã bỏ qua đơn hàng. Chú ý tỷ lệ nhận đơn!');
+    // TC-T07-003 FIX: Hiển thị thông báo rõ ràng khi bỏ qua đơn
+    showToast('❌ Đã từ chối nhận đơn hàng. Chú ý tỷ lệ nhận đơn!');
     showIdleState();
     currentOrder = null;
   };
@@ -712,6 +733,33 @@ function showSuccessNotification(title, subtitle) {
     banner.style.animation = 'slideDown 0.3s ease-out reverse';
     setTimeout(function() { banner.remove(); style.remove(); }, 300);
   }, 5000);
+}
+
+// TC_T05_013 FIX: Hàm phát âm thanh thông báo đơn mới
+function playNotificationSound() {
+  try {
+    var AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    var ctx = new AudioCtx();
+    // Tạo âm thanh notification 2 tone
+    var notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+    notes.forEach(function(freq, i) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.15);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.3);
+      osc.start(ctx.currentTime + i * 0.15);
+      osc.stop(ctx.currentTime + i * 0.15 + 0.3);
+    });
+    // Rung thiết bị nếu hỗ trợ
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
+  } catch(e) {
+    console.warn('[Sound] Không phát được âm thanh:', e);
+  }
 }
 </script>
 <style>

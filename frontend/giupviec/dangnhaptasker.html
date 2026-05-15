@@ -149,14 +149,14 @@
 <div class="flex flex-col gap-xs">
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="phone">phone</span>
-<input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Số điện thoại" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="11"/>
+<input id="phoneInput" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Số điện thoại" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="11" autocomplete="tel"/>
 </div>
 </div>
 <!-- Password Input -->
 <div class="flex flex-col gap-xs">
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-4 text-outline" data-icon="lock">lock</span>
-<input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Mật khẩu (8-20 ký tự)" type="password" minlength="8" maxlength="20"/>
+<input id="passwordInput" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[16px] text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all font-body-lg text-body-lg" placeholder="Mật khẩu (8-20 ký tự)" type="password" minlength="8" maxlength="20" autocomplete="current-password"/>
 <button id="togglePassword" class="absolute right-4 text-outline hover:text-on-surface-variant">
 <span class="material-symbols-outlined" data-icon="visibility" id="eyeIcon">visibility</span>
 </button>
@@ -202,9 +202,25 @@ if (toggleBtn) {
   });
 }
 
+// TC_T01_008 FIX: Chặn khoảng trắng trong SĐT
+document.getElementById('phoneInput').addEventListener('input', function(e) {
+  this.value = this.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+});
+
+// TC_T01_010 FIX: Chặn khoảng trắng đầu/cuối password
+document.getElementById('passwordInput').addEventListener('input', function(e) {
+  if (this.value !== this.value.trim()) {
+    this.value = this.value.trim();
+  }
+});
+
+var isSubmitting = false;
+
 async function handleTaskerLogin() {
-  var phone = document.getElementById('phoneInput').value.trim();
-  var pass = document.getElementById('passwordInput').value.trim();
+  if (isSubmitting) return;
+  var phone = document.getElementById('phoneInput').value.replace(/\s/g, '');
+  // TC_T01_010 FIX: KHÔNG trim password - chặn ngay từ input
+  var pass = document.getElementById('passwordInput').value;
   var errorEl = document.getElementById('errorMsg');
   var infoEl = document.getElementById('infoMsg');
   var loginBtn = document.getElementById('loginBtn');
@@ -216,7 +232,7 @@ async function handleTaskerLogin() {
     return;
   }
 
-  // Lỗi 5 FIX: Validate định dạng SĐT trước khi gọi API
+  // TC_T01_005 FIX: Validate định dạng SĐT trước khi gọi API
   var phoneRegex = /^0[0-9]{8,10}$/;
   if (!phoneRegex.test(phone)) {
     errorEl.textContent = 'Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng (VD: 0901234567).';
@@ -225,7 +241,7 @@ async function handleTaskerLogin() {
     return;
   }
 
-  // Lỗi 9 FIX: Validate độ dài mật khẩu
+  // TC_T01_018 FIX: Validate độ dài mật khẩu (8-20 ký tự)
   if (pass.length < 8 || pass.length > 20) {
     errorEl.textContent = 'Mật khẩu phải từ 8 đến 20 ký tự.';
     errorEl.style.display = 'block';
@@ -234,6 +250,7 @@ async function handleTaskerLogin() {
   }
 
   // Disable button + show loading
+  isSubmitting = true;
   loginBtn.disabled = true;
   loginBtn.innerHTML = '<span class="text-white font-title-sm text-title-sm font-bold">Đang đăng nhập...</span>';
   errorEl.style.display = 'none';
@@ -248,29 +265,41 @@ async function handleTaskerLogin() {
     // Lưu token + user info
     ChiOiAuth.saveLogin(data);
 
-    // Bug 1 FIX (report14): Chỉ cho phép TASKER đăng nhập trang này
+    // Chỉ cho phép TASKER đăng nhập trang này
     var user = ChiOiAuth.getUser();
     if (user && user.role === 'TASKER') {
       if (user.kyc_status && user.kyc_status === 'PENDING_APPROVAL') {
         infoEl.textContent = 'Tài khoản đang chờ Admin phê duyệt KYC.';
         infoEl.style.display = 'block';
+        isSubmitting = false;
         loginBtn.disabled = false;
         loginBtn.innerHTML = '<span class="text-white font-title-sm text-title-sm font-bold">ĐĂNG NHẬP</span>';
         return;
       }
       window.location.href = 'trangchutasker.html';
     } else {
-      // CUSTOMER hoặc ADMIN cố đăng nhập trang Tasker → từ chối
       ChiOiAuth.logout();
       errorEl.textContent = 'Tài khoản không tồn tại trong hệ thống Tasker.';
       errorEl.style.display = 'block';
+      isSubmitting = false;
       loginBtn.disabled = false;
       loginBtn.innerHTML = '<span class="text-white font-title-sm text-title-sm font-bold">ĐĂNG NHẬP</span>';
       return;
     }
   } catch (err) {
-    errorEl.textContent = err.message || 'Sai số điện thoại hoặc mật khẩu.';
+    // TC_T01_003/015/019 FIX: Phân biệt rõ loại lỗi
+    var errMsg = (err.message || '').toLowerCase();
+    if (!navigator.onLine || errMsg.indexOf('fetch') > -1 || errMsg.indexOf('network') > -1) {
+      errorEl.textContent = 'Không có kết nối mạng. Vui lòng kiểm tra Internet và thử lại.';
+    } else if (errMsg.indexOf('phiên') > -1 || errMsg.indexOf('token') > -1 || errMsg.indexOf('expired') > -1) {
+      errorEl.textContent = 'Sai số điện thoại hoặc mật khẩu.';
+    } else if (errMsg.indexOf('không tìm thấy') > -1 || errMsg.indexOf('not found') > -1) {
+      errorEl.textContent = 'Tài khoản không tồn tại trong hệ thống.';
+    } else {
+      errorEl.textContent = err.message || 'Sai số điện thoại hoặc mật khẩu.';
+    }
     errorEl.style.display = 'block';
+    isSubmitting = false;
     loginBtn.disabled = false;
     loginBtn.innerHTML = '<span class="text-white font-title-sm text-title-sm font-bold">ĐĂNG NHẬP</span>';
   }

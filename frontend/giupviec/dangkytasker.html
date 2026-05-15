@@ -423,8 +423,22 @@
                 return;
             }
 
-            if (!cccd || cccd.length < 9) {
-                showError('Chưa có số CCCD hợp lệ. Vui lòng đợi OCR hoặc nhập thủ công.');
+            // TC_T02_017 FIX: Họ tên không được chứa số hoặc ký tự đặc biệt
+            var nameRegex = /^[\p{L}\s]+$/u;
+            if (!nameRegex.test(name)) {
+                showError('Họ tên không hợp lệ. Chỉ được chứa chữ cái và khoảng trắng.');
+                return;
+            }
+
+            // TC_T02_005 FIX: CCCD phải đúng 12 số
+            if (!cccd || !/^[0-9]{12}$/.test(cccd)) {
+                showError('Số CCCD không hợp lệ. CCCD phải gồm đúng 12 chữ số.');
+                return;
+            }
+
+            // TC_T02_006 FIX: Phải chọn ít nhất 1 dịch vụ
+            if (selectedServices.length === 0) {
+                showError('Vui lòng chọn ít nhất 1 dịch vụ đăng ký.');
                 return;
             }
 
@@ -440,7 +454,9 @@
                         phone: phone,
                         password: pass,
                         full_name: name,
-                        role: 'TASKER'
+                        id_number: cccd,
+                        role: 'TASKER',
+                        services: selectedServices
                     }
                 });
 

@@ -158,6 +158,30 @@
 <div class="text-center mt-md">
 <h2 id="profileName" class="font-title-sm text-title-sm text-on-surface">--</h2>
 <p id="profilePhone" class="font-body-sm text-body-sm text-on-surface-variant">--</p>
+<!-- TC-T14-005 FIX: Hiển thị rating sao -->
+<div id="profileRating" class="flex items-center justify-center gap-1 mt-2">
+  <span class="material-symbols-outlined text-yellow-500 text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+  <span id="ratingValue" class="font-body-sm text-body-sm font-bold text-on-surface">--</span>
+  <span id="ratingCount" class="font-body-sm text-body-sm text-on-surface-variant">(0 đánh giá)</span>
+</div>
+</div>
+</section>
+<!-- TC-T14-008 FIX: Form chỉnh sửa thông tin cá nhân -->
+<section class="space-y-md">
+<h3 class="font-title-sm text-title-sm text-on-surface">Thông tin cá nhân</h3>
+<div class="space-y-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Họ và tên</label>
+<div class="relative">
+  <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-primary">person</span>
+  <input id="editFullName" class="w-full level-1-card rounded-xl pl-12 pr-md py-3 font-body-lg text-body-lg focus:ring-1.5 focus:ring-primary focus:outline-none border-none" type="text" placeholder="Nhập họ tên..."/>
+</div>
+</div>
+<div class="space-y-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Số điện thoại</label>
+<div class="relative">
+  <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-primary">phone</span>
+  <input id="editPhone" class="w-full level-1-card rounded-xl pl-12 pr-md py-3 font-body-lg text-body-lg focus:outline-none border-none bg-surface-container-high/50" type="tel" readonly/>
+</div>
 </div>
 </section>
 <!-- Edit Form Section -->
@@ -285,16 +309,37 @@
 
     if (user) {
         if (nameEl) nameEl.textContent = user.full_name || 'Chưa cập nhật';
+        // TC-T14-003 FIX: Hiển thị SĐT đầy đủ, KHÔNG che
         if (phoneEl) {
-            var phone = user.phone || '';
-            if (phone.length > 6) {
-                phoneEl.textContent = phone.substring(0, 4) + '***' + phone.substring(phone.length - 3);
-            } else {
-                phoneEl.textContent = phone;
-            }
+            phoneEl.textContent = user.phone || 'Chưa cập nhật';
         }
         if (bioEl && user.bio) bioEl.value = user.bio;
         if (areaEl && user.address) areaEl.value = user.address;
+        // TC-T14-008 FIX: Điền thông tin vào form edit
+        var editNameEl = document.getElementById('editFullName');
+        var editPhoneEl = document.getElementById('editPhone');
+        if (editNameEl) editNameEl.value = user.full_name || '';
+        if (editPhoneEl) editPhoneEl.value = user.phone || '';
+    }
+
+    // TC-T14-005 FIX: Tải rating từ API
+    try {
+        var profileData = await apiFetch('/api/users/profile');
+        if (profileData) {
+            var ratingVal = document.getElementById('ratingValue');
+            var ratingCount = document.getElementById('ratingCount');
+            var avgRating = profileData.average_rating || profileData.rating || 0;
+            var totalReviews = profileData.total_reviews || profileData.review_count || 0;
+            if (ratingVal) ratingVal.textContent = avgRating > 0 ? parseFloat(avgRating).toFixed(1) : 'Chưa có';
+            if (ratingCount) ratingCount.textContent = '(' + totalReviews + ' đánh giá)';
+            // Cập nhật lại name/phone từ server (chính xác hơn localStorage)
+            if (profileData.full_name && nameEl) nameEl.textContent = profileData.full_name;
+            if (profileData.phone && phoneEl) phoneEl.textContent = profileData.phone;
+            var editNameEl2 = document.getElementById('editFullName');
+            if (editNameEl2 && profileData.full_name) editNameEl2.value = profileData.full_name;
+        }
+    } catch(e) {
+        console.warn('[Profile] Không tải được rating:', e.message);
     }
 
     // ===== 2. Nút Back =====
@@ -321,11 +366,10 @@
             saveBtn.textContent = 'Đang lưu...';
 
             try {
-                // Bug 6 FIX: Gửi cả bio lên API
                 var result = await apiFetch('/api/users/profile', {
                     method: 'PUT',
                     body: {
-                        full_name: user ? user.full_name : fullName,
+                        full_name: document.getElementById('editFullName') ? document.getElementById('editFullName').value.trim() : (user ? user.full_name : fullName),
                         address: area,
                         bio: bio
                     }
