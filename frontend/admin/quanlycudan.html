@@ -267,13 +267,16 @@
 <div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-3">
 <div class="flex items-center gap-3 flex-1">
 <div class="relative flex-1 min-w-[200px]"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
-  <input id="cudan-search" class="w-full pl-9 pr-4 py-2 bg-white border border-outline-variant/30 rounded-xl text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none shadow-sm transition-all" placeholder="Tim ten, SDT..."/>
+  <input id="cudan-search" class="w-full pl-9 pr-4 py-2 bg-white border border-outline-variant/30 rounded-xl text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none shadow-sm transition-all" placeholder="Tìm tên, SĐT..."/>
 </div>
 <select id="filter-status" class="min-w-[160px] bg-white border border-outline-variant/30 text-body-sm rounded-xl px-4 py-2 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none shadow-sm">
 <option value="">Tất cả trạng thái</option>
 <option value="ACTIVE">Hoạt động</option>
 <option value="BANNED">Đã khóa</option>
 </select>
+  <button id="btn-clear-cudan-filter" class="h-[38px] px-3 border border-outline-variant/30 text-on-surface-variant rounded-xl hover:bg-error/10 hover:text-error hover:border-error/30 transition-all flex items-center gap-1.5 text-body-sm whitespace-nowrap">
+    <span class="material-symbols-outlined text-[16px]">filter_alt_off</span>Xóa lọc
+  </button>
 </div>
 <button id="btn-add-resident" class="bg-primary text-white px-5 py-2 rounded-xl font-label-bold flex items-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap flex-shrink-0">
 <span class="material-symbols-outlined" data-icon="add">add</span>
@@ -333,6 +336,7 @@ Thêm cư dân mới
 <table class="w-full text-left border-collapse">
 <thead class="bg-surface-container-low border-b border-outline-variant">
 <tr>
+<th class="p-4 font-label-bold text-on-surface-variant w-[50px] text-center">STT</th>
 <th class="p-4 w-12"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></th>
 <th class="p-4 font-label-bold text-on-surface-variant">CƯ DÂN</th>
 <th class="p-4 font-label-bold text-on-surface-variant">SỐ ĐIỆN THOẠI</th>
@@ -344,13 +348,14 @@ Thêm cư dân mới
 </tr>
 </thead>
 <tbody id="cudan-tbody" class="divide-y divide-surface-container-low">
-  <tr><td colspan="8" class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+  <tr><td colspan="9" class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</td></tr>
 </tbody>
 
 </table>
 <!-- Pagination -->
 <div class="p-4 flex items-center justify-between border-t border-outline-variant bg-surface-container-lowest">
 <p id="cudan-pag-info" class="text-body-sm text-on-surface-variant">Đang tải...</p>
+<div id="cudan-pagination" class="flex items-center gap-1"></div>
 </div>
 </div>
 </div>
@@ -691,18 +696,29 @@ Thêm cư dân mới
 
   }
 
+  var PAGE_SIZE = 10;
+  var currentPage = 1;
+
   function renderTable(customers) {
     var tbody = document.getElementById('cudan-tbody');
     if (!tbody) return;
     tbody.innerHTML = '';
     if (!customers || customers.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="text-center py-10 text-on-surface-variant">Không có cư dân nào</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" class="text-center py-10 text-on-surface-variant">Không có cư dân nào</td></tr>';
       var pag = document.getElementById('cudan-pag-info');
       if (pag) pag.textContent = '0 cư dân';
+      var pagDiv = document.getElementById('cudan-pagination');
+      if (pagDiv) pagDiv.innerHTML = '';
       return;
     }
 
-    customers.forEach(function(u, idx) {
+    var totalPages = Math.ceil(customers.length / PAGE_SIZE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    var startIdx = (currentPage - 1) * PAGE_SIZE;
+    var pageData = customers.slice(startIdx, startIdx + PAGE_SIZE);
+
+    pageData.forEach(function(u, idx) {
+      var globalIdx = startIdx + idx + 1;
       var isActive = u.status === 'ACTIVE';
       var statusHtml = isActive
         ? '<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 font-label-md text-[10px]">HOẠT ĐỘNG</span>'
@@ -717,6 +733,7 @@ Thêm cư dân mới
       tr.className = (idx % 2 ? 'bg-background ' : '') + 'hover:bg-surface-container-low transition-colors group cursor-pointer';
       var addr = (u.customers && u.customers.default_address) ? u.customers.default_address : '—';
       tr.innerHTML =
+        '<td class="p-4 text-body-sm text-on-surface-variant text-center">' + globalIdx + '</td>' +
         '<td class="p-4"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>' +
         '<td class="p-4"><div class="flex items-center gap-3">' +
           '<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-[18px]">person</span></div>' +
@@ -779,7 +796,39 @@ Thêm cư dân mới
     });
 
     var pagEl = document.getElementById('cudan-pag-info');
-    if (pagEl) pagEl.textContent = 'Hiển thị ' + customers.length + ' cư dân';
+    if (pagEl) pagEl.textContent = 'Hiển thị ' + (startIdx + 1) + '-' + Math.min(startIdx + PAGE_SIZE, customers.length) + ' / ' + customers.length + ' cư dân';
+
+    // Render pagination buttons
+    var pagDiv = document.getElementById('cudan-pagination');
+    if (pagDiv && totalPages > 1) {
+      pagDiv.innerHTML = '';
+      // Previous button
+      var prevBtn = document.createElement('button');
+      prevBtn.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-body-sm ' + (currentPage <= 1 ? 'text-on-surface-variant/30 cursor-not-allowed' : 'text-on-surface-variant hover:bg-surface-container-low');
+      prevBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">chevron_left</span>';
+      prevBtn.disabled = currentPage <= 1;
+      prevBtn.addEventListener('click', function() { if (currentPage > 1) { currentPage--; renderTable(customers); } });
+      pagDiv.appendChild(prevBtn);
+      // Page buttons
+      for (var p = 1; p <= totalPages; p++) {
+        (function(pg) {
+          var btn = document.createElement('button');
+          btn.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-body-sm font-medium ' + (pg === currentPage ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container-low');
+          btn.textContent = pg;
+          btn.addEventListener('click', function() { currentPage = pg; renderTable(customers); });
+          pagDiv.appendChild(btn);
+        })(p);
+      }
+      // Next button
+      var nextBtn = document.createElement('button');
+      nextBtn.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-body-sm ' + (currentPage >= totalPages ? 'text-on-surface-variant/30 cursor-not-allowed' : 'text-on-surface-variant hover:bg-surface-container-low');
+      nextBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">chevron_right</span>';
+      nextBtn.disabled = currentPage >= totalPages;
+      nextBtn.addEventListener('click', function() { if (currentPage < totalPages) { currentPage++; renderTable(customers); } });
+      pagDiv.appendChild(nextBtn);
+    } else if (pagDiv) {
+      pagDiv.innerHTML = '';
+    }
   }
 
   function openDetail(u) {
@@ -889,8 +938,17 @@ Thêm cư dân mới
     renderTable(filtered);
   }
 
-  if (searchInput) searchInput.addEventListener('input', filterAndRender);
-  if (filterStatus) filterStatus.addEventListener('change', filterAndRender);
+  if (searchInput) searchInput.addEventListener('input', function() { currentPage = 1; filterAndRender(); });
+  if (filterStatus) filterStatus.addEventListener('change', function() { currentPage = 1; filterAndRender(); });
+
+  // Clear filter button (lỗi 4)
+  var clearFilterBtn = document.getElementById('btn-clear-cudan-filter');
+  if (clearFilterBtn) clearFilterBtn.addEventListener('click', function() {
+    if (searchInput) searchInput.value = '';
+    if (filterStatus) filterStatus.value = '';
+    currentPage = 1;
+    filterAndRender();
+  });
 
   // Load data
   showLoading();

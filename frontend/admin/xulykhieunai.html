@@ -270,7 +270,7 @@
   <div id="complaint-list" class="grid grid-cols-1 xl:grid-cols-2 gap-4">
     <div class="py-16 text-center text-on-surface-variant col-span-2">
       <span class="material-symbols-outlined text-5xl block mb-3 opacity-20">hourglass_empty</span>
-      Dang tai du lieu...
+      Đang tải dữ liệu...
     </div>
   </div>
 
@@ -406,7 +406,7 @@
 
     var s = STATUS_MAP[ticket.status] || STATUS_MAP['OPEN'];
     var p = PRIORITY_MAP[ticket.priority] || PRIORITY_MAP['MEDIUM'];
-    var userName = (ticket.users && ticket.users.full_name) || 'Nguoi dung #' + ticket.user_id;
+    var userName = (ticket.users && ticket.users.full_name) || 'Người dùng #' + ticket.user_id;
     var userPhone = (ticket.users && ticket.users.phone) || '';
     var orderCode = ticket.orders ? '#' + ticket.orders.order_code : (ticket.order_id ? '#ORD-' + ticket.order_id : 'N/A');
 
@@ -553,7 +553,7 @@
   }
 
   /* ---- Logout ---- */
-  var logoutBtn = document.querySelector('button[title="Dang xuat"]');
+  var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
   if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
 })();
 </script>

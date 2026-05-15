@@ -340,15 +340,15 @@
   if (!ChiOiAuth.requireAuth('../khachhang/dangnhap.html')) return;
 
   var STATUS_MAP = {
-    'OPEN':        { label: 'Moi',       cls: 'bg-blue-100 text-blue-700',   dot: 'bg-blue-500' },
-    'IN_PROGRESS': { label: 'Dang xu ly',cls: 'bg-orange-100 text-orange-700', dot: 'bg-orange-500' },
-    'RESOLVED':    { label: 'Da giai quyet', cls: 'bg-green-100 text-green-700', dot: 'bg-green-500' },
-    'CLOSED':      { label: 'Da dong',   cls: 'bg-gray-100 text-gray-500',   dot: 'bg-gray-400' },
+    'OPEN':        { label: 'Mới',       cls: 'bg-blue-100 text-blue-700',   dot: 'bg-blue-500' },
+    'IN_PROGRESS': { label: 'Đang xử lý',cls: 'bg-orange-100 text-orange-700', dot: 'bg-orange-500' },
+    'RESOLVED':    { label: 'Đã giải quyết', cls: 'bg-green-100 text-green-700', dot: 'bg-green-500' },
+    'CLOSED':      { label: 'Đã đóng',   cls: 'bg-gray-100 text-gray-500',   dot: 'bg-gray-400' },
   };
   var PRIORITY_MAP = {
-    'HIGH':   { label: 'Cap thiet', cls: 'bg-red-100 text-red-700' },
-    'MEDIUM': { label: 'Trung binh', cls: 'bg-yellow-100 text-yellow-700' },
-    'LOW':    { label: 'Thap', cls: 'bg-gray-100 text-gray-500' },
+    'HIGH':   { label: 'Cấp thiết', cls: 'bg-red-100 text-red-700' },
+    'MEDIUM': { label: 'Trung bình', cls: 'bg-yellow-100 text-yellow-700' },
+    'LOW':    { label: 'Thấp', cls: 'bg-gray-100 text-gray-500' },
   };
 
   var allTickets = [];
@@ -360,9 +360,9 @@
     var dt = new Date(d);
     var now = new Date();
     var diff = Math.floor((now - dt) / 60000);
-    if (diff < 1) return 'Vua xong';
-    if (diff < 60) return diff + ' phut truoc';
-    if (diff < 1440) return Math.floor(diff/60) + ' gio truoc';
+    if (diff < 1) return 'Vừa xong';
+    if (diff < 60) return diff + ' phút trước';
+    if (diff < 1440) return Math.floor(diff/60) + ' giờ trước';
     return dt.toLocaleDateString('vi-VN');
   }
 
@@ -371,13 +371,13 @@
     if (!listEl) return;
     listEl.innerHTML = '';
     if (!tickets || tickets.length === 0) {
-      listEl.innerHTML = '<div class="p-8 text-center text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">inbox</span>Khong co tin nhan nao</div>';
+      listEl.innerHTML = '<div class="p-8 text-center text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-4xl block mb-2 opacity-20">inbox</span>Không có tin nhắn nào</div>';
       return;
     }
     tickets.forEach(function(t) {
       var st = STATUS_MAP[t.status] || { label: t.status, cls: 'bg-gray-100 text-gray-500' };
       var pr = PRIORITY_MAP[t.priority] || { label: t.priority, cls: 'bg-gray-100 text-gray-500' };
-      var userName = t.users ? t.users.full_name : 'Nguoi dung #' + t.user_id;
+      var userName = t.users ? t.users.full_name : 'Người dùng #' + t.user_id;
       var isUnread = t.status === 'OPEN';
       var item = document.createElement('div');
       item.className = 'ticket-item p-4 border-b border-outline-variant/10 hover:bg-surface-container/40 transition-all cursor-pointer' + (isUnread ? ' bg-primary/5' : '');
@@ -418,7 +418,7 @@
     if (empty) empty.classList.add('hidden');
 
     var loadingEl = document.getElementById('chat-messages');
-    if (loadingEl) loadingEl.innerHTML = '<div class="text-center py-8 text-on-surface-variant text-body-sm">Dang tai...</div>';
+    if (loadingEl) loadingEl.innerHTML = '<div class="text-center py-8 text-on-surface-variant text-body-sm">Đang tải...</div>';
 
     try {
       var data = await apiFetch('/api/admin/tickets/' + id);
@@ -427,7 +427,7 @@
       if (!t) return;
 
       var st = STATUS_MAP[t.status] || { label: t.status, dot: 'bg-gray-400' };
-      var userName = t.users ? t.users.full_name : 'Nguoi dung #' + t.user_id;
+      var userName = t.users ? t.users.full_name : 'Người dùng #' + t.user_id;
       var userPhone = t.users ? t.users.phone : '';
 
       // Header
@@ -455,9 +455,9 @@
       var resolveBtn = document.getElementById('resolve-btn');
       if (resolveBtn) {
         resolveBtn.onclick = async function() {
-          if (!confirm('Danh dau da giai quyet?')) return;
+          if (!confirm('Đánh dấu đã giải quyết?')) return;
           await apiFetch('/api/admin/tickets/' + id, { method: 'PATCH', body: JSON.stringify({ status: 'RESOLVED' }) });
-          hdrStatus.textContent = 'Da giai quyet';
+          hdrStatus.textContent = 'Đã giải quyết';
           hdrStatus.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-green-100 text-green-700';
           resolveBtn.disabled = true;
           resolveBtn.classList.add('opacity-50');
@@ -472,12 +472,12 @@
         loadingEl.innerHTML = '';
         if (msgs.length === 0) {
           // Show description as first "message"
-          loadingEl.innerHTML = '<div class="text-center py-6 text-on-surface-variant text-body-sm opacity-60">Khong co tin nhan truc tiep cho ticket nay.<br>Noi dung: <em>' + (t.description || '') + '</em></div>';
+          loadingEl.innerHTML = '<div class="text-center py-6 text-on-surface-variant text-body-sm opacity-60">Không có tin nhắn trực tiếp cho ticket này.<br>Nội dung: <em>' + (t.description || '') + '</em></div>';
         } else {
           msgs.forEach(function(m) {
             var sender = m.users_messages_sender_idTousers;
             var isAdmin = sender && (sender.role === 'ADMIN' || sender.role === 'admin');
-            var name = sender ? sender.full_name : 'Nguoi dung';
+            var name = sender ? sender.full_name : 'Người dùng';
             var bubble = document.createElement('div');
             bubble.className = 'flex items-start gap-2.5 ' + (isAdmin ? 'flex-row-reverse self-end max-w-[75%] ml-auto' : 'max-w-[75%]');
             bubble.innerHTML =
@@ -496,7 +496,7 @@
         }
       }
     } catch(e) {
-      if (loadingEl) loadingEl.innerHTML = '<div class="text-center py-8 text-red-500 text-body-sm">Loi tai du lieu: ' + e.message + '</div>';
+      if (loadingEl) loadingEl.innerHTML = '<div class="text-center py-8 text-red-500 text-body-sm">Lỗi tải dữ liệu: ' + e.message + '</div>';
     }
   }
 
@@ -551,7 +551,7 @@
   }
 
   // Logout
-  var logoutBtn = document.querySelector('button[title="Dang xuat"]');
+  var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
   if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
 
   await loadTickets();

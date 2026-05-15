@@ -308,7 +308,7 @@
         <h3 class="font-title-sm text-on-surface">Dịch vụ phổ biến nhất</h3>
       </div>
       <div id="top-services" class="divide-y divide-outline-variant/10">
-        <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Dang tai...</div>
+        <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Đang tải...</div>
       </div>
     </div>
 
@@ -319,7 +319,7 @@
         <h3 class="font-title-sm text-on-surface">Tasker hiệu quả nhất</h3>
       </div>
       <div id="top-taskers" class="divide-y divide-outline-variant/10">
-        <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Dang tai...</div>
+        <div class="px-5 py-4 text-body-sm text-on-surface-variant text-center">Đang tải...</div>
       </div>
     </div>
 
@@ -329,7 +329,7 @@
   <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
     <div class="px-5 py-4 border-b border-outline-variant/20 flex items-center gap-2">
       <span class="material-symbols-outlined text-primary text-[20px]">history</span>
-      <h3 class="font-title-sm text-on-surface">Don hang gan nhat</h3>
+      <h3 class="font-title-sm text-on-surface">Đơn hàng gần nhất</h3>
     </div>
     <div class="overflow-x-auto">
       <table class="w-full text-left">
@@ -344,7 +344,7 @@
           </tr>
         </thead>
         <tbody id="recent-orders-tbody" class="divide-y divide-outline-variant/10 text-body-sm">
-          <tr><td colspan="6" class="text-center py-12 text-on-surface-variant">Dang tai...</td></tr>
+          <tr><td colspan="6" class="text-center py-12 text-on-surface-variant">Đang tải...</td></tr>
         </tbody>
       </table>
     </div>
@@ -420,7 +420,7 @@
               yAxisID: 'y',
             },
             {
-              label: 'Don hang',
+              label: 'Đơn hàng',
               data: data.chart.orders,
               type: 'line',
               borderColor: '#60a5fa',
@@ -547,7 +547,7 @@
   });
 
   /* Logout */
-  var logoutBtn = document.querySelector('button[title="Dang xuat"]');
+  var logoutBtn = document.querySelector('button[title="Đăng xuất"]');
   if (logoutBtn) logoutBtn.addEventListener('click', function() { ChiOiAuth.logout('../khachhang/dangnhap.html'); });
 
   /* Export button - Lỗi 7 FIX */
