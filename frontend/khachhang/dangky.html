@@ -111,6 +111,9 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .header-gradient {
+            background: linear-gradient(180deg, #c2410c 0%, #ff7e36 100%);
+        }
     </style>
 </head>
 <body class="bg-surface-dim text-on-surface min-h-screen flex flex-col items-center">
@@ -118,7 +121,7 @@
         <div class="absolute top-0 left-0 w-full h-[250px] z-0 pointer-events-none" style="background: linear-gradient(rgb(255, 126, 54) 0%, rgb(252, 249, 248) 100%);"></div>
         
         <!-- Header Section -->
-        <header class="orange-gradient w-full h-[220px] flex flex-col items-center justify-center relative overflow-hidden">
+        <header class="header-gradient w-full h-[220px] flex flex-col items-center justify-center relative overflow-hidden">
             <!-- Abstract decorative shapes for modern tactile feel -->
             <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-black/5 rounded-full blur-2xl"></div>

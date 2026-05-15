@@ -154,6 +154,9 @@
             opacity: 0.7;
             cursor: not-allowed;
         }
+        .header-gradient {
+            background: linear-gradient(180deg, #c2410c 0%, #ff7e36 100%);
+        }
     </style>
 </head>
 <!-- FIT 1 SCREEN: h-[100dvh] + overflow-hidden = không scroll -->
@@ -161,7 +164,7 @@
     <div class="w-full max-w-[430px] h-[100dvh] bg-background relative shadow-2xl overflow-hidden flex flex-col">
 
 <!-- Header Section — COMPACT: chiếm ~28% viewport thay vì 40% -->
-<header class="orange-gradient w-full flex-shrink-0 flex flex-col items-center justify-center relative overflow-hidden" style="height: clamp(160px, 28vh, 220px);">
+<header class="header-gradient w-full flex-shrink-0 flex flex-col items-center justify-center relative overflow-hidden" style="height: clamp(160px, 28vh, 220px);">
     <!-- Decorative blobs — premium depth -->
     <div class="absolute -top-16 -right-16 w-56 h-56 bg-white/8 rounded-full blur-3xl animate-pulse" style="animation-duration:4s;"></div>
     <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-black/5 rounded-full blur-2xl"></div>
