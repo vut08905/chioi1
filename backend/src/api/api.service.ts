@@ -852,4 +852,120 @@ export class ApiService {
       return { toggled: true, status: autoApprove ? 'APPROVED' : 'PENDING_APPROVAL', message: autoApprove ? 'Đã bật dịch vụ' : 'Đã đăng ký, chờ Admin duyệt' };
     }
   }
+
+  // --- Tasker: Stats endpoint (UC_12) ---
+  async getTaskerStats(taskerId: number, period: string = 'week') {
+    const now = new Date();
+    let fromDate: Date;
+    let prevFromDate: Date;
+    let prevToDate: Date;
+
+    if (period === 'today') {
+      fromDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      // Compare vs yesterday
+      prevToDate = new Date(fromDate);
+      prevFromDate = new Date(fromDate.getTime() - 24 * 60 * 60 * 1000);
+    } else if (period === 'month') {
+      fromDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      // Compare vs last month
+      prevToDate = new Date(fromDate);
+      prevFromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    } else {
+      // week (default)
+      const dayOfWeek = now.getDay(); // 0=CN
+      const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+      fromDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - diffToMonday);
+      fromDate.setHours(0, 0, 0, 0);
+      prevToDate = new Date(fromDate);
+      prevFromDate = new Date(fromDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+    }
+
+    // Current period orders
+    const currentOrders = await this.prisma.orders.findMany({
+      where: {
+        tasker_id: taskerId,
+        created_at: { gte: fromDate },
+      },
+      select: {
+        order_id: true,
+        status: true,
+        total_price: true,
+        platform_fee: true,
+        tasker_earnings: true,
+        created_at: true,
+      },
+    });
+
+    // Previous period orders (for comparison %)
+    const prevOrders = await this.prisma.orders.findMany({
+      where: {
+        tasker_id: taskerId,
+        created_at: { gte: prevFromDate, lt: prevToDate },
+        status: 'COMPLETED',
+      },
+      select: { tasker_earnings: true },
+    });
+
+    // All-time orders for acceptance rate
+    const allTimeOrders = await this.prisma.orders.findMany({
+      where: { tasker_id: taskerId },
+      select: { status: true },
+    });
+
+    const completed = currentOrders.filter(o => o.status === 'COMPLETED');
+    const totalIncome = completed.reduce((sum, o) => sum + Number(o.tasker_earnings || 0), 0);
+    const platformFee = completed.reduce((sum, o) => sum + Number(o.platform_fee || 0), 0);
+    const completedCount = completed.length;
+
+    const prevIncome = prevOrders.reduce((sum, o) => sum + Number(o.tasker_earnings || 0), 0);
+    const weekComparisonPct = prevIncome > 0
+      ? Math.round(((totalIncome - prevIncome) / prevIncome) * 100)
+      : (totalIncome > 0 ? 100 : 0);
+
+    // Acceptance rate = COMPLETED / (COMPLETED + CANCELLED) from all time
+    const allCompleted = allTimeOrders.filter(o => o.status === 'COMPLETED').length;
+    const allCancelled = allTimeOrders.filter(o => o.status === 'CANCELLED').length;
+    const acceptanceRate = (allCompleted + allCancelled) > 0
+      ? Math.round((allCompleted / (allCompleted + allCancelled)) * 100)
+      : 0;
+
+    // Average rating from reviews
+    const reviews = await this.prisma.reviews.findMany({
+      where: { tasker_id: taskerId },
+      select: { rating: true },
+    });
+    const avgRating = reviews.length > 0
+      ? Number((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1))
+      : 0;
+
+    // Daily income for chart (7 days: Mon-Sun)
+    const dailyIncome: number[] = [0, 0, 0, 0, 0, 0, 0]; // index 0=Mon ... 6=Sun
+    completed.forEach(o => {
+      const day = new Date(o.created_at!).getDay(); // 0=Sun
+      const idx = day === 0 ? 6 : day - 1; // Convert to Mon=0 ... Sun=6
+      dailyIncome[idx] += Number(o.tasker_earnings || 0);
+    });
+
+    // Recent income history (completed orders in current period)
+    const incomeHistory = completed.map(o => ({
+      order_id: o.order_id,
+      amount: Number(o.tasker_earnings || 0),
+      fee: Number(o.platform_fee || 0),
+      date: o.created_at,
+    }));
+
+    return {
+      total_income: totalIncome,
+      platform_fee: platformFee,
+      completed_orders: completedCount,
+      total_orders_period: currentOrders.length,
+      acceptance_rate: acceptanceRate,
+      average_rating: avgRating,
+      review_count: reviews.length,
+      comparison_pct: weekComparisonPct,
+      daily_income: dailyIncome,
+      income_history: incomeHistory,
+      period,
+    };
+  }
 }

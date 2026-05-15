@@ -69,6 +69,13 @@ export class ApiController {
     return this.apiService.getTaskerHistory(req.user.userId);
   }
 
+  @Get('taskers/stats')
+  @Roles('TASKER')
+  @ApiOperation({ summary: 'Thống kê thu nhập Tasker (UC_12) - period: today|week|month' })
+  async getTaskerStats(@Request() req, @Query('period') period?: string) {
+    return this.apiService.getTaskerStats(req.user.userId, period || 'week');
+  }
+
   @Get('admin/dashboard')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Thống kê Admin Dashboard (Cần Token Admin)' })

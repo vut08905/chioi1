@@ -1,399 +1,460 @@
 <!DOCTYPE html>
-
 <html lang="vi"><head>
 <meta charset="utf-8"/>
 <link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
 <link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Thống kê - Tasker</title>
+<title>Thu nhập & Thống kê - Tasker</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../shared/responsive.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../shared/responsive.css"/>
+<link rel="stylesheet" href="../shared/responsive.css"/>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                "tertiary-fixed": "#b8eaff",
-                "on-secondary-fixed-variant": "#6d391d",
-                "on-secondary": "#ffffff",
-                "on-secondary-container": "#794226",
-                "background": "#fff8f6",
-                "on-tertiary": "#ffffff",
-                "inverse-surface": "#3b2e28",
-                "tertiary": "#006780",
-                "primary-fixed-dim": "#ffb693",
-                "surface-tint": "#a04100",
-                "error-container": "#ffdad6",
-                "primary-fixed": "#ffdbcc",
-                "tertiary-container": "#00b1da",
-                "secondary": "#895032",
-                "on-error-container": "#93000a",
-                "on-tertiary-container": "#003f4f",
-                "tertiary-fixed-dim": "#52d5ff",
-                "on-surface-variant": "#584238",
-                "surface-container-high": "#fae4da",
-                "on-tertiary-fixed-variant": "#004d61",
-                "on-surface": "#241914",
-                "on-background": "#241914",
-                "surface-bright": "#fff8f6",
-                "surface-container-lowest": "#ffffff",
-                "inverse-on-surface": "#ffede6",
-                "surface-dim": "#ecd6cc",
-                "on-primary": "#ffffff",
-                "surface-variant": "#f4ded5",
-                "on-error": "#ffffff",
-                "surface-container-low": "#fff1eb",
-                "on-primary-fixed": "#351000",
-                "error": "#ba1a1a",
-                "secondary-fixed-dim": "#ffb693",
-                "secondary-fixed": "#ffdbcc",
-                "surface-container-highest": "#f4ded5",
-                "outline-variant": "#dfc0b3",
-                "on-secondary-fixed": "#351000",
-                "surface-container": "#ffeae1",
-                "secondary-container": "#feb28e",
-                "on-primary-container": "#642600",
-                "on-primary-fixed-variant": "#7a3000",
-                "inverse-primary": "#ffb693",
-                "primary": "#a04100",
-                "outline": "#8b7266",
-                "surface": "#fff8f6",
-                "on-tertiary-fixed": "#001f28",
-                "primary-container": "#ff7e36"
-            },
-            "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-            },
-            "spacing": {
-                "sm": "8px",
-                "container-padding": "16px",
-                "xs": "4px",
-                "xl": "32px",
-                "base": "4px",
-                "stack-gap": "12px",
-                "md": "16px",
-                "lg": "24px"
-            },
-            "fontFamily": {
-                "label-caps": ["Be Vietnam Pro"],
-                "title-sm": ["Be Vietnam Pro"],
-                "headline-md": ["Be Vietnam Pro"],
-                "display-lg": ["Be Vietnam Pro"],
-                "body-sm": ["Be Vietnam Pro"],
-                "body-lg": ["Be Vietnam Pro"]
-            },
-            "fontSize": {
-                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
-                "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
-                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
-                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
-            }
-          },
-        },
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary-fixed": "#b8eaff",
+        "on-secondary-fixed-variant": "#6d391d",
+        "on-secondary": "#ffffff",
+        "on-secondary-container": "#794226",
+        "background": "#fff8f6",
+        "on-tertiary": "#ffffff",
+        "inverse-surface": "#3b2e28",
+        "tertiary": "#006780",
+        "primary-fixed-dim": "#ffb693",
+        "surface-tint": "#a04100",
+        "error-container": "#ffdad6",
+        "primary-fixed": "#ffdbcc",
+        "tertiary-container": "#00b1da",
+        "secondary": "#895032",
+        "on-error-container": "#93000a",
+        "on-tertiary-container": "#003f4f",
+        "tertiary-fixed-dim": "#52d5ff",
+        "on-surface-variant": "#584238",
+        "surface-container-high": "#fae4da",
+        "on-tertiary-fixed-variant": "#004d61",
+        "on-surface": "#241914",
+        "on-background": "#241914",
+        "surface-bright": "#fff8f6",
+        "surface-container-lowest": "#ffffff",
+        "inverse-on-surface": "#ffede6",
+        "surface-dim": "#ecd6cc",
+        "on-primary": "#ffffff",
+        "surface-variant": "#f4ded5",
+        "on-error": "#ffffff",
+        "surface-container-low": "#fff1eb",
+        "on-primary-fixed": "#351000",
+        "error": "#ba1a1a",
+        "secondary-fixed-dim": "#ffb693",
+        "secondary-fixed": "#ffdbcc",
+        "surface-container-highest": "#f4ded5",
+        "outline-variant": "#dfc0b3",
+        "on-secondary-fixed": "#351000",
+        "surface-container": "#ffeae1",
+        "secondary-container": "#feb28e",
+        "on-primary-container": "#642600",
+        "on-primary-fixed-variant": "#7a3000",
+        "inverse-primary": "#ffb693",
+        "primary": "#a04100",
+        "outline": "#8b7266",
+        "surface": "#fff8f6",
+        "on-tertiary-fixed": "#001f28",
+        "primary-container": "#ff7e36"
+      },
+      "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+      "spacing": { "sm": "8px", "container-padding": "16px", "xs": "4px", "xl": "32px", "base": "4px", "stack-gap": "12px", "md": "16px", "lg": "24px" },
+      "fontFamily": { "label-caps": ["Be Vietnam Pro"], "title-sm": ["Be Vietnam Pro"], "headline-md": ["Be Vietnam Pro"], "display-lg": ["Be Vietnam Pro"], "body-sm": ["Be Vietnam Pro"], "body-lg": ["Be Vietnam Pro"] },
+      "fontSize": {
+        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
       }
-    </script>
+    },
+  },
+}
+</script>
 <style>
-        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #fff8f6; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .chart-bar { transition: height 0.3s ease; }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-          body { font-family: 'Be Vietnam Pro', sans-serif; }
-        .orange-gradient {
-            background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%);
-        }
-        .teal-gradient {
-            background: linear-gradient(135deg, #00b1da 0%, #006780 100%);
-        }
-        .soft-shadow {
-            box-shadow: 0 4px 12px rgba(255, 126, 54, 0.08);
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Smooth transitions */
-        a, button { transition: all 0.2s ease; }
-        /* Card hover effect */
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-    </style>
+  body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #fff8f6; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .chart-bar { transition: height 0.4s cubic-bezier(.4,0,.2,1); border-radius: 6px 6px 0 0; }
+  a, button { transition: all 0.2s ease; }
+  .filter-chip { padding: 6px 16px; border-radius: 9999px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1.5px solid transparent; transition: all 0.2s ease; }
+  .filter-chip.active { background: #a04100; color: #fff; border-color: #a04100; }
+  .filter-chip:not(.active) { background: #fff; color: #584238; border-color: #dfc0b3; }
+  .filter-chip:not(.active):hover { border-color: #a04100; color: #a04100; }
+  .skeleton { background: linear-gradient(90deg, #f4ded5 25%, #ffeae1 50%, #f4ded5 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  .fade-in { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
 <body class="bg-background text-on-background min-h-screen pb-24">
-<div class="absolute top-0 left-0 w-full h-[300px] z-0" style="background: transparent; pointer-events: none;"></div>
 
-<!-- TopAppBar -->
-<header class="flex items-center justify-between px-md h-16 w-full fixed top-0 z-50     bg-transparent relative z-40">
-<div class="flex items-center gap-md">
-<span class="material-symbols-outlined text-white text-headline-md active:scale-95 transition-all cursor-pointer">menu</span>
-<h1 class="font-headline-md text-headline-md text-white">Thống kê</h1>
-</div>
-<button class="flex items-center gap-xs px-3 py-1 bg-white/20 rounded-full text-white hover:opacity-90 active:scale-95 transition-all">
-<span class="font-label-caps text-label-caps">Tháng này</span>
-<span class="material-symbols-outlined text-[18px]">filter_list</span>
-</button>
+<!-- Header -->
+<header class="flex items-center justify-between px-md h-14 w-full sticky top-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20">
+  <div class="flex items-center gap-sm">
+    <span class="material-symbols-outlined text-primary text-[24px]">monitoring</span>
+    <h1 class="font-title-sm text-title-sm text-on-surface">Thu nhập & Thống kê</h1>
+  </div>
+  <button id="btn-refresh" class="p-2 rounded-full hover:bg-surface-container-high active:scale-95 transition-all" title="Làm mới">
+    <span class="material-symbols-outlined text-on-surface-variant text-[22px]">refresh</span>
+  </button>
 </header>
-<main class="pt-20 px-container-padding space-y-md relative z-10">
-<!-- Wallet Card -->
-<div class="bg-surface-container-lowest border border-primary-fixed p-lg rounded-xl shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
-<div class="flex flex-col gap-sm">
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Số dư khả dụng</span>
-<div class="flex items-center gap-sm">
-<span class="material-symbols-outlined text-primary text-[28px]">account_balance_wallet</span>
-<span class="font-display-lg text-display-lg text-on-surface">... đ</span>
-</div>
-<button class="mt-md w-full py-4 bg-gradient-to-r from-primary to-primary-container text-on-surface font-title-sm text-title-sm rounded-full shadow-lg active:scale-95 transition-all">
-                    YÊU CẦU RÚT TIỀN
-                </button>
-<p class="text-[11px] text-on-surface-variant leading-tight mt-sm">
-                    * T+1 · Min 100k · Khấu trừ TNCN 10% nếu &gt;2tr
-                </p>
-</div>
-</div>
-<!-- KPI Grid 2x2 -->
-<div class="grid grid-cols-2 gap-md">
-<!-- Total Income -->
-<div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
-<span class="font-label-caps text-label-caps text-on-surface-variant">TỔNG THU NHẬP</span>
-<p id="kpi-total-income" class="font-title-sm text-title-sm text-primary mt-xs">-- đ</p>
-</div>
-<!-- Orders -->
-<div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
-<span class="font-label-caps text-label-caps text-on-surface-variant">HOÀN THÀNH</span>
-<p id="kpi-completed" class="font-title-sm text-title-sm text-primary mt-xs">-- đơn</p>
-</div>
-<!-- Completion Rate -->
-<div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
-<span class="font-label-caps text-label-caps text-on-surface-variant">TỶ LỆ HOÀN THÀNH</span>
-<p id="kpi-rate" class="font-title-sm text-title-sm text-primary mt-xs">--%</p>
-</div>
-<!-- Rating -->
-<div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
-<span class="font-label-caps text-label-caps text-on-surface-variant">ĐÁNH GIÁ</span>
-<div class="flex items-center gap-xs mt-xs">
-<p id="kpi-rating" class="font-title-sm text-title-sm text-primary">--</p>
-<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-</div>
-</div>
-<!-- Bar Chart Section -->
-<div class="bg-surface-container-lowest p-lg rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
-<h3 class="font-title-sm text-title-sm text-on-surface mb-lg">Xu hướng thu nhập</h3>
-<div class="flex items-end justify-between h-40 gap-sm">
-<div class="flex flex-col items-center gap-xs flex-1">
-<div class="w-full bg-primary-fixed rounded-t-lg h-24"></div>
-<span class="text-[10px] font-label-caps">T2</span>
-</div>
-<div class="flex flex-col items-center gap-xs flex-1">
-<div class="w-full bg-primary-fixed rounded-t-lg h-32"></div>
-<span class="text-[10px] font-label-caps">T3</span>
-</div>
-<div class="flex flex-col items-center gap-xs flex-1">
-<div class="w-full  rounded-t-lg h-16 shadow-md"></div>
-<span class="text-[10px] font-label-caps text-primary">T4</span>
-</div>
-<div class="flex flex-col items-center gap-xs flex-1">
-<div class="w-full bg-primary-fixed rounded-t-lg h-28"></div>
-<span class="text-[10px] font-label-caps">T5</span>
-</div>
-<div class="flex flex-col items-center gap-xs flex-1">
-<div class="w-full bg-primary-fixed rounded-t-lg h-36"></div>
-<span class="text-[10px] font-label-caps">T6</span>
-</div>
-<div class="flex flex-col items-center gap-xs flex-1">
-<div class="w-full bg-primary-fixed rounded-t-lg h-20"></div>
-<span class="text-[10px] font-label-caps">T7</span>
-</div>
-<div class="flex flex-col items-center gap-xs flex-1">
-<div class="w-full bg-primary-fixed rounded-t-lg h-12"></div>
-<span class="text-[10px] font-label-caps">CN</span>
-</div>
-</div>
-</div>
-<!-- History Section -->
-<div class="space-y-sm" id="income-history-section">
-<h3 class="font-title-sm text-title-sm text-on-surface px-xs">Lịch sử thu nhập</h3>
-<!-- Items sẽ được render động từ API -->
-<p id="no-history-msg" class="text-body-sm text-on-surface-variant px-xs py-md text-center">Đang tải dữ liệu...</p>
-</div>
-</main>
-<!-- BottomNavBar -->
 
-<!-- Navigation Shell -->
+<main class="px-container-padding space-y-md pt-md relative z-10">
+
+<!-- Filter Chips (TC-T12-010,011,012,013) -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar">
+  <button class="filter-chip active" data-period="today">Hôm nay</button>
+  <button class="filter-chip" data-period="week">Tuần này</button>
+  <button class="filter-chip" data-period="month">Tháng này</button>
+</div>
+
+<!-- Loading State (TC-T12-022) -->
+<div id="loading-state" class="space-y-md">
+  <div class="skeleton h-[140px] w-full"></div>
+  <div class="grid grid-cols-2 gap-md">
+    <div class="skeleton h-[80px]"></div>
+    <div class="skeleton h-[80px]"></div>
+    <div class="skeleton h-[80px]"></div>
+    <div class="skeleton h-[80px]"></div>
+  </div>
+  <div class="skeleton h-[200px] w-full"></div>
+</div>
+
+<!-- Error State (TC-T12-017,018) -->
+<div id="error-state" class="hidden text-center py-12">
+  <span class="material-symbols-outlined text-error text-[48px]">wifi_off</span>
+  <p class="font-title-sm text-title-sm text-on-surface mt-md">Không thể tải dữ liệu</p>
+  <p class="text-body-sm text-on-surface-variant mt-xs">Vui lòng kiểm tra kết nối mạng và thử lại</p>
+  <button id="btn-retry" class="mt-lg px-6 py-3 bg-primary text-white rounded-full font-title-sm active:scale-95">Thử lại</button>
+</div>
+
+<!-- Main Content (hidden until loaded) -->
+<div id="main-content" class="hidden space-y-md fade-in">
+
+  <!-- Wallet Card -->
+  <div class="bg-surface-container-lowest border border-primary-fixed p-lg rounded-xl shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
+    <div class="flex flex-col gap-xs">
+      <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Số dư khả dụng</span>
+      <div class="flex items-center gap-sm">
+        <span class="material-symbols-outlined text-primary text-[28px]">account_balance_wallet</span>
+        <span id="wallet-balance" class="font-display-lg text-display-lg text-on-surface">0 đ</span>
+      </div>
+      <!-- TC-T12-024,025: Nút rút tiền -->
+      <button id="btn-withdraw" class="mt-sm w-full py-3.5 bg-gradient-to-r from-primary to-primary-container text-white font-title-sm text-[15px] rounded-full shadow-lg active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100">
+        YÊU CẦU RÚT TIỀN
+      </button>
+      <p class="text-[11px] text-on-surface-variant leading-tight mt-xs">* T+1 · Min 100k · Khấu trừ TNCN 10% nếu &gt;2tr</p>
+    </div>
+  </div>
+
+  <!-- KPI Grid 2x2 + 1 -->
+  <div class="grid grid-cols-2 gap-md">
+    <!-- TC-T12-002: Tổng thu nhập -->
+    <div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
+      <span class="font-label-caps text-label-caps text-on-surface-variant">TỔNG THU NHẬP</span>
+      <p id="kpi-total-income" class="font-title-sm text-title-sm text-primary mt-xs">0 đ</p>
+      <!-- TC-T12-003: % so sánh -->
+      <p id="kpi-comparison" class="text-[11px] mt-xs text-on-surface-variant">—</p>
+    </div>
+    <!-- TC-T12-006: Số đơn hoàn thành -->
+    <div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
+      <span class="font-label-caps text-label-caps text-on-surface-variant">HOÀN THÀNH</span>
+      <p id="kpi-completed" class="font-title-sm text-title-sm text-primary mt-xs">0 đơn</p>
+    </div>
+    <!-- TC-T12-008: Tỷ lệ nhận đơn -->
+    <div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
+      <span class="font-label-caps text-label-caps text-on-surface-variant">TỶ LỆ NHẬN ĐƠN</span>
+      <p id="kpi-rate" class="font-title-sm text-title-sm text-primary mt-xs">0%</p>
+    </div>
+    <!-- TC-T12-007: Đánh giá trung bình -->
+    <div class="bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
+      <span class="font-label-caps text-label-caps text-on-surface-variant">ĐÁNH GIÁ</span>
+      <div class="flex items-center gap-xs mt-xs">
+        <p id="kpi-rating" class="font-title-sm text-title-sm text-primary">0</p>
+        <span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+        <span id="kpi-review-count" class="text-[11px] text-on-surface-variant">(0)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-T12-009: Phí Chị Ơi 15% -->
+  <div class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant/40 flex justify-between items-center">
+    <div class="flex items-center gap-sm">
+      <span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
+      <span class="text-body-sm text-on-surface-variant">Phí nền tảng Chị Ơi (15%)</span>
+    </div>
+    <span id="kpi-platform-fee" class="font-title-sm text-[15px] text-secondary">0 đ</span>
+  </div>
+
+  <!-- TC-T12-004,005: Bar Chart -->
+  <div class="bg-surface-container-lowest p-lg rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)]">
+    <h3 class="font-title-sm text-title-sm text-on-surface mb-lg">Xu hướng thu nhập</h3>
+    <div id="chart-container" class="flex items-end justify-between h-40 gap-[6px]">
+      <!-- Chart bars rendered by JS -->
+    </div>
+    <!-- TC-T12-015: Empty state for chart -->
+    <p id="chart-empty" class="hidden text-center text-body-sm text-on-surface-variant py-8">Chưa có dữ liệu thu nhập trong khoảng thời gian này</p>
+  </div>
+
+  <!-- Income History -->
+  <div id="income-history-section" class="space-y-sm">
+    <h3 class="font-title-sm text-title-sm text-on-surface px-xs">Lịch sử thu nhập</h3>
+    <p id="no-history-msg" class="text-body-sm text-on-surface-variant px-xs py-md text-center">Chưa có giao dịch nào.</p>
+  </div>
+
+</div><!-- /main-content -->
+</main>
+
+<!-- BottomNavBar -->
 <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center px-4 py-3 rounded-full bg-white shadow-xl border border-surface-container-high">
-    <!-- Trang chủ -->
-    <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform" href="trangchutasker.html">
-        <span class="material-symbols-outlined text-[28px]" >home</span>
-        <span class="text-label-sm font-label-sm">Trang chủ</span>
-    </a>
-    <!-- Lịch sử -->
-    <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-colors" href="lichsudonhang.html">
-        <span class="material-symbols-outlined text-[28px]" >history</span>
-        <span class="text-label-sm font-label-sm font-medium">Lịch sử</span>
-    </a>
-    <!-- Thống kê -->
-    <a class="flex flex-col items-center justify-center text-primary active:scale-95 transition-colors" href="thunhapvathongke.html">
-        <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">monitoring</span>
-        <span class="text-label-sm font-label-sm font-medium">Thống kê</span>
-    </a>
-    <!-- Tài khoản -->
-    <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-colors" href="hosocanhan.html">
-        <span class="material-symbols-outlined text-[28px]" >person</span>
-        <span class="text-label-sm font-label-sm font-medium">Cá nhân</span>
-    </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform" href="trangchutasker.html">
+    <span class="material-symbols-outlined text-[28px]">home</span>
+    <span class="text-label-sm font-label-sm">Trang chủ</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-colors" href="lichsudonhang.html">
+    <span class="material-symbols-outlined text-[28px]">history</span>
+    <span class="text-label-sm font-label-sm font-medium">Lịch sử</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-primary active:scale-95 transition-colors" href="thunhapvathongke.html">
+    <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+    <span class="text-label-sm font-label-sm font-medium">Thống kê</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-colors" href="hosocanhan.html">
+    <span class="material-symbols-outlined text-[28px]">person</span>
+    <span class="text-label-sm font-label-sm font-medium">Cá nhân</span>
+  </a>
 </nav>
 
-<script src="../shared/api.js?v=20260514"></script>
+<script src="../shared/api.js?v=20260515"></script>
 <script>
 (async function() {
+  // TC-T12-019: Auth check
   if (!ChiOiAuth.requireAuth('dangnhaptasker.html')) return;
 
-  var user = ChiOiAuth.getUser();
+  var currentPeriod = 'week';
+  var walletBalance = 0;
 
-  // ===== 1. Load Wallet Balance =====
-  try {
-    var wallet = await apiFetch('/api/wallets/balance');
-    if (wallet) {
-      var balanceEl = document.querySelector('.font-display-lg.text-display-lg');
-      if (balanceEl) balanceEl.textContent = formatVND(wallet.balance || 0);
-    }
-  } catch (e) { console.warn('[Thống kê] Không load được số dư:', e.message); }
+  // DOM refs
+  var loadingState = document.getElementById('loading-state');
+  var errorState = document.getElementById('error-state');
+  var mainContent = document.getElementById('main-content');
+  var filterChips = document.querySelectorAll('.filter-chip');
 
-  // ===== 2. Load Tasker Order History → Tính KPI =====
-  var totalOrders = 0;
-  var completedOrders = 0;
-  try {
-    var orders = await apiFetch('/api/taskers/history');
-    if (orders && orders.length > 0) {
-      totalOrders = orders.length;
-      completedOrders = orders.filter(function(o) { return o.status === 'COMPLETED'; }).length;
-    }
-  } catch (e) { console.warn('[Thống kê] Không load được lịch sử đơn:', e.message); }
+  // === Filter Chips (TC-T12-010,011,012,013) ===
+  filterChips.forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      filterChips.forEach(function(c) { c.classList.remove('active'); });
+      chip.classList.add('active');
+      currentPeriod = chip.getAttribute('data-period');
+      loadStats(currentPeriod);
+    });
+  });
 
-  // Tỷ lệ hoàn thành
-  var completionRate = totalOrders > 0 ? Math.round((completedOrders / totalOrders) * 100) : 0;
-  var rateEl = document.getElementById('kpi-rate');
-  if (rateEl) rateEl.textContent = completionRate + '%';
+  // === Refresh (TC-T12-016) ===
+  document.getElementById('btn-refresh').addEventListener('click', function() {
+    loadStats(currentPeriod);
+  });
+  document.getElementById('btn-retry').addEventListener('click', function() {
+    loadStats(currentPeriod);
+  });
 
-  // Đánh giá — lấy từ user data (lưu trong localStorage khi login)
-  var ratingEl = document.getElementById('kpi-rating');
-  if (ratingEl && user && user.average_rating !== undefined && user.average_rating !== null) {
-    ratingEl.textContent = Number(user.average_rating).toFixed(1);
-  } else if (ratingEl) {
-    ratingEl.textContent = 'N/A';
+  function showLoading() {
+    loadingState.classList.remove('hidden');
+    errorState.classList.add('hidden');
+    mainContent.classList.add('hidden');
   }
 
-  // ===== 3. Load Transaction History (income items) =====
-  try {
-    var transactions = await apiFetch('/api/wallets/transactions');
-    var historySection = document.getElementById('income-history-section');
-    var noHistoryMsg = document.getElementById('no-history-msg');
-    if (historySection && transactions && transactions.length > 0) {
-      // Keep title h3, remove placeholder message
-      var title = historySection.querySelector('h3');
-      historySection.innerHTML = '';
-      if (title) historySection.appendChild(title);
+  function showError() {
+    loadingState.classList.add('hidden');
+    errorState.classList.remove('hidden');
+    mainContent.classList.add('hidden');
+  }
 
-      var totalIncome = 0;
+  function showContent() {
+    loadingState.classList.add('hidden');
+    errorState.classList.add('hidden');
+    mainContent.classList.remove('hidden');
+  }
 
-      transactions.forEach(function(tx) {
-        if (tx.type === 'COMMISSION' || tx.type === 'DEPOSIT') totalIncome += Math.abs(tx.amount);
+  // === Format helpers ===
+  function fmtVND(n) {
+    return Number(n || 0).toLocaleString('vi-VN') + ' đ';
+  }
+  function fmtDate(d) {
+    if (!d) return '';
+    var dt = new Date(d);
+    return dt.toLocaleDateString('vi-VN') + ' ' + dt.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'});
+  }
 
-        var icon = tx.type === 'COMMISSION' ? 'cleaning_services' : (tx.type === 'WITHDRAWAL' ? 'savings' : 'account_balance_wallet');
-        var typeLabel = tx.type === 'COMMISSION' ? tx.description || 'Thu nhập dịch vụ' : (tx.type === 'WITHDRAWAL' ? 'Rút tiền' : 'Nạp tiền');
-        var isCredit = tx.type !== 'WITHDRAWAL';
-        var prefix = isCredit ? '+' : '-';
+  // === Main load function ===
+  async function loadStats(period) {
+    showLoading();
+    try {
+      // Parallel fetch wallet + stats
+      var results = await Promise.all([
+        apiFetch('/api/wallets/balance'),
+        apiFetch('/api/taskers/stats?period=' + period)
+      ]);
+      var wallet = results[0];
+      var stats = results[1];
 
-        var div = document.createElement('div');
-        div.className = 'bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)] flex justify-between items-center';
-        div.innerHTML =
-          '<div class="flex items-center gap-md">' +
-            '<div class="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center"><span class="material-symbols-outlined text-primary">' + icon + '</span></div>' +
-            '<div><p class="font-title-sm text-[16px] text-on-surface">' + typeLabel + '</p>' +
-            '<p class="text-body-sm text-on-surface-variant">' + formatDateTime(tx.created_at) + '</p>' +
-            (tx.type === 'COMMISSION' ? '<p class="text-[11px] text-secondary italic">Đã trừ 15% phí nền tảng</p>' : '') +
-          '</div></div>' +
-          '<p class="font-title-sm text-title-sm ' + (isCredit ? 'text-primary' : 'text-error') + '">' + prefix + formatVND(Math.abs(tx.amount)) + '</p>';
-        historySection.appendChild(div);
-      });
+      walletBalance = Number(wallet?.balance || 0);
 
-      // ===== Update KPI Cards với data thực =====
-      var totalIncomeEl = document.getElementById('kpi-total-income');
-      if (totalIncomeEl) totalIncomeEl.textContent = formatVND(totalIncome);
-      var completedEl = document.getElementById('kpi-completed');
-      if (completedEl) completedEl.textContent = completedOrders + ' đơn';
+      // TC-T12-002: Wallet balance
+      document.getElementById('wallet-balance').textContent = fmtVND(walletBalance);
 
-      // ===== Render Bar Chart từ transaction data =====
-      var chartContainer = document.querySelector('.flex.items-end.justify-between.h-40');
-      if (chartContainer && transactions.length > 0) {
-        // Gom thu nhập theo ngày trong tuần
-        var dayNames = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
-        var dailyIncome = [0, 0, 0, 0, 0, 0, 0]; // CN=0 ... T7=6
-        transactions.forEach(function(tx) {
-          if (tx.type === 'COMMISSION' || tx.type === 'DEPOSIT') {
-            var day = new Date(tx.created_at).getDay();
-            dailyIncome[day] += Math.abs(tx.amount);
-          }
-        });
-        var maxIncome = Math.max.apply(null, dailyIncome) || 1;
-        var today = new Date().getDay();
-
-        // Sắp xếp: T2 T3 T4 T5 T6 T7 CN
-        var orderedDays = [1, 2, 3, 4, 5, 6, 0];
-        chartContainer.innerHTML = '';
-        orderedDays.forEach(function(dayIdx) {
-          var pct = (dailyIncome[dayIdx] / maxIncome) * 140;
-          var barH = Math.max(pct, 8);
-          var isToday = dayIdx === today;
-          var col = document.createElement('div');
-          col.className = 'flex flex-col items-center gap-xs flex-1';
-          col.innerHTML = '<div class="w-full ' + (isToday ? 'bg-primary' : 'bg-primary-fixed') + ' rounded-t-lg chart-bar" style="height:' + barH + 'px"></div>' +
-            '<span class="text-[10px] font-label-caps ' + (isToday ? 'text-primary font-bold' : '') + '">' + dayNames[dayIdx] + '</span>';
-          chartContainer.appendChild(col);
-        });
+      // TC-T12-025: Disable withdraw when balance = 0
+      var withdrawBtn = document.getElementById('btn-withdraw');
+      if (walletBalance <= 0) {
+        withdrawBtn.disabled = true;
+        withdrawBtn.textContent = 'SỐ DƯ CHƯA ĐỦ ĐỂ RÚT';
+      } else {
+        withdrawBtn.disabled = false;
+        withdrawBtn.textContent = 'YÊU CẦU RÚT TIỀN';
       }
-    } else {
-      // Không có transactions — hiển thị message
-      if (noHistoryMsg) noHistoryMsg.textContent = 'Chưa có giao dịch nào.';
-      var totalIncomeEl = document.getElementById('kpi-total-income');
-      if (totalIncomeEl) totalIncomeEl.textContent = '0 đ';
-      var completedEl = document.getElementById('kpi-completed');
-      if (completedEl) completedEl.textContent = completedOrders + ' đơn';
+
+      // TC-T12-002: Total income
+      document.getElementById('kpi-total-income').textContent = fmtVND(stats.total_income);
+
+      // TC-T12-003: Comparison %
+      var cmpEl = document.getElementById('kpi-comparison');
+      var pct = stats.comparison_pct || 0;
+      if (pct > 0) {
+        cmpEl.innerHTML = '<span class="text-green-600">▲ +' + pct + '%</span> so với kỳ trước';
+      } else if (pct < 0) {
+        cmpEl.innerHTML = '<span class="text-error">▼ ' + pct + '%</span> so với kỳ trước';
+      } else {
+        cmpEl.textContent = '— không đổi so với kỳ trước';
+      }
+
+      // TC-T12-006: Completed orders
+      document.getElementById('kpi-completed').textContent = (stats.completed_orders || 0) + ' đơn';
+
+      // TC-T12-008: Acceptance rate
+      document.getElementById('kpi-rate').textContent = (stats.acceptance_rate || 0) + '%';
+
+      // TC-T12-007: Average rating
+      var rating = stats.average_rating || 0;
+      document.getElementById('kpi-rating').textContent = rating > 0 ? rating.toFixed(1) : 'N/A';
+      document.getElementById('kpi-review-count').textContent = '(' + (stats.review_count || 0) + ')';
+
+      // TC-T12-009: Platform fee 15%
+      document.getElementById('kpi-platform-fee').textContent = '-' + fmtVND(stats.platform_fee);
+
+      // TC-T12-004,005: Render chart
+      renderChart(stats.daily_income || [0,0,0,0,0,0,0]);
+
+      // Render income history
+      renderHistory(stats.income_history || []);
+
+      // TC-T12-014: All zeros when no income
+      showContent();
+
+    } catch (e) {
+      console.error('[Thống kê] Error:', e);
+      // TC-T12-017,018: Show error
+      showError();
+      showToastMsg('❌ Không tải được dữ liệu: ' + (e.message || 'Lỗi kết nối'));
     }
-  } catch (e) { console.warn('[Thống kê] Không load được giao dịch:', e.message); }
+  }
 
-  // ===== 4. Withdraw Button =====
-  var withdrawBtn = document.querySelector('button[class*="from-primary"]');
-  if (withdrawBtn) {
-    withdrawBtn.addEventListener('click', async function() {
-      var amount = prompt('Nhập số tiền muốn rút (tối thiểu 100.000 đ):');
-      if (!amount) return;
-      var amountNum = parseInt(amount.replace(/\D/g, ''));
-      if (isNaN(amountNum) || amountNum < 100000) { showToastMsg('Số tiền tối thiểu 100.000 đ'); return; }
+  // === TC-T12-004,005: Bar Chart ===
+  function renderChart(dailyIncome) {
+    var container = document.getElementById('chart-container');
+    var emptyMsg = document.getElementById('chart-empty');
+    var dayNames = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+    var today = new Date().getDay();
+    var todayIdx = today === 0 ? 6 : today - 1;
+    var maxVal = Math.max.apply(null, dailyIncome) || 1;
+    var hasData = dailyIncome.some(function(v) { return v > 0; });
 
-      showLoading();
-      try {
-        await apiFetch('/api/wallets/withdraw', { method: 'POST', body: { amount: amountNum } });
-        hideLoading();
-        showToastMsg('✅ Yêu cầu rút ' + formatVND(amountNum) + ' đã được gửi!');
-        setTimeout(function() { location.reload(); }, 2000);
-      } catch (e) {
-        hideLoading();
-        showToastMsg('❌ ' + e.message);
-      }
+    if (!hasData) {
+      container.classList.add('hidden');
+      emptyMsg.classList.remove('hidden');
+      return;
+    }
+    container.classList.remove('hidden');
+    emptyMsg.classList.add('hidden');
+
+    container.innerHTML = '';
+    dailyIncome.forEach(function(val, idx) {
+      var pct = (val / maxVal) * 140;
+      var barH = Math.max(pct, 6);
+      var isToday = idx === todayIdx;
+      var col = document.createElement('div');
+      col.className = 'flex flex-col items-center gap-xs flex-1';
+
+      var valLabel = val > 0 ? '<span class="text-[9px] text-on-surface-variant font-medium">' + Math.round(val/1000) + 'k</span>' : '';
+
+      col.innerHTML = valLabel +
+        '<div class="w-full chart-bar ' + (isToday ? 'bg-primary shadow-md' : 'bg-primary-fixed') + '" style="height:' + barH + 'px"></div>' +
+        '<span class="text-[10px] font-label-caps ' + (isToday ? 'text-primary font-bold' : 'text-on-surface-variant') + '">' + dayNames[idx] + '</span>';
+      container.appendChild(col);
     });
   }
+
+  // === Income History ===
+  function renderHistory(history) {
+    var section = document.getElementById('income-history-section');
+    var noMsg = document.getElementById('no-history-msg');
+    // Clear old items (keep h3 + noMsg)
+    var items = section.querySelectorAll('.history-item');
+    items.forEach(function(el) { el.remove(); });
+
+    if (!history || history.length === 0) {
+      noMsg.classList.remove('hidden');
+      return;
+    }
+    noMsg.classList.add('hidden');
+
+    history.forEach(function(item) {
+      var div = document.createElement('div');
+      div.className = 'history-item bg-surface-container-lowest p-md rounded-xl border border-primary-fixed shadow-[0_4px_15px_rgba(0,0,0,0.04)] flex justify-between items-center fade-in';
+      div.innerHTML =
+        '<div class="flex items-center gap-md">' +
+          '<div class="w-10 h-10 rounded-lg bg-primary-fixed/60 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[20px]">cleaning_services</span></div>' +
+          '<div>' +
+            '<p class="text-body-sm font-medium text-on-surface">Thu nhập đơn #' + item.order_id + '</p>' +
+            '<p class="text-[11px] text-on-surface-variant">' + fmtDate(item.date) + '</p>' +
+            '<p class="text-[11px] text-secondary italic">Phí 15%: -' + fmtVND(item.fee) + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<p class="font-title-sm text-[15px] text-primary">+' + fmtVND(item.amount) + '</p>';
+      section.appendChild(div);
+    });
+  }
+
+  // === TC-T12-024,025: Withdraw ===
+  document.getElementById('btn-withdraw').addEventListener('click', async function() {
+    if (walletBalance <= 0) { showToastMsg('Số dư không đủ để rút tiền'); return; }
+    var amount = prompt('Nhập số tiền muốn rút (tối thiểu 100.000 đ):');
+    if (!amount) return;
+    var amountNum = parseInt(amount.replace(/\D/g, ''));
+    if (isNaN(amountNum) || amountNum < 100000) { showToastMsg('Số tiền tối thiểu 100.000 đ'); return; }
+    if (amountNum > walletBalance) { showToastMsg('Số dư không đủ. Hiện có: ' + fmtVND(walletBalance)); return; }
+
+    try {
+      await apiFetch('/api/wallets/withdraw', { method: 'POST', body: { amount: amountNum } });
+      showToastMsg('✅ Yêu cầu rút ' + fmtVND(amountNum) + ' đã được gửi!');
+      setTimeout(function() { loadStats(currentPeriod); }, 1500);
+    } catch (e) {
+      showToastMsg('❌ ' + e.message);
+    }
+  });
+
+  // === Initial load ===
+  // Default to "Tuần này" active
+  filterChips.forEach(function(c) { c.classList.remove('active'); });
+  document.querySelector('[data-period="week"]').classList.add('active');
+  loadStats('week');
 })();
 </script>
 </body></html>
