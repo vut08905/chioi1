@@ -155,6 +155,7 @@
 <div class="filter-chip bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-sm font-bold flex-shrink-0 cursor-pointer" data-type="DEPOSIT">Nạp tiền</div>
 <div class="filter-chip bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-sm font-bold flex-shrink-0 cursor-pointer" data-type="PAYMENT">Thanh toán</div>
 <div class="filter-chip bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-sm font-bold flex-shrink-0 cursor-pointer" data-type="REFUND">Hoàn tiền</div>
+<div class="filter-chip bg-surface-container-low text-on-surface-variant border border-outline-variant/30 px-5 py-2 rounded-full text-label-sm font-bold flex-shrink-0 cursor-pointer" data-type="WITHDRAW">Rút tiền</div>
 </div>
 </div>
 </section>
@@ -299,9 +300,9 @@
   // Initial render
   renderTransactions('all');
 
-  // ===== Withdraw button =====
+  // ===== Withdraw button → UC-KH-19 =====
   document.getElementById('withdraw-btn').addEventListener('click', function() {
-    showToastMsg('Chức năng rút tiền đang phát triển');
+    window.location.href = 'ruttien.html';
   });
 })();
 </script>

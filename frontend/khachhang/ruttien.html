@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta name="view-transition" content="same-origin"/>
+<link rel="icon" type="image/jpeg" href="../assets/images/logo.jpg"/>
+<link rel="apple-touch-icon" href="../assets/images/logo.jpg"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta name="theme-color" content="#ff7e36"/>
+<title>Rút tiền - Ví Chị Ơi!</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/responsive.css"/>
+<link rel="stylesheet" href="../shared/transitions.css"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#a04100", "primary-container": "#ff7e36", "primary-fixed": "#ffdbcc",
+        "primary-fixed-dim": "#ffb693", "on-primary": "#ffffff", "on-primary-container": "#642600",
+        "secondary": "#b3272e", "secondary-container": "#fc5d5d", "on-secondary": "#ffffff",
+        "tertiary": "#645d58", "tertiary-container": "#aaa19b", "on-tertiary": "#ffffff",
+        "error": "#ba1a1a", "error-container": "#ffdad6", "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "background": "#fcf9f8", "on-background": "#1b1c1c",
+        "surface": "#fcf9f8", "on-surface": "#1b1c1c",
+        "surface-container": "#f0eded", "surface-container-low": "#f6f3f2",
+        "surface-container-lowest": "#ffffff", "surface-container-high": "#eae7e7",
+        "surface-variant": "#e4e2e1", "on-surface-variant": "#584238",
+        "outline": "#8b7266", "outline-variant": "#dfc0b3",
+        "inverse-surface": "#303030", "inverse-on-surface": "#f3f0f0", "inverse-primary": "#ffb693",
+        "surface-tint": "#a04100", "surface-bright": "#fcf9f8", "surface-dim": "#dcd9d9",
+      },
+      spacing: { "sm":"12px","lg":"24px","xs":"8px","base":"4px","container-padding":"20px","md":"16px","xl":"32px" },
+      fontFamily: { "body-lg":["Be Vietnam Pro"], "label-sm":["Be Vietnam Pro"], "h2-section":["Be Vietnam Pro"] },
+      fontSize: {
+        "label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],
+        "body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],
+        "body-lg":["16px",{"lineHeight":"24px","fontWeight":"500"}],
+        "h2-section":["18px",{"lineHeight":"24px","fontWeight":"700"}],
+      }
+    }
+  }
+};
+</script>
+<style>
+body { font-family: 'Be Vietnam Pro', sans-serif; }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+.orange-gradient { background: linear-gradient(135deg, #ff7e36 0%, #a04100 100%); }
+.soft-shadow { box-shadow: 0 4px 12px rgba(255,126,54,0.08); }
+.shake { animation: shake 0.4s ease-in-out; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen pb-32">
+<div class="absolute top-0 left-0 w-full h-[300px] z-0 pointer-events-none" style="background:linear-gradient(#ff7e36,#fcf9f8)"></div>
+
+<!-- Header -->
+<header class="relative z-10 flex items-center w-full px-container-padding h-16 pt-4 gap-3">
+  <button onclick="window.location.href='vivalichsu.html'" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 text-white active:scale-95 transition-all backdrop-blur-sm" style="cursor:pointer">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+  <h1 class="text-[18px] font-extrabold text-white">Rút tiền</h1>
+</header>
+
+<!-- Balance -->
+<section class="relative z-10 mx-container-padding mt-4 orange-gradient p-5 rounded-2xl text-white shadow-lg">
+  <p class="text-white/80 text-[13px]">Số dư khả dụng</p>
+  <h2 id="wallet-balance" class="text-[28px] font-extrabold mt-1">0 đ</h2>
+</section>
+
+<!-- Form rút tiền -->
+<main class="relative z-10 px-container-padding mt-5 space-y-4">
+
+  <!-- Số tiền -->
+  <section class="bg-surface-container-lowest rounded-xl p-md soft-shadow border border-surface-container">
+    <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider block mb-2">Số tiền muốn rút</label>
+    <div class="flex items-center gap-2 border-b-2 border-primary pb-2 mb-3">
+      <span class="text-[24px] font-bold text-primary">đ</span>
+      <input id="amount-input" class="w-full bg-transparent border-none p-0 text-[24px] font-bold text-on-surface focus:ring-0 focus:outline-none" placeholder="Nhập số tiền" type="text" inputmode="numeric"/>
+    </div>
+    <p id="amount-error" class="text-error text-[12px] font-semibold hidden"></p>
+    <div class="flex flex-wrap gap-2 mt-2" id="preset-amounts">
+      <button data-amount="100000" class="preset-btn px-4 py-2 rounded-full border border-outline-variant text-[13px] font-semibold text-on-surface-variant hover:bg-primary-fixed transition-colors">100.000đ</button>
+      <button data-amount="200000" class="preset-btn px-4 py-2 rounded-full border border-outline-variant text-[13px] font-semibold text-on-surface-variant hover:bg-primary-fixed transition-colors">200.000đ</button>
+      <button data-amount="500000" class="preset-btn px-4 py-2 rounded-full border border-outline-variant text-[13px] font-semibold text-on-surface-variant hover:bg-primary-fixed transition-colors">500.000đ</button>
+      <button data-amount="1000000" class="preset-btn px-4 py-2 rounded-full border border-outline-variant text-[13px] font-semibold text-on-surface-variant hover:bg-primary-fixed transition-colors">1.000.000đ</button>
+    </div>
+    <p class="text-[11px] text-on-surface-variant mt-2">Tối thiểu 100.000đ · Tối đa 50.000.000đ</p>
+  </section>
+
+  <!-- Tài khoản ngân hàng -->
+  <section class="bg-surface-container-lowest rounded-xl p-md soft-shadow border border-surface-container space-y-3">
+    <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider block">Tài khoản ngân hàng nhận tiền</label>
+
+    <!-- Danh sách TK đã lưu -->
+    <div id="saved-banks" class="space-y-2"></div>
+
+    <!-- Form nhập mới -->
+    <div id="bank-form" class="space-y-3">
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Ngân hàng</label>
+        <select id="bank-name" class="w-full border border-outline-variant rounded-xl px-4 py-3 text-[14px] bg-surface-container-low focus:border-primary focus:ring-1 focus:ring-primary">
+          <option value="">-- Chọn ngân hàng --</option>
+          <option>Vietcombank</option><option>Techcombank</option><option>BIDV</option>
+          <option>Agribank</option><option>VPBank</option><option>MBBank</option>
+          <option>TPBank</option><option>ACB</option><option>Sacombank</option>
+          <option>VietinBank</option><option>SHB</option><option>HDBank</option>
+          <option>OCB</option><option>MSB</option><option>SeABank</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Số tài khoản</label>
+        <input id="account-number" type="text" inputmode="numeric" placeholder="Nhập số tài khoản" class="w-full border border-outline-variant rounded-xl px-4 py-3 text-[14px] bg-surface-container-low focus:border-primary focus:ring-1 focus:ring-primary"/>
+      </div>
+      <div>
+        <label class="text-[12px] font-semibold text-on-surface-variant block mb-1">Tên chủ tài khoản</label>
+        <input id="account-holder" type="text" placeholder="VD: NGUYEN VAN A" class="w-full border border-outline-variant rounded-xl px-4 py-3 text-[14px] bg-surface-container-low focus:border-primary focus:ring-1 focus:ring-primary uppercase"/>
+      </div>
+    </div>
+    <p id="bank-error" class="text-error text-[12px] font-semibold hidden"></p>
+  </section>
+
+  <!-- Thông tin xác nhận -->
+  <section id="confirm-section" class="bg-primary-fixed/30 rounded-xl p-md border border-primary-fixed space-y-2 hidden">
+    <h3 class="text-[14px] font-bold text-on-surface">Xác nhận rút tiền</h3>
+    <div class="flex justify-between text-[13px]"><span class="text-on-surface-variant">Số tiền rút</span><span id="confirm-amount" class="font-bold text-primary">0đ</span></div>
+    <div class="flex justify-between text-[13px]"><span class="text-on-surface-variant">Ngân hàng</span><span id="confirm-bank" class="font-bold">—</span></div>
+    <div class="flex justify-between text-[13px]"><span class="text-on-surface-variant">Số TK</span><span id="confirm-account" class="font-bold">—</span></div>
+    <div class="flex justify-between text-[13px]"><span class="text-on-surface-variant">Chủ TK</span><span id="confirm-holder" class="font-bold">—</span></div>
+    <div class="flex justify-between text-[13px] pt-2 border-t border-outline-variant/30"><span class="text-on-surface-variant">Số dư sau rút</span><span id="confirm-remaining" class="font-bold text-error">0đ</span></div>
+  </section>
+
+  <!-- Lưu ý -->
+  <div class="bg-error-container/20 p-3 rounded-xl flex gap-2 items-start">
+    <span class="material-symbols-outlined text-error text-[18px] mt-0.5">info</span>
+    <p class="text-[12px] text-on-error-container leading-tight">Yêu cầu rút tiền sẽ được Admin xử lý trong vòng <b>1-24 giờ</b> làm việc. Số dư sẽ bị trừ ngay khi gửi yêu cầu.</p>
+  </div>
+
+  <!-- Button -->
+  <button id="submit-btn" class="w-full h-14 orange-gradient text-white text-[16px] font-bold rounded-full shadow-lg active:scale-95 transition-all">
+    Xác nhận rút tiền
+  </button>
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50 flex justify-around items-center px-4 py-3 rounded-full bg-white shadow-xl border border-surface-container-high">
+  <a class="flex flex-col items-center text-on-surface-variant hover:text-primary active:scale-95 transition-transform" href="trangchu.html">
+    <span class="material-symbols-outlined text-[28px]">home</span><span class="text-label-sm font-medium">Trang chủ</span>
+  </a>
+  <a class="flex flex-col items-center text-on-surface-variant hover:text-primary active:scale-95 transition-colors" href="lichsuhoatdong.html">
+    <span class="material-symbols-outlined text-[28px]">assignment</span><span class="text-label-sm font-medium">Hoạt động</span>
+  </a>
+  <a class="flex flex-col items-center text-on-surface-variant hover:text-primary active:scale-95 transition-colors relative" href="thongbao.html">
+    <span class="material-symbols-outlined text-[28px]">notifications</span><span class="text-label-sm font-medium">Thông báo</span>
+  </a>
+  <a class="flex flex-col items-center text-on-surface-variant hover:text-primary active:scale-95 transition-colors" href="taikhoan.html">
+    <span class="material-symbols-outlined text-[28px]">person</span><span class="text-label-sm font-medium">Tài khoản</span>
+  </a>
+</nav>
+
+<script src="../shared/api.js?v=20260516"></script>
+<script src="../shared/prefetch.js" defer></script>
+<script>
+(async function() {
+  if (!ChiOiAuth.requireAuth('dangnhap.html')) return;
+
+  var walletBalance = 0;
+  var currentAmount = 0;
+  var amountInput = document.getElementById('amount-input');
+  var amountError = document.getElementById('amount-error');
+  var bankError = document.getElementById('bank-error');
+  var bankName = document.getElementById('bank-name');
+  var accountNumber = document.getElementById('account-number');
+  var accountHolder = document.getElementById('account-holder');
+  var confirmSection = document.getElementById('confirm-section');
+  var submitBtn = document.getElementById('submit-btn');
+
+  // === TC-KH19-009: Load balance (catch network error) ===
+  try {
+    var wallet = await apiFetch('/api/wallets/balance');
+    if (wallet && wallet.balance !== undefined) {
+      walletBalance = Number(wallet.balance);
+      document.getElementById('wallet-balance').textContent = formatVND(walletBalance);
+    }
+  } catch (e) {
+    showToastMsg('⚠️ ' + e.message);
+  }
+
+  // === Helper: show/hide errors ===
+  function showError(el, msg) {
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    el.closest('section').classList.add('shake');
+    setTimeout(function() { el.closest('section').classList.remove('shake'); }, 400);
+  }
+  function hideError(el) { el.textContent = ''; el.classList.add('hidden'); }
+
+  // === Amount input formatting ===
+  amountInput.addEventListener('input', function() {
+    var raw = this.value.replace(/\D/g, '');
+    currentAmount = parseInt(raw) || 0;
+    this.value = currentAmount > 0 ? currentAmount.toLocaleString('vi-VN') : '';
+    hideError(amountError);
+    document.querySelectorAll('.preset-btn').forEach(function(b) {
+      b.className = 'preset-btn px-4 py-2 rounded-full border border-outline-variant text-[13px] font-semibold text-on-surface-variant hover:bg-primary-fixed transition-colors';
+    });
+    updateConfirm();
+  });
+
+  // === Preset amounts ===
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      currentAmount = parseInt(btn.getAttribute('data-amount')) || 0;
+      amountInput.value = currentAmount.toLocaleString('vi-VN');
+      hideError(amountError);
+      document.querySelectorAll('.preset-btn').forEach(function(b) {
+        b.className = 'preset-btn px-4 py-2 rounded-full border border-outline-variant text-[13px] font-semibold text-on-surface-variant hover:bg-primary-fixed transition-colors';
+      });
+      btn.className = 'preset-btn px-4 py-2 rounded-full bg-primary text-white text-[13px] font-semibold shadow-sm';
+      updateConfirm();
+    });
+  });
+
+  // === Update confirm panel ===
+  function updateConfirm() {
+    if (currentAmount >= 100000 && bankName.value && accountNumber.value && accountHolder.value) {
+      confirmSection.classList.remove('hidden');
+      document.getElementById('confirm-amount').textContent = formatVND(currentAmount);
+      document.getElementById('confirm-bank').textContent = bankName.value;
+      document.getElementById('confirm-account').textContent = accountNumber.value;
+      document.getElementById('confirm-holder').textContent = accountHolder.value.toUpperCase();
+      document.getElementById('confirm-remaining').textContent = formatVND(walletBalance - currentAmount);
+    } else {
+      confirmSection.classList.add('hidden');
+    }
+  }
+  bankName.addEventListener('change', updateConfirm);
+  accountNumber.addEventListener('input', updateConfirm);
+  accountHolder.addEventListener('input', updateConfirm);
+
+  // === TC-KH19-002/003/004/006: Validate + Submit ===
+  submitBtn.addEventListener('click', async function() {
+    hideError(amountError);
+    hideError(bankError);
+    var valid = true;
+
+    // TC-KH19-002: Để trống số tiền
+    if (!currentAmount || currentAmount <= 0) {
+      showError(amountError, 'Vui lòng nhập số tiền cần rút');
+      valid = false;
+    }
+    // TC-KH19-004: Số tiền không hợp lệ (< min)
+    else if (currentAmount < 100000) {
+      showError(amountError, 'Số tiền tối thiểu là 100.000đ');
+      valid = false;
+    }
+    else if (currentAmount > 50000000) {
+      showError(amountError, 'Số tiền tối đa là 50.000.000đ một lần');
+      valid = false;
+    }
+    // TC-KH19-003: Rút vượt số dư
+    else if (currentAmount > walletBalance) {
+      showError(amountError, 'Số dư không đủ. Hiện có: ' + formatVND(walletBalance));
+      valid = false;
+    }
+
+    // TC-KH19-006: Chưa chọn ngân hàng
+    if (!bankName.value) {
+      showError(bankError, 'Vui lòng chọn ngân hàng nhận tiền');
+      valid = false;
+    } else if (!accountNumber.value || accountNumber.value.trim().length < 5) {
+      showError(bankError, 'Vui lòng nhập số tài khoản hợp lệ');
+      valid = false;
+    } else if (!accountHolder.value || accountHolder.value.trim().length < 2) {
+      showError(bankError, 'Vui lòng nhập tên chủ tài khoản');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // TC-KH19-001: Rút tiền thành công
+    showLoading();
+    try {
+      var result = await apiFetch('/api/wallets/withdraw', {
+        method: 'POST',
+        body: {
+          amount: currentAmount,
+          bank_name: bankName.value,
+          account_number: accountNumber.value.trim(),
+          account_holder: accountHolder.value.trim().toUpperCase()
+        }
+      });
+      hideLoading();
+
+      // TC-KH19-007: Cập nhật số dư
+      if (result && result.wallet) {
+        walletBalance = Number(result.wallet.balance);
+        document.getElementById('wallet-balance').textContent = formatVND(walletBalance);
+      }
+
+      showToastMsg('✅ Yêu cầu rút ' + formatVND(currentAmount) + ' đã gửi thành công! Admin sẽ xử lý trong 1-24h.');
+
+      // TC-KH19-008: Redirect về lịch sử giao dịch
+      setTimeout(function() { window.location.href = 'vivalichsu.html'; }, 2500);
+
+    } catch (e) {
+      hideLoading();
+      // TC-KH19-009: Lỗi mạng hoặc lỗi server
+      showToastMsg('❌ ' + e.message);
+    }
+  });
+})();
+</script>
+</body></html>
