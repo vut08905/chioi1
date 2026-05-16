@@ -344,7 +344,21 @@ Phương thức thanh toán
     var mmInit = ('0' + nowInit.getMinutes()).slice(-2);
     timeInput.value = hhInit + ':' + mmInit;
     state.time = timeInput.value;
-    timeInput.addEventListener('change', function() { state.time = this.value; updateSummary(); });
+    timeInput.addEventListener('change', function() {
+      // Bug #23: Chặn chọn giờ quá khứ nếu ngày hôm nay
+      if (state.date === todayStr) {
+        var nowCheck = new Date();
+        var parts = this.value.split(':');
+        var selH = parseInt(parts[0]);
+        var selM = parseInt(parts[1]);
+        if (selH < nowCheck.getHours() || (selH === nowCheck.getHours() && selM < nowCheck.getMinutes())) {
+          showToastMsg('Không thể chọn giờ trong quá khứ');
+          this.value = ('0' + nowCheck.getHours()).slice(-2) + ':' + ('0' + nowCheck.getMinutes()).slice(-2);
+        }
+      }
+      state.time = this.value;
+      updateSummary();
+    });
   }
 
   // ===== TC-KH08-001: Pre-fill address from user profile =====

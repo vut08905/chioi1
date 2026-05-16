@@ -416,7 +416,20 @@ Phương thức thanh toán
     var mm = ('0' + now.getMinutes()).slice(-2);
     timeInput.value = hh + ':' + mm;
     state.time = timeInput.value;
-    timeInput.addEventListener('change', function() { 
+    timeInput.addEventListener('change', function() {
+      // Bug #23: Chặn chọn giờ quá khứ nếu ngày hôm nay
+      if (state.date === today) {
+        var nowCheck = new Date();
+        var selectedParts = this.value.split(':');
+        var selectedHour = parseInt(selectedParts[0]);
+        var selectedMin = parseInt(selectedParts[1]);
+        if (selectedHour < nowCheck.getHours() || (selectedHour === nowCheck.getHours() && selectedMin < nowCheck.getMinutes())) {
+          showToastMsg('Không thể chọn giờ trong quá khứ');
+          var safeHH = ('0' + nowCheck.getHours()).slice(-2);
+          var safeMM = ('0' + nowCheck.getMinutes()).slice(-2);
+          this.value = safeHH + ':' + safeMM;
+        }
+      }
       state.time = this.value; 
       updateSummary(); 
     });
