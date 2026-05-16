@@ -680,7 +680,7 @@ Thêm cư dân mới
       try {
         var body = { full_name: fullName, phone: phone, password: password, role: 'CUSTOMER' };
         if (email) body.email = email;
-        await apiFetch('/api/auth/register', { method: 'POST', body: JSON.stringify(body) });
+        await apiFetch('/api/auth/register', { method: 'POST', body: body });
         closeAddModal();
         showToastMsg('✅ Đã tạo tài khoản cư dân: ' + fullName);
         // Reload danh sách

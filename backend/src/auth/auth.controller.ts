@@ -20,9 +20,13 @@ export class AuthController {
   @ApiOperation({ summary: 'Đăng nhập vào hệ thống (Customer, Tasker, Admin) — rate limit 10 lần/phút/IP' })
   @ApiBody({ type: LoginDto })
   async login(@Body() body: LoginDto) {
+    // Bug #25 FIX: Phân biệt rõ "SĐT chưa đăng ký" vs "Sai mật khẩu"
     const user = await this.authService.validateUser(body.phone, body.password);
+    if (user === 'NOT_FOUND') {
+      throw new UnauthorizedException('Số điện thoại chưa được đăng ký trong hệ thống.');
+    }
     if (!user) {
-      throw new UnauthorizedException('Sai số điện thoại hoặc mật khẩu.');
+      throw new UnauthorizedException('Mật khẩu không chính xác. Vui lòng thử lại.');
     }
     // Bug Report20: Chặn login nếu tài khoản bị ban
     if (user.status === 'BANNED') {

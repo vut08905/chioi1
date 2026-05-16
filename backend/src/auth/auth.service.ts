@@ -13,11 +13,15 @@ export class AuthService {
 
   async validateUser(phone: string, pass: string): Promise<any> {
     const user = await this.prisma.users.findUnique({ where: { phone } });
-    if (user && await bcrypt.compare(pass, user.password_hash)) {
+    // Bug #25 FIX: Phân biệt "SĐT không tồn tại" vs "Sai mật khẩu"
+    if (!user) {
+      return 'NOT_FOUND'; // SĐT chưa đăng ký
+    }
+    if (await bcrypt.compare(pass, user.password_hash)) {
       const { password_hash, ...result } = user;
       return result;
     }
-    return null;
+    return null; // Sai mật khẩu
   }
 
   async login(user: any) {

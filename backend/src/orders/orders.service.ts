@@ -13,19 +13,14 @@ export class OrdersService {
     const orderCode = 'ORD' + Date.now().toString().slice(-6);
     const paymentMethod = data.payment_method || 'WALLET';
 
-    // Nếu thanh toán ví → kiểm tra số dư trước
+    // Bug #34 FIX: Nếu thanh toán ví → PHẢI kiểm tra số dư, không bỏ qua lỗi
     if (paymentMethod === 'WALLET') {
-      try {
-        const wallet = await this.prisma.wallets.findUnique({ where: { user_id: customerId } });
-        const balance = wallet ? Number(wallet.balance) : 0;
-        if (balance < Number(data.total_price)) {
-          throw new BadRequestException(
-            `Số dư ví không đủ. Cần ${data.total_price} nhưng chỉ có ${balance}`
-          );
-        }
-      } catch (e) {
-        if (e instanceof BadRequestException) throw e;
-        console.warn('[BookOrder] Không kiểm tra được ví:', e.message);
+      const wallet = await this.prisma.wallets.findUnique({ where: { user_id: customerId } });
+      const balance = wallet ? Number(wallet.balance) : 0;
+      if (balance < Number(data.total_price)) {
+        throw new BadRequestException(
+          `Số dư ví không đủ. Cần ${Number(data.total_price).toLocaleString('vi-VN')}đ nhưng chỉ có ${balance.toLocaleString('vi-VN')}đ. Vui lòng nạp thêm tiền hoặc chọn thanh toán tiền mặt.`
+        );
       }
     }
 

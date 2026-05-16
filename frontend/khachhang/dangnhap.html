@@ -355,16 +355,13 @@ async function handleLogin() {
             body: { phone: phone, password: pass }
         });
 
-        // Lưu token + user info
-        ChiOiAuth.saveLogin(data);
-
-        // Bug 1 FIX (report14): Phân quyền đăng nhập
-        var user = ChiOiAuth.getUser();
-        if (user && user.role === 'CUSTOMER') {
+        // Bug #16 FIX: Kiểm tra role TRƯỚC khi lưu token — tránh nhiễm session
+        if (data && data.user && data.user.role === 'CUSTOMER') {
+            ChiOiAuth.saveLogin(data);
             window.location.href = 'trangchu.html';
         } else {
-            ChiOiAuth.logout();
-            errorEl.textContent = 'Tài khoản không tồn tại trong hệ thống khách hàng.';
+            // KHÔNG saveLogin — không lưu token của role khác
+            errorEl.textContent = 'Tài khoản không thuộc hệ thống khách hàng. Vui lòng đăng nhập đúng cổng.';
             errorEl.style.display = 'block';
             loginBtn.disabled = false;
             loginBtn.innerHTML = '<span class="text-white text-[15px] font-bold tracking-wide">ĐĂNG NHẬP</span>';

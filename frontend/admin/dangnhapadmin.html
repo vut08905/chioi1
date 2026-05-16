@@ -203,14 +203,13 @@ async function handleAdminLogin() {
             body: { phone: phone, password: pass }
         });
 
-        ChiOiAuth.saveLogin(data);
-        var user = ChiOiAuth.getUser();
-        
-        if (user && user.role === 'ADMIN') {
+        // Bug #16 FIX: Kiểm tra role TRƯỚC khi lưu token để tránh nhiễm session
+        if (data && data.user && data.user.role === 'ADMIN') {
+            ChiOiAuth.saveLogin(data);
             window.location.href = 'bangdieukhien.html';
         } else {
-            ChiOiAuth.logout();
-            errorEl.textContent = 'Tài khoản không có quyền quản trị.';
+            // KHÔNG saveLogin — không lưu token của role khác vào localStorage
+            errorEl.textContent = 'Tài khoản không có quyền quản trị. Chỉ Admin mới được đăng nhập tại đây.';
             errorEl.style.display = 'block';
             loginBtn.disabled = false;
             loginBtn.innerHTML = '<span class="text-white text-[15px] font-bold tracking-wide">ĐĂNG NHẬP ADMIN</span>';

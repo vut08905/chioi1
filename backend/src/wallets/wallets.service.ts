@@ -70,11 +70,27 @@ export class WalletsService {
   async addTransaction(userId: number, amount: number, type: string, orderId?: number, description?: string) {
     const wallet = await this.getWallet(userId);
 
+    // Bug #28 FIX: Chặn số dư âm — nếu amount < 0, kiểm tra balance đủ không
+    if (amount < 0) {
+      const currentBalance = Number(wallet.balance);
+      const deductAmount = Math.abs(amount);
+      if (currentBalance < deductAmount) {
+        throw new BadRequestException(
+          `Số dư ví không đủ. Hiện có: ${currentBalance.toLocaleString('vi-VN')}đ, cần: ${deductAmount.toLocaleString('vi-VN')}đ`
+        );
+      }
+    }
+
     const result = await this.prisma.$transaction(async (prisma) => {
       const updatedWallet = await prisma.wallets.update({
         where: { wallet_id: wallet.wallet_id },
         data: { balance: { increment: amount } }, // amount can be negative for withdrawal or fee
       });
+
+      // Bug #28 FIX: Double-check sau khi update — phòng trường hợp race condition
+      if (Number(updatedWallet.balance) < 0) {
+        throw new BadRequestException('Giao dịch bị từ chối: số dư ví sẽ bị âm');
+      }
 
       const transaction = await prisma.transactions.create({
         data: {
