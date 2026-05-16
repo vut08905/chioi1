@@ -373,16 +373,18 @@ async function handleLogin() {
     } catch (err) {
         // TC-KH01-002,003,010,019: Dịch thông báo lỗi sang tiếng Việt
         var msg = err.message || '';
-        if (msg.includes('hết hạn') || msg.toLowerCase().includes('unauthorized') || msg.toLowerCase().includes('invalid')) {
-            msg = 'Sai số điện thoại hoặc mật khẩu. Vui lòng thử lại.';
+        if (msg.includes('hết hạn') || msg.toLowerCase().includes('unauthorized') || msg.toLowerCase().includes('invalid') || msg.includes('Sai số điện thoại')) {
+            msg = 'Số điện thoại chưa đăng ký hoặc sai mật khẩu. Vui lòng kiểm tra lại hoặc <a href="dangky.html" class="text-primary font-bold underline">đăng ký tài khoản mới</a>.';
         } else if (msg.toLowerCase().includes('not found') || msg.toLowerCase().includes('không tồn tại') || msg.toLowerCase().includes('not exist')) {
-            msg = 'Tài khoản không tồn tại. Vui lòng kiểm tra lại số điện thoại.';
+            msg = 'Số điện thoại chưa được đăng ký. <a href="dangky.html" class="text-primary font-bold underline">Đăng ký ngay</a>.';
+        } else if (msg.toLowerCase().includes('tạm khóa') || msg.toLowerCase().includes('locked') || msg.toLowerCase().includes('blocked')) {
+            msg = 'Tài khoản đã bị tạm khóa. Vui lòng liên hệ CSKH.';
         } else if (msg.toLowerCase().includes('fetch') || msg.toLowerCase().includes('kết nối')) {
             msg = 'Không có kết nối mạng. Vui lòng kiểm tra Internet và thử lại.';
         } else if (!msg) {
-            msg = 'Sai số điện thoại hoặc mật khẩu.';
+            msg = 'Đăng nhập thất bại. Vui lòng thử lại.';
         }
-        errorEl.textContent = msg;
+        errorEl.innerHTML = msg;
         errorEl.style.display = 'block';
         loginBtn.disabled = false;
         loginBtn.innerHTML = '<span class="text-white text-[15px] font-bold tracking-wide">ĐĂNG NHẬP</span>';

@@ -690,7 +690,7 @@ document.querySelectorAll('table tbody tr').forEach(function(row) {
         '<td class="px-6 py-4 text-right"><button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors material-symbols-outlined view-btn">visibility</button></td>';
 
       tr.addEventListener('click', function(e) {
-        if (e.target.closest('button')) return;
+        if (e.target.closest('button') && !e.target.closest('.view-btn')) return;
         var panel = document.getElementById('order-detail-panel');
         var el = function(id) { return document.getElementById(id); };
         if (el('od-code'))     el('od-code').textContent     = orderCode;
